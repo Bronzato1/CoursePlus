@@ -10,7 +10,7 @@
             "request": "launch",
             "program": "dotnet",
             "args": ["run"],
-            "cwd": "${workspaceFolder}/CoursePlus",
+            "cwd": "${workspaceFolder}/CoursePlus/Client",
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
             }
@@ -22,7 +22,7 @@
             "timeout": 30000,
             // If you have changed the default port / launch URL make sure to update the expectation below
             "url": "https://localhost:5001",
-            "webRoot": "${workspaceFolder}/CoursePlus",
+            "webRoot": "${workspaceFolder}/CoursePlus/Client",
             "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}"
         }
     ]

@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/CoursePlus/CoursePlus.csproj",
+                "${workspaceFolder}/CoursePlus/Client/CoursePlus.Client.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/CoursePlus/CoursePlus.csproj",
+                "${workspaceFolder}/CoursePlus/Client/CoursePlus.Client.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -32,7 +32,7 @@
             "args": [
                 "watch",
                 "run",
-                "${workspaceFolder}/CoursePlus/CoursePlus.csproj",
+                "${workspaceFolder}/CoursePlus/Client/CoursePlus.Client.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
