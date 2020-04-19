@@ -10,7 +10,7 @@
             "request": "launch",
             "program": "dotnet",
             "args": ["run"],
-            "cwd": "${workspaceFolder}/CoursePlus/Client",
+            "cwd": "${workspaceFolder}/CoursePlus/Server",
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
             }
