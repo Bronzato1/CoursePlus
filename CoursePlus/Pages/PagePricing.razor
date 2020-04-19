@@ -1,0 +1,175 @@
+﻿@page "/page-pricing"
+@using CoursePlus.Components
+
+    <div id="wrapper">
+
+        <Header Class="header" UkSticky="top:20; cls-active:header-sticky">
+            <Breadcrumbs>
+                <li><a href="/" uk-tooltip="title:Home; pos:bottom; offset:21"> <i class="uil-home-alt"></i> </a></li>
+                <li>Pricing</li>
+            </Breadcrumbs>
+        </Header>
+
+        <SearchOnMobile></SearchOnMobile>
+
+        <SearchOnDesktop></SearchOnDesktop>
+
+        <SideNav></SideNav>
+
+        <div class="page-content">
+
+            <div class="page-content-inner">
+
+                <h2> Pricing Plans </h2>
+
+                <ul class="uk-subnav pricing-swicher my-4"
+                    uk-switcher="connect: #change-plan ;animation: uk-animation-slide-top-medium, uk-animation-scale-up">
+                    <li><a href="#">Monthly</a></li>
+                    <li><a href="#">Yearly <span>Save 10%</span> </a></li>
+                </ul>
+
+                <!-- Pricing Plans Container -->
+                <div class="pricing-plans-container">
+
+                    <!-- Plan -->
+                    <div class="pricing-plan">
+                        <h3>Basic Plan</h3>
+                        <p>To start your learning to day you will get free 10 Course .</p>
+                        <ul class="uk-switcher" id="change-plan">
+                            <li>
+                                <div class="pricing-plan-label"><strong>$29</strong>/ monthly</div>
+                            </li>
+                            <li>
+                                <div class="pricing-plan-label"><strong>$199</strong>/ yearly</div>
+                            </li>
+                        </ul>
+                        <div class="pricing-plan-features">
+                            <strong>Features of Basic Plan</strong>
+                            <ul>
+                                <li>Exercise files </li>
+                                <li>Interactive tools</li>
+                                <li>On-demand learning</li>
+                            </ul>
+                        </div>
+                        <a href="pages-checkout-page.html" class="btns">Buy Now</a>
+                    </div>
+
+                    <!-- Plan -->
+                    <div class="pricing-plan recommended">
+                        <div class="recommended-badge">Recommended</div>
+                        <h3>Pro Plan</h3>
+                        <p>To start your learning to day you will get free 10 Course .</p>
+                        <ul class="uk-switcher" id="change-plan">
+                            <li>
+                                <div class="pricing-plan-label billed-monthly-label">
+                                    <strong>$69</strong>/ monthly
+                                </div>
+                            </li>
+                            <li>
+                                <div class="pricing-plan-label billed-yearly-label">
+                                    <strong>$499</strong>/ yearly
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="pricing-plan-features">
+                            <strong>Features of Pro Plan</strong>
+                            <ul>
+                                <li>Exercise files </li>
+                                <li>Access entire course library </li>
+                                <li>99+ High Quality Video Courses</li>
+                            </ul>
+                        </div>
+                        <a href="pages-checkout-page.html" class="btns">Buy Now</a>
+                    </div>
+
+                    <!-- Plan -->
+                    <div class="pricing-plan">
+                        <h3>For Teams</h3>
+                        <p>To start your learning to day you will get free 10 Course .</p>
+                        <ul class="uk-switcher" id="change-plan">
+                            <li>
+                                <div class="pricing-plan-label billed-monthly-label">
+                                    <strong>$99</strong>/ monthly
+                                </div>
+                            </li>
+                            <li>
+                                <div class="pricing-plan-label billed-yearly-label">
+                                    <strong>$690</strong>/ yearly
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="pricing-plan-features">
+                            <strong>Features of For Teams</strong>
+                            <ul>
+                                <li>Certification exams</li>
+                                <li>Dedicated success team</li>
+                                <li>1000+ High Quality Video Courses</li>
+                            </ul>
+                        </div>
+                        <a href="pages-checkout-page.html" class="btns">Buy Now</a>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="text-center mb-lg-5 pb-2 delimiter-bottom">
+                        <span class=" ">Faq</span>
+                        <h2 class="mt-3">Frequently asked question :</h2>
+                    </div>
+
+                    <div class="uk-child-width-1-2@s" uk-grid>
+
+                        <div>
+                            <h4>How to get started with Courseplus?</h4>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh
+                                euismod
+                                tincidunt ut laoreet dolore magna aliquam erat volutpat.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h4>Can I cancel my subscription?</h4>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam ut laoreet dolore
+                                magna
+                                aliquam erat volutpat.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h4>How can I create new course?</h4>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh
+                                euismod
+                                tincidunt ut laoreet dolore magna aliquam erat volutpat.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h4>Can I cancel at anytime?</h4>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh
+                                euismod
+                                tincidunt ut laoreet dolore magna aliquam erat volutpat.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h4>How to Choose a plan first?</h4>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetue aoreet dolore magna aliquam erat volutpat.
+                            </p>
+
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <Footer></Footer>
+
+            </div>
+
+        </div>
+
+    </div>

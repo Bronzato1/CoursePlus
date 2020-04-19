@@ -1,0 +1,5 @@
+bin
+obj
+publish
+Secret*.*
+App_Data/

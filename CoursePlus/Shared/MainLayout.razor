@@ -1,0 +1,15 @@
+﻿@inherits LayoutComponentBase
+
+@Body
+
+@code 
+{
+    [Inject]
+    protected IJSRuntime JsRuntime { get; set; }
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        JsRuntime.InvokeVoidAsync("onBlazorReady");
+        return base.OnAfterRenderAsync(firstRender);
+    }
+}
