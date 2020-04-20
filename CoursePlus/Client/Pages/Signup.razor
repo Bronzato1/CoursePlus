@@ -1,0 +1,133 @@
+﻿@page "/signup"
+@inject IAuthService AuthService
+@inject NavigationManager NavigationManager
+
+
+<div uk-height-viewport class="uk-flex uk-flex-middle">
+    <div class="uk-width-2-3@m uk-width-1-2@s m-auto rounded">
+        <div class="uk-child-width-1-2@m uk-grid-collapse bg-gradient-grey" uk-grid>
+
+            <!-- column one -->
+            <div class="uk-margin-auto-vertical uk-text-center uk-animation-scale-up p-3 uk-light">
+                <i class=" uil-graduation-hat icon-large"></i>
+                <h3 class="mb-4"> Courseplus</h3>
+                <p>The Place You can learn Every Thing. </p>
+            </div>
+
+            <!-- column two -->
+            <div class="uk-card-default p-5 rounded">
+                <div class="mb-4 uk-text-center">
+                    <h3 class="mb-0"> Create new Account</h3>
+                    <p class="my-2">Sign up for free.</p>
+                </div>
+
+                <EditForm class="uk-child-width-1-1 uk-grid-small" uk-grid Model="RegisterModel" OnValidSubmit="HandleRegistration">
+
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
+
+                    <div>
+                        <div class="uk-form-group">
+                            <label class="uk-form-label"> Name</label>
+
+                            <div class="uk-position-relative w-100">
+                                <span class="uk-form-icon">
+                                    <i class="icon-feather-user"></i>
+                                </span>
+                                <input class="uk-input" type="text" placeholder="">
+                            </div>
+
+                        </div>
+                    </div>
+                    <div>
+                        <div class="uk-form-group">
+                            <label class="uk-form-label"> Email</label>
+
+                            <div class="uk-position-relative w-100">
+                                <span class="uk-form-icon">
+                                    <i class="icon-feather-mail"></i>
+                                </span>
+                                <InputText Id="email" class="uk-input form-control" type="email" @bind-Value="RegisterModel.Email" placeholder="" />
+                            </div>
+                            <ValidationMessage For="@(() => RegisterModel.Email)" />
+                        </div>
+                    </div>
+
+                    <div class="uk-width-1-2@s">
+                        <div class="uk-form-group">
+                            <label class="uk-form-label"> Password</label>
+
+                            <div class="uk-position-relative w-100">
+                                <span class="uk-form-icon">
+                                    <i class="icon-feather-lock"></i>
+                                </span>
+                                <InputText Id="password" class="uk-input form-control" type="password" @bind-Value="RegisterModel.Password" placeholder="" />
+                            </div>
+                            <ValidationMessage For="@(() => RegisterModel.Password)" />
+                        </div>
+                    </div>
+                    <div class="uk-width-1-2@s">
+                        <div class="uk-form-group">
+                            <label class="uk-form-label"> Confirm password</label>
+
+                            <div class="uk-position-relative w-100">
+                                <span class="uk-form-icon">
+                                    <i class="icon-feather-lock"></i>
+                                </span>
+                                <InputText Id="password" class="uk-input form-control" type="password" @bind-Value="RegisterModel.ConfirmPassword" placeholder="" />
+                            </div>
+                            <ValidationMessage For="@(() => RegisterModel.ConfirmPassword)" />
+                        </div>
+                    </div>
+
+                    <div class="mt-4 uk-flex-middle uk-grid-small uk-grid-collapse" uk-grid>
+                        <div class="uk-width-expand@s">
+                            <p> Already have an account ? <a href="login">Login</a></p>
+                        </div>
+                        <div class="uk-width-auto@s">
+                            <input type="submit" class="btn btn-default" value="Sign up"/>
+                        </div>
+                    </div>
+
+                </EditForm>
+
+                @if (ShowErrors)
+                {
+                    <div class="alert alert-danger" role="alert">
+                        @foreach (var error in Errors)
+                        {
+                            <p>@error</p>
+                        }
+                    </div>
+                }
+
+            </div><!--  End column two -->
+
+        </div>
+    </div>
+</div>
+
+@code {
+
+    private RegisterModel RegisterModel = new RegisterModel();
+    private bool ShowErrors;
+    private IEnumerable<string> Errors;
+
+    private async Task HandleRegistration()
+    {
+        ShowErrors = false;
+
+        var result = await AuthService.Register(RegisterModel);
+
+        if (result.Successful)
+        {
+            NavigationManager.NavigateTo("/login");
+        }
+        else
+        {
+            Errors = result.Errors;
+            ShowErrors = true;
+        }
+    }
+
+}
