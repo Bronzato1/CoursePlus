@@ -1,0 +1,42 @@
+<AuthorizeView>
+
+    <Authorized>
+
+        <div class="header-widget">
+
+            <!-- User icons close mobile-->
+            <span class="icon-feather-x icon-small uk-hidden@s" uk-toggle="target: .header-widget ; cls: is-active"> </span>
+
+            <HeaderWidgetCourses/>
+
+            <HeaderWidgetNotifications/>
+
+            <HeaderWidgetMessages/>
+
+            <HeaderWidgetProfile/>
+
+        </div>
+
+        <!-- icon search-->
+        <a class="uk-navbar-toggle uk-hidden@s" uk-toggle="target: .nav-overlay; animation: uk-animation-fade" href="#">
+            <i class="uil-search icon-small"></i>
+        </a>
+
+        <!-- User icons -->
+        <a href="#" class="uil-user icon-small uk-hidden@s" uk-toggle="target: .header-widget ; cls: is-active">
+        </a>
+
+    </Authorized>
+
+    <NotAuthorized>
+
+        <div class="header-widget">
+            <a href="login" class="header-widget-icon uk-display-inline-flex">
+                <i class="uil-user-circle uk-margin-small-right"></i>
+                <b>Login</b>
+            </a>
+        </div>
+        
+    </NotAuthorized>
+
+</AuthorizeView>

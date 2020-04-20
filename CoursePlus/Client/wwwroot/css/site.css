@@ -190,3 +190,7 @@ li {
 li.uk-active {
     font-weight: bold;
 }
+
+.uk-display-inline-flex {
+    display: inline-flex !important;
+}

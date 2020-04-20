@@ -1,0 +1,80 @@
+<!-- Notificiation icon  -->
+<a href="#" class="header-widget-icon"
+    uk-tooltip="title: Notificiations; pos:bottom; offset:21">
+    <i class="uil-bell"></i>
+    <span>4</span>
+</a>
+
+<!-- Notificiation dropdown -->
+<div uk-dropdown="pos:top-right; mode:click; animation:uk-animation-slide-bottom-small"
+        class="dropdown-notifications">
+
+    <!-- Notification header -->
+    <div class="dropdown-notifications-headline">
+        <h4>Notifications </h4>
+        <a href="#">
+            <i class="icon-feather-settings"
+                uk-tooltip="title: Notifications settings ; pos: left"></i>
+        </a>
+    </div>
+
+    <!-- Notification contents -->
+    <div class="dropdown-notifications-content" data-simplebar>
+
+        <!-- Notiviation list -->
+        <ul>
+            <li class="notifications-not-read">
+                <a href="#">
+                    <span class="notification-icon btn btn-soft-danger disabled">
+                        <i class="icon-feather-thumbs-up"></i>
+                    </span>
+                    <span class="notification-text">
+                        <strong>Adrian Mohani</strong> Like Your Comment On Course
+                        <span class="text-primary">Javascript Introduction </span>
+                        <br> <span class="time-ago"> 9 hours ago </span>
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="notification-icon btn btn-soft-primary disabled">
+                        <i class="icon-feather-message-circle"></i>
+                    </span>
+                    <span class="notification-text">
+                        <strong>Stella Johnson</strong> Replay Your Comments in
+                        <span class="text-primary">Programming for Games</span>
+                        <br> <span class="time-ago"> 12 hours ago </span>
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="notification-icon btn btn-soft-success disabled">
+                        <i class="icon-feather-star"></i>
+                    </span>
+                    <span class="notification-text">
+                        <strong>Alex Dolgove</strong> Added New Review In Course
+                        <span class="text-primary">Full Stack PHP Developer</span>
+                        <br> <span class="time-ago"> 19 hours ago </span>
+                    </span>
+                </a>
+            </li>
+            <li class="notifications-not-read">
+                <a href="#">
+                    <span class="notification-icon btn btn-soft-danger disabled">
+                        <i class="icon-feather-share-2"></i>
+                    </span>
+                    <span class="notification-text">
+                        <strong>Jonathan Madano</strong> Shared Your Discussion On Course
+                        <span class="text-primary">Css Flex Box </span>
+                        <br> <span class="time-ago"> Yesterday </span>
+                    </span>
+                </a>
+            </li>
+        </ul>
+
+    </div>
+
+
+</div>
+
