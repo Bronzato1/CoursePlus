@@ -26,19 +26,34 @@
                     <DataAnnotationsValidator />
                     <ValidationSummary />
 
-                    <div>
+                    <div class="uk-width-1-2@s">
                         <div class="uk-form-group">
-                            <label class="uk-form-label"> Name</label>
+                            <label class="uk-form-label"> Firstname</label>
 
                             <div class="uk-position-relative w-100">
                                 <span class="uk-form-icon">
                                     <i class="icon-feather-user"></i>
                                 </span>
-                                <input class="uk-input" type="text" placeholder="">
+                                <InputText Id="FirstName" class="uk-input form-control" type="text" @bind-Value="RegisterModel.FirstName" placeholder="" />
                             </div>
-
+                            <ValidationMessage For="@(() => RegisterModel.FirstName)" />
                         </div>
                     </div>
+
+                    <div class="uk-width-1-2@s">
+                        <div class="uk-form-group">
+                            <label class="uk-form-label"> Lastname</label>
+
+                            <div class="uk-position-relative w-100">
+                                <span class="uk-form-icon">
+                                    <i class="icon-feather-user"></i>
+                                </span>
+                                <InputText Id="LastName" class="uk-input form-control" type="text" @bind-Value="RegisterModel.LastName" placeholder="" />
+                            </div>
+                            <ValidationMessage For="@(() => RegisterModel.LastName)" />
+                        </div>
+                    </div>
+
                     <div>
                         <div class="uk-form-group">
                             <label class="uk-form-label"> Email</label>
@@ -66,6 +81,7 @@
                             <ValidationMessage For="@(() => RegisterModel.Password)" />
                         </div>
                     </div>
+
                     <div class="uk-width-1-2@s">
                         <div class="uk-form-group">
                             <label class="uk-form-label"> Confirm password</label>
@@ -85,7 +101,7 @@
                             <p> Already have an account ? <a href="login">Login</a></p>
                         </div>
                         <div class="uk-width-auto@s">
-                            <input type="submit" class="btn btn-default" value="Sign up"/>
+                            <input type="submit" class="btn btn-default" value="Sign up" />
                         </div>
                     </div>
 

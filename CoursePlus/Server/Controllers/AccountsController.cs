@@ -1,8 +1,10 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using CoursePlus.Shared.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using CoursePlus.Server.Data;
 
 namespace CoursePlus.Server.Controllers
 {
@@ -12,9 +14,9 @@ namespace CoursePlus.Server.Controllers
     {
         private static UserModel LoggedOutUser = new UserModel { IsAuthenticated = false };
 
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<CustomUser> _userManager;
 
-        public AccountsController(UserManager<IdentityUser> userManager)
+        public AccountsController(UserManager<CustomUser> userManager)
         {
             _userManager = userManager;
         }
@@ -22,19 +24,27 @@ namespace CoursePlus.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]RegisterModel model)
         {
-            var newUser = new IdentityUser { UserName = model.Email, Email = model.Email };
-
-            var result = await _userManager.CreateAsync(newUser, model.Password);
-
-            if (!result.Succeeded)
+            try
             {
-                var errors = result.Errors.Select(x => x.Description);
+                var newUser = new CustomUser { FirstName = model.FirstName, LastName = model.LastName, UserName = model.Email, Email = model.Email };
 
-                return Ok(new RegisterResult { Successful = false, Errors = errors });
+                var result = await _userManager.CreateAsync(newUser, model.Password);
 
+                if (!result.Succeeded)
+                {
+                    var errors = result.Errors.Select(x => x.Description);
+
+                    return Ok(new RegisterResult { Successful = false, Errors = errors });
+
+                }
+
+                return Ok(new RegisterResult { Successful = true });
             }
-
-            return Ok(new RegisterResult { Successful = true });
+            catch (Exception ex)
+            {
+                return Ok(new RegisterResult { Successful = false });
+            }
+            
         }
     }
 }
