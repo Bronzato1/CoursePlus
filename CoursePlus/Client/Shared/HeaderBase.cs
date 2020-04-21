@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CoursePlus.Client.Components
+namespace CoursePlus.Client.Shared
 {
     public class HeaderBase : ComponentBase
     {

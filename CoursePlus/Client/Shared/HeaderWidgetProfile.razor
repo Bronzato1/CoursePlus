@@ -1,3 +1,10 @@
+@inject IAuthService AuthService
+
+@code{
+    [Parameter]
+    public AuthenticationState Context { get; set; }
+}
+
 <!-- Profile icon -->
 <a href="#" class="header-widget-icon profile-icon">
     <img src="images/avatars/avatar-2.jpg" alt="" class="header-profile-icon">
@@ -14,7 +21,8 @@
                 <img src="images/avatars/avatar-2.jpg" alt="">
             </div>
             <div class="dropdown-user-name">
-                Richard Ali <span>Students</span>
+                @Context.User.Identity.Name
+                <span>Students</span>
             </div>
         </div>
 
