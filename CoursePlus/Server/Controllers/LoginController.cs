@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using CoursePlus.Server.Data;
+using Microsoft.AspNetCore.Http;
+using System.Linq;
 
 namespace CoursePlus.Server.Controllers
 {
@@ -19,7 +21,7 @@ namespace CoursePlus.Server.Controllers
         private readonly IConfiguration _configuration;
         private readonly SignInManager<CustomUser> _signInManager;
 
-        public LoginController(IConfiguration configuration, SignInManager<CustomUser> signInManager)
+        public LoginController(IConfiguration configuration, SignInManager<CustomUser> signInManager, UserManager<CustomUser> userManager)
         {
             _configuration = configuration;
             _signInManager = signInManager;
@@ -34,10 +36,9 @@ namespace CoursePlus.Server.Controllers
 
                 if (!result.Succeeded) return BadRequest(new LoginResult { Successful = false, Error = "Username or password are invalid." });
 
-                var claims = new[]
-                {
-                    new Claim(ClaimTypes.Name, login.Email)
-                };
+                var appUser = _signInManager.UserManager.Users.SingleOrDefault(r => r.Email == login.Email);
+                var claimsPrincipal = await _signInManager.CreateUserPrincipalAsync(appUser);
+                var claims = claimsPrincipal.Claims.ToList();
 
                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtSecurityKey"]));
                 var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

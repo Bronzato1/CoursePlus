@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using CoursePlus.Client.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Blazored.LocalStorage;
+using System.Net.Http;
 
 namespace CoursePlus.Client
 {
@@ -21,9 +22,7 @@ namespace CoursePlus.Client
             builder.Services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.RootComponents.Add<App>("app");
-
-            builder.Services.AddBaseAddressHttpClient();
-
+            builder.Services.AddSingleton(new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             await builder.Build().RunAsync();
         }
     }

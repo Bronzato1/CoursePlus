@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -21,6 +22,7 @@ namespace CoursePlus.Client
             _httpClient = httpClient;
             _localStorage = localStorage;
         }
+
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
             var savedToken = await _localStorage.GetItemAsync<string>("authToken");
@@ -35,10 +37,23 @@ namespace CoursePlus.Client
             return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity(ParseClaimsFromJwt(savedToken), "jwt")));
         }
 
-        public void MarkUserAsAuthenticated(string email)
+        public async Task MarkUserAsAuthenticated(string email)
         {
-            var authenticatedUser = new ClaimsPrincipal(new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, email) }, "apiauth"));
+            var savedToken = await _localStorage.GetItemAsync<string>("authToken");
+
+            ClaimsPrincipal authenticatedUser;
+
+            if (string.IsNullOrWhiteSpace(savedToken))
+            {
+                authenticatedUser = new ClaimsPrincipal(new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, email) }, "jwt"));
+            }
+            else
+            {
+                authenticatedUser = new ClaimsPrincipal(new ClaimsIdentity(ParseClaimsFromJwt(savedToken), "jwt"));
+            }
+            
             var authState = Task.FromResult(new AuthenticationState(authenticatedUser));
+            
             NotifyAuthenticationStateChanged(authState);
         }
 

@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
@@ -25,8 +26,8 @@ namespace CoursePlus.Client.Services
 
         public async Task<RegisterResult> Register(RegisterModel registerModel)
         {
-            var result = await _httpClient.PostJsonAsync<RegisterResult>("api/accounts", registerModel);
-
+            var response = await _httpClient.PostAsJsonAsync("api/accounts", registerModel);
+            var result = await response.Content.ReadFromJsonAsync<RegisterResult>();
             return result;
         }
 
@@ -42,8 +43,9 @@ namespace CoursePlus.Client.Services
             }
 
             await _localStorage.SetItemAsync("authToken", loginResult.Token);
-            ((ApiAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsAuthenticated(loginModel.Email);
+            await ((ApiAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsAuthenticated(loginModel.Email);
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", loginResult.Token);
+
 
             return loginResult;
         }
