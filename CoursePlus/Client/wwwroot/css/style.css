@@ -2411,15 +2411,15 @@ fieldset {
 .header-widget .header-widget-icon:not(.profile-icon):focus {
   /* background: rgba(20, 23, 28, .05); */
   /* border-color: rgba(20, 23, 28, .05); */
-  /* TLA color: #343767; */
-  color: #ffffff;
+  color: #343767; 
 }
 
-.header-sticky .header-widget .header-widget-icon:not(.profile-icon):hover,
-.header-sticky .header-widget .header-widget-icon:not(.profile-icon):focus {
-  /* background: rgba(20, 23, 28, .05); */
-  /* border-color: rgba(20, 23, 28, .05); */
-  color: #343767;
+.uk-light .header-widget .header-widget-icon:not(.profile-icon):hover,
+.uk-light .header-widget .header-widget-icon:not(.profile-icon):focus {
+    /* background: rgba(20, 23, 28, .05); */
+    /* border-color: rgba(20, 23, 28, .05); */
+    /* TLA color: #343767;*/
+    color: #ffffff
 }
 
 .header-widget .header-widget-icon.btn-my-courses {
