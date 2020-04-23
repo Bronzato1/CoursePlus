@@ -1,4 +1,25 @@
-﻿<div class="side-nav uk-animation-slide-left-medium">
+﻿@code
+{
+    [CascadingParameter]
+    private Task<AuthenticationState> authState { get; set; }
+    private bool IsAuthenticated { get; set; }
+    private string FullName { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        System.Security.Claims.ClaimsPrincipal principal = (await authState).User;
+        IsAuthenticated = principal.Identity.IsAuthenticated;
+
+        if (IsAuthenticated)
+        {
+            var firstName = principal.Claims.FirstOrDefault(c => c.Type == "FirstName")?.Value;
+            var lastName = principal.Claims.FirstOrDefault(c => c.Type == "LastName")?.Value;
+            FullName = $"{firstName} {lastName}";
+        }
+    }
+}
+
+<div class="side-nav uk-animation-slide-left-medium">
 
     <div class="side-nav-bg"></div>
 
@@ -194,11 +215,11 @@
             </div>
 
         </li>
-        <li>
+        <li class="@(IsAuthenticated ? "" : "uk-hidden")">
             <a href="#">
                 <span class="icon-feather-user"></span>
             </a>
-            <div uk-drop="pos: right-bottom ;mode:click ; offset: 10;animation: uk-animation-slide-right-small">
+            <div uk-drop="pos:right-bottom; mode:click; offset:10; animation:uk-animation-slide-right-small">
                 <div class="uk-card-default rounded p-0">
                     <a href="/user-profile" class="p-0">
 
@@ -207,7 +228,7 @@
                                 <img src="images/avatars/avatar-2.jpg" alt="">
                             </div>
                             <div class="dropdown-user-name">
-                                Richard Ali <span>Students</span>
+                                @FullName <span>Students</span>
                             </div>
                         </div>
 
