@@ -1,0 +1,31 @@
+﻿@using System.Security.Cryptography
+@using System.Text
+
+@code 
+{ 
+    [Parameter] public string Email { get; set; }
+    [Parameter] public string Class { get; set; }
+    [Parameter] public string Alt { get; set; }
+
+    private string Src { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (string.IsNullOrEmpty(Email)) return;
+
+        var emailBytes = Encoding.ASCII.GetBytes(Email);
+        var hashBytes = new MD5CryptoServiceProvider().ComputeHash(emailBytes);
+        var hash = new StringBuilder();
+
+        foreach (var b in hashBytes)
+            hash.Append(b.ToString("x2"));
+
+        var imageUrl = string.Format(@"http://www.gravatar.com/avatar/{0}?s=128", hash.ToString());
+
+        Src = imageUrl;
+
+        base.OnInitialized();
+    }
+}
+
+<img src="@Src" alt="@Alt" class="@Class" />

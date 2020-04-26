@@ -1,8 +1,29 @@
 ﻿@page "/login"
 @inject IAuthService AuthService
 @inject NavigationManager NavigationManager
+@code {
 
+    private LoginModel loginModel = new LoginModel();
+    private bool ShowErrors;
+    private string Error = "";
 
+    private async Task HandleLogin()
+    {
+        ShowErrors = false;
+
+        var result = await AuthService.Login(loginModel);
+
+        if (result.Successful)
+        {
+            NavigationManager.NavigateTo("/");
+        }
+        else
+        {
+            Error = result.Error;
+            ShowErrors = true;
+        }
+    }
+}
 
 <div uk-height-viewport class="uk-flex uk-flex-middle">
     <div class="uk-width-2-3@m uk-width-1-2@s m-auto rounded">
@@ -34,7 +55,7 @@
                         <div class="uk-position-relative w-100">
                             <span class="uk-form-icon">
                                 <i class="icon-feather-mail"></i>
-                            </span>    
+                            </span>
                             <InputText Id="email" class="uk-input form-control" type="email" @bind-Value="loginModel.Email" placeholder="" />
                         </div>
                         <ValidationMessage For="@(() => loginModel.Email)" />
@@ -47,7 +68,7 @@
                             <span class="uk-form-icon">
                                 <i class="icon-feather-lock"></i>
                             </span>
-                            <InputText Id="password" class="uk-input form-control" type="password" @bind-Value="loginModel.Password" placeholder="" />    
+                            <InputText Id="password" class="uk-input form-control" type="password" @bind-Value="loginModel.Password" placeholder="" />
                         </div>
                         <ValidationMessage For="@(() => loginModel.Password)" />
 
@@ -76,28 +97,3 @@
         </div>
     </div>
 </div>
-
-@code {
-
-    private LoginModel loginModel = new LoginModel();
-    private bool ShowErrors;
-    private string Error = "";
-
-    private async Task HandleLogin()
-    {
-        ShowErrors = false;
-
-        var result = await AuthService.Login(loginModel);
-
-        if (result.Successful)
-        {
-            NavigationManager.NavigateTo("/");
-        }
-        else
-        {
-            Error = result.Error;
-            ShowErrors = true;
-        }
-    }
-
-}

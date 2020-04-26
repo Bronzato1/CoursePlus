@@ -37,23 +37,11 @@ namespace CoursePlus.Client
             return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity(ParseClaimsFromJwt(savedToken), "jwt")));
         }
 
-        public async Task MarkUserAsAuthenticated(string email)
+        public void MarkUserAsAuthenticated(string token)
         {
-            var savedToken = await _localStorage.GetItemAsync<string>("authToken");
-
-            ClaimsPrincipal authenticatedUser;
-
-            if (string.IsNullOrWhiteSpace(savedToken))
-            {
-                authenticatedUser = new ClaimsPrincipal(new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, email) }, "jwt"));
-            }
-            else
-            {
-                authenticatedUser = new ClaimsPrincipal(new ClaimsIdentity(ParseClaimsFromJwt(savedToken), "jwt"));
-            }
-            
+            var claims = ParseClaimsFromJwt(token);
+            var authenticatedUser = new ClaimsPrincipal(new ClaimsIdentity(claims, "jwt"));
             var authState = Task.FromResult(new AuthenticationState(authenticatedUser));
-            
             NotifyAuthenticationStateChanged(authState);
         }
 

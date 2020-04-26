@@ -14,6 +14,8 @@ using System.Text;
 using CoursePlus.Server.Data;
 using static CoursePlus.Server.Data.ApplicationDbContext;
 using Microsoft.AspNetCore.Authentication;
+using CoursePlus.Server.Repositories;
+using CoursePlus.Shared.Policies;
 
 namespace CoursePlus.Server
 {
@@ -33,6 +35,7 @@ namespace CoursePlus.Server
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ConnectionForSqlServerExpress")));
             
             services.AddDefaultIdentity<CustomUser>()
+                    .AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<ApplicationDbContext>()
                     .AddClaimsPrincipalFactory<CustomUserClaimsPrincipalFactory>();
 
@@ -53,7 +56,13 @@ namespace CoursePlus.Server
                     };
                 });
 
-            
+            services.AddAuthorization(config =>
+            {
+                config.AddPolicy(Policies.IsAdmin, Policies.IsAdminPolicy());
+                config.AddPolicy(Policies.IsUser, Policies.IsUserPolicy());
+            });
+
+            services.AddScoped<IBookRepository, BookRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

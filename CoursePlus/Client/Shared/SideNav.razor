@@ -4,6 +4,7 @@
     private Task<AuthenticationState> authState { get; set; }
     private bool IsAuthenticated { get; set; }
     private string FullName { get; set; }
+    private string Email { get; set; }
 
     protected override async Task OnParametersSetAsync()
     {
@@ -15,6 +16,7 @@
             var firstName = principal.Claims.FirstOrDefault(c => c.Type == "FirstName")?.Value;
             var lastName = principal.Claims.FirstOrDefault(c => c.Type == "LastName")?.Value;
             FullName = $"{firstName} {lastName}";
+            Email = principal.Identity.Name;
         }
     }
 }
@@ -225,7 +227,7 @@
 
                         <div class="dropdown-user-details">
                             <div class="dropdown-user-avatar">
-                                <img src="images/avatars/avatar-2.jpg" alt="">
+                                <Gravatar Email="@Email" Alt="@FullName" />
                             </div>
                             <div class="dropdown-user-name">
                                 @FullName <span>Students</span>

@@ -36,9 +36,18 @@ namespace CoursePlus.Server.Controllers
 
                 if (!result.Succeeded) return BadRequest(new LoginResult { Successful = false, Error = "Username or password are invalid." });
 
-                var appUser = _signInManager.UserManager.Users.SingleOrDefault(r => r.Email == login.Email);
-                var claimsPrincipal = await _signInManager.CreateUserPrincipalAsync(appUser);
+                var user = await _signInManager.UserManager.FindByEmailAsync(login.Email);
+                var roles = await _signInManager.UserManager.GetRolesAsync(user);
+                var claimsPrincipal = await _signInManager.CreateUserPrincipalAsync(user);
+                
                 var claims = claimsPrincipal.Claims.ToList();
+
+                //claims.Add(new Claim(ClaimTypes.Name, login.Email));
+
+                foreach (var role in roles)
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, role));
+                }
 
                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtSecurityKey"]));
                 var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
