@@ -1,0 +1,147 @@
+﻿@page "/admin-book-overview"
+@inject IBookService BookService
+@inject NavigationManager MyNavigationManager
+@code
+{
+    public IEnumerable<CoursePlus.Shared.Models.Book> AllBooks { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        AllBooks = await BookService.GetBooks();
+    }
+
+    void EditBook(CoursePlus.Shared.Models.Book book)
+    {
+        MyNavigationManager.NavigateTo("/admin-book-edit/" + book.Id);
+    }
+}
+
+<div id="wrapper">
+
+    <Header Class="header" UkSticky="top:20; cls-active:header-sticky">
+        <Breadcrumbs>
+            <li><a href="/" uk-tooltip="title:Home; pos:bottom; offset:21"> <i class="uil-home-alt"></i> </a></li>
+            <li><a href="/admin-dashboard">Admin dashboard</a></li>
+            <li>Book overview</li>
+        </Breadcrumbs>
+    </Header>
+
+    <SearchOnMobile></SearchOnMobile>
+
+    <SearchOnDesktop></SearchOnDesktop>
+
+    <SideNav></SideNav>
+
+    <div class="page-content">
+        <div class="page-content-inner">
+
+            <div class="card">
+                <!-- Card header -->
+                <div class="card-header actions-toolbar border-0">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="d-inline-block mb-0">Book overview</h4>
+                        <div class="d-flex">
+
+                            <a href="#" class="btn btn-icon btn-hover  btn-circle" uk-tooltip="Search product">
+                                <i class="uil-search"></i>
+                            </a>
+                            <div class="uk-drop" uk-drop="mode: click; pos: left-center; offset: 0">
+                                <form class="uk-search uk-search-navbar uk-width-1-1">
+                                    <input class="uk-search-input shadow-0 uk-form-small" type="search"
+                                           placeholder="Search..." autofocus>
+                                </form>
+                            </div>
+
+                            <a href="#" class="btn btn-icon btn-hover  btn-circle" uk-tooltip="filter">
+                                <i class="uil-filter"></i>
+                            </a>
+                            <div uk-dropdown="pos: bottom-right ; mode: click ;animation: uk-animation-scale-up">
+                                <ul class="uk-nav uk-dropdown-nav">
+                                    <li class="uk-active"><a href="#"> Newest </a></li>
+                                    <li><a href="#">From A-Z</a></li>
+                                    <li><a href="#">From Z-A</a></li>
+                                </ul>
+                            </div>
+
+
+                            <a href="#" class="btn btn-icon btn-hover  btn-circle" uk-tooltip="More">
+                                <i class="uil-ellipsis-h"></i>
+                            </a>
+                            <div uk-dropdown="pos: bottom-right ; mode: click ;animation: uk-animation-scale-up">
+                                <ul class="uk-nav uk-dropdown-nav">
+                                    <li><a href="#"> Refresh </a></li>
+                                    <li><a href="#">Manage</a></li>
+                                    <li><a href="#">Setting</a></li>
+                                </ul>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                <!-- Table -->
+                <div class="table-responsive">
+                    <table class="table align-items-center">
+                        <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">Publishing date</th>
+                                <th scope="col">Language</th>
+                                <th scope="col">Page count</th>
+                                <th scope="col"> </th>
+                            </tr>
+                        </thead>
+                        <tbody class="list">
+                            @if (AllBooks != null)
+                            {
+                                @foreach (var OneBook in AllBooks)
+                                {
+                                    <tr>
+                                        <th scope="row">
+                                            <div class="media align-items-center">
+                                                <div>
+                                                    <div class="avatar-parent-child" style="width: max-content">
+                                                        <img alt="Image placeholder"
+                                                             src="/images/avatars/avatar-2.jpg"
+                                                             class="avatar  rounded-circle">
+                                                        <span class="avatar-child avatar-badge bg-success"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="media-body ml-4">
+                                                    <a href="#" class="name h6 mb-0 text-sm">@OneBook.Title</a>
+                                                    <small class="d-block font-weight-bold">@OneBook.Author</small>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <td>@OneBook.PublishingDate.ToString("dd/MM/yyyy")</td>
+                                        <td>@OneBook.Language</td>
+                                        <td>@OneBook.PageCount</td>
+                                        <td class="text-right">
+                                            <!-- Actions -->
+                                            <div class="actions ml-3">
+                                                <a href="#" class="btn btn-icon btn-hover btn-sm btn-circle" uk-tooltip="Quick view">
+                                                    <i class="uil-external-link-alt"></i>
+                                                </a>
+                                                <a href="javascript:void(0)" class="btn btn-icon btn-hover btn-sm btn-circle" uk-tooltip="Edit" @onclick="@(e => EditBook(OneBook))">
+                                                    <i class="uil-pen"></i>
+                                                </a>
+                                                <a href="/admin-book-edit/2" class="btn btn-icon btn-hover btn-sm btn-circle" uk-tooltip="Delete user">
+                                                    <i class="uil-trash-alt text-danger"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <Footer></Footer>
+
+        </div>
+
+    </div>
+
+</div>

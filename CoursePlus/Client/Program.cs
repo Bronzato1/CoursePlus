@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Blazored.LocalStorage;
 using System.Net.Http;
 using CoursePlus.Client.Pages;
+using CoursePlus.Shared.Policies;
 
 namespace CoursePlus.Client
 {
@@ -19,7 +20,11 @@ namespace CoursePlus.Client
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.Services.AddBlazoredLocalStorage();
             builder.Services.AddOptions();
-            builder.Services.AddAuthorizationCore();
+            builder.Services.AddAuthorizationCore(config =>
+            {
+                config.AddPolicy(Policies.IsAdmin, Policies.IsAdminPolicy());
+                config.AddPolicy(Policies.IsUser, Policies.IsUserPolicy());
+            });
             builder.Services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<IBookService, BookService>();

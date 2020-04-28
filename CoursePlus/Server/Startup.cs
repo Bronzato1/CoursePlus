@@ -16,6 +16,8 @@ using static CoursePlus.Server.Data.ApplicationDbContext;
 using Microsoft.AspNetCore.Authentication;
 using CoursePlus.Server.Repositories;
 using CoursePlus.Shared.Policies;
+using Microsoft.AspNetCore.Http;
+using System.Security.Principal;
 
 namespace CoursePlus.Server
 {
@@ -63,6 +65,7 @@ namespace CoursePlus.Server
             });
 
             services.AddScoped<IBookRepository, BookRepository>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

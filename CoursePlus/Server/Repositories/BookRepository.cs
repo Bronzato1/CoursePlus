@@ -16,11 +16,53 @@ namespace CoursePlus.Server.Repositories
             _dbContext = dbContext;
         }
 
-        public Task<IEnumerable<Book>> GetBooks()
+        public IEnumerable<Book> GetBooks()
         {
-            var books = _dbContext.Books.AsEnumerable();
+            return _dbContext.Books;
+        }
 
-            return Task.FromResult(books);
+        public Book GetBook(int Id)
+        {
+            return _dbContext.Books.FirstOrDefault(x => x.Id == Id);
+        }
+
+        public Book AddBook(Book book)
+        {
+            var addedEntity = _dbContext.Books.Add(book);
+            _dbContext.SaveChanges();
+            return addedEntity.Entity;
+        }
+
+        public Book UpdateBook(Book book)
+        {
+            var foundBook = _dbContext.Books.FirstOrDefault(e => e.Id == book.Id);
+
+            if (foundBook != null)
+            {
+                foundBook.Title = book.Title;
+                foundBook.Description = book.Description;
+                foundBook.Author = book.Author;
+                foundBook.CoverImage = book.CoverImage;
+                foundBook.Language = book.Language;
+                foundBook.PageCount = book.PageCount;
+                foundBook.PublishingDate = book.PublishingDate;
+                foundBook.PurchaseLink = book.PurchaseLink;
+                
+                _dbContext.SaveChanges();
+
+                return foundBook;
+            }
+
+            return null;
+        }
+
+        public void DeleteBook(int id)
+        {
+            var foundBook = _dbContext.Books.FirstOrDefault(e => e.Id == id);
+            if (foundBook == null) return;
+
+            _dbContext.Books.Remove(foundBook);
+            _dbContext.SaveChanges();
         }
     }
 }

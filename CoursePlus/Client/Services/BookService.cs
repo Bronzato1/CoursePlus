@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -20,12 +21,38 @@ namespace CoursePlus.Client.Services
 
         public async Task<IEnumerable<Book>> GetBooks()
         {
-            var data = await _httpClient.GetFromJsonAsync<Book[]>("api/Book");
-            return data;
-            //var response = await _httpClient.GetAsync("api/Book");
-            //var result = JsonSerializer.Deserialize<IEnumerable<Book>>(await response.Content.ReadAsStringAsync(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-            //return result;
+            return await JsonSerializer.DeserializeAsync<IEnumerable<Book>>(await _httpClient.GetStreamAsync($"api/book"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
         }
 
+        public async Task<Book> GetBook(int Id)
+        {
+            return await JsonSerializer.DeserializeAsync<Book>(await _httpClient.GetStreamAsync($"api/book/{Id}"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+        }
+
+        public async Task<Book> AddBook(Book book)
+        {
+            var bookJson = new StringContent(JsonSerializer.Serialize(book), Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PostAsync("api/book", bookJson);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await JsonSerializer.DeserializeAsync<Book>(await response.Content.ReadAsStreamAsync());
+            }
+
+            return null;
+        }
+
+        public async Task UpdateBook(Book book)
+        {
+            var bookJson = new StringContent(JsonSerializer.Serialize(book), Encoding.UTF8, "application/json");
+
+            await _httpClient.PutAsync("api/book", bookJson);
+        }
+
+        public async Task DeleteBook(int id)
+        {
+            await _httpClient.DeleteAsync($"api/book/{id}");
+        }
     }
 }

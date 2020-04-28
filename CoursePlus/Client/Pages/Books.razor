@@ -1,14 +1,4 @@
 ﻿@page "/books"
-@inject IBookService BookService  
-@code
-{ 
-    public IEnumerable<Book> FeaturedBooks { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        FeaturedBooks = await BookService.GetBooks();
-    }
-}
 
 <div id="wrapper">
 
@@ -29,14 +19,6 @@
     <div class="page-content">
 
         <div class="container">
-
-            @if (FeaturedBooks != null)
-            {
-                @foreach (var book in FeaturedBooks)
-                {
-                    @book.Title
-                }
-            }
 
             <h1> Books </h1>
 

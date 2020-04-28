@@ -819,24 +819,24 @@ input[type="email"],
 input[type="number"],
 textarea,
 select {
-  height: 46px;
-  line-height: 45px;
-  padding: 0px 17px;
-  outline: none;
-  font-size: 14px;
-  color: #808080;
-  margin: 0 0 16px 0;
-  border: 1px solid #e2e5ec;
-  max-width: 100%;
-  width: 100%;
-  box-sizing: border-box;
-  display: block;
-  font-weight: 500;
-  opacity: 1;
-  border-radius: 4px;
-  /* border: none; */
-  /* box-shadow: 0 1px 4px 0px rgba(0, 0, 0, 0.12); */
-  /* background-color: #dee2e6; */
+    height: 41px; /* TLA 46px */
+    line-height: 45px;
+    padding: 0px 17px;
+    outline: none;
+    font-size: 14px;
+    color: #808080;
+    margin: 0 0 16px 0;
+    border: 1px solid #ced4da; /* TLA 1px solid #e2e5ec */
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    display: block;
+    font-weight: 500;
+    opacity: 1;
+    border-radius: 4px;
+    /* border: none; */
+    /* box-shadow: 0 1px 4px 0px rgba(0, 0, 0, 0.12); */
+    /* background-color: #dee2e6; */
 }
 
 select {
@@ -852,6 +852,11 @@ input {
   transition: all 0.1s ease-in-out;
 }
 
+select:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25) !important; /* TLA */
+}
+
+/* TLA
 input:focus,
 input[type="text"]:focus,
 input[type="password"]:focus,
@@ -870,6 +875,7 @@ input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 30px #fff inset !important;
   -webkit-text-fill-color: #808080 !important;
 }
+*/
 
 /* With Border */
 input.with-border,

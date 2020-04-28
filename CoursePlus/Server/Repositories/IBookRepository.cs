@@ -8,6 +8,10 @@ namespace CoursePlus.Server.Repositories
 {
     public interface IBookRepository
     {
-        public Task<IEnumerable<Book>> GetBooks();
+        public IEnumerable<Book> GetBooks();
+        public Book GetBook(int Id);
+        public Book AddBook(Book book);
+        public Book UpdateBook(Book book);
+        public void DeleteBook(int id);
     }
 }

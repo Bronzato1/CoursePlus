@@ -1,4 +1,5 @@
-﻿@code
+﻿@using CoursePlus.Shared.Policies 
+@code
 {
     [CascadingParameter]
     private Task<AuthenticationState> authState { get; set; }
@@ -164,33 +165,6 @@
 
     <ul class="uk-position-bottom">
         <li>
-            <a href="/dashboard"> <i class="uil-fire"></i> </a>
-            <div class="side-menu-slide">
-                <div class="side-menu-slide-content">
-                    <ul data-simplebar>
-                        <li>
-                            <a href="/manage-courses"> <i class="uil-youtube-alt"></i>Courses</a>
-                        </li>
-                        <li>
-                            <a href="/add-course"> <i class="uil-youtube-alt"></i>Add course</a>
-                        </li>
-                        <li>
-                            <a href="/manage-categories"> <i class="uil-tag-alt"></i>Categories</a>
-                        </li>
-                        <li>
-                            <a href="/manage-instructors"> <i class="uil-tag-alt"></i>Instructors</a>
-                        </li>
-                        <li>
-                            <a href="/manage-students"> <i class="uil-user-check"></i>Students</a>
-                        </li>
-                        <li>
-                            <a href="/settings"> <i class="uil-cog"></i>Settings</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </li>
-        <li>
             <!-- Lunch information box -->
             <a href="#">
                 <i class="uil-paint-tool"></i>
@@ -215,57 +189,91 @@
                     </div>
                 </div>
             </div>
-
         </li>
-        <li class="@(IsAuthenticated ? "" : "uk-hidden")">
-            <a href="#">
-                <span class="icon-feather-user"></span>
-            </a>
-            <div uk-drop="pos:right-bottom; mode:click; offset:10; animation:uk-animation-slide-right-small">
-                <div class="uk-card-default rounded p-0">
-                    <a href="/user-profile" class="p-0">
-
-                        <div class="dropdown-user-details">
-                            <div class="dropdown-user-avatar">
-                                <Gravatar Email="@Email" Alt="@FullName" />
-                            </div>
-                            <div class="dropdown-user-name">
-                                @FullName <span>Students</span>
-                            </div>
-                        </div>
-
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="#">
-                                <i class="icon-material-outline-dashboard"></i> Dashboard
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/user-profile-edit">
-                                <i class="icon-feather-settings"></i> Account Settings
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-grey">
-                                <i class="icon-feather-star"></i> Upgrade To Premium
-                            </a>
-                        </li>
-                        <li class="menu-divider">
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="icon-feather-help-circle"></i> Help
-                            </a>
-                        </li>
-                        <li>
-                            <a href="page-login.html">
-                                <i class="icon-feather-log-out"></i> Sing Out
-                            </a>
-                        </li>
-                    </ul>
+        <AuthorizeView Policy="@Policies.IsAdmin">
+            <li>
+                <a href="/admin-dashboard"> <i class="uil-fire"></i> </a>
+                <div class="side-menu-slide">
+                    <div class="side-menu-slide-content">
+                        <ul data-simplebar>
+                            <li>
+                                <a href="/manage-courses"> <i class="uil-youtube-alt"></i>Courses</a>
+                            </li>
+                            <li>
+                                <a href="/add-course"> <i class="uil-youtube-alt"></i>Add course</a>
+                            </li>
+                            <li>
+                                <a href="/manage-categories"> <i class="uil-tag-alt"></i>Categories</a>
+                            </li>
+                            <li>
+                                <a href="/manage-instructors"> <i class="uil-tag-alt"></i>Instructors</a>
+                            </li>
+                            <li>
+                                <a href="/manage-students"> <i class="uil-user-check"></i>Students</a>
+                            </li>
+                            <li>
+                                <a href="/admin-book-overview"> <i class="uil-book-alt"></i>Book overview</a>
+                            </li>
+                            <li>
+                                <a href="/settings"> <i class="uil-cog"></i>Settings</a>
+                            </li>
+                            <li>
+                                <a href="/myfolder/firstpage/2"> <i class="uil-cog"></i>First page</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </li>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="icon-feather-user"></span>
+                </a>
+                <div uk-drop="pos:right-bottom; mode:click; offset:10; animation:uk-animation-slide-right-small">
+                    <div class="uk-card-default rounded p-0">
+                        <a href="/user-profile" class="p-0">
+
+                            <div class="dropdown-user-details">
+                                <div class="dropdown-user-avatar">
+                                    <Gravatar Email="@Email" Alt="@FullName" />
+                                </div>
+                                <div class="dropdown-user-name">
+                                    @FullName <span>Students</span>
+                                </div>
+                            </div>
+
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="#">
+                                    <i class="icon-material-outline-dashboard"></i> Dashboard
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/user-profile-edit">
+                                    <i class="icon-feather-settings"></i> Account Settings
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="text-grey">
+                                    <i class="icon-feather-star"></i> Upgrade To Premium
+                                </a>
+                            </li>
+                            <li class="menu-divider">
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="icon-feather-help-circle"></i> Help
+                                </a>
+                            </li>
+                            <li>
+                                <a href="page-login.html">
+                                    <i class="icon-feather-log-out"></i> Sing Out
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+        </AuthorizeView>
     </ul>
 </div>

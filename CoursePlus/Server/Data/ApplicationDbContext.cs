@@ -1,4 +1,5 @@
 using CoursePlus.Shared.Models;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -6,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Principal;
 using System.Threading;
 using static CoursePlus.Server.Data.ApplicationDbContext;
 
@@ -13,8 +15,11 @@ namespace CoursePlus.Server.Data
 {
     public class ApplicationDbContext : IdentityDbContext<CustomUser>
     {
-        public ApplicationDbContext(DbContextOptions options) : base(options)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public ApplicationDbContext(DbContextOptions options, IHttpContextAccessor httpContextAccessor) : base(options)
         {
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public DbSet<Book> Books { get; set; }
@@ -38,20 +43,24 @@ namespace CoursePlus.Server.Data
                 .Where(p => p.State == EntityState.Modified)
                 .Select(p => p.Entity);
 
+            // var email = _httpContextAccessor.HttpContext.User.Identity.Name;
+            var firstName = _httpContextAccessor.HttpContext.User.FindFirstValue("FirstName");
+            var lastName = _httpContextAccessor.HttpContext.User.FindFirstValue("LastName");
+            var fullName = firstName + " " + lastName;
             var now = DateTime.UtcNow;
 
             foreach (var added in addedAuditedEntities)
             {
                 added.CreatedTime = now;
                 added.UpdatedTime = now;
-                added.CreatedUser = Thread.CurrentPrincipal.Identity.Name;
-                added.UpdatedUser = Thread.CurrentPrincipal.Identity.Name;
+                added.CreatedUser = fullName;
+                added.UpdatedUser = fullName;
             }
 
             foreach (var modified in modifiedAuditedEntities)
             {
                 modified.UpdatedTime = now;
-                modified.UpdatedUser = Thread.CurrentPrincipal.Identity.Name;
+                modified.UpdatedUser = fullName;
             }
 
             return base.SaveChanges();
