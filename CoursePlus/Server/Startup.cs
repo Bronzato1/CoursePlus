@@ -35,7 +35,7 @@ namespace CoursePlus.Server
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ConnectionForSqlServerExpress")));
-            
+
             services.AddDefaultIdentity<CustomUser>()
                     .AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<ApplicationDbContext>()
