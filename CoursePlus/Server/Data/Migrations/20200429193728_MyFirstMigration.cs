@@ -49,27 +49,29 @@ namespace CoursePlus.Server.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Books",
+                name: "Categories",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(nullable: false),
-                    Description = table.Column<string>(nullable: false),
-                    Author = table.Column<string>(nullable: true),
-                    PurchaseLink = table.Column<string>(nullable: true),
-                    CoverImage = table.Column<byte[]>(nullable: true),
-                    PageCount = table.Column<int>(nullable: false),
-                    Language = table.Column<int>(nullable: false),
-                    PublishingDate = table.Column<DateTime>(nullable: false),
-                    CreatedTime = table.Column<DateTime>(nullable: false),
-                    UpdatedTime = table.Column<DateTime>(nullable: true),
-                    CreatedUser = table.Column<string>(nullable: true),
-                    UpdatedUser = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Books", x => x.Id);
+                    table.PrimaryKey("PK_Categories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Files",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Data = table.Column<byte[]>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Files", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -178,24 +180,74 @@ namespace CoursePlus.Server.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Books",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(nullable: false),
+                    Author = table.Column<string>(nullable: true),
+                    PurchaseLink = table.Column<string>(nullable: true),
+                    PageCount = table.Column<int>(nullable: false),
+                    Language = table.Column<int>(nullable: false),
+                    PublishingDate = table.Column<DateTime>(nullable: false),
+                    Featured = table.Column<bool>(nullable: false),
+                    Popular = table.Column<bool>(nullable: false),
+                    CategoryId = table.Column<int>(nullable: false),
+                    CoverImageId = table.Column<int>(nullable: true),
+                    CreatedTime = table.Column<DateTime>(nullable: false),
+                    UpdatedTime = table.Column<DateTime>(nullable: true),
+                    CreatedUser = table.Column<string>(nullable: true),
+                    UpdatedUser = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Books", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Books_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Books_Files_CoverImageId",
+                        column: x => x.CoverImageId,
+                        principalTable: "Files",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "4d8d8d05-116c-46bd-ba8c-d2bff99fa8db", "293f9f2b-8c05-4c99-ad2b-58f4b8720c89", "User", "USER" },
-                    { "06522ae4-b2c9-48f8-8983-a907e345e073", "aa90b920-d563-48e9-942a-d4bae2070411", "Admin", "ADMIN" }
+                    { "0a3d93c9-e5d8-4ed5-b79d-d1e6a3768228", "7ff46a67-2016-40cb-ab9d-3cbe2594018e", "User", "USER" },
+                    { "1002a5ed-a8e4-4c5c-9587-b8a8e1aa320b", "9d0ed9a1-83a4-44b8-8de6-25e3d82dd1e9", "Admin", "ADMIN" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "HTML" },
+                    { 2, "CSS" },
+                    { 3, "JavaScript" },
+                    { 4, "TypeScript" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Books",
-                columns: new[] { "Id", "Author", "CoverImage", "CreatedTime", "CreatedUser", "Description", "Language", "PageCount", "PublishingDate", "PurchaseLink", "Title", "UpdatedTime", "UpdatedUser" },
+                columns: new[] { "Id", "Author", "CategoryId", "CoverImageId", "CreatedTime", "CreatedUser", "Description", "Featured", "Language", "PageCount", "Popular", "PublishingDate", "PurchaseLink", "Title", "UpdatedTime", "UpdatedUser" },
                 values: new object[,]
                 {
-                    { 1, "John", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Bbbbbb", 0, 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Aaaaa", null, null },
-                    { 2, "Cecilia", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "DDddd", 0, 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Ccccc", null, null },
-                    { 3, "Mike", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Fffff", 0, 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Eeeee", null, null },
-                    { 4, "Steve", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Hhhhhh", 0, 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Gggggg", null, null }
+                    { 1, "John", 1, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Bbbbbb", false, 0, 0, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Aaaaa", null, null },
+                    { 2, "Cecilia", 2, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "DDddd", false, 0, 0, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Ccccc", null, null },
+                    { 3, "Mike", 3, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Fffff", false, 0, 0, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Eeeee", null, null },
+                    { 4, "Steve", 4, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Hhhhhh", false, 0, 0, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Gggggg", null, null }
                 });
 
             migrationBuilder.CreateIndex(
@@ -236,6 +288,16 @@ namespace CoursePlus.Server.Data.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Books_CategoryId",
+                table: "Books",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Books_CoverImageId",
+                table: "Books",
+                column: "CoverImageId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -263,6 +325,12 @@ namespace CoursePlus.Server.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "Files");
         }
     }
 }

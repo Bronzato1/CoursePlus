@@ -23,6 +23,8 @@ namespace CoursePlus.Server.Data
         }
 
         public DbSet<Book> Books { get; set; }
+        public DbSet<File> Files { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -80,7 +82,35 @@ namespace CoursePlus.Server.Data
         public static void Seed(this ModelBuilder modelBuilder)
         {
             SeedRoles(modelBuilder);
+            SeedCategories(modelBuilder);
             SeedBooks(modelBuilder);
+        }
+
+        private static void SeedCategories(this ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Category>().HasData
+            (
+                new Category
+                {
+                    Id = 1,
+                    Name = "HTML"
+                },
+                new Category
+                {
+                    Id = 2,
+                    Name = "CSS"
+                },
+                new Category
+                {
+                    Id = 3,
+                    Name = "JavaScript"
+                },
+                new Category
+                {
+                    Id = 4,
+                    Name = "TypeScript"
+                }
+            );
         }
 
         private static void SeedBooks(this ModelBuilder modelBuilder)
@@ -92,36 +122,40 @@ namespace CoursePlus.Server.Data
                     Id = 1,
                     Title = "Aaaaa",
                     Description = "Bbbbbb",
-                    Author = "John"
+                    Author = "John",
+                    CategoryId = 1
                 },
                 new Book
                 {
                     Id = 2,
                     Title = "Ccccc",
                     Description = "DDddd",
-                    Author = "Cecilia"
+                    Author = "Cecilia",
+                    CategoryId = 2
                 },
                 new Book
                 {
                     Id = 3,
                     Title = "Eeeee",
                     Description = "Fffff",
-                    Author = "Mike"
+                    Author = "Mike",
+                    CategoryId = 3
                 },
                 new Book
                 {
                     Id = 4,
                     Title = "Gggggg",
                     Description = "Hhhhhh",
-                    Author = "Steve"
+                    Author = "Steve",
+                    CategoryId = 4
                 }
             );
         }
 
         private static void SeedRoles(this ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole { Name = "User", NormalizedName = "USER", Id = Guid.NewGuid().ToString(), ConcurrencyStamp = Guid.NewGuid().ToString() });
-            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole { Name = "Admin", NormalizedName = "ADMIN", Id = Guid.NewGuid().ToString(), ConcurrencyStamp = Guid.NewGuid().ToString() });
+            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole { Name = "User", NormalizedName = "USER", Id = "0a3d93c9-e5d8-4ed5-b79d-d1e6a3768228", ConcurrencyStamp = "7ff46a67-2016-40cb-ab9d-3cbe2594018e" });
+            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole { Name = "Admin", NormalizedName = "ADMIN", Id = "1002a5ed-a8e4-4c5c-9587-b8a8e1aa320b", ConcurrencyStamp = "9d0ed9a1-83a4-44b8-8de6-25e3d82dd1e9" });
         }
 
         public static void Initialize(ApplicationDbContext context)

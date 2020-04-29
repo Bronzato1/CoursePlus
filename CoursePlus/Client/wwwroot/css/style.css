@@ -906,7 +906,7 @@ input[type="submit"] {
 }
 
 input[type="checkbox"] {
-  display: inline;
+  /*display: inline; TLA */
 }
 
 input[type="radio"] {

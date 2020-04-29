@@ -65,6 +65,7 @@ namespace CoursePlus.Server
             });
 
             services.AddScoped<IBookRepository, BookRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 

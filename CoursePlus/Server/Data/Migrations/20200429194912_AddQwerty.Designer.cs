@@ -4,14 +4,16 @@ using CoursePlus.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CoursePlus.Server.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200429194912_AddQwerty")]
+    partial class AddQwerty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -134,6 +136,9 @@ namespace CoursePlus.Server.Data.Migrations
                     b.Property<string>("PurchaseLink")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Qwerty")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -165,6 +170,7 @@ namespace CoursePlus.Server.Data.Migrations
                             PageCount = 0,
                             Popular = false,
                             PublishingDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Qwerty = 0,
                             Title = "Aaaaa"
                         },
                         new
@@ -179,6 +185,7 @@ namespace CoursePlus.Server.Data.Migrations
                             PageCount = 0,
                             Popular = false,
                             PublishingDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Qwerty = 0,
                             Title = "Ccccc"
                         },
                         new
@@ -193,6 +200,7 @@ namespace CoursePlus.Server.Data.Migrations
                             PageCount = 0,
                             Popular = false,
                             PublishingDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Qwerty = 0,
                             Title = "Eeeee"
                         },
                         new
@@ -207,6 +215,7 @@ namespace CoursePlus.Server.Data.Migrations
                             PageCount = 0,
                             Popular = false,
                             PublishingDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Qwerty = 0,
                             Title = "Gggggg"
                         });
                 });

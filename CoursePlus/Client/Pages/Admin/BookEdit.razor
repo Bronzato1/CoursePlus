@@ -1,211 +1,195 @@
-﻿@page "/admin-book-edit/{Id:int}"
-@inject IBookService BookService
-@code
-{
-    [Parameter] 
-    public int Id { get; set; }
+﻿@page "/admin/book-edit/{Id:int}"
+@inherits BookEditBase
 
-    [Inject] 
-    public NavigationManager NavigationManager { get; set; }
+<div id="wrapper">
 
-    public Book Book { get; set; } = new Book();
+    <Header Class="header" UkSticky="top:20; cls-active:header-sticky">
+        <Breadcrumbs>
+            <li><a href="/" uk-tooltip="title:Home; pos:bottom; offset:21"> <i class="uil-home-alt"></i> </a></li>
+            <li><a href="/admin/dashboard">Admin dashboard</a></li>
+            <li><a href="/admin/book-overview">Book overview</a></li>
+            <li>Edition #@Id</li>
+        </Breadcrumbs>
+    </Header>
 
-    //used to store state of screen
-    protected string Message = string.Empty;
-    protected string StatusClass = string.Empty;
-    protected bool Saved;
+    <SearchOnMobile></SearchOnMobile>
 
-    protected override void OnParametersSet()
+    <SearchOnDesktop></SearchOnDesktop>
+
+    <SideNav></SideNav>
+
+    @if (!Saved)
     {
-        //Console.WriteLine(Id);
-        base.OnParametersSet();
-    }
+        <div class="page-content">
+            <div class="page-content-inner">
 
-    protected override async Task OnInitializedAsync()
-    {
-        Saved = false;
+                <div uk-grid>
 
-        if (Id == 0) // new book is being created
-        {
-            // add some defaults
-            Book = new Book { Language = EnumLanguages.English, PublishingDate = new DateTime(2000,1,1) };
-        }
-        else
-        {
-            Book = await BookService.GetBook(Id);
-        }
-    }
+                    <div class="uk-width-3-5@m">
 
-    protected async Task HandleValidSubmit()
-    {
-        Console.WriteLine("Clicked");
-
-        if (Id == 0)
-        {
-            var addedBook = await BookService.AddBook(Book);
-            if (addedBook != null)
-            {
-                StatusClass = "alert-success";
-                Message = "New book added successfully.";
-                Saved = true;
-            }
-            else
-            {
-                StatusClass = "alert-danger";
-                Message = "Something went wrong adding the new book. Please try again.";
-                Saved = false;
-            }
-        }
-        else
-        {
-            await BookService.UpdateBook(Book);
-            StatusClass = "alert-success";
-            Message = "Book updated successfully.";
-            Saved = true;
-        }
-    }
-
-    protected void HandleInvalidSubmit()
-    {
-        StatusClass = "alert-danger";
-        Message = "There are some validation errors. Please try again.";
-    }
-
-    protected async Task DeleteBook()
-    {
-        await BookService.DeleteBook(Book.Id);
-
-        StatusClass = "alert-success";
-        Message = "Deleted successfully";
-
-        Saved = true;
-    }
-
-    protected void NavigateToOverview()
-    {
-        NavigationManager.NavigateTo("/admin-book-overview");
-    }
-}
-
-    <div id="wrapper">
-
-        <Header Class="header" UkSticky="top:20; cls-active:header-sticky">
-            <Breadcrumbs>
-                <li><a href="/" uk-tooltip="title:Home; pos:bottom; offset:21"> <i class="uil-home-alt"></i> </a></li>
-                <li><a href="/admin-dashboard">Admin dashboard</a></li>
-                <li><a href="/admin-book-overview">Book overview</a></li>
-                <li>Edition #@Id</li>
-            </Breadcrumbs>
-        </Header>
-
-        <SearchOnMobile></SearchOnMobile>
-
-        <SearchOnDesktop></SearchOnDesktop>
-
-        <SideNav></SideNav>
-
-        @if (!Saved)
-        {
-            <div class="page-content">
-                <div class="page-content-inner">
-
-                    <div uk-grid>
-
-                        <div class="uk-width-2-3@m">
-
-                            <div class="card rounded">
-                                <div class="p-3">
-                                    <h5 class="mb-0"> Book Edition #@Id</h5>
-                                </div>
-                                <hr class="m-0">
-                                <EditForm Model="@Book" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit" class="uk-child-width-1-1@s uk-grid-small p-4" uk-grid>
-
-                                    <div>
-                                        <div class="uk-form-group">
-                                            <label class="uk-form-label">Title</label>
-                                            <div class="uk-position-relative w-100">
-                                                <InputText Id="title" class="uk-input form-control" @bind-Value="Book.Title" placeholder="" />
-                                            </div>
-                                            <ValidationMessage For="@(() => Book.Title)" />
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <div class="uk-form-group">
-                                            <label class="uk-form-label">Description</label>
-                                            <div class="uk-position-relative w-100">
-                                                <InputTextArea rows="5" class="uk-input form-control" @bind-Value="Book.Description" />
-                                            </div>
-                                            <ValidationMessage For="@(() => Book.Description)" />
-                                        </div>
-                                    </div>
-
-                                    <div class="uk-width-1-3@s">
-                                        <div class="uk-form-group">
-                                            <label class="uk-form-label">Page count</label>
-                                            <div class="uk-position-relative w-100">
-                                                <InputNumber Id="PageCount" class="uk-input form-control" @bind-Value="Book.PageCount" placeholder="" />
-                                            </div>
-                                            <ValidationMessage For="@(() => Book.PageCount)" />
-                                        </div>
-                                    </div>
-
-                                    <div class="uk-width-1-3@s">
-                                        <div class="uk-form-group">
-                                            <label class="uk-form-label">Language</label>
-                                            <div class="uk-position-relative w-100">
-                                                <InputSelect Id="Language" class="uk-select form-control" placeholder="" @bind-Value="Book.Language">
-                                                    <option value="">Select...</option>
-                                                    <option value="English">English</option>
-                                                    <option value="French">French</option>
-                                                </InputSelect>
-                                            </div>
-                                            <ValidationMessage For="@(() => Book.Language)" />
-                                        </div>
-                                    </div>
-
-                                    <div class="uk-width-1-3@s">
-                                        <div class="uk-form-group">
-                                            <label class="uk-form-label">Publishing date</label>
-                                            <div class="uk-position-relative w-100">
-                                                <InputDate Id="PublishingDate" class="uk-input form-control" @bind-Value="Book.PublishingDate" placeholder="" />
-                                            </div>
-                                            <ValidationMessage For="@(() => Book.PublishingDate)" />
-                                        </div>
-                                    </div>
-
-                                    <div class="uk-flex uk-flex-right p-4">
-                                        <button class="btn  btn-light mr-2" @onclick="NavigateToOverview">Cancel</button>
-                                        <button class="btn btn-default" type="submit">Save Changes</button>
-                                        @if (Book.Id > 0)
-                                        {
-                                            <a class="btn btn-danger" @onclick="@DeleteBook">
-                                                Delete
-                                            </a>
-                                        }
-                                    </div>
-
-                                </EditForm>
+                        <div class="card rounded">
+                            <div class="p-3">
+                                <h5 class="mb-0"> Book Edition #@Id</h5>
                             </div>
+                            <hr class="m-0">
+                            <EditForm Model="@Book" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit" class="uk-child-width-1-1@s uk-grid-small p-4" uk-grid>
 
+                                <div>
+                                    <div class="uk-form-group">
+                                        <label class="uk-form-label">Title</label>
+                                        <div class="uk-position-relative w-100">
+                                            <InputText Id="title" class="uk-input form-control" @bind-Value="Book.Title" placeholder="" />
+                                        </div>
+                                        <ValidationMessage For="@(() => Book.Title)" />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div class="uk-form-group">
+                                        <label class="uk-form-label">Description</label>
+                                        <div class="uk-position-relative w-100">
+                                            <InputTextArea rows="15" class="form-control" @bind-Value="Book.Description" />
+                                        </div>
+                                        <ValidationMessage For="@(() => Book.Description)" />
+                                    </div>
+                                </div>
+
+                                <div class="uk-width-1-3@s">
+                                    <div class="uk-form-group">
+                                        <label class="uk-form-label">Page count</label>
+                                        <div class="uk-position-relative w-100">
+                                            <InputNumber Id="PageCount" class="uk-input form-control" @bind-Value="Book.PageCount" placeholder="" />
+                                        </div>
+                                        <ValidationMessage For="@(() => Book.PageCount)" />
+                                    </div>
+                                </div>
+
+                                <div class="uk-width-1-3@s">
+                                    <div class="uk-form-group">
+                                        <label class="uk-form-label">Language</label>
+                                        <div class="uk-position-relative w-100">
+                                            <InputSelect Id="Language" class="uk-select form-control" placeholder="" @bind-Value="Book.Language">
+                                                <option value="">Select...</option>
+                                                <option value="English">English</option>
+                                                <option value="French">French</option>
+                                            </InputSelect>
+                                        </div>
+                                        <ValidationMessage For="@(() => Book.Language)" />
+                                    </div>
+                                </div>
+
+                                <div class="uk-width-1-3@s">
+                                    <div class="uk-form-group">
+                                        <label class="uk-form-label">Publishing date</label>
+                                        <div class="uk-position-relative w-100">
+                                            <InputDate Id="PublishingDate" class="uk-input form-control" @bind-Value="Book.PublishingDate" placeholder="" />
+                                        </div>
+                                        <ValidationMessage For="@(() => Book.PublishingDate)" />
+                                    </div>
+                                </div>
+
+                                <div class="uk-width-1-3@s">
+                                    <div class="uk-form-group">
+                                        <label class="uk-form-label">Author</label>
+                                        <div class="uk-position-relative w-100">
+                                            <InputText Id="author" class="uk-input form-control" @bind-Value="Book.Author" placeholder="" />
+                                        </div>
+                                        <ValidationMessage For="@(() => Book.Author)" />
+                                    </div>
+                                </div>
+
+                                <div class="uk-width-2-3@s">
+                                    <div class="uk-form-group">
+                                        <label class="uk-form-label">Purchase link</label>
+                                        <div class="uk-position-relative w-100">
+                                            <InputText Id="purchaseLink" class="uk-input form-control" @bind-Value="Book.PurchaseLink" placeholder="" />
+                                        </div>
+                                        <ValidationMessage For="@(() => Book.PurchaseLink)" />
+                                    </div>
+                                </div>
+
+                                <div class="uk-width-1-1@s">
+                                    <div class="uk-form-group">
+                                        <label class="uk-form-label">Category</label>
+                                        <div class="uk-position-relative w-100">
+                                            <InputSelect id="category" class="form-control col-sm-8" @bind-Value="@CategoryId">
+                                                @foreach (var category in Categories)
+                                                    {
+                                                    <option value="@category.Id">@category.Name</option>
+                                                    }
+                                                /**/
+                                                /**/
+                                            </InputSelect>
+                                        </div>
+                                        <ValidationMessage For="@(() => Book.Category)" />
+                                    </div>
+                                </div>
+
+                                <div class="uk-width-1-3@s">
+                                    <div class="uk-form-group">
+                                        <label for="featured" class=" offset-sm-3">
+                                            <InputCheckbox id="featured" class="uk-checkbox" @bind-Value="@Book.Featured"></InputCheckbox>
+                                            &nbsp;Featured
+                                        </label>
+                                        <ValidationMessage For="@(() => Book.Featured)" />
+                                    </div>
+                                </div>
+
+                                <div class="uk-width-1-3@s">
+                                    <div class="uk-form-group">
+                                        <label for="popular" class=" offset-sm-3">
+                                            <InputCheckbox id="popular" class="uk-checkbox" @bind-Value="@Book.Popular"></InputCheckbox>
+                                            &nbsp;Popular
+                                        </label>
+                                        <ValidationMessage For="@(() => Book.Popular)" />
+                                    </div>
+                                </div>
+
+                                <div class="uk-flex uk-flex-right pt-4">
+                                    <button class="btn btn-light mr-2" @onclick="NavigateToOverview">Cancel</button>
+                                    <button class="btn btn-default mr-2" type="submit">Save Changes</button>
+                                    @if (Book.Id > 0)
+                                    {
+                                        <a class="btn btn-danger" @onclick="@DeleteBook">
+                                            Delete
+                                        </a>
+                                    }
+                                </div>
+
+                            </EditForm>
                         </div>
-
 
                     </div>
 
-                    <Footer></Footer>
+                    <div class="uk-width-2-5@m">
+
+                        <div class="drag-drop-zone">
+                            <InputFile OnChange="HandleSelection" />
+                            Drop a file here or click to choose one
+                        </div>
+
+                        @if (Book.CoverImage != null)
+                        {
+                            <img src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(Book.CoverImage.Data))" />
+                        }
+
+                    </div>
 
                 </div>
 
+                <Footer></Footer>
+
             </div>
-        }
-        else
-        {
-            <div class="page-content">
-                <div class="page-content-inner">
-                    <div class="alert @StatusClass">@Message</div>
-                    <a class="btn btn-outline-primary" @onclick="@NavigateToOverview">Back to overview</a>
-                </div>
+
+        </div>
+    }
+    else
+    {
+        <div class="page-content">
+            <div class="page-content-inner">
+                <div class="alert @StatusClass">@Message</div>
+                <a class="btn btn-outline-primary" @onclick="@NavigateToOverview">Back to overview</a>
             </div>
-        }
-    </div>
+        </div>
+    }
+</div>

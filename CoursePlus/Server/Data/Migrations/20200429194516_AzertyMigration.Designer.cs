@@ -4,14 +4,16 @@ using CoursePlus.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CoursePlus.Server.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200429194516_AzertyMigration")]
+    partial class AzertyMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -100,6 +102,9 @@ namespace CoursePlus.Server.Data.Migrations
                     b.Property<string>("Author")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Azerty")
+                        .HasColumnType("int");
+
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
@@ -157,6 +162,7 @@ namespace CoursePlus.Server.Data.Migrations
                         {
                             Id = 1,
                             Author = "John",
+                            Azerty = 0,
                             CategoryId = 1,
                             CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Bbbbbb",
@@ -171,6 +177,7 @@ namespace CoursePlus.Server.Data.Migrations
                         {
                             Id = 2,
                             Author = "Cecilia",
+                            Azerty = 0,
                             CategoryId = 2,
                             CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "DDddd",
@@ -185,6 +192,7 @@ namespace CoursePlus.Server.Data.Migrations
                         {
                             Id = 3,
                             Author = "Mike",
+                            Azerty = 0,
                             CategoryId = 3,
                             CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Fffff",
@@ -199,6 +207,7 @@ namespace CoursePlus.Server.Data.Migrations
                         {
                             Id = 4,
                             Author = "Steve",
+                            Azerty = 0,
                             CategoryId = 4,
                             CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Hhhhhh",

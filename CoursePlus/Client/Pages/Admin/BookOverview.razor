@@ -1,4 +1,4 @@
-﻿@page "/admin-book-overview"
+﻿@page "/admin/book-overview"
 @inject IBookService BookService
 @inject NavigationManager MyNavigationManager
 @code
@@ -12,7 +12,7 @@
 
     void EditBook(CoursePlus.Shared.Models.Book book)
     {
-        MyNavigationManager.NavigateTo("/admin-book-edit/" + book.Id);
+        MyNavigationManager.NavigateTo("/admin/book-edit/" + book.Id);
     }
 }
 
@@ -88,6 +88,7 @@
                                 <th scope="col">Publishing date</th>
                                 <th scope="col">Language</th>
                                 <th scope="col">Page count</th>
+                                <th scope="col">Category</th>
                                 <th scope="col"> </th>
                             </tr>
                         </thead>
@@ -101,10 +102,12 @@
                                             <div class="media align-items-center">
                                                 <div>
                                                     <div class="avatar-parent-child" style="width: max-content">
-                                                        <img alt="Image placeholder"
-                                                             src="/images/avatars/avatar-2.jpg"
-                                                             class="avatar  rounded-circle">
-                                                        <span class="avatar-child avatar-badge bg-success"></span>
+
+                                                        @if (OneBook.CoverImage != null)
+                                                        {
+                                                            <img class="avatar rounded-0" src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(OneBook.CoverImage.Data))" />
+                                                        }
+
                                                     </div>
                                                 </div>
                                                 <div class="media-body ml-4">
@@ -116,6 +119,7 @@
                                         <td>@OneBook.PublishingDate.ToString("dd/MM/yyyy")</td>
                                         <td>@OneBook.Language</td>
                                         <td>@OneBook.PageCount</td>
+                                        <td>@OneBook.Category.Name</td>
                                         <td class="text-right">
                                             <!-- Actions -->
                                             <div class="actions ml-3">
@@ -125,7 +129,7 @@
                                                 <a href="javascript:void(0)" class="btn btn-icon btn-hover btn-sm btn-circle" uk-tooltip="Edit" @onclick="@(e => EditBook(OneBook))">
                                                     <i class="uil-pen"></i>
                                                 </a>
-                                                <a href="/admin-book-edit/2" class="btn btn-icon btn-hover btn-sm btn-circle" uk-tooltip="Delete user">
+                                                <a href="javascript:void(0)" class="btn btn-icon btn-hover btn-sm btn-circle" uk-tooltip="Delete user">
                                                     <i class="uil-trash-alt text-danger"></i>
                                                 </a>
                                             </div>

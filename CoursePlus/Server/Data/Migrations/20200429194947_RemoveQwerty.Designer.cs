@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoursePlus.Server.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200426110205_MyFirstMigration")]
-    partial class MyFirstMigration
+    [Migration("20200429194947_RemoveQwerty")]
+    partial class RemoveQwerty
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -102,8 +102,11 @@ namespace CoursePlus.Server.Data.Migrations
                     b.Property<string>("Author")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("CoverImage")
-                        .HasColumnType("varbinary(max)");
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CoverImageId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedTime")
                         .HasColumnType("datetime2");
@@ -115,11 +118,17 @@ namespace CoursePlus.Server.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("Featured")
+                        .HasColumnType("bit");
+
                     b.Property<int>("Language")
                         .HasColumnType("int");
 
                     b.Property<int>("PageCount")
                         .HasColumnType("int");
+
+                    b.Property<bool>("Popular")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("PublishingDate")
                         .HasColumnType("datetime2");
@@ -139,6 +148,10 @@ namespace CoursePlus.Server.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("CoverImageId");
+
                     b.ToTable("Books");
 
                     b.HasData(
@@ -146,10 +159,13 @@ namespace CoursePlus.Server.Data.Migrations
                         {
                             Id = 1,
                             Author = "John",
+                            CategoryId = 1,
                             CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Bbbbbb",
+                            Featured = false,
                             Language = 0,
                             PageCount = 0,
+                            Popular = false,
                             PublishingDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Aaaaa"
                         },
@@ -157,10 +173,13 @@ namespace CoursePlus.Server.Data.Migrations
                         {
                             Id = 2,
                             Author = "Cecilia",
+                            CategoryId = 2,
                             CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "DDddd",
+                            Featured = false,
                             Language = 0,
                             PageCount = 0,
+                            Popular = false,
                             PublishingDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Ccccc"
                         },
@@ -168,10 +187,13 @@ namespace CoursePlus.Server.Data.Migrations
                         {
                             Id = 3,
                             Author = "Mike",
+                            CategoryId = 3,
                             CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Fffff",
+                            Featured = false,
                             Language = 0,
                             PageCount = 0,
+                            Popular = false,
                             PublishingDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Eeeee"
                         },
@@ -179,13 +201,68 @@ namespace CoursePlus.Server.Data.Migrations
                         {
                             Id = 4,
                             Author = "Steve",
+                            CategoryId = 4,
                             CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Hhhhhh",
+                            Featured = false,
                             Language = 0,
                             PageCount = 0,
+                            Popular = false,
                             PublishingDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Gggggg"
                         });
+                });
+
+            modelBuilder.Entity("CoursePlus.Shared.Models.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "HTML"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "CSS"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "JavaScript"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "TypeScript"
+                        });
+                });
+
+            modelBuilder.Entity("CoursePlus.Shared.Models.File", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<byte[]>("Data")
+                        .HasColumnType("varbinary(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Files");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -217,15 +294,15 @@ namespace CoursePlus.Server.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "4d8d8d05-116c-46bd-ba8c-d2bff99fa8db",
-                            ConcurrencyStamp = "293f9f2b-8c05-4c99-ad2b-58f4b8720c89",
+                            Id = "0a3d93c9-e5d8-4ed5-b79d-d1e6a3768228",
+                            ConcurrencyStamp = "7ff46a67-2016-40cb-ab9d-3cbe2594018e",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "06522ae4-b2c9-48f8-8983-a907e345e073",
-                            ConcurrencyStamp = "aa90b920-d563-48e9-942a-d4bae2070411",
+                            Id = "1002a5ed-a8e4-4c5c-9587-b8a8e1aa320b",
+                            ConcurrencyStamp = "9d0ed9a1-83a4-44b8-8de6-25e3d82dd1e9",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -337,6 +414,19 @@ namespace CoursePlus.Server.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("CoursePlus.Shared.Models.Book", b =>
+                {
+                    b.HasOne("CoursePlus.Shared.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CoursePlus.Shared.Models.File", "CoverImage")
+                        .WithMany()
+                        .HasForeignKey("CoverImageId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

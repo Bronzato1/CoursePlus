@@ -1,5 +1,6 @@
 ﻿using CoursePlus.Server.Data;
 using CoursePlus.Shared.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,12 +19,19 @@ namespace CoursePlus.Server.Repositories
 
         public IEnumerable<Book> GetBooks()
         {
-            return _dbContext.Books;
+            return _dbContext.Books
+                .Include(x => x.CoverImage)
+                .Include(x => x.Category);
         }
 
         public Book GetBook(int Id)
         {
-            return _dbContext.Books.FirstOrDefault(x => x.Id == Id);
+            var book = _dbContext.Books
+                .Where(x => x.Id == Id)
+                .Include(x => x.CoverImage)
+                .Include(x => x.Category)
+                .FirstOrDefault();
+            return book;
         }
 
         public Book AddBook(Book book)
@@ -42,11 +50,14 @@ namespace CoursePlus.Server.Repositories
                 foundBook.Title = book.Title;
                 foundBook.Description = book.Description;
                 foundBook.Author = book.Author;
-                foundBook.CoverImage = book.CoverImage;
+                foundBook.CoverImageId = book.CoverImageId;
                 foundBook.Language = book.Language;
                 foundBook.PageCount = book.PageCount;
                 foundBook.PublishingDate = book.PublishingDate;
                 foundBook.PurchaseLink = book.PurchaseLink;
+                foundBook.CategoryId = book.CategoryId;
+                foundBook.Featured = book.Featured;
+                foundBook.Popular = book.Popular;
                 
                 _dbContext.SaveChanges();
 

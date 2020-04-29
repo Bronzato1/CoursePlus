@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
@@ -15,11 +16,20 @@ namespace CoursePlus.Shared.Models
         public string Description { get; set; }
         public string Author { get; set; }
         public string PurchaseLink { get; set; }
-        public byte[] CoverImage { get; set; }
         public int PageCount { get; set; }
         [Required]
         public EnumLanguages Language { get; set; }
         public DateTime PublishingDate { get; set; }
+
+        public bool Featured { get; set; }
+        public bool Popular { get; set; }
+
+        [Required]
+        public int CategoryId { get; set; }
+        public Category Category { get; set; }
+
+        public int? CoverImageId { get; set; }
+        public virtual File CoverImage { get; set; }
 
         public DateTime CreatedTime { get; set; }
         public DateTime? UpdatedTime { get; set; }
