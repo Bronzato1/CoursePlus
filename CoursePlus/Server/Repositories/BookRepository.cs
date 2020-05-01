@@ -20,7 +20,7 @@ namespace CoursePlus.Server.Repositories
         public IEnumerable<Book> GetBooks()
         {
             return _dbContext.Books
-                .Include(x => x.CoverImage)
+                .Include(x => x.Thumbnail)
                 .Include(x => x.Category);
         }
 
@@ -28,7 +28,7 @@ namespace CoursePlus.Server.Repositories
         {
             var book = _dbContext.Books
                 .Where(x => x.Id == Id)
-                .Include(x => x.CoverImage)
+                .Include(x => x.Image)
                 .Include(x => x.Category)
                 .FirstOrDefault();
             return book;
@@ -50,7 +50,8 @@ namespace CoursePlus.Server.Repositories
                 foundBook.Title = book.Title;
                 foundBook.Description = book.Description;
                 foundBook.Author = book.Author;
-                foundBook.CoverImageId = book.CoverImageId;
+                foundBook.ImageId = book.ImageId;
+                foundBook.ThumbnailId = book.ThumbnailId;
                 foundBook.Language = book.Language;
                 foundBook.PageCount = book.PageCount;
                 foundBook.PublishingDate = book.PublishingDate;

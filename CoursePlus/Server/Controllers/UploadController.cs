@@ -8,6 +8,7 @@ using CoursePlus.Shared.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Drawing.Imaging;
 
 namespace CoursePlus.Server.Controllers
 {
@@ -30,24 +31,33 @@ namespace CoursePlus.Server.Controllers
             if (HttpContext.Request.Form.Files.Count == 1)
             {
                 var fileForm = HttpContext.Request.Form.Files.First();
-                var filePath = Path.Combine(environment.ContentRootPath, fileForm.FileName);
 
-                using (var stream = new FileStream(filePath, FileMode.Create))
+                System.Drawing.Image img;
+                System.Drawing.Image thumb;
+
+                Image newImage;
+                Thumbnail newThumbnail;
+
+                using (MemoryStream ms = new MemoryStream())
                 {
-                    await fileForm.CopyToAsync(stream);
+                    await fileForm.CopyToAsync(ms);
+                    img = System.Drawing.Image.FromStream(ms);
+                    newImage = new Image { Data = ms.ToArray() };
                 }
 
-                var fileBytes = System.IO.File.ReadAllBytes(filePath);
-
-                var newFile = new CoursePlus.Shared.Models.File
+                using (MemoryStream ms = new MemoryStream())
                 {
-                    Data = fileBytes
-                };
+                    thumb = img.GetThumbnailImage(300, 390, () => false, IntPtr.Zero);
+                    thumb.Save(ms, ImageFormat.Jpeg);
+                    newThumbnail = new Thumbnail { Data = ms.ToArray() };
+                }
 
-                _dbContext.Files.Add(newFile);
+                _dbContext.Images.Add(newImage);
+                _dbContext.Thumbnails.Add(newThumbnail);
+
                 await _dbContext.SaveChangesAsync();
-                System.IO.File.Delete(filePath);
-                return Ok(new UploadResult { Id = newFile.Id });
+                
+                return Ok(new UploadResult { ImageId = newImage.Id, ThumbnailId = newThumbnail.Id });
             }
             return BadRequest();
         }

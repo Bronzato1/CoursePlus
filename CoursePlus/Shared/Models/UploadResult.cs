@@ -2,6 +2,7 @@ namespace CoursePlus.Shared.Models
 {
     public class UploadResult
     {
-        public int Id { get; set; }
+        public int ImageId { get; set; }
+        public int ThumbnailId { get; set; }
     }
 }

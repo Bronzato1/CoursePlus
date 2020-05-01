@@ -9,6 +9,7 @@ using BlazorInputFile;
 using System.IO;
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 
 namespace CoursePlus.Client.Pages.Admin
 {
@@ -16,16 +17,12 @@ namespace CoursePlus.Client.Pages.Admin
     {
         [Parameter]
         public int Id { get; set; }
-
         [Inject]
         public NavigationManager NavigationManager { get; set; }
-
         [Inject]
         public IBookService BookService { get; set; }
-
         [Inject]
         public ICategoryService CategoryService { get; set; }
-
         [Inject]
         public HttpClient Client { get; set; }
 
@@ -76,23 +73,29 @@ namespace CoursePlus.Client.Pages.Admin
                 var addedBook = await BookService.AddBook(Book);
                 if (addedBook != null)
                 {
-                    StatusClass = "alert-success";
-                    Message = "New book added successfully.";
+                    StatusClass = "uk-text-success";
+                    Message = "New book added successfully";
                     Saved = true;
+                    StateHasChanged();
+                    await Task.Delay(2000);
+                    NavigationManager.NavigateTo("/admin/book-overview");
                 }
                 else
                 {
-                    StatusClass = "alert-danger";
-                    Message = "Something went wrong adding the new book. Please try again.";
+                    StatusClass = "uk-text-danger";
+                    Message = "Something went wrong";
                     Saved = false;
                 }
             }
             else
             {
                 await BookService.UpdateBook(Book);
-                StatusClass = "alert-success";
-                Message = "Book updated successfully.";
+                StatusClass = "uk-text-success";
+                Message = "Book updated successfully";
                 Saved = true;
+                StateHasChanged();
+                await Task.Delay(2000);
+                NavigationManager.NavigateTo("/admin/book-overview");
             }
         }
 
@@ -126,8 +129,13 @@ namespace CoursePlus.Client.Pages.Admin
                 var result = await Client.PostAsync("api/upload", content);
                 result.EnsureSuccessStatusCode();
                 var uploadResult = JsonSerializer.Deserialize<UploadResult>(await result.Content.ReadAsStringAsync(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-                Book.CoverImageId = uploadResult.Id;
-                Book.CoverImage.Data = ms.ToArray();
+                Book.ImageId = uploadResult.ImageId;
+                Book.ThumbnailId = uploadResult.ThumbnailId;
+
+                if (Book.Image == null) // First time image for this book
+                    Book.Image = new CoursePlus.Shared.Models.Image();
+
+                Book.Image.Data = ms.ToArray();
             }
         }
 

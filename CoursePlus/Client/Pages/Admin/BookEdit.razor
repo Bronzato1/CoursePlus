@@ -18,8 +18,7 @@
 
     <SideNav></SideNav>
 
-    @if (!Saved)
-    {
+    
         <div class="page-content">
             <div class="page-content-inner">
 
@@ -29,8 +28,15 @@
 
                         <div class="card rounded">
                             <div class="p-3">
-                                <h5 class="mb-0"> Book Edition #@Id</h5>
+                                <h4 class="float-left mb-0"> Book Edition #@Id</h4>
+
+                                @if (Saved)
+                                {
+                                    <div class="float-right @StatusClass"><b>@Message</b></div>
+                                }
                             </div>
+
+                            
                             <hr class="m-0">
                             <EditForm Model="@Book" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit" class="uk-child-width-1-1@s uk-grid-small p-4" uk-grid>
 
@@ -48,7 +54,7 @@
                                     <div class="uk-form-group">
                                         <label class="uk-form-label">Description</label>
                                         <div class="uk-position-relative w-100">
-                                            <InputTextArea rows="15" class="form-control" @bind-Value="Book.Description" />
+                                            <InputTextArea rows="5" class="form-control" @bind-Value="Book.Description" />
                                         </div>
                                         <ValidationMessage For="@(() => Book.Description)" />
                                     </div>
@@ -114,9 +120,9 @@
                                         <div class="uk-position-relative w-100">
                                             <InputSelect id="category" class="form-control col-sm-8" @bind-Value="@CategoryId">
                                                 @foreach (var category in Categories)
-                                                    {
+                                                {
                                                     <option value="@category.Id">@category.Name</option>
-                                                    }
+                                                }
                                                 /**/
                                                 /**/
                                             </InputSelect>
@@ -155,7 +161,7 @@
                                         </a>
                                     }
                                 </div>
-
+                                
                             </EditForm>
                         </div>
 
@@ -168,9 +174,9 @@
                             Drop a file here or click to choose one
                         </div>
 
-                        @if (Book.CoverImage != null)
+                        @if (Book.Image != null)
                         {
-                            <img src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(Book.CoverImage.Data))" />
+                            <img src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(Book.Image.Data))" />
                         }
 
                     </div>
@@ -182,14 +188,5 @@
             </div>
 
         </div>
-    }
-    else
-    {
-        <div class="page-content">
-            <div class="page-content-inner">
-                <div class="alert @StatusClass">@Message</div>
-                <a class="btn btn-outline-primary" @onclick="@NavigateToOverview">Back to overview</a>
-            </div>
-        </div>
-    }
+
 </div>

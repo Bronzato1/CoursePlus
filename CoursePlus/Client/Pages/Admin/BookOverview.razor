@@ -14,6 +14,12 @@
     {
         MyNavigationManager.NavigateTo("/admin/book-edit/" + book.Id);
     }
+
+    public async Task ConfirmDelete()
+    {
+     
+        Console.WriteLine("here we are");
+    }
 }
 
 <div id="wrapper">
@@ -103,9 +109,9 @@
                                                 <div>
                                                     <div class="avatar-parent-child" style="width: max-content">
 
-                                                        @if (OneBook.CoverImage != null)
+                                                        @if (OneBook.Thumbnail != null)
                                                         {
-                                                            <img class="avatar rounded-0" src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(OneBook.CoverImage.Data))" />
+                                                            <img class="avatar rounded-0" src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(OneBook.Thumbnail.Data))" />
                                                         }
 
                                                     </div>
@@ -129,7 +135,7 @@
                                                 <a href="javascript:void(0)" class="btn btn-icon btn-hover btn-sm btn-circle" uk-tooltip="Edit" @onclick="@(e => EditBook(OneBook))">
                                                     <i class="uil-pen"></i>
                                                 </a>
-                                                <a href="javascript:void(0)" class="btn btn-icon btn-hover btn-sm btn-circle" uk-tooltip="Delete user">
+                                                <a href="javascript:void(0)" class="btn btn-icon btn-hover btn-sm btn-circle" uk-tooltip="Delete user" @onclick="@ConfirmDelete">
                                                     <i class="uil-trash-alt text-danger"></i>
                                                 </a>
                                             </div>

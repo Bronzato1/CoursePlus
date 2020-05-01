@@ -62,7 +62,7 @@ namespace CoursePlus.Server.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Files",
+                name: "Images",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -71,7 +71,20 @@ namespace CoursePlus.Server.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Files", x => x.Id);
+                    table.PrimaryKey("PK_Images", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Thumbnails",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Data = table.Column<byte[]>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Thumbnails", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -196,7 +209,8 @@ namespace CoursePlus.Server.Data.Migrations
                     Featured = table.Column<bool>(nullable: false),
                     Popular = table.Column<bool>(nullable: false),
                     CategoryId = table.Column<int>(nullable: false),
-                    CoverImageId = table.Column<int>(nullable: true),
+                    ImageId = table.Column<int>(nullable: true),
+                    ThumbnailId = table.Column<int>(nullable: true),
                     CreatedTime = table.Column<DateTime>(nullable: false),
                     UpdatedTime = table.Column<DateTime>(nullable: true),
                     CreatedUser = table.Column<string>(nullable: true),
@@ -212,9 +226,15 @@ namespace CoursePlus.Server.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Books_Files_CoverImageId",
-                        column: x => x.CoverImageId,
-                        principalTable: "Files",
+                        name: "FK_Books_Images_ImageId",
+                        column: x => x.ImageId,
+                        principalTable: "Images",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Books_Thumbnails_ThumbnailId",
+                        column: x => x.ThumbnailId,
+                        principalTable: "Thumbnails",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -241,13 +261,13 @@ namespace CoursePlus.Server.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "Books",
-                columns: new[] { "Id", "Author", "CategoryId", "CoverImageId", "CreatedTime", "CreatedUser", "Description", "Featured", "Language", "PageCount", "Popular", "PublishingDate", "PurchaseLink", "Title", "UpdatedTime", "UpdatedUser" },
+                columns: new[] { "Id", "Author", "CategoryId", "CreatedTime", "CreatedUser", "Description", "Featured", "ImageId", "Language", "PageCount", "Popular", "PublishingDate", "PurchaseLink", "ThumbnailId", "Title", "UpdatedTime", "UpdatedUser" },
                 values: new object[,]
                 {
-                    { 1, "John", 1, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Bbbbbb", false, 0, 0, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Aaaaa", null, null },
-                    { 2, "Cecilia", 2, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "DDddd", false, 0, 0, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Ccccc", null, null },
-                    { 3, "Mike", 3, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Fffff", false, 0, 0, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Eeeee", null, null },
-                    { 4, "Steve", 4, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Hhhhhh", false, 0, 0, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Gggggg", null, null }
+                    { 1, "John", 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Bbbbbb", false, null, 0, 0, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, "Aaaaa", null, null },
+                    { 2, "Cecilia", 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "DDddd", false, null, 0, 0, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, "Ccccc", null, null },
+                    { 3, "Mike", 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Fffff", false, null, 0, 0, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, "Eeeee", null, null },
+                    { 4, "Steve", 4, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Hhhhhh", false, null, 0, 0, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, "Gggggg", null, null }
                 });
 
             migrationBuilder.CreateIndex(
@@ -295,9 +315,14 @@ namespace CoursePlus.Server.Data.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Books_CoverImageId",
+                name: "IX_Books_ImageId",
                 table: "Books",
-                column: "CoverImageId");
+                column: "ImageId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Books_ThumbnailId",
+                table: "Books",
+                column: "ThumbnailId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -330,7 +355,10 @@ namespace CoursePlus.Server.Data.Migrations
                 name: "Categories");
 
             migrationBuilder.DropTable(
-                name: "Files");
+                name: "Images");
+
+            migrationBuilder.DropTable(
+                name: "Thumbnails");
         }
     }
 }

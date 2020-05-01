@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CoursePlus.Shared.Models
 {
-    public class File
+    public class Image
     {
         [Required]
         public int Id { get; set; }

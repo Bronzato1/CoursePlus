@@ -103,9 +103,6 @@ namespace CoursePlus.Server.Data.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CoverImageId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedTime")
                         .HasColumnType("datetime2");
 
@@ -118,6 +115,9 @@ namespace CoursePlus.Server.Data.Migrations
 
                     b.Property<bool>("Featured")
                         .HasColumnType("bit");
+
+                    b.Property<int?>("ImageId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Language")
                         .HasColumnType("int");
@@ -134,6 +134,9 @@ namespace CoursePlus.Server.Data.Migrations
                     b.Property<string>("PurchaseLink")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("ThumbnailId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -148,7 +151,9 @@ namespace CoursePlus.Server.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("CoverImageId");
+                    b.HasIndex("ImageId");
+
+                    b.HasIndex("ThumbnailId");
 
                     b.ToTable("Books");
 
@@ -248,7 +253,7 @@ namespace CoursePlus.Server.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("CoursePlus.Shared.Models.File", b =>
+            modelBuilder.Entity("CoursePlus.Shared.Models.Image", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -260,7 +265,22 @@ namespace CoursePlus.Server.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Files");
+                    b.ToTable("Images");
+                });
+
+            modelBuilder.Entity("CoursePlus.Shared.Models.Thumbnail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<byte[]>("Data")
+                        .HasColumnType("varbinary(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Thumbnails");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -422,9 +442,13 @@ namespace CoursePlus.Server.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CoursePlus.Shared.Models.File", "CoverImage")
+                    b.HasOne("CoursePlus.Shared.Models.Image", "Image")
                         .WithMany()
-                        .HasForeignKey("CoverImageId");
+                        .HasForeignKey("ImageId");
+
+                    b.HasOne("CoursePlus.Shared.Models.Thumbnail", "Thumbnail")
+                        .WithMany()
+                        .HasForeignKey("ThumbnailId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

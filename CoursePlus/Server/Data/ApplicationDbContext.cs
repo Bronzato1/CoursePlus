@@ -23,7 +23,8 @@ namespace CoursePlus.Server.Data
         }
 
         public DbSet<Book> Books { get; set; }
-        public DbSet<File> Files { get; set; }
+        public DbSet<Image> Images { get; set; }
+        public DbSet<Thumbnail> Thumbnails { get; set; }
         public DbSet<Category> Categories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -45,7 +46,7 @@ namespace CoursePlus.Server.Data
                 .Where(p => p.State == EntityState.Modified)
                 .Select(p => p.Entity);
 
-            // var email = _httpContextAccessor.HttpContext.User.Identity.Name;
+            var email = _httpContextAccessor.HttpContext.User.Identity.Name;
             var firstName = _httpContextAccessor.HttpContext.User.FindFirstValue("FirstName");
             var lastName = _httpContextAccessor.HttpContext.User.FindFirstValue("LastName");
             var fullName = firstName + " " + lastName;
@@ -55,14 +56,14 @@ namespace CoursePlus.Server.Data
             {
                 added.CreatedTime = now;
                 added.UpdatedTime = now;
-                added.CreatedUser = fullName;
-                added.UpdatedUser = fullName;
+                added.CreatedUser = email;
+                added.UpdatedUser = email;
             }
 
             foreach (var modified in modifiedAuditedEntities)
             {
                 modified.UpdatedTime = now;
-                modified.UpdatedUser = fullName;
+                modified.UpdatedUser = email;
             }
 
             return base.SaveChanges();
