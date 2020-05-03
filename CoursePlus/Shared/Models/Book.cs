@@ -18,14 +18,14 @@ namespace CoursePlus.Shared.Models
         public string PurchaseLink { get; set; }
         public int PageCount { get; set; }
         [Required]
-        public EnumLanguages Language { get; set; }
+        public EnumLanguages? Language { get; set; }
         public DateTime PublishingDate { get; set; }
 
         public bool Featured { get; set; }
         public bool Popular { get; set; }
 
         [Required]
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
         public Category Category { get; set; }
 
         public int? ImageId { get; set; }

@@ -10,6 +10,8 @@ using System.IO;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
+using System.Diagnostics;
+using Microsoft.AspNetCore.Components.Forms;
 
 namespace CoursePlus.Client.Pages.Admin
 {
@@ -26,15 +28,26 @@ namespace CoursePlus.Client.Pages.Admin
         [Inject]
         public HttpClient Client { get; set; }
 
+        public EditForm FormContext { get; set; }
+
         public Book Book { get; set; } = new Book();
 
         //needed to bind to select to value
-        protected string CategoryId = string.Empty;
+        protected string CategoryId
+        {
+            get
+            {
+                return Book.CategoryId.ToString();
+            }
+            set
+            {
+                Book.CategoryId = int.Parse(value);
+            }
+        }
 
         //used to store state of screen
         protected string Message = string.Empty;
         protected string StatusClass = string.Empty;
-        protected bool Saved;
 
         public List<Category> Categories { get; set; } = new List<Category>();
 
@@ -46,26 +59,30 @@ namespace CoursePlus.Client.Pages.Admin
 
         protected override async Task OnInitializedAsync()
         {
-            Saved = false;
-
             Categories = (await CategoryService.GetAllCategories()).ToList();
 
             if (Id == 0) // new book is being created
             {
                 // add some defaults
-                Book = new Book { Language = EnumLanguages.English, PublishingDate = new DateTime(2000, 1, 1) };
+                Book = new Book { PublishingDate = new DateTime(2000, 1, 1) };
+                //CategoryId = string.Empty;
+                //CategoryId = null;
             }
             else
             {
                 Book = await BookService.GetBook(Id);
+                CategoryId = Book.CategoryId.ToString();
             }
 
-            CategoryId = Book.CategoryId.ToString();
+            
 
         }
 
         protected async Task HandleValidSubmit()
         {
+            Debug.WriteLine("##### " + CategoryId);
+            
+            
             Book.CategoryId = int.Parse(CategoryId);
 
             if (Id == 0)
@@ -75,7 +92,6 @@ namespace CoursePlus.Client.Pages.Admin
                 {
                     StatusClass = "uk-text-success";
                     Message = "New book added successfully";
-                    Saved = true;
                     StateHasChanged();
                     await Task.Delay(2000);
                     NavigationManager.NavigateTo("/admin/book-overview");
@@ -84,7 +100,6 @@ namespace CoursePlus.Client.Pages.Admin
                 {
                     StatusClass = "uk-text-danger";
                     Message = "Something went wrong";
-                    Saved = false;
                 }
             }
             else
@@ -92,7 +107,6 @@ namespace CoursePlus.Client.Pages.Admin
                 await BookService.UpdateBook(Book);
                 StatusClass = "uk-text-success";
                 Message = "Book updated successfully";
-                Saved = true;
                 StateHasChanged();
                 await Task.Delay(2000);
                 NavigationManager.NavigateTo("/admin/book-overview");
@@ -101,8 +115,16 @@ namespace CoursePlus.Client.Pages.Admin
 
         protected void HandleInvalidSubmit()
         {
-            StatusClass = "alert-danger";
-            Message = "There are some validation errors. Please try again.";
+            StatusClass = "uk-text-warning";
+            Message = "Validation errors";
+        }
+
+        protected void CategoryChanged(ChangeEventArgs e)
+        {
+            var selectedString = e.Value.ToString();
+            Book.CategoryId = int.Parse(e.Value.ToString());
+            Console.WriteLine("It is definitely: " + selectedString);
+            //FormContext.EditContext.Validate();
         }
 
         protected async Task DeleteBook()
@@ -111,8 +133,6 @@ namespace CoursePlus.Client.Pages.Admin
 
             StatusClass = "alert-success";
             Message = "Deleted successfully";
-
-            Saved = true;
         }
 
         protected async Task HandleSelection(IFileListEntry[] files)

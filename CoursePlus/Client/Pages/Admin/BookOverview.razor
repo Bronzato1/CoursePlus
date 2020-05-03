@@ -1,26 +1,5 @@
 ﻿@page "/admin/book-overview"
-@inject IBookService BookService
-@inject NavigationManager MyNavigationManager
-@code
-{
-    public IEnumerable<CoursePlus.Shared.Models.Book> AllBooks { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        AllBooks = await BookService.GetBooks();
-    }
-
-    void EditBook(CoursePlus.Shared.Models.Book book)
-    {
-        MyNavigationManager.NavigateTo("/admin/book-edit/" + book.Id);
-    }
-
-    public async Task ConfirmDelete()
-    {
-     
-        Console.WriteLine("here we are");
-    }
-}
+@inherits BookOverviewBase
 
 <div id="wrapper">
 
@@ -75,9 +54,8 @@
                             </a>
                             <div uk-dropdown="pos: bottom-right ; mode: click ;animation: uk-animation-scale-up">
                                 <ul class="uk-nav uk-dropdown-nav">
-                                    <li><a href="#"> Refresh </a></li>
-                                    <li><a href="#">Manage</a></li>
-                                    <li><a href="#">Setting</a></li>
+                                    <li><a @onclick="RefreshList">Refresh</a></li>
+                                    <li><a @onclick="AddnewBook">Add new book</a></li>
                                 </ul>
                             </div>
 
@@ -91,10 +69,12 @@
                         <thead>
                             <tr>
                                 <th scope="col"></th>
-                                <th scope="col">Publishing date</th>
+                                <th scope="col">Publishing</th>
                                 <th scope="col">Language</th>
-                                <th scope="col">Page count</th>
+                                <th scope="col">Pages</th>
                                 <th scope="col">Category</th>
+                                <th scope="col">Featured</th>
+                                <th scope="col">Popular</th>
                                 <th scope="col"> </th>
                             </tr>
                         </thead>
@@ -122,20 +102,22 @@
                                                 </div>
                                             </div>
                                         </th>
-                                        <td>@OneBook.PublishingDate.ToString("dd/MM/yyyy")</td>
-                                        <td>@OneBook.Language</td>
-                                        <td>@OneBook.PageCount</td>
-                                        <td>@OneBook.Category.Name</td>
+                                        <td class="text-center">@OneBook.PublishingDate.ToString("yyyy")</td>
+                                        <td class="text-center">@OneBook.Language</td>
+                                        <td class="text-center">@OneBook.PageCount</td>
+                                        <td class="text-center">@OneBook.Category.Name</td>
+                                        <td class="text-center"><i class="@(OneBook.Featured ? "icon-material-outline-star" : "icon-material-outline-star-border")"></i></td>
+                                        <td class="text-center"><i class="@(OneBook.Popular ? "icon-material-outline-favorite" : "icon-material-outline-favorite-border")"></i></td>
                                         <td class="text-right">
                                             <!-- Actions -->
                                             <div class="actions ml-3">
                                                 <a href="#" class="btn btn-icon btn-hover btn-sm btn-circle" uk-tooltip="Quick view">
                                                     <i class="uil-external-link-alt"></i>
                                                 </a>
-                                                <a href="javascript:void(0)" class="btn btn-icon btn-hover btn-sm btn-circle" uk-tooltip="Edit" @onclick="@(e => EditBook(OneBook))">
+                                                <a class="btn btn-icon btn-hover btn-sm btn-circle" uk-tooltip="Edit" @onclick="@(e => EditBook(OneBook))">
                                                     <i class="uil-pen"></i>
                                                 </a>
-                                                <a href="javascript:void(0)" class="btn btn-icon btn-hover btn-sm btn-circle" uk-tooltip="Delete user" @onclick="@ConfirmDelete">
+                                                <a class="btn btn-icon btn-hover btn-sm btn-circle" uk-tooltip="Delete user" @onclick="@(e => ConfirmDelete(OneBook))">
                                                     <i class="uil-trash-alt text-danger"></i>
                                                 </a>
                                             </div>

@@ -105,17 +105,20 @@ app {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
+*/
+
 .valid.modified:not([type=checkbox]) {
-    outline: 1px solid #26b050;
+    box-shadow: 0 0 0 1pt #26b050 !important;
 }
 
+
 .invalid {
-    outline: 1px solid red;
+    box-shadow: 0 0 0 1pt red !important;
 }
 
 .validation-message {
-    color: red;
-}*/
+    color: red !important;
+}
 
 #blazor-error-ui {
     background: lightyellow;

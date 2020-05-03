@@ -124,6 +124,7 @@ namespace CoursePlus.Server.Data
                     Title = "Aaaaa",
                     Description = "Bbbbbb",
                     Author = "John",
+                    Language = EnumLanguages.English,
                     CategoryId = 1
                 },
                 new Book
@@ -132,6 +133,7 @@ namespace CoursePlus.Server.Data
                     Title = "Ccccc",
                     Description = "DDddd",
                     Author = "Cecilia",
+                    Language = EnumLanguages.English,
                     CategoryId = 2
                 },
                 new Book
@@ -140,6 +142,7 @@ namespace CoursePlus.Server.Data
                     Title = "Eeeee",
                     Description = "Fffff",
                     Author = "Mike",
+                    Language = EnumLanguages.French,
                     CategoryId = 3
                 },
                 new Book
@@ -148,6 +151,7 @@ namespace CoursePlus.Server.Data
                     Title = "Gggggg",
                     Description = "Hhhhhh",
                     Author = "Steve",
+                    Language = EnumLanguages.English,
                     CategoryId = 4
                 }
             );
