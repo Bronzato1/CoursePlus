@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CoursePlus.Client.Pages
 {
-    public class BooksBase : ComponentBase
+    public class BookListBase : ComponentBase
     {
         [Inject]
         public IBookService BookService { get; set; }
@@ -16,7 +16,7 @@ namespace CoursePlus.Client.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            AllBooks = await BookService.GetBooks();
+            AllBooks = await BookService.GetAllBooksAsync();
         }
 
     }

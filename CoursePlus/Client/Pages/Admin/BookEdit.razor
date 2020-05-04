@@ -1,4 +1,4 @@
-﻿@page "/admin/book-edit/{Id:int}"
+﻿@page "/admin/book/{Id:int}"
 @inherits BookEditBase
 
 <div id="wrapper">
@@ -7,8 +7,8 @@
         <Breadcrumbs>
             <li><a href="/" uk-tooltip="title:Home; pos:bottom; offset:21"> <i class="uil-home-alt"></i> </a></li>
             <li><a href="/admin/dashboard">Admin dashboard</a></li>
-            <li><a href="/admin/book-overview">Book overview</a></li>
-            <li>Edition #@Id</li>
+            <li><a href="/admin/books">All books</a></li>
+            <li>@Book.Title</li>
         </Breadcrumbs>
     </Header>
 
@@ -27,7 +27,7 @@
 
                         <div class="card rounded">
                             <div class="p-3">
-                                <h4 class="float-left mb-0"> Book Edition #@Id</h4>
+                                <h4 class="float-left mb-0"> Book #@Id</h4>
                                 <div class="float-right @StatusClass"><b>@Message</b></div>
                             </div>
 
@@ -140,7 +140,7 @@
                                 </div>
 
                                 <div class="uk-flex uk-flex-right pt-4">
-                                    <button class="btn btn-light mr-2" @onclick="NavigateToOverview">Cancel</button>
+                                    <button class="btn btn-light mr-2" @onclick="NavigateToList">Cancel</button>
                                     <button class="btn btn-default mr-2" type="submit">Save Changes</button>
                                     @if (Book.Id > 0)
                                     {

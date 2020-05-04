@@ -1,5 +1,5 @@
-﻿@page "/admin/book-overview"
-@inherits BookOverviewBase
+﻿@page "/admin/books"
+@inherits BookListBase
 
 <div id="wrapper">
 
@@ -7,7 +7,7 @@
         <Breadcrumbs>
             <li><a href="/" uk-tooltip="title:Home; pos:bottom; offset:21"> <i class="uil-home-alt"></i> </a></li>
             <li><a href="/admin-dashboard">Admin dashboard</a></li>
-            <li>Book overview</li>
+            <li>All books</li>
         </Breadcrumbs>
     </Header>
 
@@ -18,13 +18,13 @@
     <SideNav></SideNav>
 
     <div class="page-content">
-        <div class="page-content-inner">
+        <div class="page-content-inner mw-100">
 
             <div class="card">
                 <!-- Card header -->
                 <div class="card-header actions-toolbar border-0">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h4 class="d-inline-block mb-0">Book overview</h4>
+                        <h4 class="d-inline-block mb-0">All books (@SomeBooks?.Count())</h4>
                         <div class="d-flex">
 
                             <a href="#" class="btn btn-icon btn-hover  btn-circle" uk-tooltip="Search product">
@@ -42,9 +42,9 @@
                             </a>
                             <div uk-dropdown="pos: bottom-right ; mode: click ;animation: uk-animation-scale-up">
                                 <ul class="uk-nav uk-dropdown-nav">
-                                    <li class="uk-active"><a href="#"> Newest </a></li>
-                                    <li><a href="#">From A-Z</a></li>
-                                    <li><a href="#">From Z-A</a></li>
+                                    <li class="@(CurrentFilter == EnumFilters.All ?      "uk-active" : "")"><a @onclick="GetAllBooksAsync">All</a></li>
+                                    <li class="@(CurrentFilter == EnumFilters.Featured ? "uk-active" : "")"><a @onclick="GetFeaturedBooksAsync">Featured</a></li>
+                                    <li class="@(CurrentFilter == EnumFilters.Popular ?  "uk-active" : "")"><a @onclick="GetPopularBooksAsync">Popular</a></li>
                                 </ul>
                             </div>
 
@@ -54,8 +54,8 @@
                             </a>
                             <div uk-dropdown="pos: bottom-right ; mode: click ;animation: uk-animation-scale-up">
                                 <ul class="uk-nav uk-dropdown-nav">
-                                    <li><a @onclick="RefreshList">Refresh</a></li>
-                                    <li><a @onclick="AddnewBook">Add new book</a></li>
+                                    <li><a @onclick="RefreshListAsync">Refresh</a></li>
+                                    <li><a @onclick="AddBook">Add new book</a></li>
                                 </ul>
                             </div>
 
@@ -68,20 +68,20 @@
                     <table class="table align-items-center">
                         <thead>
                             <tr>
-                                <th scope="col"></th>
-                                <th scope="col">Publishing</th>
-                                <th scope="col">Language</th>
-                                <th scope="col">Pages</th>
-                                <th scope="col">Category</th>
-                                <th scope="col">Featured</th>
-                                <th scope="col">Popular</th>
-                                <th scope="col"> </th>
+                                <th scope="col" class="text-center"></th>
+                                <th scope="col" class="text-center">Publishing</th>
+                                <th scope="col" class="text-center">Language</th>
+                                <th scope="col" class="text-center">Pages</th>
+                                <th scope="col" class="text-center">Category</th>
+                                <th scope="col" class="text-center">Featured</th>
+                                <th scope="col" class="text-center">Popular</th>
+                                <th scope="col" class="text-center"></th>
                             </tr>
                         </thead>
                         <tbody class="list">
-                            @if (AllBooks != null)
+                            @if (SomeBooks != null)
                             {
-                                @foreach (var OneBook in AllBooks)
+                                @foreach (var OneBook in SomeBooks)
                                 {
                                     <tr>
                                         <th scope="row">
@@ -117,7 +117,7 @@
                                                 <a class="btn btn-icon btn-hover btn-sm btn-circle" uk-tooltip="Edit" @onclick="@(e => EditBook(OneBook))">
                                                     <i class="uil-pen"></i>
                                                 </a>
-                                                <a class="btn btn-icon btn-hover btn-sm btn-circle" uk-tooltip="Delete user" @onclick="@(e => ConfirmDelete(OneBook))">
+                                                <a class="btn btn-icon btn-hover btn-sm btn-circle" uk-tooltip="Delete" @onclick="@(e => DeleteBook(OneBook))">
                                                     <i class="uil-trash-alt text-danger"></i>
                                                 </a>
                                             </div>

@@ -9,6 +9,8 @@ namespace CoursePlus.Server.Repositories
     public interface IBookRepository
     {
         public IEnumerable<Book> GetBooks();
+        public IEnumerable<Book> GetFeaturedBooks();
+        public IEnumerable<Book> GetPopularBooks();
         public Book GetBook(int Id);
         public Book AddBook(Book book);
         public Book UpdateBook(Book book);

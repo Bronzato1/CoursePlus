@@ -12,6 +12,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Components.Forms;
+using Blazor.ModalDialog;
 
 namespace CoursePlus.Client.Pages.Admin
 {
@@ -27,23 +28,12 @@ namespace CoursePlus.Client.Pages.Admin
         public ICategoryService CategoryService { get; set; }
         [Inject]
         public HttpClient Client { get; set; }
+        [Inject]
+        public IModalDialogService ModalDialog { get; set; }
 
         public EditForm FormContext { get; set; }
 
         public Book Book { get; set; } = new Book();
-
-        //needed to bind to select to value
-        protected string CategoryId
-        {
-            get
-            {
-                return Book.CategoryId.ToString();
-            }
-            set
-            {
-                Book.CategoryId = int.Parse(value);
-            }
-        }
 
         //used to store state of screen
         protected string Message = string.Empty;
@@ -63,28 +53,16 @@ namespace CoursePlus.Client.Pages.Admin
 
             if (Id == 0) // new book is being created
             {
-                // add some defaults
                 Book = new Book { PublishingDate = new DateTime(2000, 1, 1) };
-                //CategoryId = string.Empty;
-                //CategoryId = null;
             }
             else
             {
                 Book = await BookService.GetBook(Id);
-                CategoryId = Book.CategoryId.ToString();
             }
-
-            
-
         }
 
         protected async Task HandleValidSubmit()
         {
-            Debug.WriteLine("##### " + CategoryId);
-            
-            
-            Book.CategoryId = int.Parse(CategoryId);
-
             if (Id == 0)
             {
                 var addedBook = await BookService.AddBook(Book);
@@ -94,7 +72,7 @@ namespace CoursePlus.Client.Pages.Admin
                     Message = "New book added successfully";
                     StateHasChanged();
                     await Task.Delay(2000);
-                    NavigationManager.NavigateTo("/admin/book-overview");
+                    NavigationManager.NavigateTo("/admin/books");
                 }
                 else
                 {
@@ -108,8 +86,8 @@ namespace CoursePlus.Client.Pages.Admin
                 StatusClass = "uk-text-success";
                 Message = "Book updated successfully";
                 StateHasChanged();
-                await Task.Delay(2000);
-                NavigationManager.NavigateTo("/admin/book-overview");
+                await Task.Delay(1000);
+                NavigationManager.NavigateTo("/admin/books");
             }
         }
 
@@ -119,20 +97,19 @@ namespace CoursePlus.Client.Pages.Admin
             Message = "Validation errors";
         }
 
-        protected void CategoryChanged(ChangeEventArgs e)
-        {
-            var selectedString = e.Value.ToString();
-            Book.CategoryId = int.Parse(e.Value.ToString());
-            Console.WriteLine("It is definitely: " + selectedString);
-            //FormContext.EditContext.Validate();
-        }
-
         protected async Task DeleteBook()
         {
-            await BookService.DeleteBook(Book.Id);
+            MessageBoxDialogResult result = await ModalDialog.ShowMessageBoxAsync("Confirm Delete", "Are you sure you want to delete the book ?", MessageBoxButtons.YesNo, MessageBoxDefaultButton.Button2);
 
-            StatusClass = "alert-success";
-            Message = "Deleted successfully";
+            if (result == MessageBoxDialogResult.Yes)
+            {
+                await BookService.DeleteBook(Book.Id);
+                StatusClass = "alert-danger";
+                Message = "Deleted successfully";
+                StateHasChanged();
+                await Task.Delay(1000);
+                NavigationManager.NavigateTo("/admin/books");
+            }            
         }
 
         protected async Task HandleSelection(IFileListEntry[] files)
@@ -159,9 +136,9 @@ namespace CoursePlus.Client.Pages.Admin
             }
         }
 
-        protected void NavigateToOverview()
+        protected void NavigateToList()
         {
-            NavigationManager.NavigateTo("/admin/book-overview");
+            NavigationManager.NavigateTo("/admin/books");
         }
     }
 }

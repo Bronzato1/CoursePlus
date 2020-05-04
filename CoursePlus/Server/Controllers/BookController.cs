@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace CoursePlus.Server.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
     public class BookController : ControllerBase
     {
         private readonly IBookRepository _bookRepository;
@@ -22,19 +21,31 @@ namespace CoursePlus.Server.Controllers
             _bookRepository = bookRepository;
         }
 
-        [HttpGet]
+        [HttpGet("api/books")]
         public IActionResult GetBooks()
         {
             return Ok(_bookRepository.GetBooks());
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("api/books/featured")]
+        public IActionResult GetFeaturedBooks()
+        {
+            return Ok(_bookRepository.GetFeaturedBooks());
+        }
+
+        [HttpGet("api/books/popular")]
+        public IActionResult GetPopularBooks()
+        {
+            return Ok(_bookRepository.GetPopularBooks());
+        }
+
+        [HttpGet("api/book/{id:int}")]
         public IActionResult GetBook(int id)
         {
             return Ok(_bookRepository.GetBook(id));
         }
 
-        [HttpPost]
+        [HttpPost("api/book")]
         public IActionResult CreateBook([FromBody] Book book)
         {
             if (book == null)
@@ -53,7 +64,7 @@ namespace CoursePlus.Server.Controllers
             return Created("book", createdBook);
         }
 
-        [HttpPut]
+        [HttpPut("api/book")]
         public IActionResult UpdateBook([FromBody] Book book)
         {
             if (book == null)
@@ -77,7 +88,7 @@ namespace CoursePlus.Server.Controllers
             return NoContent(); //success
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("api/book/{id:int}")]
         public IActionResult DeleteBook(int id)
         {
             if (id == 0)
