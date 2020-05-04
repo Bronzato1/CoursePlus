@@ -8,7 +8,7 @@
             <li><a href="/" uk-tooltip="title:Home; pos:bottom; offset:21"> <i class="uil-home-alt"></i> </a></li>
             <li><a href="/admin/dashboard">Admin dashboard</a></li>
             <li><a href="/admin/books">All books</a></li>
-            <li>@Book.Title</li>
+            <li>@OneBook.Title</li>
         </Breadcrumbs>
     </Header>
 
@@ -32,13 +32,13 @@
                             </div>
 
                             <hr class="m-0">
-                            <EditForm Model="@Book" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit" class="uk-child-width-1-1@s uk-grid-small p-4" uk-grid>
+                            <EditForm Model="@OneBook" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit" class="uk-child-width-1-1@s uk-grid-small p-4" uk-grid>
 
                                 <div>
                                     <div class="uk-form-group">
                                         <label class="uk-form-label">Title</label>
                                         <div class="uk-position-relative w-100">
-                                            <InputText Id="title" class="uk-input form-control" @bind-Value="Book.Title" placeholder="" />
+                                            <InputText Id="title" class="uk-input form-control" @bind-Value="OneBook.Title" placeholder="" />
                                         </div>
                                     </div>
                                 </div>
@@ -47,7 +47,7 @@
                                     <div class="uk-form-group">
                                         <label class="uk-form-label">Description</label>
                                         <div class="uk-position-relative w-100">
-                                            <InputTextArea rows="5" class="form-control" @bind-Value="Book.Description" />
+                                            <InputTextArea rows="5" class="form-control" @bind-Value="OneBook.Description" />
                                         </div>
                                     </div>
                                 </div>
@@ -56,7 +56,7 @@
                                     <div class="uk-form-group">
                                         <label class="uk-form-label">Page count</label>
                                         <div class="uk-position-relative w-100">
-                                            <InputNumber Id="PageCount" class="uk-input form-control" @bind-Value="Book.PageCount" placeholder="" />
+                                            <InputNumber Id="PageCount" class="uk-input form-control" @bind-Value="OneBook.PageCount" placeholder="" />
                                         </div>
                                     </div>
                                 </div>
@@ -65,7 +65,7 @@
                                     <div class="uk-form-group">
                                         <label class="uk-form-label">Language</label>
                                         <div class="uk-position-relative w-100">
-                                            <InputSelectCustom Id="Language" class="uk-select form-control" placeholder="" @bind-Value="Book.Language">
+                                            <InputSelectCustom Id="Language" class="uk-select form-control" placeholder="" @bind-Value="OneBook.Language">
                                                 <option value=""></option>
                                                 <option value="English">English</option>
                                                 <option value="French">French</option>
@@ -78,7 +78,7 @@
                                     <div class="uk-form-group">
                                         <label class="uk-form-label">Publishing date</label>
                                         <div class="uk-position-relative w-100">
-                                            <InputDate Id="PublishingDate" class="uk-input form-control" @bind-Value="Book.PublishingDate" placeholder="" />
+                                            <InputDate Id="PublishingDate" class="uk-input form-control" @bind-Value="OneBook.PublishingDate" placeholder="" />
                                         </div>
                                     </div>
                                 </div>
@@ -87,7 +87,7 @@
                                     <div class="uk-form-group">
                                         <label class="uk-form-label">Author</label>
                                         <div class="uk-position-relative w-100">
-                                            <InputText Id="author" class="uk-input form-control" @bind-Value="Book.Author" placeholder="" />
+                                            <InputText Id="author" class="uk-input form-control" @bind-Value="OneBook.Author" placeholder="" />
                                         </div>
                                     </div>
                                 </div>
@@ -96,7 +96,7 @@
                                     <div class="uk-form-group">
                                         <label class="uk-form-label">Purchase link</label>
                                         <div class="uk-position-relative w-100">
-                                            <InputText Id="purchaseLink" class="uk-input form-control" @bind-Value="Book.PurchaseLink" placeholder="" />
+                                            <InputText Id="purchaseLink" class="uk-input form-control" @bind-Value="OneBook.PurchaseLink" placeholder="" />
                                         </div>
                                     </div>
                                 </div>
@@ -105,7 +105,7 @@
                                     <div class="uk-form-group">
                                         <label class="uk-form-label">Category</label>
                                         <div class="uk-position-relative w-100">
-                                            <InputSelectCustom id="category" class="form-control col-sm-8" @bind-Value="@Book.CategoryId">
+                                            <InputSelectCustom id="category" class="form-control col-sm-8" @bind-Value="@OneBook.CategoryId">
                                                 <option value=""></option>
                                                 @foreach (var category in Categories)
                                                 {
@@ -119,7 +119,7 @@
                                 <div class="uk-width-1-3@s">
                                     <div class="uk-form-group">
                                         <label for="featured" class=" offset-sm-3">
-                                            <InputCheckbox id="featured" class="uk-checkbox" @bind-Value="@Book.Featured"></InputCheckbox>
+                                            <InputCheckbox id="featured" class="uk-checkbox" @bind-Value="@OneBook.Featured"></InputCheckbox>
                                             &nbsp;Featured
                                         </label>
                                     </div>
@@ -128,7 +128,7 @@
                                 <div class="uk-width-1-3@s">
                                     <div class="uk-form-group">
                                         <label for="popular" class=" offset-sm-3">
-                                            <InputCheckbox id="popular" class="uk-checkbox" @bind-Value="@Book.Popular"></InputCheckbox>
+                                            <InputCheckbox id="popular" class="uk-checkbox" @bind-Value="@OneBook.Popular"></InputCheckbox>
                                             &nbsp;Popular
                                         </label>
                                     </div>
@@ -142,7 +142,7 @@
                                 <div class="uk-flex uk-flex-right pt-4">
                                     <button class="btn btn-light mr-2" @onclick="NavigateToList">Cancel</button>
                                     <button class="btn btn-default mr-2" type="submit">Save Changes</button>
-                                    @if (Book.Id > 0)
+                                    @if (OneBook.Id > 0)
                                     {
                                         <a class="btn btn-danger" @onclick="@DeleteBook">
                                             Delete
@@ -162,9 +162,9 @@
                             Drop a file here or click to choose one
                         </div>
 
-                        @if (Book.Image != null)
+                            @if (OneBook.Image != null)
                         {
-                            <img src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(Book.Image.Data))" />
+                            <img src="@String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(OneBook.Image.Data))" />
                         }
 
                     </div>

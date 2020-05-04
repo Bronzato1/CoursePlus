@@ -1,4 +1,5 @@
 ﻿using CoursePlus.Client.Services;
+using CoursePlus.Shared.Models;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -11,13 +12,22 @@ namespace CoursePlus.Client.Pages
     {
         [Inject]
         public IBookService BookService { get; set; }
+        [Inject]
+        public NavigationManager NavigationManager { get; set; }
 
-        public IEnumerable<CoursePlus.Shared.Models.Book> AllBooks { get; set; }
+        public IEnumerable<CoursePlus.Shared.Models.Book> FeaturedBooks { get; set; }
+
+        public IEnumerable<CoursePlus.Shared.Models.Book> PopularBooks { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            AllBooks = await BookService.GetAllBooksAsync();
+            FeaturedBooks = await BookService.GetFeaturedBooksAsync();
+            PopularBooks = await BookService.GetPopularBooksAsync();
         }
 
+        protected void ViewBook(Book OneBook)
+        {
+            NavigationManager.NavigateTo("/book-detail/" + OneBook.Id);
+        }
     }
 }

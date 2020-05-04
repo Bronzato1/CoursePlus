@@ -11,7 +11,7 @@ namespace CoursePlus.Client.Services
         Task<IEnumerable<Book>> GetAllBooksAsync();
         Task<IEnumerable<Book>> GetFeaturedBooksAsync();
         Task<IEnumerable<Book>> GetPopularBooksAsync();
-        Task<Book> GetBook(int Id);
+        Task<Book> GetBookAsync(int Id);
         Task<Book> AddBook(Book book);
         Task UpdateBook(Book book);
         Task DeleteBook(int id);

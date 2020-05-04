@@ -104,38 +104,28 @@
                 </div>
 
                 <div class="uk-width-1-4@m">
+
                     <h4> Popular books </h4>
+
                     <div id="book-popular">
-                        <div class="book-popular-card">
-                            <img src="images/book/css3.jpg" alt="" class="cover-img">
-                            <div class="book-details">
-                                <a href="#">
-                                    <h4>CSS3 Web Development</h4>
-                                </a>
-                                <p>Richard Ali </p>
-                            </div>
-                            <a href="#"> <i class="icon-feather-bookmark icon-small"></i></a>
-                        </div>
-                        <div class="book-popular-card">
-                            <img src="images/book/vue-2-basics-.jpg" alt="" class="cover-img">
-                            <div class="book-details">
-                                <a href="#">
-                                    <h4>Vue.js Basics</h4>
-                                </a>
-                                <p>John smith </p>
-                            </div>
-                            <a href="#"> <i class="icon-feather-bookmark icon-small"></i></a>
-                        </div>
-                        <div class="book-popular-card">
-                            <img src="images/book/php.jpg" alt="" class="cover-img">
-                            <div class="book-details">
-                                <a href="#">
-                                    <h4>PHP for Beginners</h4>
-                                </a>
-                                <p>Richard Ali </p>
-                            </div>
-                            <a href="#"> <i class="icon-feather-bookmark icon-small"></i></a>
-                        </div>
+
+                        @if (PopularBooks != null)
+                        {
+                            @foreach (var OneBook in PopularBooks.Take(3))
+                            {
+                                <div class="book-popular-card">
+                                    <img src="images/book/css3.jpg" alt="" class="cover-img">
+                                    <div class="book-details">
+                                        <a @onclick="@(e => ViewBook(OneBook))">
+                                            <h4>@OneBook.Title</h4>
+                                        </a>
+                                        <p>@OneBook.Author</p>
+                                    </div>
+                                    <a href="#"> <i class="icon-feather-bookmark icon-small"></i></a>
+                                </div>
+                            }
+                        }
+
                     </div>
                 </div>
 

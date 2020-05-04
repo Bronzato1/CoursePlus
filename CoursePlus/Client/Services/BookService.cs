@@ -34,7 +34,7 @@ namespace CoursePlus.Client.Services
             return await JsonSerializer.DeserializeAsync<IEnumerable<Book>>(await _httpClient.GetStreamAsync($"api/books/popular"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
         }
 
-        public async Task<Book> GetBook(int Id)
+        public async Task<Book> GetBookAsync(int Id)
         {
             return await JsonSerializer.DeserializeAsync<Book>(await _httpClient.GetStreamAsync($"api/book/{Id}"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
         }

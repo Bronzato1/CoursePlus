@@ -14,7 +14,7 @@ namespace CoursePlus.Client.Pages.Admin
         [Inject]
         public IBookService BookService { get; set; }
         [Inject]
-        public NavigationManager MyNavigationManager { get; set; }
+        public NavigationManager NavigationManager { get; set; }
         [Inject]
         public IModalDialogService ModalDialog { get; set; }
 
@@ -54,12 +54,12 @@ namespace CoursePlus.Client.Pages.Admin
 
         protected void EditBook(Book book)
         {
-            MyNavigationManager.NavigateTo("/admin/book/" + book.Id);
+            NavigationManager.NavigateTo("/admin/book/" + book.Id);
         }
 
         protected void AddBook()
         {
-            MyNavigationManager.NavigateTo("/admin/book/0");
+            NavigationManager.NavigateTo("/admin/book/0");
         }
 
         public async Task DeleteBook(Book book)
