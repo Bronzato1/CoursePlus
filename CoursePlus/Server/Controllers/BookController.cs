@@ -39,6 +39,12 @@ namespace CoursePlus.Server.Controllers
             return Ok(_bookRepository.GetPopularBooks());
         }
 
+        [HttpGet("api/books/category/{id:int}")]
+        public IActionResult GetBooksByCategory(int id)
+        {
+            return Ok(_bookRepository.GetBooksByCategory(id));
+        }
+
         [HttpGet("api/book/{id:int}")]
         public IActionResult GetBook(int id)
         {

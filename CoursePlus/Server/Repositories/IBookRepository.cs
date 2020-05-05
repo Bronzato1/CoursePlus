@@ -11,7 +11,8 @@ namespace CoursePlus.Server.Repositories
         public IEnumerable<Book> GetBooks();
         public IEnumerable<Book> GetFeaturedBooks();
         public IEnumerable<Book> GetPopularBooks();
-        public Book GetBook(int Id);
+        public IEnumerable<Book> GetBooksByCategory(int id);
+        public Book GetBook(int id);
         public Book AddBook(Book book);
         public Book UpdateBook(Book book);
         public void DeleteBook(int id);

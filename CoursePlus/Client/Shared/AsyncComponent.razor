@@ -1,0 +1,45 @@
+﻿@typeparam TResult
+@typeparam TInput
+@code
+{
+    [Parameter] public RenderFragment<TResult> DataReadyFragment { get; set; }
+    [Parameter] public RenderFragment DataMissingFragment { get; set; }
+    [Parameter] public Func<TInput, Task<TResult>> AsyncOperation { get; set; }
+    [Parameter] public TInput Input { get; set; }
+    TResult Result { get; set; }
+
+    public int Dummy { get; set; }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await AsyncOperation.Invoke(Input).ContinueWith(t =>
+            {
+                Result = t.Result;
+                InvokeAsync(StateHasChanged);
+            });
+        }
+    }
+}
+
+@if (Result != null && CustomFunctions.IsEnumerableType(typeof(TResult)))
+{
+    System.Collections.ICollection collection = Result as System.Collections.ICollection;
+
+    if (collection.Count > 0)
+    {
+        @DataReadyFragment(Result)
+    }
+    else
+    {
+        @DataMissingFragment
+    }
+}
+else if (Result != null)
+{
+    @DataReadyFragment(Result)
+}
+else if (DataMissingFragment != null)
+{
+    @DataMissingFragment
+}

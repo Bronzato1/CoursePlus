@@ -5,8 +5,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using CoursePlus.Shared.Utilities;
 
-namespace CoursePlus.Client
+namespace CoursePlus.Shared.Utilities
 {
     public class InputSelectCustom<T> : InputSelect<T>
     {
@@ -29,10 +30,25 @@ namespace CoursePlus.Client
                 }
             }
             else 
-            if (typeof(T) == typeof(EnumLanguages) ||
-                typeof(T) == typeof(EnumLanguages?))
+            if (typeof(T).IsEnum)
             {
-                if (Enum.TryParse<EnumLanguages>(value, out var resultEnum))
+                if (CustomFunctions.EnumTryParse<T>(value, out var resultEnum))
+                {
+                    result = (T)(object)resultEnum;
+                    validationErrorMessage = null;
+                    return true;
+                }
+                else
+                {
+                    result = default;
+                    validationErrorMessage = "The chosen value is not valid.";
+                    return false;
+                }
+            }
+            else
+            if (typeof(T).IsNullableEnum())
+            {
+                if (CustomFunctions.NullableEnumTryParse<T>(value, out var resultEnum))
                 {
                     result = (T)(object)resultEnum;
                     validationErrorMessage = null;

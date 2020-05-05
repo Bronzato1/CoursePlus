@@ -40,10 +40,18 @@ namespace CoursePlus.Server.Repositories
                 .Where(x => x.Popular);
         }
 
-        public Book GetBook(int Id)
+        public IEnumerable<Book> GetBooksByCategory(int id)
+        {
+            return _dbContext.Books
+                .Include(x => x.Thumbnail)
+                .Include(x => x.Category)
+                .Where(x => x.CategoryId == id);
+        }
+
+        public Book GetBook(int id)
         {
             var book = _dbContext.Books
-                .Where(x => x.Id == Id)
+                .Where(x => x.Id == id)
                 .Include(x => x.Image)
                 .Include(x => x.Category)
                 .FirstOrDefault();
