@@ -57,8 +57,6 @@ namespace CoursePlus.Client.Pages
 
             context.Items.RemoveRange(0, cptr);
 
-            context.HasNextPage = data.HasNextPage;
-            context.HasPreviousPage = data.HasPreviousPage;
             context.PageIndex = data.PageIndex;
             context.TotalPages = data.TotalPages;
 
@@ -67,7 +65,7 @@ namespace CoursePlus.Client.Pages
 
         protected void ViewBook(Book OneBook)
         {
-            NavigationManager.NavigateTo("/book-detail/" + OneBook.Id);
+            NavigationManager.NavigateTo("/book/" + OneBook.Id);
         }
     }
 }

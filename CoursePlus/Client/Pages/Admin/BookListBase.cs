@@ -15,6 +15,8 @@ namespace CoursePlus.Client.Pages.Admin
         [Inject]
         public IBookService BookService { get; set; }
         [Inject]
+        public ICategoryService CategoryService { get; set; }
+        [Inject]
         public NavigationManager NavigationManager { get; set; }
         [Inject]
         public IModalDialogService ModalDialog { get; set; }
@@ -22,6 +24,8 @@ namespace CoursePlus.Client.Pages.Admin
         public PaginatedList<Book> paginatedList = new PaginatedList<Book>();
 
         public IEnumerable<Book> SomeBooks { get; set; }
+
+        public IEnumerable<Category> SomeCategories { get; set; }
 
         int pageNumber = 1;
 
@@ -35,6 +39,7 @@ namespace CoursePlus.Client.Pages.Admin
 
         protected override async Task OnInitializedAsync()
         {
+            SomeCategories = await CategoryService.GetCategories();
             await RefreshListAsync();
         }
 
@@ -102,6 +107,7 @@ namespace CoursePlus.Client.Pages.Admin
 
         public async Task Filter(string field, string value)
         {
+            pageNumber = 1;
             currentFilterField = field;
             currentFilterValue = value;
 

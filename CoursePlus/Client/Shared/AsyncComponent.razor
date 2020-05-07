@@ -22,7 +22,10 @@
     }
 }
 
-@if (Result != null && CustomFunctions.IsEnumerableType(typeof(TResult)))
+
+@* ================================== THIS CODE SHOULD BE DELETED =================================
+
+    @if (Result != null && CustomFunctions.IsEnumerableType(typeof(TResult)))
 {
     System.Collections.ICollection collection = Result as System.Collections.ICollection;
 
@@ -35,7 +38,23 @@
         @DataMissingFragment
     }
 }
-else if (Result != null)
+else if (Result != null && typeof(TResult) == typeof(CoursePlus.Shared.Infrastructure.PaginatedList<Book>))
+{
+    var result = Result as CoursePlus.Shared.Infrastructure.PaginatedList<Book>;
+
+    if (result.Items.Count > 0)
+    {
+        @DataReadyFragment(Result)
+    }
+    else
+    {
+        @DataMissingFragment
+    }
+}
+else ================================================================================================ *@
+
+
+@if (Result != null)
 {
     @DataReadyFragment(Result)
 }

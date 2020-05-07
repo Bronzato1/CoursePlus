@@ -52,8 +52,14 @@
                                     <li class="@(FilterIndicator("Language", "French"))"><a @onclick="@(() => Filter("Language", "French"))"><i class="icon-material-outline-arrow-right"></i> French</a></li>
                                     <li class="uk-nav-divider"></li>
                                     <li class="uk-nav-header">Category</li>
-                                    <li class="@(FilterIndicator("CategoryId", "5"))"><a @onclick="@(() => Filter("CategoryId", "5"))"><i class="icon-material-outline-arrow-right"></i> C#</a></li>
-                                    <li class="@(FilterIndicator("CategoryId", "3"))"><a @onclick="@(() => Filter("CategoryId", "3"))"><i class="icon-material-outline-arrow-right"></i> JavaScript</a></li>
+
+                                    @if (SomeCategories != null)
+                                    {
+                                        @foreach (var OneCategory in SomeCategories)
+                                        {
+                                            <li class="@(FilterIndicator("CategoryId", OneCategory.Id.ToString()))"><a @onclick="@(() => Filter("CategoryId", OneCategory.Id.ToString()))"><i class="icon-material-outline-arrow-right"></i>@OneCategory.Name</a></li>
+                                        }
+                                    }
                                 </ul>
                             </div>
 
@@ -119,7 +125,7 @@
                                         <td class="text-right">
                                             <!-- Actions -->
                                             <div class="actions ml-3">
-                                                <a href="#" class="btn btn-icon btn-hover btn-sm btn-circle" uk-tooltip="Quick view">
+                                                <a href="/book/@OneBook.Id" class="btn btn-icon btn-hover btn-sm btn-circle" uk-tooltip="Quick view">
                                                     <i class="uil-external-link-alt"></i>
                                                 </a>
                                                 <a class="btn btn-icon btn-hover btn-sm btn-circle" uk-tooltip="Edit" @onclick="@(e => EditBook(OneBook))">
