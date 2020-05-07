@@ -8,7 +8,8 @@ namespace CoursePlus.Client.Services
 {
     public interface ICategoryService
     {
-        Task<IEnumerable<Category>> GetAllCategories();
+        Task<IEnumerable<Category>> GetCategories();
+
         Task<Category> GetCategoryById(int categoryId);
     }
 }

@@ -24,7 +24,7 @@ namespace CoursePlus.Client.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            OneBook = await BookService.GetBookAsync(Id);
+            OneBook = await BookService.GetBook(Id);
         }
 
         protected async Task OpenCoverInNewTab()

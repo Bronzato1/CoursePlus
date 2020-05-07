@@ -9,6 +9,7 @@ namespace CoursePlus.Server.Repositories
     public interface ICategoryRepository
     {
         IEnumerable<Category> GetAllCategories();
+
         Category GetCategoryById(int categoryId);
     }
 }

@@ -1,6 +1,6 @@
 ﻿@page "/books"
 @inherits BookListBase
-
+@using CoursePlus.Shared.Infrastructure 
 <div id="wrapper">
 
     <Header Class="header" UkSticky="top:20; cls-active:header-sticky">
@@ -35,7 +35,7 @@
 
                             @if (FeaturedBooks != null)
                             {
-                                foreach (var OneBook in FeaturedBooks.Take(5))
+                                foreach (var OneBook in FeaturedBooks.Items)
                                 {
                                     <li>
                                         <a @onclick="@(e => ViewBook(OneBook))">
@@ -70,7 +70,7 @@
 
                         @if (PopularBooks != null)
                         {
-                            @foreach (var OneBook in PopularBooks.Take(3))
+                            @foreach (var OneBook in PopularBooks.Items)
                             {
                                 <div class="book-popular-card">
                                     <a @onclick="@(e => ViewBook(OneBook))">
@@ -117,24 +117,34 @@
                     foreach (var OneCategory in Categories)
                     {
                         <li>
-                            <!-- list of items -->
                             <div class="section-small">
-                                <div class="uk-child-width-1-5@m uk-child-width-1-3@s uk-child-width-1-2" uk-grid>
+                                
+                                    <AsyncComponent TResult="PaginatedList<Book>" TInput="int" Input="@OneCategory.Id" AsyncOperation="@GetBooksForCategory">
 
-                                    <AsyncComponent TResult="IEnumerable<Book>" TInput="int" Input="@OneCategory.Id" AsyncOperation="@GetBooksForCategory">
+                                        <DataReadyFragment Context="SomeBooks"> @* <--- the result of the async operation of type PaginatedList *@
 
-                                        <DataReadyFragment Context="SomeBooks"> @* <--- the result of the async operation *@
+                                            <div class="uk-child-width-1-5@m uk-child-width-1-3@s uk-child-width-1-2" uk-grid>
+                                
+                                                @foreach (var OneBook in SomeBooks.Items)
+                                                {
+                                                    <div>
+                                                        <a @onclick="@(e => ViewBook(OneBook))" class="uk-text-bold">
+                                                            <img src="@String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(OneBook.Thumbnail.Data))" class="mb-2 w-100 shadow rounded">
+                                                            @OneBook.Title
+                                                        </a>
+                                                    </div>
+                                                }
 
-                                            @foreach (var OneBook in SomeBooks)
-                                            {
-                                                <div>
-                                                    <a @onclick="@(e => ViewBook(OneBook))" class="uk-text-bold">
-                                                        <img src="@String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(OneBook.Thumbnail.Data))" class="mb-2 w-100 shadow rounded">
-                                                        @OneBook.Title
-                                                    </a>
-                                                </div>
-                                            }
-                                        
+                                            </div>
+
+                                            <div class=" uk-flex uk-flex-center uk-margin-top uk-margin-bottom uk-width-expand">
+
+                                                <Pager PageIndex=@SomeBooks.PageIndex TotalPages=@SomeBooks.TotalPages OnClick="@((newPageNumber) => PageIndexChanged(SomeBooks, newPageNumber, OneCategory.Id))"
+                                                        HasNextPage=@SomeBooks.HasNextPage HasPreviousPage=@SomeBooks.HasPreviousPage>
+                                                </Pager>
+
+                                            </div>
+
                                         </DataReadyFragment>
 
                                         <DataMissingFragment>
@@ -143,33 +153,7 @@
 
                                     </AsyncComponent>
 
-                                </div>
                             </div>
-
-                            <!-- pagination -->
-                            <ul class="uk-pagination uk-flex-center uk-margin-medium">
-                                <li class="uk-active">
-                                    <span>1</span>
-                                </li>
-                                <li>
-                                    <a href="#">2</a>
-                                </li>
-                                <li>
-                                    <a href="#">3</a>
-                                </li>
-                                <li>
-                                    <a href="#">4</a>
-                                </li>
-                                <li>
-                                    <a href="#">5</a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="icon-feather-chevron-right uk-margin-small-top"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#">12</a>
-                                </li>
-                            </ul>
                         </li>
                     }
                 }

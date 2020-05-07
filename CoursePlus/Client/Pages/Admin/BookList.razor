@@ -21,13 +21,14 @@
         <div class="page-content-inner mw-100">
 
             <div class="card">
+
                 <!-- Card header -->
                 <div class="card-header actions-toolbar border-0">
                     <div class="d-flex justify-content-between align-items-center">
                         <h4 class="d-inline-block mb-0">All books (@SomeBooks?.Count())</h4>
                         <div class="d-flex">
 
-                            <a href="#" class="btn btn-icon btn-hover  btn-circle" uk-tooltip="Search product">
+                            <a href="#" class="btn btn-icon btn-hover btn-circle" uk-tooltip="Search product">
                                 <i class="uil-search"></i>
                             </a>
                             <div class="uk-drop" uk-drop="mode: click; pos: left-center; offset: 0">
@@ -37,19 +38,26 @@
                                 </form>
                             </div>
 
-                            <a href="#" class="btn btn-icon btn-hover  btn-circle" uk-tooltip="filter">
+                            <a href="#" class="btn btn-icon btn-hover  btn-circle" uk-tooltip="Filter">
                                 <i class="uil-filter"></i>
                             </a>
                             <div uk-dropdown="pos: bottom-right ; mode: click ;animation: uk-animation-scale-up">
                                 <ul class="uk-nav uk-dropdown-nav">
-                                    <li class="@(CurrentFilter == EnumFilters.All ?      "uk-active" : "")"><a @onclick="GetAllBooksAsync">All</a></li>
-                                    <li class="@(CurrentFilter == EnumFilters.Featured ? "uk-active" : "")"><a @onclick="GetFeaturedBooksAsync">Featured</a></li>
-                                    <li class="@(CurrentFilter == EnumFilters.Popular ?  "uk-active" : "")"><a @onclick="GetPopularBooksAsync">Popular</a></li>
+                                    <li class="@(FilterIndicator("", ""))"><a @onclick="@(() => Filter("", ""))">None</a></li>
+                                    <li class="@(FilterIndicator("Featured", "true"))"><a @onclick="@(() => Filter("Featured", "true"))"><i class="icon-material-outline-arrow-right"></i> Featured</a></li>
+                                    <li class="@(FilterIndicator("Popular", "true"))"><a @onclick="@(() => Filter("Popular", "true"))"><i class="icon-material-outline-arrow-right"></i> Popular</a></li>
+                                    <li class="uk-nav-divider"></li>
+                                    <li class="uk-nav-header">Language</li>
+                                    <li class="@(FilterIndicator("Language", "English"))"><a @onclick="@(() => Filter("Language", "English"))"><i class="icon-material-outline-arrow-right"></i> English</a></li>
+                                    <li class="@(FilterIndicator("Language", "French"))"><a @onclick="@(() => Filter("Language", "French"))"><i class="icon-material-outline-arrow-right"></i> French</a></li>
+                                    <li class="uk-nav-divider"></li>
+                                    <li class="uk-nav-header">Category</li>
+                                    <li class="@(FilterIndicator("CategoryId", "5"))"><a @onclick="@(() => Filter("CategoryId", "5"))"><i class="icon-material-outline-arrow-right"></i> C#</a></li>
+                                    <li class="@(FilterIndicator("CategoryId", "3"))"><a @onclick="@(() => Filter("CategoryId", "3"))"><i class="icon-material-outline-arrow-right"></i> JavaScript</a></li>
                                 </ul>
                             </div>
 
-
-                            <a href="#" class="btn btn-icon btn-hover  btn-circle" uk-tooltip="More">
+                            <a href="#" class="btn btn-icon btn-hover btn-circle" uk-tooltip="More">
                                 <i class="uil-ellipsis-h"></i>
                             </a>
                             <div uk-dropdown="pos: bottom-right ; mode: click ;animation: uk-animation-scale-up">
@@ -59,22 +67,22 @@
                                 </ul>
                             </div>
 
-
                         </div>
                     </div>
                 </div>
+
                 <!-- Table -->
                 <div class="table-responsive">
                     <table class="table align-items-center">
                         <thead>
                             <tr>
-                                <th scope="col" class="text-center"></th>
-                                <th scope="col" class="text-center">Publishing</th>
-                                <th scope="col" class="text-center">Language</th>
-                                <th scope="col" class="text-center">Pages</th>
-                                <th scope="col" class="text-center">Category</th>
-                                <th scope="col" class="text-center">Featured</th>
-                                <th scope="col" class="text-center">Popular</th>
+                                <th scope="col" class="text-left"><span class="uk-margin-large-left" @onclick="@(() => Sort("Title"))">Title</span><i class="@(SortIndicator("Title"))"></i></th>
+                                <th scope="col" class="text-center"><span @onclick="@(() => Sort("PublishingDate"))">Publishing</span><i class="@(SortIndicator("PublishingDate"))"></i></th>
+                                <th scope="col" class="text-center"><span @onclick="@(() => Sort("Language"))">Language</span><i class="@(SortIndicator("Language"))"></i></th>
+                                <th scope="col" class="text-center"><span @onclick="@(() => Sort("PageCount"))">Pages</span><i class="@(SortIndicator("PageCount"))"></i></th>
+                                <th scope="col" class="text-center"><span @onclick="@(() => Sort("Category"))">Category</span><i class="@(SortIndicator("Category"))"></i></th>
+                                <th scope="col" class="text-center"><span @onclick="@(() => Sort("Featured"))">Featured</span><i class="@(SortIndicator("Featured"))"></i></th>
+                                <th scope="col" class="text-center"><span @onclick="@(() => Sort("Popular"))">Popular</span><i class="@(SortIndicator("Popular"))"></i></th>
                                 <th scope="col" class="text-center"></th>
                             </tr>
                         </thead>
@@ -128,6 +136,16 @@
                         </tbody>
                     </table>
                 </div>
+
+                <!-- Card footer -->
+                <div class="card-footer">
+                    <div class="uk-flex uk-flex-right uk-margin-top uk-margin-bottom">
+                        <Pager PageIndex=@paginatedList.PageIndex TotalPages=@paginatedList.TotalPages OnClick="PageIndexChanged"
+                               HasNextPage=@paginatedList.HasNextPage HasPreviousPage=@paginatedList.HasPreviousPage>
+                        </Pager>
+                    </div>
+                </div>
+
             </div>
 
             <Footer></Footer>

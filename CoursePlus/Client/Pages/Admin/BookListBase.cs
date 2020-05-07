@@ -1,5 +1,6 @@
 ﻿using Blazor.ModalDialog;
 using CoursePlus.Client.Services;
+using CoursePlus.Shared.Infrastructure;
 using CoursePlus.Shared.Models;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -18,38 +19,35 @@ namespace CoursePlus.Client.Pages.Admin
         [Inject]
         public IModalDialogService ModalDialog { get; set; }
 
-        public IEnumerable<CoursePlus.Shared.Models.Book> SomeBooks { get; set; }
+        public PaginatedList<Book> paginatedList = new PaginatedList<Book>();
 
-        public EnumFilters CurrentFilter { get; set; } = EnumFilters.All;
+        public IEnumerable<Book> SomeBooks { get; set; }
 
-        public enum EnumFilters
-        {
-            All,
-            Featured,
-            Popular
-        }
+        int pageNumber = 1;
+
+        string currentSortField = "Title";
+
+        string currentSortOrder = "Asc";
+
+        string currentFilterField = string.Empty;
+
+        string currentFilterValue = string.Empty;
 
         protected override async Task OnInitializedAsync()
         {
             await RefreshListAsync();
         }
 
-        protected async Task GetAllBooksAsync()
+        public async void PageIndexChanged(int newPageNumber)
         {
-            CurrentFilter = EnumFilters.All;
-            await RefreshListAsync();
-        }
+            if (newPageNumber < 1 || newPageNumber > paginatedList.TotalPages)
+            {
+                return;
+            }
 
-        protected async Task GetFeaturedBooksAsync()
-        {
-            CurrentFilter = EnumFilters.Featured;
+            pageNumber = newPageNumber;
             await RefreshListAsync();
-        }
-
-        protected async Task GetPopularBooksAsync()
-        {
-            CurrentFilter = EnumFilters.Popular;
-            await RefreshListAsync();
+            StateHasChanged();
         }
 
         protected void EditBook(Book book)
@@ -69,24 +67,54 @@ namespace CoursePlus.Client.Pages.Admin
             if (result == MessageBoxDialogResult.Yes)
             {
                 await BookService.DeleteBook(book.Id);
-                SomeBooks = await BookService.GetAllBooksAsync();
+                await RefreshListAsync();
             }
         }
 
         public async Task RefreshListAsync()
         {
-            switch (CurrentFilter)
+            paginatedList = await BookService.GetBooks(pageNumber, currentSortField, currentSortOrder, currentFilterField, currentFilterValue);
+            SomeBooks = paginatedList.Items;
+        }
+
+        public async Task Sort(string sortField)
+        {
+            if (sortField.Equals(currentSortField))
             {
-                case EnumFilters.All:
-                    SomeBooks = await BookService.GetAllBooksAsync();
-                    break;
-                case EnumFilters.Featured:
-                    SomeBooks = await BookService.GetFeaturedBooksAsync();
-                    break;
-                case EnumFilters.Popular:
-                    SomeBooks = await BookService.GetPopularBooksAsync();
-                    break;
+                currentSortOrder = currentSortOrder.Equals("Asc") ? "Desc" : "Asc";
             }
+            else
+            {
+                currentSortField = sortField;
+                currentSortOrder = "Asc";
+            }
+            await RefreshListAsync();
+        }
+
+        public string SortIndicator(string sortField)
+        {
+            if (sortField.Equals(currentSortField))
+            {
+                return currentSortOrder.Equals("Asc") ? "icon-material-outline-arrow-drop-down" : "icon-material-outline-arrow-drop-up";
+            }
+            return string.Empty;
+        }
+
+        public async Task Filter(string field, string value)
+        {
+            currentFilterField = field;
+            currentFilterValue = value;
+
+            await RefreshListAsync();
+        }
+
+        public string FilterIndicator(string filterField, string filterValue)
+        {
+            if (filterField.Equals(currentFilterField) && filterValue.Equals(currentFilterValue))
+            {
+                return "uk-active";
+            }
+            return string.Empty;
         }
     }
 }

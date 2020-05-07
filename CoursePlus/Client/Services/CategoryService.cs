@@ -17,7 +17,7 @@ namespace CoursePlus.Client.Services
             _httpClient = httpClient;
         }
 
-        public async Task<IEnumerable<Category>> GetAllCategories()
+        public async Task<IEnumerable<Category>> GetCategories()
         {
             return await JsonSerializer.DeserializeAsync<IEnumerable<Category>>
                 (await _httpClient.GetStreamAsync($"api/category"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });

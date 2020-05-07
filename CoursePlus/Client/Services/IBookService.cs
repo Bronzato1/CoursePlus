@@ -1,4 +1,5 @@
-﻿using CoursePlus.Shared.Models;
+﻿using CoursePlus.Shared.Infrastructure;
+using CoursePlus.Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,13 +9,14 @@ namespace CoursePlus.Client.Services
 {
     public interface IBookService
     {
-        Task<IEnumerable<Book>> GetAllBooksAsync();
-        Task<IEnumerable<Book>> GetFeaturedBooksAsync();
-        Task<IEnumerable<Book>> GetPopularBooksAsync();
-        Task<IEnumerable<Book>> GetBooksByCategory(int id);
-        Task<Book> GetBookAsync(int id);
+        Task<PaginatedList<Book>> GetBooks(int pageNumber = 1, string sortField = "", string sortOrder = "", string filterField = "", string filterValue = "");
+
+        Task<Book> GetBook(int id);
+
         Task<Book> AddBook(Book book);
+
         Task UpdateBook(Book book);
+
         Task DeleteBook(int id);
     }
 }

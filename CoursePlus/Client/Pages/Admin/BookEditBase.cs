@@ -49,7 +49,7 @@ namespace CoursePlus.Client.Pages.Admin
 
         protected override async Task OnInitializedAsync()
         {
-            Categories = (await CategoryService.GetAllCategories()).ToList();
+            Categories = (await CategoryService.GetCategories()).ToList();
 
             if (Id == 0) // new book is being created
             {
@@ -57,7 +57,7 @@ namespace CoursePlus.Client.Pages.Admin
             }
             else
             {
-                OneBook = await BookService.GetBookAsync(Id);
+                OneBook = await BookService.GetBook(Id);
             }
         }
 

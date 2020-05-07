@@ -1,4 +1,5 @@
-﻿using CoursePlus.Shared.Models;
+﻿using CoursePlus.Shared.Infrastructure;
+using CoursePlus.Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,27 +20,21 @@ namespace CoursePlus.Client.Services
             _httpClient = httpClient;
         }
 
-        public async Task<IEnumerable<Book>> GetAllBooksAsync()
+        public async Task<PaginatedList<Book>> GetBooks(int pageNumber, string sortField, string sortOrder, string filterField, string filterValue)
         {
-            return await JsonSerializer.DeserializeAsync<IEnumerable<Book>>(await _httpClient.GetStreamAsync($"api/books"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+            var response = await _httpClient.GetAsync($"api/books/get?pageNumber={pageNumber}&sortField={sortField}&sortOrder={sortOrder}&filterField={filterField}&filterValue={filterValue}");
+            response.EnsureSuccessStatusCode();
+
+            using var responseStream = await response.Content.ReadAsStreamAsync();
+            var result = await JsonSerializer.DeserializeAsync<PaginatedList<Book>>(responseStream, new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                PropertyNameCaseInsensitive = true,
+            });
+            return result;
         }
 
-        public async Task<IEnumerable<Book>> GetFeaturedBooksAsync()
-        {
-            return await JsonSerializer.DeserializeAsync<IEnumerable<Book>>(await _httpClient.GetStreamAsync($"api/books/featured"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
-        }
-
-        public async Task<IEnumerable<Book>> GetPopularBooksAsync()
-        {
-            return await JsonSerializer.DeserializeAsync<IEnumerable<Book>>(await _httpClient.GetStreamAsync($"api/books/popular"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
-        }
-
-        public async Task<IEnumerable<Book>> GetBooksByCategory(int id)
-        {
-            return await JsonSerializer.DeserializeAsync<IEnumerable<Book>>(await _httpClient.GetStreamAsync($"api/books/category/{id}"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
-        }
-
-        public async Task<Book> GetBookAsync(int id)
+        public async Task<Book> GetBook(int id)
         {
             return await JsonSerializer.DeserializeAsync<Book>(await _httpClient.GetStreamAsync($"api/book/{id}"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
         }

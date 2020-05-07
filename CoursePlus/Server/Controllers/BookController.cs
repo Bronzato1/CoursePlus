@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CoursePlus.Shared.Infrastructure;
 using CoursePlus.Server.Repositories;
 using CoursePlus.Shared.Models;
 using CoursePlus.Shared.Policies;
@@ -21,28 +22,12 @@ namespace CoursePlus.Server.Controllers
             _bookRepository = bookRepository;
         }
 
-        [HttpGet("api/books")]
-        public IActionResult GetBooks()
+        [HttpGet]
+        [Route("api/books/get")]
+        public async Task<ActionResult<PaginatedList<Book>>> Get(int? pageNumber, string sortField, string sortOrder, string filterField, string filterValue)
         {
-            return Ok(_bookRepository.GetBooks());
-        }
-
-        [HttpGet("api/books/featured")]
-        public IActionResult GetFeaturedBooks()
-        {
-            return Ok(_bookRepository.GetFeaturedBooks());
-        }
-
-        [HttpGet("api/books/popular")]
-        public IActionResult GetPopularBooks()
-        {
-            return Ok(_bookRepository.GetPopularBooks());
-        }
-
-        [HttpGet("api/books/category/{id:int}")]
-        public IActionResult GetBooksByCategory(int id)
-        {
-            return Ok(_bookRepository.GetBooksByCategory(id));
+            var list = await _bookRepository.GetList(pageNumber, sortField, sortOrder, filterField, filterValue);
+            return list;
         }
 
         [HttpGet("api/book/{id:int}")]

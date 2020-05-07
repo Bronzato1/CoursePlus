@@ -1,5 +1,7 @@
 ﻿using CoursePlus.Server.Data;
+using CoursePlus.Shared.Infrastructure;
 using CoursePlus.Shared.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -46,6 +48,25 @@ namespace CoursePlus.Server.Repositories
                 .Include(x => x.Thumbnail)
                 .Include(x => x.Category)
                 .Where(x => x.CategoryId == id);
+        }
+
+        public async Task<PaginatedList<Book>> GetList(int? pageNumber, string sortField, string sortOrder, string filterField, string filterValue)
+        {
+            try
+            {
+                int pageSize = 5;
+                var bookList = _dbContext.Books
+                                         .Include(x => x.Thumbnail)
+                                         .Include(x => x.Category)
+                                         .WhereDynamic(filterField, filterValue)
+                                         .OrderByDynamic(sortField, sortOrder);
+
+                return await PaginatedList<Book>.CreateAsync(bookList.AsNoTracking(), pageNumber ?? 1, pageSize);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException();
+            }
         }
 
         public Book GetBook(int id)
