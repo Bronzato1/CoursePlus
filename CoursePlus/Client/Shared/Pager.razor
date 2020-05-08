@@ -1,20 +1,30 @@
 ﻿@if (TotalPages > 0)
 {
-    <div class="pager">
-        <button type="button" class="btn btn-default btn-sm" disabled="@((PageIndex == 1) ? "disabled" : null)" @onclick="@(() => OnClick.InvokeAsync(1))">
-            <i class="icon-feather-chevrons-left" aria-hidden="true"></i>
-        </button>
-        <button type="button" class="btn btn-default btn-sm" disabled="@(HasPreviousPage ? null : "disabled")" @onclick="@(() => OnClick.InvokeAsync(PageIndex - 1))">
-            <i class="icon-feather-chevron-left" aria-hidden="true"></i>
-        </button>
-        <span>@PageIndex</span>
-        <button type="button" class="btn btn-default btn-sm" disabled="@(HasNextPage ? null : "disabled")" @onclick="@(() => OnClick.InvokeAsync(PageIndex + 1))">
-            <i class="icon-feather-chevron-right" aria-hidden="true"></i>
-        </button>
-        <button type="button" class="btn btn-default btn-sm" disabled="@((PageIndex == TotalPages) ? "disabled" : null)" @onclick="@(() => OnClick.InvokeAsync(TotalPages))">
-            <i class="icon-feather-chevrons-right" aria-hidden="true"></i>
-        </button>
-    </div>
+    <ul class="uk-pagination my-1 @AlignClass" uk-margin>
+        <li class="@((PageIndex == 1) ? "uk-disabled" : "uk-enabled")">
+            <a @onclick="@(() => OnClick.InvokeAsync(1))">
+                <i class="icon-line-awesome-chevron-left" aria-hidden="true"></i>
+            </a>
+        </li>
+        <li class="@(HasPreviousPage ? "uk-enabled" : "uk-disabled")">
+            <a @onclick="@(() => OnClick.InvokeAsync(PageIndex - 1))">
+                <i uk-pagination-previous></i>
+            </a>
+        </li>
+        <li class="uk-active">
+            <span>@PageIndex</span>
+        </li>
+        <li class="@(HasNextPage ? "uk-enabled" : "uk-disabled")">
+            <a @onclick="@(() => OnClick.InvokeAsync(PageIndex + 1))">
+                <i uk-pagination-next></i>
+            </a>
+        </li>
+        <li class="@((PageIndex == TotalPages) ? "uk-disabled" : "uk-enabled")">
+            <a @onclick="@(() => OnClick.InvokeAsync(TotalPages))">
+                <i class="icon-line-awesome-chevron-right"></i>
+            </a>
+        </li>
+    </ul>
 }
 
 <style>
@@ -39,5 +49,8 @@
 
     [Parameter]
     public EventCallback<int> OnClick { get; set; }
+
+    [Parameter]
+    public string AlignClass { get; set; }
 
 }

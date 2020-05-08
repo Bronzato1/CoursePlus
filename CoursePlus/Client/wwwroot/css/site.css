@@ -224,3 +224,7 @@ li.uk-active {
     opacity: 0;
     cursor: pointer;
 }
+
+.uk-enabled a {
+    background-color: gainsboro;
+}
