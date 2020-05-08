@@ -1,6 +1,6 @@
 ﻿@if (TotalPages > 0)
 {
-    <div class="float-left pager">
+    <div class="pager">
         <button type="button" class="btn btn-default btn-sm" disabled="@((PageIndex == 1) ? "disabled" : null)" @onclick="@(() => OnClick.InvokeAsync(1))">
             <i class="icon-feather-chevrons-left" aria-hidden="true"></i>
         </button>

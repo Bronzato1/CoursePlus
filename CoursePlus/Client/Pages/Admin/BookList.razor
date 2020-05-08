@@ -25,7 +25,7 @@
                 <!-- Card header -->
                 <div class="card-header actions-toolbar border-0">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h4 class="d-inline-block mb-0">All books (@SomeBooks?.Count())</h4>
+                        <h4 class="d-inline-block mb-0">All books</h4>
                         <div class="d-flex">
 
                             <a href="#" class="btn btn-icon btn-hover btn-circle" uk-tooltip="Search product">
@@ -145,10 +145,15 @@
 
                 <!-- Card footer -->
                 <div class="card-footer">
-                    <div class="uk-flex uk-flex-right uk-margin-top uk-margin-bottom">
-                        <Pager PageIndex=@paginatedList.PageIndex TotalPages=@paginatedList.TotalPages OnClick="PageIndexChanged"
-                               HasNextPage=@paginatedList.HasNextPage HasPreviousPage=@paginatedList.HasPreviousPage>
-                        </Pager>
+                    <div class="uk-flex uk-margin-top uk-margin-bottom">
+                        <div class="uk-width-1-2">
+                            @paginatedList.TotalItems items
+                        </div>
+                        <div class="uk-width-1-2 uk-text-right">
+                            <Pager PageIndex=@paginatedList.PageIndex TotalPages=@paginatedList.TotalPages OnClick="PageIndexChanged"
+                                   HasNextPage=@paginatedList.HasNextPage HasPreviousPage=@paginatedList.HasPreviousPage>
+                            </Pager>
+                        </div>
                     </div>
                 </div>
 

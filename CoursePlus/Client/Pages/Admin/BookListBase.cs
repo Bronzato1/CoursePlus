@@ -23,7 +23,7 @@ namespace CoursePlus.Client.Pages.Admin
 
         public PaginatedList<Book> paginatedList = new PaginatedList<Book>();
 
-        public IEnumerable<Book> SomeBooks { get; set; }
+        public IEnumerable<Book> SomeBooks { get { return paginatedList.Items; } }
 
         public IEnumerable<Category> SomeCategories { get; set; }
 
@@ -79,7 +79,6 @@ namespace CoursePlus.Client.Pages.Admin
         public async Task RefreshListAsync()
         {
             paginatedList = await BookService.GetBooks(pageNumber, currentSortField, currentSortOrder, currentFilterField, currentFilterValue);
-            SomeBooks = paginatedList.Items;
         }
 
         public async Task Sort(string sortField)
