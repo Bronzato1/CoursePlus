@@ -16,16 +16,14 @@ using Blazor.ModalDialog;
 
 namespace CoursePlus.Client.Pages.Admin
 {
-    public class BookEditBase : ComponentBase
+    public class InstructorEditBase : ComponentBase
     {
         [Parameter]
         public int Id { get; set; }
         [Inject]
         public NavigationManager NavigationManager { get; set; }
         [Inject]
-        public IBookService BookService { get; set; }
-        [Inject]
-        public ICategoryService CategoryService { get; set; }
+        public IInstructorService InstructorService { get; set; }
         [Inject]
         public HttpClient Client { get; set; }
         [Inject]
@@ -33,31 +31,26 @@ namespace CoursePlus.Client.Pages.Admin
 
         public EditForm FormContext { get; set; }
 
-        public Book OneBook { get; set; } = new Book();
+        public Instructor OneInstructor { get; set; } = new Instructor();
 
         //used to store state of screen
         protected string Message = string.Empty;
         protected string StatusClass = string.Empty;
 
-        public List<Category> Categories { get; set; } = new List<Category>();
-
         protected override void OnParametersSet()
         {
-            //Console.WriteLine(Id);
             base.OnParametersSet();
         }
 
         protected override async Task OnInitializedAsync()
         {
-            Categories = (await CategoryService.GetCategories()).ToList();
-
-            if (Id == 0) // new book is being created
+            if (Id == 0) // new instructor is being created
             {
-                OneBook = new Book { PublishingDate = new DateTime(2000, 1, 1) };
+                OneInstructor = new Instructor { User = new CustomUser() };
             }
             else
             {
-                OneBook = await BookService.GetBook(Id);
+                OneInstructor = await InstructorService.GetInstructor(Id);
             }
         }
 
@@ -65,14 +58,14 @@ namespace CoursePlus.Client.Pages.Admin
         {
             if (Id == 0)
             {
-                var addedBook = await BookService.AddBook(OneBook);
-                if (addedBook != null)
+                var addedInstructor = await InstructorService.AddInstructor(OneInstructor);
+                if (addedInstructor != null)
                 {
                     StatusClass = "uk-text-success";
-                    Message = "New book added successfully";
+                    Message = "New instructor added successfully";
                     StateHasChanged();
                     await Task.Delay(2000);
-                    NavigationManager.NavigateTo("/admin/books");
+                    NavigationManager.NavigateTo("/admin/instructors");
                 }
                 else
                 {
@@ -82,12 +75,12 @@ namespace CoursePlus.Client.Pages.Admin
             }
             else
             {
-                await BookService.UpdateBook(OneBook);
+                await InstructorService.UpdateInstructor(OneInstructor);
                 StatusClass = "uk-text-success";
-                Message = "Book updated successfully";
+                Message = "Instructor updated successfully";
                 StateHasChanged();
                 await Task.Delay(1000);
-                NavigationManager.NavigateTo("/admin/books");
+                NavigationManager.NavigateTo("/admin/instructors");
             }
         }
 
@@ -97,19 +90,19 @@ namespace CoursePlus.Client.Pages.Admin
             Message = "Validation errors";
         }
 
-        protected async Task DeleteBook()
+        protected async Task DeleteInstructor()
         {
-            MessageBoxDialogResult result = await ModalDialog.ShowMessageBoxAsync("Confirm Delete", "Are you sure you want to delete the book ?", MessageBoxButtons.YesNo, MessageBoxDefaultButton.Button2);
+            MessageBoxDialogResult result = await ModalDialog.ShowMessageBoxAsync("Confirm Delete", "Are you sure you want to delete the instructor ?", MessageBoxButtons.YesNo, MessageBoxDefaultButton.Button2);
 
             if (result == MessageBoxDialogResult.Yes)
             {
-                await BookService.DeleteBook(OneBook.Id);
+                await InstructorService.DeleteInstructor(OneInstructor.Id);
                 StatusClass = "alert-danger";
                 Message = "Deleted successfully";
                 StateHasChanged();
                 await Task.Delay(1000);
-                NavigationManager.NavigateTo("/admin/books");
-            }            
+                NavigationManager.NavigateTo("/admin/instructors");
+            }
         }
 
         protected async Task HandleSelection(IFileListEntry[] files)
@@ -123,22 +116,21 @@ namespace CoursePlus.Client.Pages.Admin
                 await file.Data.CopyToAsync(ms);
 
                 var content = new MultipartFormDataContent { { new ByteArrayContent(ms.GetBuffer()), "\"upload\"", file.Name } };
-                var result = await Client.PostAsync("api/upload/image", content);
+                var result = await Client.PostAsync("api/upload/avatar", content);
                 result.EnsureSuccessStatusCode();
-                var uploadImageResult = JsonSerializer.Deserialize<UploadImageResult>(await result.Content.ReadAsStringAsync(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-                OneBook.ImageId = uploadImageResult.ImageId;
-                OneBook.ThumbnailId = uploadImageResult.ThumbnailId;
+                var uploadAvatarResult = JsonSerializer.Deserialize<UploadAvatarResult>(await result.Content.ReadAsStringAsync(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                OneInstructor.User.AvatarId = uploadAvatarResult.AvatarId;
 
-                if (OneBook.Image == null) // First time image for this book
-                    OneBook.Image = new CoursePlus.Shared.Models.Image();
+                if (OneInstructor.User.Avatar == null) // First time image for this instructor
+                    OneInstructor.User.Avatar = new CoursePlus.Shared.Models.Avatar();
 
-                OneBook.Image.Data = ms.ToArray();
+                OneInstructor.User.Avatar.Data = ms.ToArray();
             }
         }
 
         protected void NavigateToList()
         {
-            NavigationManager.NavigateTo("/admin/books");
+            NavigationManager.NavigateTo("/admin/instructors");
         }
     }
 }

@@ -1,6 +1,6 @@
 namespace CoursePlus.Shared.Models
 {
-    public class UploadResult
+    public class UploadImageResult
     {
         public int ImageId { get; set; }
         public int ThumbnailId { get; set; }

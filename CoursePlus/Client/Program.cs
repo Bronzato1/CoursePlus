@@ -27,6 +27,7 @@ namespace CoursePlus.Client
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<IBookService, BookService>();
             builder.Services.AddScoped<ICategoryService, CategoryService>();
+            builder.Services.AddScoped<IInstructorService, InstructorService>();
             builder.Services.AddModalDialog();
             builder.RootComponents.Add<App>("app");
             builder.Services.AddSingleton(new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });

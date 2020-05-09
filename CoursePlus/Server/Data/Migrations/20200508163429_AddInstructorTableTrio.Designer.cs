@@ -4,35 +4,22 @@ using CoursePlus.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CoursePlus.Server.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200508163429_AddInstructorTableTrio")]
+    partial class AddInstructorTableTrio
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("CoursePlus.Shared.Models.Avatar", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<byte[]>("Data")
-                        .HasColumnType("varbinary(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Avatars");
-                });
 
             modelBuilder.Entity("CoursePlus.Shared.Models.Book", b =>
                 {
@@ -206,9 +193,6 @@ namespace CoursePlus.Server.Data.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<int?>("AvatarId")
-                        .HasColumnType("int");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -260,8 +244,6 @@ namespace CoursePlus.Server.Data.Migrations
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AvatarId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -499,13 +481,6 @@ namespace CoursePlus.Server.Data.Migrations
                     b.HasOne("CoursePlus.Shared.Models.Thumbnail", "Thumbnail")
                         .WithMany()
                         .HasForeignKey("ThumbnailId");
-                });
-
-            modelBuilder.Entity("CoursePlus.Shared.Models.CustomUser", b =>
-                {
-                    b.HasOne("CoursePlus.Shared.Models.Avatar", "Avatar")
-                        .WithMany()
-                        .HasForeignKey("AvatarId");
                 });
 
             modelBuilder.Entity("CoursePlus.Shared.Models.Instructor", b =>

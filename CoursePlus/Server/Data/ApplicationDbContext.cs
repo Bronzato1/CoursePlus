@@ -25,7 +25,9 @@ namespace CoursePlus.Server.Data
         public DbSet<Book> Books { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<Thumbnail> Thumbnails { get; set; }
+        public DbSet<Avatar> Avatars { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Instructor> Instructors { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -68,14 +70,6 @@ namespace CoursePlus.Server.Data
 
             return base.SaveChanges();
         }
-    }
-
-    public class CustomUser : IdentityUser
-    {
-        [PersonalData]
-        public string FirstName { get; set; }
-        [PersonalData]
-        public string LastName { get; set; }
     }
 
     public static class DbInitializer

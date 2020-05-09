@@ -16,16 +16,27 @@ namespace CoursePlus.Shared.Infrastructure
             if (string.IsNullOrEmpty(orderByMember) || string.IsNullOrEmpty(direction))
                 return query;
 
-            var queryElementTypeParam = Expression.Parameter(typeof(T));
-            var memberAccess = Expression.PropertyOrField(queryElementTypeParam, orderByMember);
-            var keySelector = Expression.Lambda(memberAccess, queryElementTypeParam);
+            var propertyNames = orderByMember.Split(".");
+            var param = Expression.Parameter(typeof(T), string.Empty);
+            var property = (Expression)param;
+
+            foreach (var prop in propertyNames)
+            {
+                property = Expression.PropertyOrField(property, prop);
+            }
+
+            var lambda = Expression.Lambda(property, param);
+
+            //var queryElementTypeParam = Expression.Parameter(typeof(T));
+            //var memberAccess = Expression.PropertyOrField(queryElementTypeParam, orderByMember);
+            //var keySelector = Expression.Lambda(memberAccess, queryElementTypeParam);
 
             var orderBy = Expression.Call(
                 typeof(Queryable),
                 direction.ToUpper() == "ASC" ? "OrderBy" : "OrderByDescending",
-                new Type[] { typeof(T), memberAccess.Type },
+                new Type[] { typeof(T), property.Type },
                 query.Expression,
-                Expression.Quote(keySelector));
+                Expression.Quote(lambda));
 
             return query.Provider.CreateQuery<T>(orderBy);
         }
@@ -39,9 +50,9 @@ namespace CoursePlus.Shared.Infrastructure
             var prop = Expression.Property(param, filterMember);
             var value = GetValueExpression(filterMember, filterValue, param);
             var body = Expression.Equal(prop, value);
-            var exp = Expression.Lambda<Func<T, bool>>(body, param);
+            var lambda = Expression.Lambda<Func<T, bool>>(body, param);
 
-            return System.Linq.Queryable.Where(query, exp);
+            return System.Linq.Queryable.Where(query, lambda);
         }
 
         private static UnaryExpression GetValueExpression(string propertyName, string val, ParameterExpression param)

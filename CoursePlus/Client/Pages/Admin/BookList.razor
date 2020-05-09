@@ -147,11 +147,11 @@
                 <div class="card-footer">
                     <div class="uk-flex uk-flex-middle">
                         <div class="uk-width-1-2">
-                            @paginatedList.TotalItems items
+                            @PaginatedList.TotalItems items
                         </div>
                         <div class="uk-width-1-2">
-                            <Pager PageIndex=@paginatedList.PageIndex TotalPages=@paginatedList.TotalPages OnClick="PageIndexChanged" AlignClass="uk-flex-right"
-                                   HasNextPage=@paginatedList.HasNextPage HasPreviousPage=@paginatedList.HasPreviousPage>
+                            <Pager PageIndex=@PaginatedList.PageIndex TotalPages=@PaginatedList.TotalPages OnClick="PageIndexChanged" AlignClass="uk-flex-right"
+                                   HasNextPage=@PaginatedList.HasNextPage HasPreviousPage=@PaginatedList.HasPreviousPage>
                             </Pager>
                         </div>
                     </div>

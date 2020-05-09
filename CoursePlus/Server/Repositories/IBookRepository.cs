@@ -9,14 +9,6 @@ namespace CoursePlus.Server.Repositories
 {
     public interface IBookRepository
     {
-        public IEnumerable<Book> GetBooks();
-
-        public IEnumerable<Book> GetFeaturedBooks();
-
-        public IEnumerable<Book> GetPopularBooks();
-
-        public IEnumerable<Book> GetBooksByCategory(int id);
-
         Task<PaginatedList<Book>> GetList(int? pageNumber, string sortField, string sortOrder, string filterField, string filterValue);
 
         public Book GetBook(int id);

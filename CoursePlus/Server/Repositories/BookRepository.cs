@@ -19,37 +19,6 @@ namespace CoursePlus.Server.Repositories
             _dbContext = dbContext;
         }
 
-        public IEnumerable<Book> GetBooks()
-        {
-            return _dbContext.Books
-                .Include(x => x.Thumbnail)
-                .Include(x => x.Category);
-        }
-
-        public IEnumerable<Book> GetFeaturedBooks()
-        {
-            return _dbContext.Books
-                .Include(x => x.Thumbnail)
-                .Include(x => x.Category)
-                .Where(x => x.Featured);
-        }
-
-        public IEnumerable<Book> GetPopularBooks()
-        {
-            return _dbContext.Books
-                .Include(x => x.Thumbnail)
-                .Include(x => x.Category)
-                .Where(x => x.Popular);
-        }
-
-        public IEnumerable<Book> GetBooksByCategory(int id)
-        {
-            return _dbContext.Books
-                .Include(x => x.Thumbnail)
-                .Include(x => x.Category)
-                .Where(x => x.CategoryId == id);
-        }
-
         public async Task<PaginatedList<Book>> GetList(int? pageNumber, string sortField, string sortOrder, string filterField, string filterValue)
         {
             try

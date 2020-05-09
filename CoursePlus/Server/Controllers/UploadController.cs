@@ -12,7 +12,6 @@ using System.Drawing.Imaging;
 
 namespace CoursePlus.Server.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     public class UploadController : ControllerBase
     {
@@ -25,8 +24,8 @@ namespace CoursePlus.Server.Controllers
             _dbContext = dbContext;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Post()
+        [HttpPost("api/upload/image")]
+        public async Task<IActionResult> PostImage()
         {
             if (HttpContext.Request.Form.Files.Count == 1)
             {
@@ -57,7 +56,34 @@ namespace CoursePlus.Server.Controllers
 
                 await _dbContext.SaveChangesAsync();
                 
-                return Ok(new UploadResult { ImageId = newImage.Id, ThumbnailId = newThumbnail.Id });
+                return Ok(new UploadImageResult { ImageId = newImage.Id, ThumbnailId = newThumbnail.Id });
+            }
+            return BadRequest();
+        }
+
+        [HttpPost("api/upload/avatar")]
+        public async Task<IActionResult> PostAvatar()
+        {
+            if (HttpContext.Request.Form.Files.Count == 1)
+            {
+                var fileForm = HttpContext.Request.Form.Files.First();
+
+                System.Drawing.Image avatar;
+
+                Avatar newAvatar;
+
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    await fileForm.CopyToAsync(ms);
+                    avatar = System.Drawing.Image.FromStream(ms);
+                    newAvatar = new Avatar { Data = ms.ToArray() };
+                }
+
+                _dbContext.Avatars.Add(newAvatar);
+
+                await _dbContext.SaveChangesAsync();
+
+                return Ok(new UploadAvatarResult { AvatarId = newAvatar.Id });
             }
             return BadRequest();
         }

@@ -18,6 +18,7 @@ using CoursePlus.Server.Repositories;
 using CoursePlus.Shared.Policies;
 using Microsoft.AspNetCore.Http;
 using System.Security.Principal;
+using CoursePlus.Shared.Models;
 
 namespace CoursePlus.Server
 {
@@ -66,6 +67,7 @@ namespace CoursePlus.Server
 
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IInstructorRepository, InstructorRepository>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 

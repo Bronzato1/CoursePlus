@@ -1,0 +1,101 @@
+﻿@page "/admin/instructors"
+@inherits InstructorListBase
+
+<div id="wrapper">
+
+    <Header Class="header" UkSticky="top:20; cls-active:header-sticky">
+        <Breadcrumbs>
+            <li><a href="/" uk-tooltip="title:Home; pos:bottom; offset:21"> <i class="uil-home-alt"></i> </a></li>
+            <li><a href="/admin/dashboard">Admin dashboard</a></li>
+            <li>All instructors</li>
+        </Breadcrumbs>
+    </Header>
+
+    <SearchOnMobile></SearchOnMobile>
+
+    <SearchOnDesktop></SearchOnDesktop>
+
+    <SideNav></SideNav>
+
+    <!-- content -->
+    <div class="page-content">
+        <div class="page-content-inner">
+
+            <div class="section-header mb-lg-2 border-0 uk-flex-middle">
+                <div class="section-header-left">
+                    <h2 class="uk-heading-line text-left"><span> Instructors </span></h2>
+                </div>
+                <div class="section-header-right">
+
+                    <a href="#" uk-tooltip="title: View as list; pos: top-right" title="" aria-expanded="false">
+                        <i class="icon-feather-list"></i>
+                    </a>
+                    <div class="display-as">
+                        <a href="your-laked-videos.html" class="active"
+                           uk-tooltip="title: View as Grid; pos: top-right" title="" aria-expanded="false">
+                            <i class="icon-feather-grid"></i>
+                        </a>
+                    </div>
+
+                    <a href="javascript:void" @onclick="AddInstructor" class="btn btn-default uk-visible@s"> <i class="uil-plus"></i> Add instructor</a>
+
+                </div>
+            </div>
+
+            <div class="uk-child-width-1-4@m uk-child-width-1-2@s" uk-grid uk-scrollspy="cls: uk-animation-slide-bottom-small; target: > div ; delay: 200">
+                <div>
+                    @if (SomeInstructors != null)
+                    {
+                        foreach (var OneInstructor in SomeInstructors)
+                        {
+                            <div class="card animate-this">
+                                <div class="card-body text-center">
+                                    <div class="avatar-parent-child">
+                                        @if (OneInstructor.User != null && OneInstructor.User.Avatar != null)
+                                        {
+                                            <img src="@String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(OneInstructor.User.Avatar.Data))" alt="@(OneInstructor.User.FirstName + " " + OneInstructor.User.LastName)" class="avatar rounded-circle avatar-lg" />
+                                        }
+                                        else
+                                        {
+                                            <img src="/images/avatars/home-profile.jpg" alt="@(OneInstructor.User.FirstName + " " + OneInstructor.User.LastName)" class="avatar rounded-circle avatar-lg" />
+                                        }
+                                        <span class="avatar-child avatar-badge bg-success"></span>
+                                    </div>
+                                    <h5 class="h6 mt-4 mb-0">@OneInstructor.User.FirstName @OneInstructor.User.LastName</h5>
+                                    <a href="#" class="d-block text-sm text-muted mb-3">@@john.sullivan</a>
+
+                                    <div class="d-flex justify-content-between px-4">
+                                        <a href="/admin/instructor/@OneInstructor.Id" class="btn btn-icon btn-hover btn-circle" uk-tooltip="Edit">
+                                            <i class="uil-edit-alt"></i>
+                                        </a>
+                                        <a href="#" class="btn btn-icon btn-hover btn-circle" uk-tooltip="Send Message">
+                                            <i class="uil-envelope"></i>
+                                        </a>
+                                        <a @onclick="@(() => DeleteInstructor(OneInstructor))" class="btn btn-icon btn-hover btn-circle" uk-tooltip="Delete">
+                                            <i class="uil-trash-alt"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="card-footer text-center py-2">
+
+                                    <a href="#" class="text-muted uk-text-small"> 13 Courses </a>
+
+                                </div>
+
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+
+            <Pager PageIndex=@PaginatedList.PageIndex TotalPages=@PaginatedList.TotalPages OnClick="PageIndexChanged" AlignClass="uk-flex-right"
+                   HasNextPage=@PaginatedList.HasNextPage HasPreviousPage=@PaginatedList.HasPreviousPage>
+            </Pager>
+
+            <Footer></Footer>
+
+        </div>
+
+    </div>
+
+</div>
