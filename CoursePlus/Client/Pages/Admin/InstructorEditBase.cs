@@ -13,6 +13,7 @@ using System.Threading;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Components.Forms;
 using Blazor.ModalDialog;
+using CoursePlus.Shared.Infrastructure;
 
 namespace CoursePlus.Client.Pages.Admin
 {
@@ -28,6 +29,8 @@ namespace CoursePlus.Client.Pages.Admin
         public HttpClient Client { get; set; }
         [Inject]
         public IModalDialogService ModalDialog { get; set; }
+        [Inject]
+        public UserValidator UserValidator { get; set; }
 
         public EditForm FormContext { get; set; }
 

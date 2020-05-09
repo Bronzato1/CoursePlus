@@ -35,7 +35,7 @@
 
                             @if (OneInstructor != null && OneInstructor.User != null)
                             {
-                                <EditForm Model="@OneInstructor" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit" class="uk-child-width-1-1@s uk-grid-small p-4" uk-grid>
+                                <EditForm Model="@OneInstructor.User" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit" class="uk-child-width-1-1@s uk-grid-small p-4" uk-grid>
 
                                     <div>
                                         <div class="uk-form-group">
@@ -73,10 +73,11 @@
                                         </div>
                                     </div>*@
 
-                                    <div>
-                                        <DataAnnotationsValidator />
-                                        <ValidationSummary />
-                                    </div>
+                                <div>
+                                    @*<DataAnnotationsValidator />*@
+                                    <FluentValidationValidator />
+                                    <ValidationSummary />
+                                </div>
 
                                     <div class="uk-flex uk-flex-right pt-4">
                                         <button class="btn btn-light mr-2" @onclick="NavigateToList">Cancel</button>

@@ -8,6 +8,7 @@ using Blazored.LocalStorage;
 using System.Net.Http;
 using CoursePlus.Shared.Policies;
 using Blazor.ModalDialog;
+using CoursePlus.Shared.Infrastructure;
 
 namespace CoursePlus.Client
 {
@@ -28,6 +29,7 @@ namespace CoursePlus.Client
             builder.Services.AddScoped<IBookService, BookService>();
             builder.Services.AddScoped<ICategoryService, CategoryService>();
             builder.Services.AddScoped<IInstructorService, InstructorService>();
+            builder.Services.AddScoped<UserValidator>();
             builder.Services.AddModalDialog();
             builder.RootComponents.Add<App>("app");
             builder.Services.AddSingleton(new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
