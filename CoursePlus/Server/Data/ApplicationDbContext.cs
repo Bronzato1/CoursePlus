@@ -28,6 +28,7 @@ namespace CoursePlus.Server.Data
         public DbSet<Avatar> Avatars { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Instructor> Instructors { get; set; }
+        public DbSet<Student> Students { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
