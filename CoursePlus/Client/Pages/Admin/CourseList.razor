@@ -1,4 +1,5 @@
-﻿@page "/manage-courses"
+﻿@page "/admin/courses"
+@inherits CourseListBase
 
 <div id="wrapper">
 
@@ -25,7 +26,7 @@
                 <h3> Courses (14) </h3>
 
                 <div>
-                    <a href="#" class="btn btn-default">
+                    <a @onclick="AddCourse" class="btn btn-default">
                         <i class="uil-plus"> </i> New course
                     </a>
                 </div>

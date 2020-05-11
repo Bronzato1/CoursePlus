@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CoursePlus.Server.Controllers
 {
     [ApiController]
+    [Route("api/[Controller]")]
     public class BookController : ControllerBase
     {
         private readonly IBookRepository _bookRepository;
@@ -22,21 +23,20 @@ namespace CoursePlus.Server.Controllers
             _bookRepository = bookRepository;
         }
 
-        [HttpGet]
-        [Route("api/books/get")]
-        public async Task<ActionResult<PaginatedList<Book>>> Get(int? pageNumber, string sortField, string sortOrder, string filterField, string filterValue)
+        [HttpGet("getbooks")]
+        public async Task<ActionResult<PaginatedList<Book>>> GetBooks(int? pageNumber, string sortField, string sortOrder, string filterField, string filterValue)
         {
             var list = await _bookRepository.GetList(pageNumber, sortField, sortOrder, filterField, filterValue);
             return list;
         }
 
-        [HttpGet("api/book/{id:int}")]
+        [HttpGet("{id:int}")]
         public IActionResult GetBook(int id)
         {
             return Ok(_bookRepository.GetBook(id));
         }
 
-        [HttpPost("api/book")]
+        [HttpPost]
         public IActionResult CreateBook([FromBody] Book book)
         {
             if (book == null)
@@ -55,7 +55,7 @@ namespace CoursePlus.Server.Controllers
             return Created("book", createdBook);
         }
 
-        [HttpPut("api/book")]
+        [HttpPut]
         public IActionResult UpdateBook([FromBody] Book book)
         {
             if (book == null)
@@ -79,7 +79,7 @@ namespace CoursePlus.Server.Controllers
             return NoContent(); //success
         }
 
-        [HttpDelete("api/book/{id:int}")]
+        [HttpDelete("{id:int}")]
         public IActionResult DeleteBook(int id)
         {
             if (id == 0)

@@ -29,6 +29,7 @@ namespace CoursePlus.Server.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Instructor> Instructors { get; set; }
         public DbSet<Student> Students { get; set; }
+        public DbSet<Course> Courses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

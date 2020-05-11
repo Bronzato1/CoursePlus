@@ -22,7 +22,7 @@ namespace CoursePlus.Client.Services
 
         public async Task<PaginatedList<Book>> GetBooks(int pageNumber, string sortField, string sortOrder, string filterField, string filterValue)
         {
-            var response = await _httpClient.GetAsync($"api/books/get?pageNumber={pageNumber}&sortField={sortField}&sortOrder={sortOrder}&filterField={filterField}&filterValue={filterValue}");
+            var response = await _httpClient.GetAsync($"api/book/getbooks?pageNumber={pageNumber}&sortField={sortField}&sortOrder={sortOrder}&filterField={filterField}&filterValue={filterValue}");
             response.EnsureSuccessStatusCode();
 
             using var responseStream = await response.Content.ReadAsStreamAsync();
