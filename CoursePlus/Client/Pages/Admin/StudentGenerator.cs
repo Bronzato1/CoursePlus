@@ -1,9 +1,14 @@
-﻿using CoursePlus.Client.Services;
+﻿using Blazor.ModalDialog;
+using CoursePlus.Client.Services;
 using CoursePlus.Shared.Models;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace CoursePlus.Client.Pages.Admin
@@ -11,30 +16,40 @@ namespace CoursePlus.Client.Pages.Admin
     public class StudentGeneratorBase : ComponentBase
     {
         [Inject]
-        public IFakeUserService FakeUserService { get; set; }
+        public IStudentService StudentService { get; set; }
+        [Inject]
+        public IModalDialogService ModalDialog { get; set; }
+        [Inject] 
+        HttpClient HttpClient { get; set; }
 
-        public List<FakeUserModel> SomeUsers { get; set; }
+        public WebClient WebClient = new WebClient();
+
+        public List<FakeStudentModel> SomeUsers { get; set; } = new List<FakeStudentModel>();
 
         protected override async Task OnInitializedAsync()
         {
-            var users = await FakeUserService.GetFakeUsers();
-            SomeUsers = users.ToList();
+            await LoadMoreUsers();
         }
 
-        protected void HandleValidSubmit()
+        protected async Task LoadMoreUsers()
         {
-
+            var users = await StudentService.GetFakeStudents();
+            SomeUsers.AddRange(users);
         }
 
-        protected void HandleInvalidSubmit()
+        protected async Task CreateStudentProfiles()
         {
+            var result = await StudentService.CreateFakeStudents(SomeUsers);
 
+            if (result != null)
+            {
+                SomeUsers = new List<FakeStudentModel>();
+                await ModalDialog.ShowMessageBoxAsync("Student profiles created successfully", $"Profiles created: {result.CptrSucceed} - Failed: {result.CptrFailed}", MessageBoxButtons.OK, MessageBoxDefaultButton.Button1);
+            }
         }
 
-        public void Delete(FakeUserModel OneUser)
+        public void Delete(FakeStudentModel OneUser)
         {
-            //var OneUser = SomeUsers.Select(x => x.Index == OneUser.Index);
-
             SomeUsers.Remove(OneUser);
         }
     }

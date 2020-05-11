@@ -26,7 +26,7 @@ namespace CoursePlus.Client.Pages.Admin
         [Inject]
         public IInstructorService InstructorService { get; set; }
         [Inject]
-        public HttpClient Client { get; set; }
+        public HttpClient HttpClient { get; set; }
         [Inject]
         public IModalDialogService ModalDialog { get; set; }
         [Inject]
@@ -119,7 +119,7 @@ namespace CoursePlus.Client.Pages.Admin
                 await file.Data.CopyToAsync(ms);
 
                 var content = new MultipartFormDataContent { { new ByteArrayContent(ms.GetBuffer()), "\"upload\"", file.Name } };
-                var result = await Client.PostAsync("api/upload/avatar", content);
+                var result = await HttpClient.PostAsync("api/upload/avatar", content);
                 result.EnsureSuccessStatusCode();
                 var uploadAvatarResult = JsonSerializer.Deserialize<UploadAvatarResult>(await result.Content.ReadAsStringAsync(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
                 OneInstructor.User.AvatarId = uploadAvatarResult.AvatarId;

@@ -9,9 +9,6 @@ using CoursePlus.Shared.Policies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Net.Http;
-using Microsoft.AspNetCore.Components.WebAssembly.Http;
-using CoursePlus.Server.Services;
 
 namespace CoursePlus.Server.Controllers
 {
@@ -19,10 +16,12 @@ namespace CoursePlus.Server.Controllers
     public class StudentController : ControllerBase
     {
         private readonly IStudentRepository _studentRepository;
+        private readonly IAvatarRepository _avatarRepository;
 
-        public StudentController(IStudentRepository studentRepository)
+        public StudentController(IStudentRepository studentRepository, IAvatarRepository avatarRepository)
         {
             _studentRepository = studentRepository;
+            _avatarRepository = avatarRepository;
         }
 
         [HttpGet]
@@ -95,6 +94,43 @@ namespace CoursePlus.Server.Controllers
             _studentRepository.DeleteStudent(id);
 
             return NoContent();//success
+        }
+
+        [HttpGet("api/students/getFakeStudents")]
+        public async Task<FakeStudentModel[]> GetFakeStudents()
+        {
+            return await _studentRepository.GetFakeStudents();
+        }
+
+        [HttpPost("api/students/createFakeStudents")]
+        public async Task<IActionResult> CreateFakeStudents([FromBody] List<FakeStudentModel> users)
+        {
+            var cptrSucceed = 0;
+            var cptrFailed = 0;
+
+            foreach (var user in users)
+            {
+                var avatarId = await _avatarRepository.CreateAvatarFromUrl(user.PhotoUrl);
+                
+                var student = new Student
+                {
+                    User = new CustomUser
+                    {
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        Email = user.FirstName + "." + user.LastName + "@ululu.com",
+                        AvatarId = avatarId
+                    }
+                };
+                var createdStudent = await _studentRepository.AddStudent(student);
+
+                if (createdStudent != null)
+                    cptrSucceed++;
+                else
+                    cptrFailed++;
+            }
+
+            return Ok(new CreateFakeStudentsResult { CptrSucceed = cptrSucceed, CptrFailed = cptrFailed });
         }
     }
 }

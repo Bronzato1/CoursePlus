@@ -7,7 +7,7 @@
             <Breadcrumbs>
                 <li><a href="/" uk-tooltip="title:Home; pos:bottom; offset:21"> <i class="uil-home-alt"></i> </a></li>
                 <li><a href="/admin/dashboard">Admin dashboard</a></li>
-                <li>Student generator</li>
+                <li>Fake student generator</li>
             </Breadcrumbs>
         </Header>
 
@@ -25,14 +25,14 @@
                     <!-- Card header -->
                     <div class="card-header actions-toolbar border-0">
                         <div class="d-flex justify-content-between align-items-center">
-                            <h4 class="d-inline-block mb-0">Student generator</h4>
+                            <h4 class="d-inline-block mb-0">Fake student generator</h4>
                             <div class="d-flex">
                                 <a href="#" class="btn btn-icon btn-hover btn-circle" uk-tooltip="More">
                                     <i class="uil-ellipsis-h"></i>
                                 </a>
                                 <div uk-dropdown="pos: bottom-right ; mode: click ;animation: uk-animation-scale-up">
                                     <ul class="uk-nav uk-dropdown-nav">
-                                        <li><a href="">Refresh</a></li>
+                                        <li><a @onclick="LoadMoreUsers">Load more users</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -91,8 +91,11 @@
                             <div class="uk-width-1-2">
                                 @SomeUsers?.Count items
                             </div>
+                            <div class="uk-width-1-2 uk-text-right uk-margin-top uk-margin-bottom">
+                                <a href="javascript:void(0)" @onclick="CreateStudentProfiles" class="btn btn-default uk-visible@s"> <i class="uil-plus"></i> Create student profiles </a>
+                            </div>
+                            </div>
                         </div>
-                    </div>
 
                 </div>
 

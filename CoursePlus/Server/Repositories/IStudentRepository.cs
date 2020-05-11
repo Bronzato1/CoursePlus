@@ -13,10 +13,12 @@ namespace CoursePlus.Server.Repositories
 
         public Student GetStudent(int id);
 
-        public Student AddStudent(Student student);
+        public Task<Student> AddStudent(Student student);
 
         public Student UpdateStudent(Student student);
 
         public void DeleteStudent(int id);
+
+        Task<FakeStudentModel[]> GetFakeStudents();
     }
 }

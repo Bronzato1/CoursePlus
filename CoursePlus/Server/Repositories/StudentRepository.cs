@@ -7,21 +7,24 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace CoursePlus.Server.Repositories
 {
     public class StudentRepository : IStudentRepository
     {
-        private readonly ApplicationDbContext _dbContext;
-
         private readonly UserManager<CustomUser> _userManager;
-
-        public StudentRepository(ApplicationDbContext dbContext, UserManager<CustomUser> userManager)
+        private readonly ApplicationDbContext _dbContext;
+        private readonly HttpClient _httpClient;
+        
+        public StudentRepository(ApplicationDbContext dbContext, UserManager<CustomUser> userManager, HttpClient httpClient)
         {
             _dbContext = dbContext;
             _userManager = userManager;
+            _httpClient = httpClient;
         }
 
         public async Task<PaginatedList<Student>> GetList(int? pageNumber, string sortField, string sortOrder, string filterField, string filterValue)
@@ -53,7 +56,7 @@ namespace CoursePlus.Server.Repositories
             return student;
         }
 
-        public Student AddStudent(Student student)
+        public async Task<Student> AddStudent(Student student)
         {
             var newUser = new CustomUser { FirstName = student.User.FirstName, LastName = student.User.LastName, UserName = student.User.Email, Email = student.User.Email, AvatarId = student.User.AvatarId };
             var result = _userManager.CreateAsync(newUser, "Pa$$w0rd").Result;
@@ -63,13 +66,13 @@ namespace CoursePlus.Server.Repositories
                 throw new ApplicationException();
             }
 
-            _userManager.AddToRoleAsync(newUser, "User");
+            await _userManager.AddToRoleAsync(newUser, "User");
 
             student.User = newUser;
 
             var addedEntity = _dbContext.Students.Add(student);
 
-            _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
 
             return addedEntity.Entity;
         }
@@ -119,6 +122,40 @@ namespace CoursePlus.Server.Repositories
 
             _dbContext.Students.Remove(foundStudent);
             _dbContext.SaveChanges();
+        }
+
+        public async Task<FakeStudentModel[]> GetFakeStudents()
+        {
+            try
+            {
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, "get_random_users?ps=10&av=f&is=400");
+
+                //rm.SetBrowserRequestMode(BrowserRequestMode.NoCors);
+                //rm.SetBrowserRequestCache(BrowserRequestCache.NoCache);
+
+                var response = await _httpClient.SendAsync(request);
+                var result = await response.Content.ReadAsStringAsync();
+
+                var parsedUsers = JsonSerializer.Deserialize<FakeStudentModel[]>(result.ToString(), new JsonSerializerOptions
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                    PropertyNameCaseInsensitive = true,
+                });
+
+                var index = 0;
+
+                foreach (var elm in parsedUsers)
+                {
+                    elm.Index = index;
+                    index++;
+                }
+
+                return parsedUsers;
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException();
+            }
         }
     }
 }

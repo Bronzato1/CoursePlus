@@ -18,5 +18,9 @@ namespace CoursePlus.Client.Services
         Task UpdateStudent(Student student);
 
         Task DeleteStudent(int id);
+
+        Task<FakeStudentModel[]> GetFakeStudents();
+
+        Task<CreateFakeStudentsResult> CreateFakeStudents(List<FakeStudentModel> users);
     }
 }

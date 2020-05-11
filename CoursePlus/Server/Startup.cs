@@ -19,7 +19,6 @@ using CoursePlus.Shared.Policies;
 using Microsoft.AspNetCore.Http;
 using System.Security.Principal;
 using CoursePlus.Shared.Models;
-using CoursePlus.Server.Services;
 using System;
 
 namespace CoursePlus.Server
@@ -67,14 +66,7 @@ namespace CoursePlus.Server
                 config.AddPolicy(Policies.IsUser, Policies.IsUserPolicy());
             });
 
-            //services.AddCors(options =>
-            //{
-            //    options.AddPolicy("CorsPolicy",
-            //        builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-            //});
-
-
-            services.AddHttpClient<IWebCrawlerService, WebCrawlerService>(client =>
+            services.AddHttpClient<IStudentRepository, StudentRepository>(client =>
             {
                 client.BaseAddress = new Uri("https://fakedata.dev/users/v1/");
             });
@@ -82,7 +74,8 @@ namespace CoursePlus.Server
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IInstructorRepository, InstructorRepository>();
-            services.AddScoped<IStudentRepository, StudentRepository>();
+            services.AddScoped<IAvatarRepository, AvatarRepository>();
+            
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
@@ -109,8 +102,6 @@ namespace CoursePlus.Server
 
             app.UseAuthentication();
             app.UseAuthorization();
-
-            //app.UseCors("CorsPolicy");
 
             app.UseEndpoints(endpoints =>
             {

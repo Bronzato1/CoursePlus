@@ -2,7 +2,9 @@
 using CoursePlus.Shared.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text;
@@ -63,6 +65,43 @@ namespace CoursePlus.Client.Services
         public async Task DeleteStudent(int id)
         {
             await _httpClient.DeleteAsync($"api/student/{id}");
+        }
+
+        public async Task<FakeStudentModel[]> GetFakeStudents()
+        {
+            var response = await _httpClient.GetAsync($"api/students/getFakeStudents");
+            response.EnsureSuccessStatusCode();
+
+            using var responseStream = await response.Content.ReadAsStreamAsync();
+
+            var result = await JsonSerializer.DeserializeAsync<FakeStudentModel[]>(responseStream, new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                PropertyNameCaseInsensitive = true,
+            });
+
+            return result;
+        }
+
+        public async Task<CreateFakeStudentsResult> CreateFakeStudents(List<FakeStudentModel> users)
+        {
+            try
+            {
+                var jsonList = new StringContent(JsonSerializer.Serialize(users), Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync("api/students/createFakeStudents", jsonList);
+                response.EnsureSuccessStatusCode();
+                var result = await JsonSerializer.DeserializeAsync<CreateFakeStudentsResult>(await response.Content.ReadAsStreamAsync(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                Console.WriteLine("Succeed:::::: {0}", result.CptrSucceed.ToString());
+                Console.WriteLine("Failed::::::: {0}", result.CptrFailed.ToString());
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception: {0}", ex.Message);
+                Console.WriteLine("Inner Exception: {0}", ex.InnerException.Message);
+                throw new ApplicationException();
+            }
+            
         }
     }
 }
