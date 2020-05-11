@@ -55,9 +55,8 @@
                             </a>
                             <div uk-dropdown="pos: bottom-right ; mode: click ;animation: uk-animation-scale-up">
                                 <ul class="uk-nav uk-dropdown-nav">
-                                    <li><a href="#"> Refresh </a></li>
-                                    <li><a href="#">Manage</a></li>
-                                    <li><a href="#">Setting</a></li>
+                                    <li><a @onclick="RefreshListAsync">Refresh</a></li>
+                                    <li><a @onclick="AddStudent">Add new student</a></li>
                                 </ul>
                             </div>
 
@@ -70,9 +69,9 @@
                     <table class="table align-items-center">
                         <thead>
                             <tr>
-                                <th scope="col">Name</th>
-                                <th scope="col">Joined at</th>
-                                <th scope="col">Enerolled</th>
+                                <th scope="col" class="text-left"><span class="uk-margin-large-left" @onclick="@(() => Sort("User.FirstName"))">Firstname</span><i class="@(SortIndicator("User.FirstName"))"></i></th>
+                                <th scope="col" class="text-center"><span @onclick="@(() => Sort("Joined"))">Joined</span><i class="@(SortIndicator("Joined"))"></i></th>
+                                <th scope="col" class="text-center"><span @onclick="@(() => Sort("Enrolled"))">Enrolled</span><i class="@(SortIndicator("Enrolled"))"></i></th>
                                 <th scope="col">Total payments</th>
                                 <th scope="col">Activity</th>
                                 <th scope="col"> </th>
@@ -100,8 +99,8 @@
                                                 </div>
                                             </div>
                                         </th>
-                                        <td> 10/09/2018 </td>
-                                        <td> 15 </td>
+                                        <td> @OneStudent.Joined.ToString("dd/MM/yyyy") </td>
+                                        <td> @OneStudent.Enrolled </td>
                                         <td> $1035,00 </td>
                                         <td>
                                             <div class="progress" style="height: 7px;">
@@ -115,7 +114,7 @@
                                                    uk-tooltip="Quick view">
                                                     <i class="uil-external-link-alt "></i>
                                                 </a>
-                                                <a href="#" class="btn btn-icon btn-hover btn-sm btn-circle"
+                                                <a @onclick="@(() => EditStudent(OneStudent))" class="btn btn-icon btn-hover btn-sm btn-circle"
                                                    uk-tooltip="Edit">
                                                     <i class="uil-pen "></i>
                                                 </a>

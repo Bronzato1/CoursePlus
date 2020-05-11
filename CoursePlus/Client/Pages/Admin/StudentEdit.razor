@@ -1,5 +1,5 @@
-﻿@page "/admin/instructor/{Id:int}"
-@inherits InstructorEditBase
+﻿@page "/admin/student/{Id:int}"
+@inherits StudentEditBase
 
 <div id="wrapper">
 
@@ -8,7 +8,7 @@
             <li><a href="/" uk-tooltip="title:Home; pos:bottom; offset:21"> <i class="uil-home-alt"></i> </a></li>
             <li><a href="/admin/dashboard">Admin dashboard</a></li>
             <li><a href="/admin/instructors">All instructors</a></li>
-            <li>@OneInstructor?.User?.FirstName @OneInstructor?.User?.LastName</li>
+            <li>@OneStudent?.User?.FirstName @OneStudent?.User?.LastName</li>
         </Breadcrumbs>
     </Header>
 
@@ -27,21 +27,21 @@
 
                         <div class="card rounded">
                             <div class="p-3">
-                                <h4 class="float-left mb-0"> Instructor #@Id</h4>
+                                <h4 class="float-left mb-0"> Student #@Id</h4>
                                 <div class="float-right @StatusClass"><b>@Message</b></div>
                             </div>
 
                             <hr class="m-0">
 
-                            @if (OneInstructor != null && OneInstructor.User != null)
+                            @if (OneStudent != null && OneStudent.User != null)
                             {
-                        <EditForm Model="@OneInstructor.User" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit" class="uk-child-width-1-1@s uk-grid-small p-4" uk-grid>
+                        <EditForm Model="@OneStudent.User" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit" class="uk-child-width-1-1@s uk-grid-small p-4" uk-grid>
 
                             <div class="uk-width-1-3@s">
                                 <div class="uk-form-group">
                                     <label class="uk-form-label">FirstName</label>
                                     <div class="uk-position-relative w-100">
-                                        <InputText Id="firstname" class="uk-input form-control" @bind-Value="OneInstructor.User.FirstName" placeholder="" />
+                                        <InputText Id="firstname" class="uk-input form-control" @bind-Value="OneStudent.User.FirstName" placeholder="" />
                                     </div>
                                 </div>
                             </div>
@@ -50,7 +50,7 @@
                                 <div class="uk-form-group">
                                     <label class="uk-form-label">LastName</label>
                                     <div class="uk-position-relative w-100">
-                                        <InputText Id="lastname" class="uk-input form-control" @bind-Value="OneInstructor.User.LastName" placeholder="" />
+                                        <InputText Id="lastname" class="uk-input form-control" @bind-Value="OneStudent.User.LastName" placeholder="" />
                                     </div>
                                 </div>
                             </div>
@@ -59,7 +59,7 @@
                                 <div class="uk-form-group">
                                     <label class="uk-form-label">Email</label>
                                     <div class="uk-position-relative w-100">
-                                        <InputText Id="email" class="uk-input form-control" @bind-Value="OneInstructor.User.Email" placeholder="" />
+                                        <InputText Id="email" class="uk-input form-control" @bind-Value="OneStudent.User.Email" placeholder="" />
                                     </div>
                                 </div>
                             </div>
@@ -68,7 +68,7 @@
                                 <div class="uk-form-group">
                                     <label class="uk-form-label">Joined</label>
                                     <div class="uk-position-relative w-100">
-                                        <InputDate Id="joinded" class="uk-input form-control" @bind-Value="OneInstructor.Joined" placeholder="" />
+                                        <InputDate Id="joinded" class="uk-input form-control" @bind-Value="OneStudent.Joined" placeholder="" />
                                     </div>
                                 </div>
                             </div>
@@ -91,9 +91,9 @@
                             <div class="uk-flex uk-flex-right pt-4">
                                 <button class="btn btn-light mr-2" @onclick="NavigateToList">Cancel</button>
                                 <button class="btn btn-default mr-2" type="submit">Save Changes</button>
-                                @if (OneInstructor.Id > 0)
+                                @if (OneStudent.Id > 0)
                                 {
-                                    <a class="btn btn-danger" @onclick="@DeleteInstructor">
+                                    <a class="btn btn-danger" @onclick="@DeleteStudent">
                                         Delete
                                     </a>
                                 }
@@ -112,9 +112,9 @@
                             Drop a file here or click to choose one
                         </div>
 
-                        @if (OneInstructor.User != null && OneInstructor.User.Avatar != null)
+                        @if (OneStudent.User != null && OneStudent.User.Avatar != null)
                         {
-                            <img src="@String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(OneInstructor.User.Avatar.Data))" />
+                            <img src="@String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(OneStudent.User.Avatar.Data))" />
                         }
 
                     </div>

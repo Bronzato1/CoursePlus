@@ -82,6 +82,7 @@ namespace CoursePlus.Server.Repositories
             if (foundInstructor != null)
             {
                 foundInstructor.UserId = instructor.UserId;
+                foundInstructor.Joined = instructor.Joined;
 
                 if (foundUser != null)
                 {

@@ -58,23 +58,31 @@ namespace CoursePlus.Server.Repositories
 
         public async Task<Student> AddStudent(Student student)
         {
-            var newUser = new CustomUser { FirstName = student.User.FirstName, LastName = student.User.LastName, UserName = student.User.Email, Email = student.User.Email, AvatarId = student.User.AvatarId };
-            var result = _userManager.CreateAsync(newUser, "Pa$$w0rd").Result;
+            try
+            {
+                var newUser = new CustomUser { FirstName = student.User.FirstName, LastName = student.User.LastName, UserName = student.User.Email, Email = student.User.Email, AvatarId = student.User.AvatarId };
+                var result = await _userManager.CreateAsync(newUser, "Pa$$w0rd");
 
-            if (!result.Succeeded)
+                if (!result.Succeeded)
+                {
+                    throw new ApplicationException();
+                }
+
+                await _userManager.AddToRoleAsync(newUser, "User");
+
+                student.User = newUser;
+
+                var addedEntity = _dbContext.Students.Add(student);
+
+                await _dbContext.SaveChangesAsync();
+
+                return addedEntity.Entity;
+            }
+            catch (Exception ex)
             {
                 throw new ApplicationException();
             }
-
-            await _userManager.AddToRoleAsync(newUser, "User");
-
-            student.User = newUser;
-
-            var addedEntity = _dbContext.Students.Add(student);
-
-            await _dbContext.SaveChangesAsync();
-
-            return addedEntity.Entity;
+            
         }
 
         public Student UpdateStudent(Student student)
@@ -85,6 +93,7 @@ namespace CoursePlus.Server.Repositories
             if (foundStudent != null)
             {
                 foundStudent.UserId = student.UserId;
+                foundStudent.Joined = student.Joined;
 
                 if (foundUser != null)
                 {

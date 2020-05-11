@@ -39,7 +39,7 @@ namespace CoursePlus.Server.Controllers
         }
 
         [HttpPost("api/student")]
-        public IActionResult CreateStudent([FromBody] Student student)
+        public async Task<IActionResult> CreateStudent([FromBody] Student student)
         {
             if (student == null)
                 return BadRequest();
@@ -52,7 +52,7 @@ namespace CoursePlus.Server.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var createdStudent = _studentRepository.AddStudent(student);
+            var createdStudent = await _studentRepository.AddStudent(student);
 
             return Created("student", createdStudent);
         }
