@@ -23,6 +23,8 @@ namespace CoursePlus.Client.Pages.Admin
         [Inject]
         public ICourseService CourseService { get; set; }
         [Inject]
+        public IChapterService ChapterService { get; set; }
+        [Inject]
         public ICategoryService CategoryService { get; set; }
         [Inject]
         public HttpClient Client { get; set; }
@@ -136,6 +138,34 @@ namespace CoursePlus.Client.Pages.Admin
         protected void NavigateToList()
         {
             NavigationManager.NavigateTo("/admin/courses");
+        }
+
+        protected async Task AddChapter()
+        {
+            ModalDataInputForm frm = new ModalDataInputForm("Add new chapter", "Please give a title");
+
+            var titleFld = frm.AddStringField("title", "Title", "", "The title of the chapter");
+
+            if (await frm.ShowAsync(ModalDialog))
+            {
+                var chapter = new Chapter { Title = titleFld.Value, CourseId = OneCourse.Id };
+
+                OneCourse.Chapters.Add(chapter);
+                await ChapterService.AddChapter(chapter);
+                StateHasChanged();
+            }
+        }
+
+        protected async Task DeleteChapter(Chapter OneChapter)
+        {
+            MessageBoxDialogResult result = await ModalDialog.ShowMessageBoxAsync("Confirm Delete", "Are you sure you want to delete the chapter ?", MessageBoxButtons.YesNo, MessageBoxDefaultButton.Button2);
+
+            if (result == MessageBoxDialogResult.Yes)
+            {
+                await ChapterService.DeleteChapter(OneChapter.Id);
+                OneCourse.Chapters.Remove(OneChapter);
+                StateHasChanged();
+            }
         }
     }
 }

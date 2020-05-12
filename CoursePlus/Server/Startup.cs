@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Http;
 using System.Security.Principal;
 using CoursePlus.Shared.Models;
 using System;
+using CoursePlus.Client.Services;
 
 namespace CoursePlus.Server
 {
@@ -76,6 +77,7 @@ namespace CoursePlus.Server
             services.AddScoped<IInstructorRepository, InstructorRepository>();
             services.AddScoped<IAvatarRepository, AvatarRepository>();
             services.AddScoped<ICourseRepository, CourseRepository>();
+            services.AddScoped<IChapterRepository, ChapterRepository>();
             
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }

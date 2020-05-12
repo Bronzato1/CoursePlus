@@ -33,7 +33,7 @@
                     uk-switcher="connect: #course-edit-tab ; animation: uk-animation-slide-left-medium, uk-animation-slide-right-medium">
                     <li class="uk-active"><a href="#"> Basic </a></li>
                     <li><a href="#"> Episodes </a></li>
-                    <li><a href="#"> Images </a></li>
+                    <li><a href="#"> Image </a></li>
                     <li><a href="#"> Requirements </a></li>
                     <li><a href="#"> Pricing </a></li>
                     <li><a href="#"> Finish </a></li>
@@ -137,402 +137,47 @@
                                 <div class="row">
                                     <div class="col-xl-10 m-auto">
                                         <ul class="c-curriculum" uk-accordion>
-                                            <li class="uk-open">
-                                                <a class="uk-accordion-title" href="#">
-                                                    <i class="uil-folder">
-                                                    </i>Section titile 1
-                                                </a>
-                                                <div class="action-btn">
-                                                    <a href="#"> <i class="uil-plus">  </i> Add Lacture </a>
-                                                    <a href="#"> <i class="uil-plus">  </i> Add link </a>
-                                                    <a href="#"> <i class="uil-plus">  </i>  Add quiz </a>
-                                                </div>
-                                                <div class="uk-accordion-content">
-                                                    <ul class="sec-list" uk-sortable="handle: .uk-sortable-handle">
-                                                        <li>
-                                                            <div class="sec-list-item">
-                                                                <div>
-                                                                    <i class="uil-list-ul uk-sortable-handle"></i>
-                                                                    <label class="mb-0 mx-2">
-                                                                        <input class="uk-checkbox" type="checkbox">
-                                                                    </label>
-                                                                    <p> Course Simple Content   </p>
-                                                                </div>
-                                                                <div>
-                                                                    <div class="btn-act">
-                                                                        <a href="#">
-                                                                            <i class="uil-cloud-download"></i>
-                                                                        </a>
-                                                                        <a href="#"><i class="uil-eye"></i></a>
-                                                                        <a href="#"><i class="icon-feather-x"></i></a>
+                                            @if (OneCourse.Chapters != null && OneCourse.Chapters.Count() > 0)
+                                            {
+                                                foreach (var OneChapter in OneCourse.Chapters)
+                                                {
+                                                    <li class="uk-open">
+                                                        <a class="uk-accordion-title" href="#">
+                                                            <i class="uil-folder"></i> @OneChapter.Title
+                                                        </a>
+                                                        <div class="action-btn">
+                                                            <a href="#"> <i class="uil-plus">  </i> Add new episode </a>
+                                                            <a href="#"> <i class="uil-trash">  </i> Delete selected episodes </a>
+                                                            <a href="javascript:void(0)" @onclick="@(() => DeleteChapter(OneChapter))"> <i class="uil-trash">  </i> Delete this chapter </a>
+                                                        </div>
+                                                        <div class="uk-accordion-content">
+                                                            <ul class="sec-list">
+                                                                <li>
+                                                                    <div class="sec-list-item">
+                                                                        <div>
+                                                                            <label class="mb-0 mx-2">
+                                                                                <input class="uk-checkbox uk-margin-remove" type="checkbox">
+                                                                            </label>
+                                                                            <p> Episode 1  </p>
+                                                                        </div>
+                                                                        <div>
+                                                                            <div class="btn-act">
+                                                                                <a href="#"><i class="uil-edit-alt"></i></a>
+                                                                                <a href="#"><i class="uil-trash"></i></a>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="sec-list-item">
-                                                                <div>
-                                                                    <i class="uil-list-ul uk-sortable-handle"></i>
-                                                                    <label class="mb-0 mx-2">
-                                                                        <input class="uk-checkbox" type="checkbox">
-                                                                    </label>
-                                                                    <p> Course Simple Content   </p>
-                                                                </div>
-                                                                <div>
-                                                                    <div class="btn-act">
-                                                                        <a href="#">
-                                                                            <i class="uil-cloud-download"></i>
-                                                                        </a>
-                                                                        <a href="#"><i class="uil-eye"></i></a>
-                                                                        <a href="#"><i class="icon-feather-x"></i></a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="sec-list-item">
-                                                                <div>
-                                                                    <i class="uil-list-ul uk-sortable-handle"></i>
-                                                                    <label class="mb-0 mx-2">
-                                                                        <input class="uk-checkbox" type="checkbox">
-                                                                    </label>
-                                                                    <p> Course Simple Content   </p>
-                                                                </div>
-                                                                <div>
-                                                                    <div class="btn-act">
-                                                                        <a href="#">
-                                                                            <i class="uil-cloud-download"></i>
-                                                                        </a>
-                                                                        <a href="#"><i class="uil-eye"></i></a>
-                                                                        <a href="#"><i class="icon-feather-x"></i></a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="sec-list-item">
-                                                                <div>
-                                                                    <i class="uil-list-ul uk-sortable-handle"></i>
-                                                                    <label class="mb-0 mx-2">
-                                                                        <input class="uk-checkbox" type="checkbox">
-                                                                    </label>
-                                                                    <p> Course Simple Content   </p>
-                                                                </div>
-                                                                <div>
-                                                                    <div class="btn-act">
-                                                                        <a href="#">
-                                                                            <i class="uil-cloud-download"></i>
-                                                                        </a>
-                                                                        <a href="#"><i class="uil-eye"></i></a>
-                                                                        <a href="#"><i class="icon-feather-x"></i></a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-
-                                                    </ul>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <a class="uk-accordion-title" href="#">
-                                                    <i class="uil-folder">
-                                                    </i>Section titile 2
-                                                </a>
-                                                <div class="action-btn">
-                                                    <a href="#"> <i class="uil-plus">  </i> Add Lacture </a>
-                                                    <a href="#"> <i class="uil-plus">  </i> Add link </a>
-                                                    <a href="#"> <i class="uil-plus">  </i>  Add quiz </a>
-                                                </div>
-                                                <div class="uk-accordion-content">
-                                                    <ul class="sec-list" uk-sortable="handle: .uk-sortable-handle">
-                                                        <li>
-                                                            <div class="sec-list-item">
-                                                                <div>
-                                                                    <i class="uil-list-ul uk-sortable-handle"></i>
-                                                                    <label class="mb-0 mx-2">
-                                                                        <input class="uk-checkbox" type="checkbox">
-                                                                    </label>
-                                                                    <p> Course Simple Content   </p>
-                                                                </div>
-                                                                <div>
-                                                                    <div class="btn-act">
-                                                                        <a href="#">
-                                                                            <i class="uil-cloud-download"></i>
-                                                                        </a>
-                                                                        <a href="#"><i class="uil-eye"></i></a>
-                                                                        <a href="#"><i class="icon-feather-x"></i></a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="sec-list-item">
-                                                                <div>
-                                                                    <i class="uil-list-ul uk-sortable-handle"></i>
-                                                                    <label class="mb-0 mx-2">
-                                                                        <input class="uk-checkbox" type="checkbox">
-                                                                    </label>
-                                                                    <p> Course Simple Content   </p>
-                                                                </div>
-                                                                <div>
-                                                                    <div class="btn-act">
-                                                                        <a href="#">
-                                                                            <i class="uil-cloud-download"></i>
-                                                                        </a>
-                                                                        <a href="#"><i class="uil-eye"></i></a>
-                                                                        <a href="#"><i class="icon-feather-x"></i></a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="sec-list-item">
-                                                                <div>
-                                                                    <i class="uil-list-ul uk-sortable-handle"></i>
-                                                                    <label class="mb-0 mx-2">
-                                                                        <input class="uk-checkbox" type="checkbox">
-                                                                    </label>
-                                                                    <p> Course Simple Content   </p>
-                                                                </div>
-                                                                <div>
-                                                                    <div class="btn-act">
-                                                                        <a href="#">
-                                                                            <i class="uil-cloud-download"></i>
-                                                                        </a>
-                                                                        <a href="#"><i class="uil-eye"></i></a>
-                                                                        <a href="#"><i class="icon-feather-x"></i></a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="sec-list-item">
-                                                                <div>
-                                                                    <i class="uil-list-ul uk-sortable-handle"></i>
-                                                                    <label class="mb-0 mx-2">
-                                                                        <input class="uk-checkbox" type="checkbox">
-                                                                    </label>
-                                                                    <p> Course Simple Content   </p>
-                                                                </div>
-                                                                <div>
-                                                                    <div class="btn-act">
-                                                                        <a href="#">
-                                                                            <i class="uil-cloud-download"></i>
-                                                                        </a>
-                                                                        <a href="#"><i class="uil-eye"></i></a>
-                                                                        <a href="#"><i class="icon-feather-x"></i></a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-
-                                                    </ul>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <a class="uk-accordion-title" href="#">
-                                                    <i class="uil-folder">
-                                                    </i>Section titile 3
-                                                </a>
-                                                <div class="action-btn">
-                                                    <a href="#"> <i class="uil-plus">  </i> Add Lacture </a>
-                                                    <a href="#"> <i class="uil-plus">  </i> Add link </a>
-                                                    <a href="#"> <i class="uil-plus">  </i>  Add quiz </a>
-                                                </div>
-                                                <div class="uk-accordion-content">
-                                                    <ul class="sec-list" uk-sortable="handle: .uk-sortable-handle">
-                                                        <li>
-                                                            <div class="sec-list-item">
-                                                                <div>
-                                                                    <i class="uil-list-ul uk-sortable-handle"></i>
-                                                                    <label class="mb-0 mx-2">
-                                                                        <input class="uk-checkbox" type="checkbox">
-                                                                    </label>
-                                                                    <p> Course Simple Content   </p>
-                                                                </div>
-                                                                <div>
-                                                                    <div class="btn-act">
-                                                                        <a href="#">
-                                                                            <i class="uil-cloud-download"></i>
-                                                                        </a>
-                                                                        <a href="#"><i class="uil-eye"></i></a>
-                                                                        <a href="#"><i class="icon-feather-x"></i></a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="sec-list-item">
-                                                                <div>
-                                                                    <i class="uil-list-ul uk-sortable-handle"></i>
-                                                                    <label class="mb-0 mx-2">
-                                                                        <input class="uk-checkbox" type="checkbox">
-                                                                    </label>
-                                                                    <p> Course Simple Content   </p>
-                                                                </div>
-                                                                <div>
-                                                                    <div class="btn-act">
-                                                                        <a href="#">
-                                                                            <i class="uil-cloud-download"></i>
-                                                                        </a>
-                                                                        <a href="#"><i class="uil-eye"></i></a>
-                                                                        <a href="#"><i class="icon-feather-x"></i></a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="sec-list-item">
-                                                                <div>
-                                                                    <i class="uil-list-ul uk-sortable-handle"></i>
-                                                                    <label class="mb-0 mx-2">
-                                                                        <input class="uk-checkbox" type="checkbox">
-                                                                    </label>
-                                                                    <p> Course Simple Content   </p>
-                                                                </div>
-                                                                <div>
-                                                                    <div class="btn-act">
-                                                                        <a href="#">
-                                                                            <i class="uil-cloud-download"></i>
-                                                                        </a>
-                                                                        <a href="#"><i class="uil-eye"></i></a>
-                                                                        <a href="#"><i class="icon-feather-x"></i></a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="sec-list-item">
-                                                                <div>
-                                                                    <i class="uil-list-ul uk-sortable-handle"></i>
-                                                                    <label class="mb-0 mx-2">
-                                                                        <input class="uk-checkbox" type="checkbox">
-                                                                    </label>
-                                                                    <p> Course Simple Content   </p>
-                                                                </div>
-                                                                <div>
-                                                                    <div class="btn-act">
-                                                                        <a href="#">
-                                                                            <i class="uil-cloud-download"></i>
-                                                                        </a>
-                                                                        <a href="#"><i class="uil-eye"></i></a>
-                                                                        <a href="#"><i class="icon-feather-x"></i></a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-
-                                                    </ul>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <a class="uk-accordion-title" href="#">
-                                                    <i class="uil-folder">
-                                                    </i>Section titile 4
-                                                </a>
-                                                <div class="action-btn">
-                                                    <a href="#"> <i class="uil-plus">  </i> Add Lacture </a>
-                                                    <a href="#"> <i class="uil-plus">  </i> Add link </a>
-                                                    <a href="#"> <i class="uil-plus">  </i>  Add quiz </a>
-                                                </div>
-                                                <div class="uk-accordion-content">
-                                                    <ul class="sec-list" uk-sortable="handle: .uk-sortable-handle">
-                                                        <li>
-                                                            <div class="sec-list-item">
-                                                                <div>
-                                                                    <i class="uil-list-ul uk-sortable-handle"></i>
-                                                                    <label class="mb-0 mx-2">
-                                                                        <input class="uk-checkbox" type="checkbox">
-                                                                    </label>
-                                                                    <p> Course Simple Content   </p>
-                                                                </div>
-                                                                <div>
-                                                                    <div class="btn-act">
-                                                                        <a href="#">
-                                                                            <i class="uil-cloud-download"></i>
-                                                                        </a>
-                                                                        <a href="#"><i class="uil-eye"></i></a>
-                                                                        <a href="#"><i class="icon-feather-x"></i></a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="sec-list-item">
-                                                                <div>
-                                                                    <i class="uil-list-ul uk-sortable-handle"></i>
-                                                                    <label class="mb-0 mx-2">
-                                                                        <input class="uk-checkbox" type="checkbox">
-                                                                    </label>
-                                                                    <p> Course Simple Content   </p>
-                                                                </div>
-                                                                <div>
-                                                                    <div class="btn-act">
-                                                                        <a href="#">
-                                                                            <i class="uil-cloud-download"></i>
-                                                                        </a>
-                                                                        <a href="#"><i class="uil-eye"></i></a>
-                                                                        <a href="#"><i class="icon-feather-x"></i></a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="sec-list-item">
-                                                                <div>
-                                                                    <i class="uil-list-ul uk-sortable-handle"></i>
-                                                                    <label class="mb-0 mx-2">
-                                                                        <input class="uk-checkbox" type="checkbox">
-                                                                    </label>
-                                                                    <p> Course Simple Content   </p>
-                                                                </div>
-                                                                <div>
-                                                                    <div class="btn-act">
-                                                                        <a href="#">
-                                                                            <i class="uil-cloud-download"></i>
-                                                                        </a>
-                                                                        <a href="#"><i class="uil-eye"></i></a>
-                                                                        <a href="#"><i class="icon-feather-x"></i></a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="sec-list-item">
-                                                                <div>
-                                                                    <i class="uil-list-ul uk-sortable-handle"></i>
-                                                                    <label class="mb-0 mx-2">
-                                                                        <input class="uk-checkbox" type="checkbox">
-                                                                    </label>
-                                                                    <p> Course Simple Content   </p>
-                                                                </div>
-                                                                <div>
-                                                                    <div class="btn-act">
-                                                                        <a href="#">
-                                                                            <i class="uil-cloud-download"></i>
-                                                                        </a>
-                                                                        <a href="#"><i class="uil-eye"></i></a>
-                                                                        <a href="#"><i class="icon-feather-x"></i></a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-
-                                                    </ul>
-                                                </div>
-                                            </li>
-
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </li>
+                                                }
+                                            }
 
                                         </ul>
-
-
+                                        <a href="javascript:void(0)" @onclick="AddChapter" class="btn btn-default mt-3 mr-2"><i class="uil-folder"></i> Add new chapter </a>
                                     </div>
                                 </div>
-
-
-
-
-
 
                             </li>
 

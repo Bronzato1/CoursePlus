@@ -24,6 +24,8 @@ namespace CoursePlus.Shared.Models
         public int? ThumbnailId { get; set; }
         public virtual Thumbnail Thumbnail { get; set; }
 
+        public List<Chapter> Chapters { get; set; }
+
         public DateTime CreatedTime { get; set; }
         public DateTime? UpdatedTime { get; set; }
         public string CreatedUser { get; set; }
