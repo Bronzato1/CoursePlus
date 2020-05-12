@@ -42,15 +42,17 @@
                 </div>
             </div>
 
-            <div class="uk-child-width-1-4@m uk-child-width-1-2@s" uk-grid uk-scrollspy="cls: uk-animation-slide-bottom-small; target: > div ; delay: 200">
-                <div>
-                    @if (SomeInstructors != null)
+            <div class="uk-child-width-1-4@m uk-child-width-1-2@s uk-margin-medium-bottom" uk-grid uk-scrollspy="cls: uk-animation-slide-bottom-small; target: > div ; delay: 200">
+
+                @if (SomeInstructors != null)
+                {
+                    @foreach (var OneInstructor in SomeInstructors)
                     {
-                        foreach (var OneInstructor in SomeInstructors)
-                        {
+                        <div>
                             <div class="card animate-this">
                                 <div class="card-body text-center">
                                     <div class="avatar-parent-child">
+
                                         @if (OneInstructor.User != null && OneInstructor.User.Avatar != null)
                                         {
                                             <img src="@String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(OneInstructor.User.Avatar.Data))" alt="@(OneInstructor.User.FirstName + " " + OneInstructor.User.LastName)" class="avatar rounded-circle avatar-lg" />
@@ -59,6 +61,7 @@
                                         {
                                             <img src="/images/avatars/home-profile.jpg" alt="@(OneInstructor.User.FirstName + " " + OneInstructor.User.LastName)" class="avatar rounded-circle avatar-lg" />
                                         }
+
                                         <span class="avatar-child avatar-badge bg-success"></span>
                                     </div>
                                     <h5 class="h6 mt-4 mb-0">@OneInstructor.User.FirstName @OneInstructor.User.LastName</h5>
@@ -77,19 +80,16 @@
                                     </div>
                                 </div>
                                 <div class="card-footer text-center py-2">
-
                                     <a href="#" class="text-muted uk-text-small"> 13 Courses </a>
-
                                 </div>
-
                             </div>
-                        }
+                        </div>
                     }
-                </div>
+                }
             </div>
-
+            
             <Pager PageIndex=@PaginatedList.PageIndex TotalPages=@PaginatedList.TotalPages OnClick="PageIndexChanged" AlignClass="uk-flex-right"
-                   HasNextPage=@PaginatedList.HasNextPage HasPreviousPage=@PaginatedList.HasPreviousPage>
+                    HasNextPage=@PaginatedList.HasNextPage HasPreviousPage=@PaginatedList.HasPreviousPage>
             </Pager>
 
             <Footer></Footer>

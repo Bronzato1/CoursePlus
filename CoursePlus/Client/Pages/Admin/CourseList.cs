@@ -23,7 +23,7 @@ namespace CoursePlus.Client.Pages.Admin
 
         public PaginatedList<Course> PaginatedList = new PaginatedList<Course>();
 
-        public IEnumerable<Course> SomeBooks { get { return PaginatedList.Items; } }
+        public IEnumerable<Course> SomeCourses { get { return PaginatedList.Items; } }
 
         public IEnumerable<Category> SomeCategories { get; set; }
 

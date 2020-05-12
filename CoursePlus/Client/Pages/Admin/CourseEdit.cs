@@ -41,7 +41,6 @@ namespace CoursePlus.Client.Pages.Admin
 
         protected override void OnParametersSet()
         {
-            //Console.WriteLine(Id);
             base.OnParametersSet();
         }
 
@@ -49,7 +48,7 @@ namespace CoursePlus.Client.Pages.Admin
         {
             Categories = (await CategoryService.GetCategories()).ToList();
 
-            if (Id == 0) // new book is being created
+            if (Id == 0) // new course is being created
             {
                 OneCourse = new Course { };
             }
@@ -67,7 +66,7 @@ namespace CoursePlus.Client.Pages.Admin
                 if (addedCourse != null)
                 {
                     StatusClass = "uk-text-success";
-                    Message = "New book added successfully";
+                    Message = "New course added successfully";
                     StateHasChanged();
                     await Task.Delay(2000);
                     NavigationManager.NavigateTo("/admin/courses");
@@ -127,7 +126,7 @@ namespace CoursePlus.Client.Pages.Admin
                 OneCourse.ImageId = uploadImageResult.ImageId;
                 OneCourse.ThumbnailId = uploadImageResult.ThumbnailId;
 
-                if (OneCourse.Image == null) // First time image for this book
+                if (OneCourse.Image == null) // First time image for this course
                     OneCourse.Image = new CoursePlus.Shared.Models.Image();
 
                 OneCourse.Image.Data = ms.ToArray();

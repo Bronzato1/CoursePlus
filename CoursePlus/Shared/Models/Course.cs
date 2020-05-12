@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace CoursePlus.Shared.Models
@@ -10,7 +11,11 @@ namespace CoursePlus.Shared.Models
         public string Title { get; set; }
         public string Description { get; set; }
         public int Price { get; set; }
+
+        [Required]
+        public int? CategoryId { get; set; }
         public Category Category { get; set; }
+
         public EnumLanguages Language { get; set; }
 
         public int? ImageId { get; set; }

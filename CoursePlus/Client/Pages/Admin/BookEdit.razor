@@ -162,7 +162,7 @@
                             Drop a file here or click to choose one
                         </div>
 
-                            @if (OneBook.Image != null)
+                        @if (OneBook.Image != null)
                         {
                             <img src="@String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(OneBook.Image.Data))" />
                         }
