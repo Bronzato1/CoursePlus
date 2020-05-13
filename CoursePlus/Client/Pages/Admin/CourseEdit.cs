@@ -156,9 +156,8 @@ namespace CoursePlus.Client.Pages.Admin
             if (await frm.ShowAsync(ModalDialog))
             {
                 var chapter = new Chapter { Title = titleFld.Value, CourseId = OneCourse.Id };
-
-                OneCourse.Chapters.Add(chapter);
-                await ChapterService.AddChapter(chapter);
+                var addedChapter = await ChapterService.AddChapter(chapter);
+                OneCourse.Chapters.Add(addedChapter);
                 StateHasChanged();
             }
         }
@@ -185,6 +184,9 @@ namespace CoursePlus.Client.Pages.Admin
             if (await frm.ShowAsync(ModalDialog))
             {
                 var episode = new Episode { Title = titleFld.Value, VideoUrl = urlFld.Value, ChapterId = OneChapter.Id };
+
+                if (OneChapter.Episodes == null)
+                    OneChapter.Episodes = new List<Episode>();
 
                 OneChapter.Episodes.Add(episode);
                 await EpisodeService.AddEpisode(episode);

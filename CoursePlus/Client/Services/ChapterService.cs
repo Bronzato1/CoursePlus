@@ -49,7 +49,7 @@ namespace CoursePlus.Client.Services
 
             if (response.IsSuccessStatusCode)
             {
-                return await JsonSerializer.DeserializeAsync<Chapter>(await response.Content.ReadAsStreamAsync());
+                return await JsonSerializer.DeserializeAsync<Chapter>(await response.Content.ReadAsStreamAsync(), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
             }
 
             return null;

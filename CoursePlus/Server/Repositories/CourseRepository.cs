@@ -44,6 +44,7 @@ namespace CoursePlus.Server.Repositories
                 .Where(x => x.Id == id)
                 .Include(x => x.Image)
                 .Include(x => x.Category)
+                .Include(x => x.Instructor.User)
                 .Include("Chapters.Episodes")
                 .FirstOrDefault();
             return course;
