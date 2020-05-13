@@ -26,7 +26,7 @@ namespace CoursePlus.Server.Controllers
         [HttpGet("getcourses")]
         public async Task<ActionResult<PaginatedList<Course>>> GetCourses(int? pageNumber, string sortField, string sortOrder, string filterField, string filterValue)
         {
-            var list = await _courseRepository.GetList(pageNumber, sortField, sortOrder, filterField, filterValue);
+            var list = await _courseRepository.GetCourses(pageNumber, sortField, sortOrder, filterField, filterValue);
             return list;
         }
 

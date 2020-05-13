@@ -25,10 +25,10 @@ namespace CoursePlus.Server.Controllers
         }
 
         [HttpGet]
-        [Route("api/students/get")]
+        [Route("api/students/getstudents")]
         public async Task<ActionResult<PaginatedList<Student>>> Get(int? pageNumber, string sortField, string sortOrder, string filterField, string filterValue)
         {
-            var list = await _studentRepository.GetList(pageNumber, sortField, sortOrder, filterField, filterValue);
+            var list = await _studentRepository.GetStudents(pageNumber, sortField, sortOrder, filterField, filterValue);
             return list;
         }
 

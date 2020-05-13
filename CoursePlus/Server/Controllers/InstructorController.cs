@@ -23,10 +23,18 @@ namespace CoursePlus.Server.Controllers
         }
 
         [HttpGet]
-        [Route("api/instructors/get")]
-        public async Task<ActionResult<PaginatedList<Instructor>>> Get(int? pageNumber, string sortField, string sortOrder, string filterField, string filterValue)
+        [Route("api/instructors/getinstructors")]
+        public async Task<ActionResult<PaginatedList<Instructor>>> GetInstructors(int? pageNumber, string sortField, string sortOrder, string filterField, string filterValue)
         {
-            var list = await _instructorRepository.GetList(pageNumber, sortField, sortOrder, filterField, filterValue);
+            var list = await _instructorRepository.GetInstructors(pageNumber, sortField, sortOrder, filterField, filterValue);
+            return list;
+        }
+
+        [HttpGet]
+        [Route("api/instructors/getallinstructors")]
+        public async Task<ActionResult<List<Instructor>>> GetAllInstructors()
+        {
+            var list = await _instructorRepository.GetAllInstructors();
             return list;
         }
 

@@ -19,7 +19,7 @@ namespace CoursePlus.Server.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<List<Episode>> GetList()
+        public async Task<List<Episode>> GetEpisodes()
         {
             try
             {

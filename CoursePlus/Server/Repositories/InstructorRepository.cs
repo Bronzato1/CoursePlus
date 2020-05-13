@@ -24,7 +24,7 @@ namespace CoursePlus.Server.Repositories
             _userManager = userManager;
         }
 
-        public async Task<PaginatedList<Instructor>> GetList(int? pageNumber, string sortField, string sortOrder, string filterField, string filterValue)
+        public async Task<PaginatedList<Instructor>> GetInstructors(int? pageNumber, string sortField, string sortOrder, string filterField, string filterValue)
         {
             try
             {
@@ -35,6 +35,22 @@ namespace CoursePlus.Server.Repositories
                                                .OrderByDynamic(sortField, sortOrder);
 
                 return await PaginatedList<Instructor>.CreateAsync(instructorList.AsNoTracking(), pageNumber ?? 1, pageSize);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException();
+            }
+        }
+
+        public async Task<List<Instructor>> GetAllInstructors()
+        {
+            try
+            {
+                var instructorList = _dbContext.Instructors
+                                               .Include(x => x.User)
+                                               .OrderBy(x => x.User.FirstName);
+
+                return await instructorList.ToListAsync();
             }
             catch (Exception ex)
             {

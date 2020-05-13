@@ -11,6 +11,8 @@ namespace CoursePlus.Client.Services
     {
         Task<PaginatedList<Instructor>> GetInstructors(int pageNumber = 1, string sortField = "", string sortOrder = "", string filterField = "", string filterValue = "");
 
+        Task<List<Instructor>> GetAllInstructors();
+
         Task<Instructor> GetInstructor(int id);
 
         Task<Instructor> AddInstructor(Instructor instructor);

@@ -9,14 +9,16 @@ namespace CoursePlus.Server.Repositories
 {
     public interface IInstructorRepository
     {
-        Task<PaginatedList<Instructor>> GetList(int? pageNumber, string sortField, string sortOrder, string filterField, string filterValue);
+        Task<PaginatedList<Instructor>> GetInstructors(int? pageNumber, string sortField, string sortOrder, string filterField, string filterValue);
 
-        public Instructor GetInstructor(int id);
+        Task<List<Instructor>> GetAllInstructors();
 
-        public Instructor AddInstructor(Instructor instructor);
+        Instructor GetInstructor(int id);
 
-        public Instructor UpdateInstructor(Instructor instructor);
+        Instructor AddInstructor(Instructor instructor);
 
-        public void DeleteInstructor(int id);
+        Instructor UpdateInstructor(Instructor instructor);
+
+        void DeleteInstructor(int id);
     }
 }

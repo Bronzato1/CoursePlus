@@ -26,7 +26,7 @@ namespace CoursePlus.Server.Controllers
         [HttpGet("getepisodes")]
         public async Task<ActionResult<List<Episode>>> GetEpisodes()
         {
-            var list = await _episodeRepository.GetList();
+            var list = await _episodeRepository.GetEpisodes();
             return list;
         }
 

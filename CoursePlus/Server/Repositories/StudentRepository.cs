@@ -27,7 +27,7 @@ namespace CoursePlus.Server.Repositories
             _httpClient = httpClient;
         }
 
-        public async Task<PaginatedList<Student>> GetList(int? pageNumber, string sortField, string sortOrder, string filterField, string filterValue)
+        public async Task<PaginatedList<Student>> GetStudents(int? pageNumber, string sortField, string sortOrder, string filterField, string filterValue)
         {
             try
             {

@@ -25,7 +25,7 @@ namespace CoursePlus.Shared.Models
         public int InstructorId { get; set; }
         public Instructor Instructor { get; set; }
 
-        //public List<Enrollment> Enrollments { get; set; }
+        public virtual List<Enrollment> Enrollments { get; set; }
 
         public int? ThumbnailId { get; set; }
         public virtual Thumbnail Thumbnail { get; set; }

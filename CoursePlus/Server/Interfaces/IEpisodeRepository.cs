@@ -10,7 +10,7 @@ namespace CoursePlus.Server.Repositories
 {
     public interface IEpisodeRepository
     {
-        Task<List<Episode>> GetList();
+        Task<List<Episode>> GetEpisodes();
 
         public Episode GetEpisode(int id);
 

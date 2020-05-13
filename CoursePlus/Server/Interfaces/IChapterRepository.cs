@@ -10,7 +10,7 @@ namespace CoursePlus.Server.Repositories
 {
     public interface IChapterRepository
     {
-        Task<List<Chapter>> GetList();
+        Task<List<Chapter>> GetChapters();
 
         public Chapter GetChapter(int id);
 

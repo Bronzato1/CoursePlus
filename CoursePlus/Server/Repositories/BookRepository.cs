@@ -19,7 +19,7 @@ namespace CoursePlus.Server.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<PaginatedList<Book>> GetList(int? pageNumber, string sortField, string sortOrder, string filterField, string filterValue)
+        public async Task<PaginatedList<Book>> GetBooks(int? pageNumber, string sortField, string sortOrder, string filterField, string filterValue)
         {
             try
             {

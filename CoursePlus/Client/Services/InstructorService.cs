@@ -34,6 +34,20 @@ namespace CoursePlus.Client.Services
             return result;
         }
 
+        public async Task<List<Instructor>> GetAllInstructors()
+        {
+            var response = await _httpClient.GetAsync($"api/instructors/getallinstructors");
+            response.EnsureSuccessStatusCode();
+
+            using var responseStream = await response.Content.ReadAsStreamAsync();
+            var result = await JsonSerializer.DeserializeAsync<List<Instructor>>(responseStream, new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                PropertyNameCaseInsensitive = true,
+            });
+            return result;
+        }
+
         public async Task<Instructor> GetInstructor(int id)
         {
             return await JsonSerializer.DeserializeAsync<Instructor>(await _httpClient.GetStreamAsync($"api/instructor/{id}"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });

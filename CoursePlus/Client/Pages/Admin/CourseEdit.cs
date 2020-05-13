@@ -29,6 +29,8 @@ namespace CoursePlus.Client.Pages.Admin
         [Inject]
         public ICategoryService CategoryService { get; set; }
         [Inject]
+        public IInstructorService InstructorService { get; set; }
+        [Inject]
         public HttpClient Client { get; set; }
         [Inject]
         public IModalDialogService ModalDialog { get; set; }
@@ -43,6 +45,8 @@ namespace CoursePlus.Client.Pages.Admin
 
         public List<Category> Categories { get; set; } = new List<Category>();
 
+        public List<Instructor> Instructors { get; set; } = new List<Instructor>();
+
         protected override void OnParametersSet()
         {
             base.OnParametersSet();
@@ -51,6 +55,7 @@ namespace CoursePlus.Client.Pages.Admin
         protected override async Task OnInitializedAsync()
         {
             Categories = (await CategoryService.GetCategories()).ToList();
+            Instructors = (await InstructorService.GetAllInstructors()).ToList();
 
             if (Id == 0) // new course is being created
             {

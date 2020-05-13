@@ -32,12 +32,15 @@ namespace CoursePlus.Server.Data
         public DbSet<Course> Courses { get; set; }
         public DbSet<Chapter> Chapters { get; set; }
         public DbSet<Episode> Episodes { get; set; }
+        public DbSet<Enrollment> Enrollments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.HasAnnotation("ProductVersion", "2.2.4-servicing-10062");
             builder.Seed();
             base.OnModelCreating(builder);
+
+            builder.Entity<Enrollment>().HasKey(c => new { c.CourseId, c.StudentId });
         }
 
         public override int SaveChanges()

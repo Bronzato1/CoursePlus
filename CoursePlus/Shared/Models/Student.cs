@@ -15,7 +15,7 @@ namespace CoursePlus.Shared.Models
         public string UserId { get; set; }
         public virtual CustomUser User { get; set; }
 
-        //public List<Enrollment> Enrollments { get; set; }
+        public virtual List<Enrollment> Enrollments { get; set; }
 
         public DateTime CreatedTime { get; set; }
         public DateTime? UpdatedTime { get; set; }
