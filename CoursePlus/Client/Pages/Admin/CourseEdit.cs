@@ -25,6 +25,8 @@ namespace CoursePlus.Client.Pages.Admin
         [Inject]
         public IChapterService ChapterService { get; set; }
         [Inject]
+        public IEpisodeService EpisodeService { get; set; }
+        [Inject]
         public ICategoryService CategoryService { get; set; }
         [Inject]
         public HttpClient Client { get; set; }
@@ -142,7 +144,7 @@ namespace CoursePlus.Client.Pages.Admin
 
         protected async Task AddChapter()
         {
-            ModalDataInputForm frm = new ModalDataInputForm("Add new chapter", "Please give a title");
+            ModalDataInputForm frm = new ModalDataInputForm("Add chapter", "Please give a title");
 
             var titleFld = frm.AddStringField("title", "Title", "", "The title of the chapter");
 
@@ -164,6 +166,51 @@ namespace CoursePlus.Client.Pages.Admin
             {
                 await ChapterService.DeleteChapter(OneChapter.Id);
                 OneCourse.Chapters.Remove(OneChapter);
+                StateHasChanged();
+            }
+        }
+
+        protected async Task AddEpisode(Chapter OneChapter)
+        {
+            ModalDataInputForm frm = new ModalDataInputForm("Add episode", "Please fill in the information below");
+
+            var titleFld = frm.AddStringField("title", "Title", "", "The title of the episode");
+            var urlFld = frm.AddStringField("url", "Url", "", "The youtube url of the episode");
+
+            if (await frm.ShowAsync(ModalDialog))
+            {
+                var episode = new Episode { Title = titleFld.Value, VideoUrl = urlFld.Value, ChapterId = OneChapter.Id };
+
+                OneChapter.Episodes.Add(episode);
+                await EpisodeService.AddEpisode(episode);
+                StateHasChanged();
+            }
+        }
+
+        protected async Task EditEpisode(Chapter OneChapter, Episode OneEpisode)
+        {
+            ModalDataInputForm frm = new ModalDataInputForm("Edit episode", "Please fill in the information below");
+
+            var titleFld = frm.AddStringField("title", "Title", OneEpisode.Title, "The title of the episode");
+            var urlFld = frm.AddStringField("url", "Url", OneEpisode.VideoUrl, "The youtube url of the episode");
+
+            if (await frm.ShowAsync(ModalDialog))
+            {
+                OneEpisode.Title = titleFld.Value;
+                OneEpisode.VideoUrl = urlFld.Value;
+                await EpisodeService.UpdateEpisode(OneEpisode);
+                StateHasChanged();
+            }
+        }
+
+        protected async Task DeleteEpisode(Chapter OneChapter, Episode OneEpisode)
+        {
+            MessageBoxDialogResult result = await ModalDialog.ShowMessageBoxAsync("Confirm Delete", "Are you sure you want to delete the episode ?", MessageBoxButtons.YesNo, MessageBoxDefaultButton.Button2);
+
+            if (result == MessageBoxDialogResult.Yes)
+            {
+                await EpisodeService.DeleteEpisode(OneEpisode.Id);
+                OneChapter.Episodes.Remove(OneEpisode);
                 StateHasChanged();
             }
         }

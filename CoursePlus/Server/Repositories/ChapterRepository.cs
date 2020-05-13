@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CoursePlus.Server.Repositories
 {
-    public class ChapterRepository :IChapterRepository
+    public class ChapterRepository : IChapterRepository
     {
         private readonly ApplicationDbContext _dbContext;
 

@@ -32,6 +32,7 @@ namespace CoursePlus.Client
             builder.Services.AddScoped<IStudentService, StudentService>();
             builder.Services.AddScoped<ICourseService, CourseService>();
             builder.Services.AddScoped<IChapterService, ChapterService>();
+            builder.Services.AddScoped<IEpisodeService, EpisodeService>();
             builder.Services.AddScoped<UserValidator>();
             builder.Services.AddSingleton(new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             builder.Services.AddModalDialog();

@@ -66,10 +66,5 @@ namespace CoursePlus.Client.Services
         {
             await _httpClient.DeleteAsync($"api/chapter/{id}");
         }
-
-        //public AsyncTaskMethodBuilder Save()
-        //{
-            
-        //}
     }
 }

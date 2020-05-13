@@ -42,13 +42,13 @@
                 </div>
             </div>
 
-            <div class="uk-child-width-1-4@m uk-child-width-1-2@s uk-margin-medium-bottom" uk-grid uk-scrollspy="cls: uk-animation-slide-bottom-small; target: > div ; delay: 200">
+            <div class="uk-child-width-1-4@m uk-child-width-1-2@s uk-margin-medium-bottom" uk-grid uk-scrollspy="cls: uk-animation-slide-bottom-small; target: > div ; delay: 100">
 
                 @if (SomeInstructors != null)
                 {
                     @foreach (var OneInstructor in SomeInstructors)
                     {
-                        <div>
+                        <div style="visibility: hidden;">
                             <div class="card animate-this">
                                 <div class="card-body text-center">
                                     <div class="avatar-parent-child">

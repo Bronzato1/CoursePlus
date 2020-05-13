@@ -145,29 +145,34 @@
                                                         <a class="uk-accordion-title" href="#">
                                                             <i class="uil-folder"></i> @OneChapter.Title
                                                         </a>
-                                                        <div class="action-btn">
-                                                            <a href="#"> <i class="uil-plus">  </i> Add new episode </a>
-                                                            <a href="#"> <i class="uil-trash">  </i> Delete selected episodes </a>
-                                                            <a href="javascript:void(0)" @onclick="@(() => DeleteChapter(OneChapter))"> <i class="uil-trash">  </i> Delete this chapter </a>
+                                                        <div class="action-btn btn-act">
+                                                            <a href="javascript:void(0)" @onclick="@(() => AddEpisode(OneChapter))" uk-tooltip="Add episode"><i class="uil-plus"></i></a>
+                                                            <a href="javascript:void(0)" @onclick="@(() => DeleteChapter(OneChapter))" uk-tooltip="Delete chapter"> <i class="uil-trash"></i> </a>
                                                         </div>
                                                         <div class="uk-accordion-content">
                                                             <ul class="sec-list">
-                                                                <li>
-                                                                    <div class="sec-list-item">
-                                                                        <div>
-                                                                            <label class="mb-0 mx-2">
-                                                                                <input class="uk-checkbox uk-margin-remove" type="checkbox">
-                                                                            </label>
-                                                                            <p> Episode 1  </p>
-                                                                        </div>
-                                                                        <div>
-                                                                            <div class="btn-act">
-                                                                                <a href="#"><i class="uil-edit-alt"></i></a>
-                                                                                <a href="#"><i class="uil-trash"></i></a>
+                                                                @if (OneChapter.Episodes != null && OneChapter.Episodes.Count() > 0)
+                                                                {
+                                                                    foreach (var OneEpisode in OneChapter.Episodes)
+                                                                    {
+                                                                        <li>
+                                                                            <div class="sec-list-item">
+                                                                                <div>
+                                                                                    <label class="mb-0 mx-2">
+                                                                                        <input class="uk-checkbox uk-margin-remove" type="checkbox">
+                                                                                    </label>
+                                                                                    <p> @OneEpisode.Title </p>
+                                                                                </div>
+                                                                                <div>
+                                                                                    <div class="btn-act">
+                                                                                        <a href="javascript:void(0)" @onclick="@(() => EditEpisode(OneChapter, OneEpisode))" uk-tooltip="Edit episode"><i class="uil-edit-alt"></i></a>
+                                                                                        <a href="javascript:void(0)" @onclick="@(() => DeleteEpisode(OneChapter, OneEpisode))" uk-tooltip="Delete episode"><i class="uil-trash"></i></a>
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
+                                                                        </li>
+                                                                    }
+                                                                }
                                                             </ul>
                                                         </div>
                                                     </li>
@@ -175,7 +180,7 @@
                                             }
 
                                         </ul>
-                                        <a href="javascript:void(0)" @onclick="AddChapter" class="btn btn-default mt-3 mr-2"><i class="uil-folder"></i> Add new chapter </a>
+                                        <a href="javascript:void(0)" @onclick="AddChapter" class="btn btn-default mt-3 mr-2"><i class="uil-folder"></i> Add chapter </a>
                                     </div>
                                 </div>
 

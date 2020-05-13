@@ -9,6 +9,7 @@ namespace CoursePlus.Shared.Models
     {
         public int Id { get; set; }
         public string Title { get; set; }
+        public string SubTitle { get; set; }
         public string Description { get; set; }
         public int Price { get; set; }
 
@@ -20,6 +21,11 @@ namespace CoursePlus.Shared.Models
 
         public int? ImageId { get; set; }
         public virtual Image Image { get; set; }
+
+        public int InstructorId { get; set; }
+        public Instructor Instructor { get; set; }
+
+        //public List<Enrollment> Enrollments { get; set; }
 
         public int? ThumbnailId { get; set; }
         public virtual Thumbnail Thumbnail { get; set; }

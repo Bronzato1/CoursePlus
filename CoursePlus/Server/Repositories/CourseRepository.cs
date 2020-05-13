@@ -23,7 +23,7 @@ namespace CoursePlus.Server.Repositories
         {
             try
             {
-                int pageSize = 5;
+                int pageSize = 6;
                 var courseList = _dbContext.Courses
                                          .Include(x => x.Thumbnail)
                                          .Include(x => x.Category)
