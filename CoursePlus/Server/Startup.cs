@@ -80,7 +80,7 @@ namespace CoursePlus.Server
             services.AddScoped<IChapterRepository, ChapterRepository>();
             services.AddScoped<IEpisodeRepository, EpisodeRepository>();
             
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
