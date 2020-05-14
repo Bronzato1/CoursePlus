@@ -1,5 +1,6 @@
 ﻿@page "/admin/instructors"
 @inherits InstructorListBase
+@attribute [Authorize(Policy = Policies.IsAdmin)]
 
 <div id="wrapper">
 
@@ -87,9 +88,9 @@
                     }
                 }
             </div>
-            
+
             <Pager PageIndex=@PaginatedList.PageIndex TotalPages=@PaginatedList.TotalPages OnClick="PageIndexChanged" AlignClass="uk-flex-right"
-                    HasNextPage=@PaginatedList.HasNextPage HasPreviousPage=@PaginatedList.HasPreviousPage>
+                   HasNextPage=@PaginatedList.HasNextPage HasPreviousPage=@PaginatedList.HasPreviousPage>
             </Pager>
 
             <Footer></Footer>

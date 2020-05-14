@@ -1,5 +1,6 @@
 ﻿@page "/admin/student/{Id:int}"
 @inherits StudentEditBase
+@attribute [Authorize(Policy = Policies.IsAdmin)]
 
 <div id="wrapper">
 

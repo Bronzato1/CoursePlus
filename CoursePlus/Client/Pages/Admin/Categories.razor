@@ -1,4 +1,5 @@
 ﻿@page "/manage-categories"
+@attribute [Authorize(Policy = Policies.IsAdmin)]
 
 <div id="wrapper">
 

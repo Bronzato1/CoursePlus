@@ -37,6 +37,7 @@ namespace CoursePlus.Server.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = Policies.IsAdmin)]
         public IActionResult CreateEpisode([FromBody] Episode episode)
         {
             if (episode == null)
@@ -56,6 +57,7 @@ namespace CoursePlus.Server.Controllers
         }
 
         [HttpPut]
+        [Authorize(Policy = Policies.IsAdmin)]
         public IActionResult UpdateEpisode([FromBody] Episode episode)
         {
             if (episode == null)
@@ -80,6 +82,7 @@ namespace CoursePlus.Server.Controllers
         }
 
         [HttpDelete("{id:int}")]
+        [Authorize(Policy = Policies.IsAdmin)]
         public IActionResult DeleteEpisode(int id)
         {
             if (id == 0)

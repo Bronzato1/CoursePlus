@@ -24,7 +24,7 @@ namespace CoursePlus.Client.Services
 
         public async Task<PaginatedList<Student>> GetStudents(int pageNumber, string sortField, string sortOrder, string filterField, string filterValue)
         {
-            var response = await _httpClient.GetAsync($"api/students/get?pageNumber={pageNumber}&sortField={sortField}&sortOrder={sortOrder}&filterField={filterField}&filterValue={filterValue}");
+            var response = await _httpClient.GetAsync($"api/student/getstudents?pageNumber={pageNumber}&sortField={sortField}&sortOrder={sortOrder}&filterField={filterField}&filterValue={filterValue}");
             response.EnsureSuccessStatusCode();
 
             using var responseStream = await response.Content.ReadAsStreamAsync();
@@ -69,7 +69,7 @@ namespace CoursePlus.Client.Services
 
         public async Task<FakeStudentModel[]> GetFakeStudents()
         {
-            var response = await _httpClient.GetAsync($"api/students/getFakeStudents");
+            var response = await _httpClient.GetAsync($"api/student/getFakeStudents");
             response.EnsureSuccessStatusCode();
 
             using var responseStream = await response.Content.ReadAsStreamAsync();
@@ -88,11 +88,9 @@ namespace CoursePlus.Client.Services
             try
             {
                 var jsonList = new StringContent(JsonSerializer.Serialize(users), Encoding.UTF8, "application/json");
-                var response = await _httpClient.PostAsync("api/students/createFakeStudents", jsonList);
+                var response = await _httpClient.PostAsync("api/student/createFakeStudents", jsonList);
                 response.EnsureSuccessStatusCode();
                 var result = await JsonSerializer.DeserializeAsync<CreateFakeStudentsResult>(await response.Content.ReadAsStreamAsync(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-                Console.WriteLine("Succeed:::::: {0}", result.CptrSucceed.ToString());
-                Console.WriteLine("Failed::::::: {0}", result.CptrFailed.ToString());
                 return result;
             }
             catch (Exception ex)

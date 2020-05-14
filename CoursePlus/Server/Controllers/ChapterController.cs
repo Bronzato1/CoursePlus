@@ -37,6 +37,7 @@ namespace CoursePlus.Server.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = Policies.IsAdmin)]
         public IActionResult CreateChapter([FromBody] Chapter chapter)
         {
             if (chapter == null)
@@ -56,6 +57,7 @@ namespace CoursePlus.Server.Controllers
         }
 
         [HttpPut]
+        [Authorize(Policy = Policies.IsAdmin)]
         public IActionResult UpdateChapter([FromBody] Chapter chapter)
         {
             if (chapter == null)
@@ -80,6 +82,7 @@ namespace CoursePlus.Server.Controllers
         }
 
         [HttpDelete("{id:int}")]
+        [Authorize(Policy = Policies.IsAdmin)]
         public IActionResult DeleteChapter(int id)
         {
             if (id == 0)

@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CoursePlus.Server.Controllers
 {
     [ApiController]
+    [Route("api/[Controller]")]
     public class StudentController : ControllerBase
     {
         private readonly IStudentRepository _studentRepository;
@@ -25,20 +26,21 @@ namespace CoursePlus.Server.Controllers
         }
 
         [HttpGet]
-        [Route("api/students/getstudents")]
+        [Route("getstudents")]
         public async Task<ActionResult<PaginatedList<Student>>> Get(int? pageNumber, string sortField, string sortOrder, string filterField, string filterValue)
         {
             var list = await _studentRepository.GetStudents(pageNumber, sortField, sortOrder, filterField, filterValue);
             return list;
         }
 
-        [HttpGet("api/student/{id:int}")]
+        [HttpGet("{id:int}")]
         public IActionResult GetStudent(int id)
         {
             return Ok(_studentRepository.GetStudent(id));
         }
 
-        [HttpPost("api/student")]
+        [HttpPost]
+        [Authorize(Policy = Policies.IsAdmin)]
         public async Task<IActionResult> CreateStudent([FromBody] Student student)
         {
             if (student == null)
@@ -57,7 +59,8 @@ namespace CoursePlus.Server.Controllers
             return Created("student", createdStudent);
         }
 
-        [HttpPut("api/student")]
+        [HttpPut]
+        [Authorize(Policy = Policies.IsAdmin)]
         public IActionResult UpdateStudent([FromBody] Student student)
         {
             if (student == null)
@@ -81,7 +84,8 @@ namespace CoursePlus.Server.Controllers
             return NoContent(); //success
         }
 
-        [HttpDelete("api/student/{id}")]
+        [HttpDelete("{id:int}")]
+        [Authorize(Policy = Policies.IsAdmin)]
         public IActionResult DeleteStudent(int id)
         {
             if (id == null)
@@ -96,13 +100,13 @@ namespace CoursePlus.Server.Controllers
             return NoContent();//success
         }
 
-        [HttpGet("api/students/getFakeStudents")]
+        [HttpGet("getFakeStudents")]
         public async Task<FakeStudentModel[]> GetFakeStudents()
         {
             return await _studentRepository.GetFakeStudents();
         }
 
-        [HttpPost("api/students/createFakeStudents")]
+        [HttpPost("createFakeStudents")]
         public async Task<IActionResult> CreateFakeStudents([FromBody] List<FakeStudentModel> users)
         {
             var cptrSucceed = 0;

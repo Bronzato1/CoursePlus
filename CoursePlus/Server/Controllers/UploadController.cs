@@ -9,10 +9,13 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Drawing.Imaging;
+using Microsoft.AspNetCore.Authorization;
+using CoursePlus.Shared.Policies;
 
 namespace CoursePlus.Server.Controllers
 {
     [ApiController]
+    [Authorize(Policy = Policies.IsAdmin)]
     public class UploadController : ControllerBase
     {
         private readonly IWebHostEnvironment environment;

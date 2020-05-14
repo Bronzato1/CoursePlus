@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CoursePlus.Server.Controllers
 {
     [ApiController]
+    [Route("api/[Controller]")]
     public class InstructorController : ControllerBase
     {
         private readonly IInstructorRepository _instructorRepository;
@@ -22,27 +23,28 @@ namespace CoursePlus.Server.Controllers
             _instructorRepository = instructorRepository;
         }
 
-        [HttpGet("api/instructors/getinstructors")]
+        [HttpGet("getinstructors")]
         public async Task<ActionResult<PaginatedList<Instructor>>> GetInstructors(int? pageNumber, string sortField, string sortOrder, string filterField, string filterValue)
         {
             var list = await _instructorRepository.GetInstructors(pageNumber, sortField, sortOrder, filterField, filterValue);
             return list;
         }
 
-        [HttpGet("api/instructors/getallinstructors")]
+        [HttpGet("getallinstructors")]
         public async Task<ActionResult<List<Instructor>>> GetAllInstructors()
         {
             var list = await _instructorRepository.GetAllInstructors();
             return list;
         }
 
-        [HttpGet("api/instructor/{id:int}")]
+        [HttpGet("{id:int}")]
         public IActionResult GetInstructor(int id)
         {
             return Ok(_instructorRepository.GetInstructor(id));
         }
 
-        [HttpPost("api/instructor")]
+        [HttpPost]
+        [Authorize(Policy = Policies.IsAdmin)]
         public IActionResult CreateInstrutor([FromBody] Instructor instructor)
         {
             if (instructor == null)
@@ -61,7 +63,8 @@ namespace CoursePlus.Server.Controllers
             return Created("instructor", createdInstructor);
         }
 
-        [HttpPut("api/instructor")]
+        [HttpPut]
+        [Authorize(Policy = Policies.IsAdmin)]
         public IActionResult UpdateInstructor([FromBody] Instructor instructor)
         {
             if (instructor == null)
@@ -85,7 +88,8 @@ namespace CoursePlus.Server.Controllers
             return NoContent(); //success
         }
 
-        [HttpDelete("api/instructor/{id}")]
+        [HttpDelete("{id:int}")]
+        [Authorize(Policy = Policies.IsAdmin)]
         public IActionResult DeleteInstructor(int id)
         {
             if (id == null)

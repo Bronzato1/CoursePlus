@@ -1,4 +1,5 @@
 ﻿@page "/admin/dashboard"
+@attribute [Authorize(Policy = Policies.IsAdmin)]
 
 <div id="wrapper">
 

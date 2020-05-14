@@ -1,5 +1,6 @@
 ﻿@page "/admin/courses"
 @inherits CourseListBase
+@attribute [Authorize(Policy = Policies.IsAdmin)]
 
 <div id="wrapper">
 

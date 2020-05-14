@@ -19,15 +19,12 @@ namespace CoursePlus.Server.Controllers
             _categoryRepository = categoryRepository;
         }
 
-
-        // GET: api/<controller>
         [HttpGet]
         public IActionResult GetCategories()
         {
             return Ok(_categoryRepository.GetAllCategories());
         }
 
-        // GET api/<controller>/5
         [HttpGet("{id}")]
         public IActionResult GetCategoryById(int id)
         {

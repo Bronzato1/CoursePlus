@@ -37,6 +37,7 @@ namespace CoursePlus.Server.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = Policies.IsAdmin)]
         public IActionResult CreateBook([FromBody] Book book)
         {
             if (book == null)
@@ -56,6 +57,7 @@ namespace CoursePlus.Server.Controllers
         }
 
         [HttpPut]
+        [Authorize(Policy = Policies.IsAdmin)]
         public IActionResult UpdateBook([FromBody] Book book)
         {
             if (book == null)
@@ -80,6 +82,7 @@ namespace CoursePlus.Server.Controllers
         }
 
         [HttpDelete("{id:int}")]
+        [Authorize(Policy = Policies.IsAdmin)]
         public IActionResult DeleteBook(int id)
         {
             if (id == 0)

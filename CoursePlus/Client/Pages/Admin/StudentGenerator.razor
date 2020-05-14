@@ -1,5 +1,6 @@
 ﻿@page "/admin/student-generator"
 @inherits StudentGeneratorBase
+@attribute [Authorize(Policy = Policies.IsAdmin)]
 
 <div id="wrapper">
 

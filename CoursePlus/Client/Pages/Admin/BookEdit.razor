@@ -1,5 +1,6 @@
 ﻿@page "/admin/book/{Id:int}"
 @inherits BookEditBase
+@attribute [Authorize(Policy = Policies.IsAdmin)]
 
 <div id="wrapper">
 
@@ -18,163 +19,163 @@
 
     <SideNav></SideNav>
 
-        <div class="page-content">
-            <div class="page-content-inner">
+    <div class="page-content">
+        <div class="page-content-inner">
 
-                <div uk-grid>
+            <div uk-grid>
 
-                    <div class="uk-width-3-5@m">
+                <div class="uk-width-3-5@m">
 
-                        <div class="card rounded">
-                            <div class="p-3">
-                                <h4 class="float-left mb-0"> Book #@Id</h4>
-                                <div class="float-right @StatusClass"><b>@Message</b></div>
+                    <div class="card rounded">
+                        <div class="p-3">
+                            <h4 class="float-left mb-0"> Book #@Id</h4>
+                            <div class="float-right @StatusClass"><b>@Message</b></div>
+                        </div>
+
+                        <hr class="m-0">
+                        <EditForm Model="@OneBook" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit" class="uk-child-width-1-1@s uk-grid-small p-4" uk-grid>
+
+                            <div>
+                                <div class="uk-form-group">
+                                    <label class="uk-form-label">Title</label>
+                                    <div class="uk-position-relative w-100">
+                                        <InputText Id="title" class="uk-input form-control" @bind-Value="OneBook.Title" placeholder="" />
+                                    </div>
+                                </div>
                             </div>
 
-                            <hr class="m-0">
-                            <EditForm Model="@OneBook" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit" class="uk-child-width-1-1@s uk-grid-small p-4" uk-grid>
-
-                                <div>
-                                    <div class="uk-form-group">
-                                        <label class="uk-form-label">Title</label>
-                                        <div class="uk-position-relative w-100">
-                                            <InputText Id="title" class="uk-input form-control" @bind-Value="OneBook.Title" placeholder="" />
-                                        </div>
+                            <div>
+                                <div class="uk-form-group">
+                                    <label class="uk-form-label">Description</label>
+                                    <div class="uk-position-relative w-100">
+                                        <InputTextArea rows="5" class="form-control" @bind-Value="OneBook.Description" />
                                     </div>
                                 </div>
+                            </div>
 
-                                <div>
-                                    <div class="uk-form-group">
-                                        <label class="uk-form-label">Description</label>
-                                        <div class="uk-position-relative w-100">
-                                            <InputTextArea rows="5" class="form-control" @bind-Value="OneBook.Description" />
-                                        </div>
+                            <div class="uk-width-1-3@s">
+                                <div class="uk-form-group">
+                                    <label class="uk-form-label">Page count</label>
+                                    <div class="uk-position-relative w-100">
+                                        <InputNumber Id="PageCount" class="uk-input form-control" @bind-Value="OneBook.PageCount" placeholder="" />
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="uk-width-1-3@s">
-                                    <div class="uk-form-group">
-                                        <label class="uk-form-label">Page count</label>
-                                        <div class="uk-position-relative w-100">
-                                            <InputNumber Id="PageCount" class="uk-input form-control" @bind-Value="OneBook.PageCount" placeholder="" />
-                                        </div>
+                            <div class="uk-width-1-3@s">
+                                <div class="uk-form-group">
+                                    <label class="uk-form-label">Language</label>
+                                    <div class="uk-position-relative w-100">
+                                        <InputSelectCustom Id="Language" class="uk-select form-control" placeholder="" @bind-Value="OneBook.Language">
+                                            <option value=""></option>
+                                            <option value="English">English</option>
+                                            <option value="French">French</option>
+                                        </InputSelectCustom>
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="uk-width-1-3@s">
-                                    <div class="uk-form-group">
-                                        <label class="uk-form-label">Language</label>
-                                        <div class="uk-position-relative w-100">
-                                            <InputSelectCustom Id="Language" class="uk-select form-control" placeholder="" @bind-Value="OneBook.Language">
-                                                <option value=""></option>
-                                                <option value="English">English</option>
-                                                <option value="French">French</option>
-                                            </InputSelectCustom>
-                                        </div>
+                            <div class="uk-width-1-3@s">
+                                <div class="uk-form-group">
+                                    <label class="uk-form-label">Publishing date</label>
+                                    <div class="uk-position-relative w-100">
+                                        <InputDate Id="PublishingDate" class="uk-input form-control" @bind-Value="OneBook.PublishingDate" placeholder="" />
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="uk-width-1-3@s">
-                                    <div class="uk-form-group">
-                                        <label class="uk-form-label">Publishing date</label>
-                                        <div class="uk-position-relative w-100">
-                                            <InputDate Id="PublishingDate" class="uk-input form-control" @bind-Value="OneBook.PublishingDate" placeholder="" />
-                                        </div>
+                            <div class="uk-width-1-3@s">
+                                <div class="uk-form-group">
+                                    <label class="uk-form-label">Author</label>
+                                    <div class="uk-position-relative w-100">
+                                        <InputText Id="author" class="uk-input form-control" @bind-Value="OneBook.Author" placeholder="" />
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="uk-width-1-3@s">
-                                    <div class="uk-form-group">
-                                        <label class="uk-form-label">Author</label>
-                                        <div class="uk-position-relative w-100">
-                                            <InputText Id="author" class="uk-input form-control" @bind-Value="OneBook.Author" placeholder="" />
-                                        </div>
+                            <div class="uk-width-2-3@s">
+                                <div class="uk-form-group">
+                                    <label class="uk-form-label">Purchase link</label>
+                                    <div class="uk-position-relative w-100">
+                                        <InputText Id="purchaseLink" class="uk-input form-control" @bind-Value="OneBook.PurchaseLink" placeholder="" />
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="uk-width-2-3@s">
-                                    <div class="uk-form-group">
-                                        <label class="uk-form-label">Purchase link</label>
-                                        <div class="uk-position-relative w-100">
-                                            <InputText Id="purchaseLink" class="uk-input form-control" @bind-Value="OneBook.PurchaseLink" placeholder="" />
-                                        </div>
+                            <div class="uk-width-1-1@s">
+                                <div class="uk-form-group">
+                                    <label class="uk-form-label">Category</label>
+                                    <div class="uk-position-relative w-100">
+                                        <InputSelectCustom id="category" class="form-control col-sm-8" @bind-Value="@OneBook.CategoryId">
+                                            <option value=""></option>
+                                            @foreach (var category in Categories)
+                                            {
+                                                <option value="@category.Id">@category.Name</option>
+                                            }
+                                        </InputSelectCustom>
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="uk-width-1-1@s">
-                                    <div class="uk-form-group">
-                                        <label class="uk-form-label">Category</label>
-                                        <div class="uk-position-relative w-100">
-                                            <InputSelectCustom id="category" class="form-control col-sm-8" @bind-Value="@OneBook.CategoryId">
-                                                <option value=""></option>
-                                                @foreach (var category in Categories)
-                                                {
-                                                    <option value="@category.Id">@category.Name</option>
-                                                }
-                                            </InputSelectCustom>
-                                        </div>
-                                    </div>
+                            <div class="uk-width-1-3@s">
+                                <div class="uk-form-group">
+                                    <label for="featured" class=" offset-sm-3">
+                                        <InputCheckbox id="featured" class="uk-checkbox" @bind-Value="@OneBook.Featured"></InputCheckbox>
+                                        &nbsp;Featured
+                                    </label>
                                 </div>
+                            </div>
 
-                                <div class="uk-width-1-3@s">
-                                    <div class="uk-form-group">
-                                        <label for="featured" class=" offset-sm-3">
-                                            <InputCheckbox id="featured" class="uk-checkbox" @bind-Value="@OneBook.Featured"></InputCheckbox>
-                                            &nbsp;Featured
-                                        </label>
-                                    </div>
+                            <div class="uk-width-1-3@s">
+                                <div class="uk-form-group">
+                                    <label for="popular" class=" offset-sm-3">
+                                        <InputCheckbox id="popular" class="uk-checkbox" @bind-Value="@OneBook.Popular"></InputCheckbox>
+                                        &nbsp;Popular
+                                    </label>
                                 </div>
+                            </div>
 
-                                <div class="uk-width-1-3@s">
-                                    <div class="uk-form-group">
-                                        <label for="popular" class=" offset-sm-3">
-                                            <InputCheckbox id="popular" class="uk-checkbox" @bind-Value="@OneBook.Popular"></InputCheckbox>
-                                            &nbsp;Popular
-                                        </label>
-                                    </div>
-                                </div>
+                            <div>
+                                <DataAnnotationsValidator />
+                                <ValidationSummary />
+                            </div>
 
-                                <div>
-                                    <DataAnnotationsValidator />
-                                    <ValidationSummary />
-                                </div>
+                            <div class="uk-flex uk-flex-right pt-4">
+                                <button class="btn btn-light mr-2" @onclick="NavigateToList">Cancel</button>
+                                <button class="btn btn-default mr-2" type="submit">Save Changes</button>
+                                @if (OneBook.Id > 0)
+                                {
+                                    <a class="btn btn-danger" @onclick="@DeleteBook">
+                                        Delete
+                                    </a>
+                                }
+                            </div>
 
-                                <div class="uk-flex uk-flex-right pt-4">
-                                    <button class="btn btn-light mr-2" @onclick="NavigateToList">Cancel</button>
-                                    <button class="btn btn-default mr-2" type="submit">Save Changes</button>
-                                    @if (OneBook.Id > 0)
-                                    {
-                                        <a class="btn btn-danger" @onclick="@DeleteBook">
-                                            Delete
-                                        </a>
-                                    }
-                                </div>
-
-                            </EditForm>
-                        </div>
-
-                    </div>
-
-                    <div class="uk-width-2-5@m">
-
-                        <div class="drag-drop-zone">
-                            <InputFile OnChange="HandleSelection" />
-                            Drop a file here or click to choose one
-                        </div>
-
-                        @if (OneBook.Image != null)
-                        {
-                            <img src="@String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(OneBook.Image.Data))" />
-                        }
-
+                        </EditForm>
                     </div>
 
                 </div>
 
-                <Footer></Footer>
+                <div class="uk-width-2-5@m">
+
+                    <div class="drag-drop-zone">
+                        <InputFile OnChange="HandleSelection" />
+                        Drop a file here or click to choose one
+                    </div>
+
+                    @if (OneBook.Image != null)
+                    {
+                        <img src="@String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(OneBook.Image.Data))" />
+                    }
+
+                </div>
 
             </div>
 
+            <Footer></Footer>
+
         </div>
+
+    </div>
 
 </div>
