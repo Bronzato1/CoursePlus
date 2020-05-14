@@ -33,7 +33,9 @@ namespace CoursePlus.Server.Controllers
         [HttpGet("{id:int}")]
         public IActionResult GetCourse(int id)
         {
-            return Ok(_courseRepository.GetCourse(id));
+            var data = _courseRepository.GetCourse(id);
+            var json = Newtonsoft.Json.JsonConvert.SerializeObject(data, new Newtonsoft.Json.JsonSerializerSettings() { ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore });
+            return Ok(json);
         }
 
         [HttpPost]

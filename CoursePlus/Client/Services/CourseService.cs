@@ -37,7 +37,12 @@ namespace CoursePlus.Client.Services
 
         public async Task<Course> GetCourse(int id)
         {
-            return await JsonSerializer.DeserializeAsync<Course>(await _httpClient.GetStreamAsync($"api/course/{id}"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+            var data = await JsonSerializer.DeserializeAsync<Course>(await _httpClient.GetStreamAsync($"api/course/{id}"), new JsonSerializerOptions()
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                PropertyNameCaseInsensitive = true
+            });
+            return data;
         }
 
         public async Task<Course> AddCourse(Course course)

@@ -11,7 +11,7 @@ namespace CoursePlus.Shared.Models
         public string Title { get; set; }
 
         public int ChapterId { get; set; }
-        //public Chapter Chapter { get; set; }
+        public Chapter Chapter { get; set; }
 
         public DateTime CreatedTime { get; set; }
         public DateTime? UpdatedTime { get; set; }

@@ -45,8 +45,10 @@ namespace CoursePlus.Server.Repositories
                 .Include(x => x.Image)
                 .Include(x => x.Category)
                 .Include(x => x.Instructor.User)
-                .Include("Chapters.Episodes")
+                .Include(x => x.Chapters).ThenInclude(x => x.Episodes)
+                .Include(x => x.Enrollments).ThenInclude(x => x.Student)
                 .FirstOrDefault();
+
             return course;
         }
 
