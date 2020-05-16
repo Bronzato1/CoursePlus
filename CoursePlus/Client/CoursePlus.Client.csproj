@@ -27,6 +27,7 @@
     <Content Remove="Pages\PagePricing.razor" />
     <Content Remove="Pages\PagePrivacy.razor" />
     <Content Remove="Pages\PageTerm.razor" />
+    <Content Remove="Pages\Signup.razor" />
     <Content Remove="Pages\UserProfile.razor" />
     <Content Remove="Pages\UserProfileEdit.razor" />
   </ItemGroup>

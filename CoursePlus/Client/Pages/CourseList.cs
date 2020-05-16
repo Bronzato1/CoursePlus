@@ -28,6 +28,10 @@ namespace CoursePlus.Client.Pages
         {
             public EnumDifficulty? DifficultyFilter { get; set; }
             public EnumDuration? DurationFilter { get; set; }
+            public int? CategoryFilter { get; set; }
+            public EnumRating? RatingFilter { get; set; }
+            public EnumPeriode? PeriodeFilter { get; set; }
+            public EnumClassment? ClassmentFilter { get; set; }
         }
 
         protected override async Task OnInitializedAsync()

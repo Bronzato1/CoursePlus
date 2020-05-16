@@ -148,51 +148,31 @@
                                     </li>
 
                                     <li>
-                                        <a class="uk-accordion-title" href="#"> Course type </a>
-                                        <div class="uk-accordion-content">
-                                            <div class="uk-form-controls">
-                                                <label>
-                                                    <input class="uk-radio" type="radio" name="radio2">
-                                                    <span class="test"> Any </span>
-                                                </label>
-                                                <label>
-                                                    <input class="uk-radio" type="radio" name="radio2">
-                                                    <span class="test"> Free </span>
-                                                </label>
-                                                <label>
-                                                    <input class="uk-radio" type="radio" name="radio2">
-                                                    <span class="test"> Paid </span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </li>
-
-                                    <li>
                                         <a class="uk-accordion-title" href="#"> Duration time </a>
                                         <div class="uk-accordion-content">
                                             <div class="uk-form-controls">
                                                 <label>
-                                                    <input class="uk-radio" type="radio" name="radio3">
+                                                    <InputRadio class="uk-radio" SelectedValue="null" SelectedValueChanged="FilterCourses" @bind-Value="@CurrentFilterModel.DurationFilter" />
                                                     <span class="test"> Any </span>
                                                 </label>
                                                 <label>
-                                                    <input class="uk-radio" type="radio" name="radio3">
+                                                    <InputRadio class="uk-radio" SelectedValue="EnumDuration.MoreThan2Hours" SelectedValueChanged="FilterCourses" @bind-Value="@CurrentFilterModel.DurationFilter" />
                                                     <span class="test"> +2 hours </span>
                                                 </label>
                                                 <label>
-                                                    <input class="uk-radio" type="radio" name="radio3">
+                                                    <InputRadio class="uk-radio" SelectedValue="EnumDuration.MoreThan5Hours" SelectedValueChanged="FilterCourses" @bind-Value="@CurrentFilterModel.DurationFilter" />
                                                     <span class="test"> +5 hours </span>
                                                 </label>
                                                 <label>
-                                                    <input class="uk-radio" type="radio" name="radio3">
+                                                    <InputRadio class="uk-radio" SelectedValue="EnumDuration.MoreThan10Hours" SelectedValueChanged="FilterCourses" @bind-Value="@CurrentFilterModel.DurationFilter" />
                                                     <span class="test"> +10 hours </span>
                                                 </label>
                                                 <label>
-                                                    <input class="uk-radio" type="radio" name="radio3">
+                                                    <InputRadio class="uk-radio" SelectedValue="EnumDuration.MoreThan20Hours" SelectedValueChanged="FilterCourses" @bind-Value="@CurrentFilterModel.DurationFilter" />
                                                     <span class="test"> +20 hours </span>
                                                 </label>
                                                 <label>
-                                                    <input class="uk-radio" type="radio" name="radio3">
+                                                    <InputRadio class="uk-radio" SelectedValue="EnumDuration.MoreThan30Hours" SelectedValueChanged="FilterCourses" @bind-Value="@CurrentFilterModel.DurationFilter" />
                                                     <span class="test"> +30 hours </span>
                                                 </label>
                                             </div>
@@ -203,30 +183,23 @@
                                         <a class="uk-accordion-title" href="#"> Category </a>
                                         <div class="uk-accordion-content">
                                             <div class="uk-form-controls">
+
                                                 <label>
-                                                    <input class="uk-radio" type="radio" name="radio3">
+                                                    <InputRadio class="uk-radio" SelectedValue="null" SelectedValueChanged="FilterCourses" @bind-Value="@CurrentFilterModel.CategoryFilter" />
                                                     <span class="test"> Any </span>
                                                 </label>
-                                                <label>
-                                                    <input class="uk-radio" type="radio" name="radio3">
-                                                    <span class="test"> C# </span>
-                                                </label>
-                                                <label>
-                                                    <input class="uk-radio" type="radio" name="radio3">
-                                                    <span class="test"> HTML </span>
-                                                </label>
-                                                <label>
-                                                    <input class="uk-radio" type="radio" name="radio3">
-                                                    <span class="test"> CSS </span>
-                                                </label>
-                                                <label>
-                                                    <input class="uk-radio" type="radio" name="radio3">
-                                                    <span class="test"> JavaScript </span>
-                                                </label>
-                                                <label>
-                                                    <input class="uk-radio" type="radio" name="radio3">
-                                                    <span class="test"> TypeScript </span>
-                                                </label>
+
+                                                @if (Categories != null)
+                                                {
+                                                    foreach (var Category in Categories)
+                                                    {
+                                                        <label>
+                                                            <InputRadio class="uk-radio" SelectedValue="@Category.Id" SelectedValueChanged="FilterCourses" @bind-Value="@CurrentFilterModel.CategoryFilter" />
+                                                            <span class="test"> @Category.Name </span>
+                                                        </label>
+                                                    }
+                                                }
+
                                             </div>
                                         </div>
                                     </li>
@@ -236,23 +209,23 @@
                                         <div class="uk-accordion-content">
                                             <div class="uk-form-controls">
                                                 <label>
-                                                    <input class="uk-radio" type="radio" name="radio3">
+                                                    <InputRadio class="uk-radio" SelectedValue="null" SelectedValueChanged="FilterCourses" @bind-Value="@CurrentFilterModel.RatingFilter" />
                                                     <span class="test"> Any </span>
                                                 </label>
                                                 <label>
-                                                    <input class="uk-radio" type="radio" name="radio3">
+                                                    <InputRadio class="uk-radio" SelectedValue="EnumRating.OneStarAndHigher" SelectedValueChanged="FilterCourses" @bind-Value="@CurrentFilterModel.RatingFilter" />
                                                     <span class="test"> 1 star and higher </span>
                                                 </label>
                                                 <label>
-                                                    <input class="uk-radio" type="radio" name="radio3">
+                                                    <InputRadio class="uk-radio" SelectedValue="EnumRating.TwoStarsAndHigher" SelectedValueChanged="FilterCourses" @bind-Value="@CurrentFilterModel.RatingFilter" />
                                                     <span class="test"> 2 stars and higher </span>
                                                 </label>
                                                 <label>
-                                                    <input class="uk-radio" type="radio" name="radio3">
+                                                    <InputRadio class="uk-radio" SelectedValue="EnumRating.FourStarsAndHigher" SelectedValueChanged="FilterCourses" @bind-Value="@CurrentFilterModel.RatingFilter" />
                                                     <span class="test"> 3 stars and higher </span>
                                                 </label>
                                                 <label>
-                                                    <input class="uk-radio" type="radio" name="radio3">
+                                                    <InputRadio class="uk-radio" SelectedValue="EnumRating.FourStarsAndHigher" SelectedValueChanged="FilterCourses" @bind-Value="@CurrentFilterModel.RatingFilter" />
                                                     <span class="test"> 4 stars and higher </span>
                                                 </label>
                                             </div>
@@ -264,16 +237,24 @@
                                         <div class="uk-accordion-content">
                                             <div class="uk-form-controls">
                                                 <label>
-                                                    <input class="uk-radio" type="radio" name="radio3">
+                                                    <InputRadio class="uk-radio" SelectedValue="null" SelectedValueChanged="FilterCourses" @bind-Value="@CurrentFilterModel.PeriodeFilter" />
                                                     <span class="test"> Any </span>
                                                 </label>
                                                 <label>
-                                                    <input class="uk-radio" type="radio" name="radio3">
-                                                    <span class="test"> In the last year </span>
+                                                    <InputRadio class="uk-radio" SelectedValue="EnumPeriode.LastMonth" SelectedValueChanged="FilterCourses" @bind-Value="@CurrentFilterModel.PeriodeFilter" />
+                                                    <span class="test"> In the last month </span>
                                                 </label>
                                                 <label>
-                                                    <input class="uk-radio" type="radio" name="radio3">
-                                                    <span class="test"> In the last month </span>
+                                                    <InputRadio class="uk-radio" SelectedValue="EnumPeriode.Last3Months" SelectedValueChanged="FilterCourses" @bind-Value="@CurrentFilterModel.PeriodeFilter" />
+                                                    <span class="test"> In the last 3 months </span>
+                                                </label>
+                                                <label>
+                                                    <InputRadio class="uk-radio" SelectedValue="EnumPeriode.Last6Months" SelectedValueChanged="FilterCourses" @bind-Value="@CurrentFilterModel.PeriodeFilter" />
+                                                    <span class="test"> In the last 6 months </span>
+                                                </label>
+                                                <label>
+                                                    <InputRadio class="uk-radio" SelectedValue="EnumPeriode.Last12Months" SelectedValueChanged="FilterCourses" @bind-Value="@CurrentFilterModel.PeriodeFilter" />
+                                                    <span class="test"> In the last year </span>
                                                 </label>
                                             </div>
                                         </div>
@@ -284,16 +265,20 @@
                                         <div class="uk-accordion-content">
                                             <div class="uk-form-controls">
                                                 <label>
-                                                    <input class="uk-radio" type="radio" name="radio3">
+                                                    <InputRadio class="uk-radio" SelectedValue="null" SelectedValueChanged="FilterCourses" @bind-Value="@CurrentFilterModel.ClassmentFilter" />
                                                     <span class="test"> Any </span>
                                                 </label>
                                                 <label>
-                                                    <input class="uk-radio" type="radio" name="radio3">
-                                                    <span class="test"> Featured courses only </span>
+                                                    <InputRadio class="uk-radio" SelectedValue="EnumClassment.Featured" SelectedValueChanged="FilterCourses" @bind-Value="@CurrentFilterModel.ClassmentFilter" />
+                                                    <span class="test"> Featured only </span>
                                                 </label>
                                                 <label>
-                                                    <input class="uk-radio" type="radio" name="radio3">
-                                                    <span class="test"> Popular courses only </span>
+                                                    <InputRadio class="uk-radio" SelectedValue="EnumClassment.Popular" SelectedValueChanged="FilterCourses" @bind-Value="@CurrentFilterModel.ClassmentFilter" />
+                                                    <span class="test"> Popular only </span>
+                                                </label>
+                                                <label>
+                                                    <InputRadio class="uk-radio" SelectedValue="EnumClassment.Novelty" SelectedValueChanged="FilterCourses" @bind-Value="@CurrentFilterModel.ClassmentFilter" />
+                                                    <span class="test"> Novelty only </span>
                                                 </label>
                                             </div>
                                         </div>
