@@ -32,7 +32,7 @@ namespace CoursePlus.Server.Repositories
 
                 return await PaginatedList<Book>.CreateAsync(bookList.AsNoTracking(), pageNumber ?? 1, pageSize);
             }
-            catch (Exception ex)
+            catch
             {
                 throw new ApplicationException();
             }

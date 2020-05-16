@@ -39,7 +39,7 @@ namespace CoursePlus.Server.Repositories
 
                 return await PaginatedList<Student>.CreateAsync(studentList.AsNoTracking(), pageNumber ?? 1, pageSize);
             }
-            catch (Exception ex)
+            catch
             {
                 throw new ApplicationException();
             }
@@ -78,7 +78,7 @@ namespace CoursePlus.Server.Repositories
 
                 return addedEntity.Entity;
             }
-            catch (Exception ex)
+            catch
             {
                 throw new ApplicationException();
             }
@@ -161,7 +161,7 @@ namespace CoursePlus.Server.Repositories
 
                 return parsedUsers;
             }
-            catch (Exception ex)
+            catch
             {
                 throw new ApplicationException();
             }

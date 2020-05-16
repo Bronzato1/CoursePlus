@@ -26,7 +26,7 @@ namespace CoursePlus.Server.Repositories
                 var episodeList = _dbContext.Episodes;
                 return await episodeList.ToListAsync();
             }
-            catch (Exception ex)
+            catch
             {
                 throw new ApplicationException();
             }

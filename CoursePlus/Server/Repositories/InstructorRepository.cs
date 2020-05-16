@@ -36,7 +36,7 @@ namespace CoursePlus.Server.Repositories
 
                 return await PaginatedList<Instructor>.CreateAsync(instructorList.AsNoTracking(), pageNumber ?? 1, pageSize);
             }
-            catch (Exception ex)
+            catch
             {
                 throw new ApplicationException();
             }
@@ -52,7 +52,7 @@ namespace CoursePlus.Server.Repositories
 
                 return await instructorList.ToListAsync();
             }
-            catch (Exception ex)
+            catch
             {
                 throw new ApplicationException();
             }

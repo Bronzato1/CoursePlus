@@ -46,7 +46,7 @@ namespace CoursePlus.Server.Controllers
 
                 return Ok(new RegisterResult { Successful = true });
             }
-            catch (Exception ex)
+            catch
             {
                 return Ok(new RegisterResult { Successful = false });
             }

@@ -26,7 +26,7 @@ namespace CoursePlus.Server.Repositories
                 var chapterList = _dbContext.Chapters;
                 return await chapterList.ToListAsync();
             }
-            catch (Exception ex)
+            catch
             {
                 throw new ApplicationException();
             }

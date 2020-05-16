@@ -63,7 +63,7 @@ namespace CoursePlus.Server.Controllers
 
                 return Ok(new LoginResult { Successful = true, Token = new JwtSecurityTokenHandler().WriteToken(token) });
             }
-            catch (Exception ex)
+            catch
             {
                 return Ok(new LoginResult { Successful = false });
             }

@@ -88,9 +88,6 @@ namespace CoursePlus.Server.Controllers
         [Authorize(Policy = Policies.IsAdmin)]
         public IActionResult DeleteStudent(int id)
         {
-            if (id == null)
-                return BadRequest();
-
             var studentToDelete = _studentRepository.GetStudent(id);
             if (studentToDelete == null)
                 return NotFound();
