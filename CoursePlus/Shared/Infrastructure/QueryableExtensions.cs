@@ -40,7 +40,7 @@ namespace CoursePlus.Shared.Infrastructure
 
             return query.Provider.CreateQuery<T>(orderBy);
         }
-
+        
         public static IQueryable<T> WhereDynamic<T>(this IQueryable<T> query, string filterMember, string filterValue)
         {
             if (string.IsNullOrEmpty(filterMember) || string.IsNullOrEmpty(filterValue))

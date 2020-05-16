@@ -123,7 +123,7 @@ namespace CoursePlus.Client.Pages.Admin
                 await file.Data.CopyToAsync(ms);
 
                 var content = new MultipartFormDataContent { { new ByteArrayContent(ms.GetBuffer()), "\"upload\"", file.Name } };
-                var result = await Client.PostAsync("api/upload/image", content);
+                var result = await Client.PostAsync("api/upload/image/300/390", content);
                 result.EnsureSuccessStatusCode();
                 var uploadImageResult = JsonSerializer.Deserialize<UploadImageResult>(await result.Content.ReadAsStringAsync(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
                 OneBook.ImageId = uploadImageResult.ImageId;

@@ -6,6 +6,33 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\BookDetailBase.cs" />
+    <Compile Remove="Pages\BookListBase.cs" />
+    <Compile Remove="Pages\CourseDetail.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Pages\Blog_1.razor" />
+    <Content Remove="Pages\BookDetail.razor" />
+    <Content Remove="Pages\Chat.razor" />
+    <Content Remove="Pages\ComingSoon.razor" />
+    <Content Remove="Pages\Components.razor" />
+    <Content Remove="Pages\CourseDetail.razor" />
+    <Content Remove="Pages\Elements.razor" />
+    <Content Remove="Pages\FormRegister.razor" />
+    <Content Remove="Pages\Icons.razor" />
+    <Content Remove="Pages\Logout.razor" />
+    <Content Remove="Pages\Maintenance.razor" />
+    <Content Remove="Pages\PageFaq.razor" />
+    <Content Remove="Pages\PagePricing.razor" />
+    <Content Remove="Pages\PagePrivacy.razor" />
+    <Content Remove="Pages\PageTerm.razor" />
+    <Content Remove="Pages\Signup.razor" />
+    <Content Remove="Pages\UserProfile.razor" />
+    <Content Remove="Pages\UserProfileEdit.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Blazored.FluentValidation" Version="1.3.0" />
     <PackageReference Include="Blazored.LocalStorage" Version="2.1.5" />
     <PackageReference Include="BlazorInputFile" Version="0.2.0" />
@@ -18,6 +45,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Build" Version="3.2.0-rc1.20223.4" PrivateAssets="all" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="3.2.0-rc1.20223.4" PrivateAssets="all" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="3.1.4" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="System.Net.Http.Json" Version="3.2.0-rc1.20217.1" />
   </ItemGroup>
   <ItemGroup>

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CoursePlus.Shared.Models
 {
-    public enum EnumDifficulties
+    public enum EnumDifficulty
     {
         Beginner,
         Intermediate,

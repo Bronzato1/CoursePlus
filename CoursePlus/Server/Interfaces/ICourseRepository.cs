@@ -9,7 +9,7 @@ namespace CoursePlus.Server.Repositories
 {
     public interface ICourseRepository
     {
-        Task<PaginatedList<Course>> GetCourses(int? pageNumber, string sortField, string sortOrder, string filterField, string filterValue);
+        Task<PaginatedList<Course>> GetCourses(int? pageNumber, IDictionary<string, string> sortOrder, IDictionary<string, string> filters);
 
         public Course GetCourse(int id);
 

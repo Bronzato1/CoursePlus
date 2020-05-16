@@ -4,6 +4,7 @@ using CoursePlus.Client.Services;
 using CoursePlus.Shared.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -36,22 +37,18 @@ namespace CoursePlus.Client.Pages.Admin
         public IModalDialogService ModalDialog { get; set; }
 
         public EditForm FormContext { get; set; }
-
         public Course OneCourse { get; set; } = new Course();
 
-        //used to store state of screen
         protected string Message = string.Empty;
         protected string StatusClass = string.Empty;
 
         public List<Category> Categories { get; set; } = new List<Category>();
-
         public List<Instructor> Instructors { get; set; } = new List<Instructor>();
 
         protected override void OnParametersSet()
         {
             base.OnParametersSet();
         }
-
         protected override async Task OnInitializedAsync()
         {
             Categories = (await CategoryService.GetCategories()).ToList();
@@ -67,6 +64,15 @@ namespace CoursePlus.Client.Pages.Admin
             }
         }
 
+        protected void NavigateToList()
+        {
+            NavigationManager.NavigateTo("/admin/courses");
+        }
+        protected void HandleInvalidSubmit()
+        {
+            StatusClass = "uk-text-warning";
+            Message = "Validation errors";
+        }
         protected async Task HandleValidSubmit()
         {
             if (Id == 0)
@@ -96,13 +102,6 @@ namespace CoursePlus.Client.Pages.Admin
                 NavigationManager.NavigateTo("/admin/courses");
             }
         }
-
-        protected void HandleInvalidSubmit()
-        {
-            StatusClass = "uk-text-warning";
-            Message = "Validation errors";
-        }
-
         protected async Task DeleteCourse()
         {
             MessageBoxDialogResult result = await ModalDialog.ShowMessageBoxAsync("Confirm Delete", "Are you sure you want to delete the course ?", MessageBoxButtons.YesNo, MessageBoxDefaultButton.Button2);
@@ -117,7 +116,6 @@ namespace CoursePlus.Client.Pages.Admin
                 NavigationManager.NavigateTo("/admin/courses");
             }
         }
-
         protected async Task HandleSelection(IFileListEntry[] files)
         {
             var file = files.FirstOrDefault();
@@ -129,7 +127,7 @@ namespace CoursePlus.Client.Pages.Admin
                 await file.Data.CopyToAsync(ms);
 
                 var content = new MultipartFormDataContent { { new ByteArrayContent(ms.GetBuffer()), "\"upload\"", file.Name } };
-                var result = await Client.PostAsync("api/upload/image", content);
+                var result = await Client.PostAsync("api/upload/image/390/300", content);
                 result.EnsureSuccessStatusCode();
                 var uploadImageResult = JsonSerializer.Deserialize<UploadImageResult>(await result.Content.ReadAsStringAsync(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
                 OneCourse.ImageId = uploadImageResult.ImageId;
@@ -141,12 +139,6 @@ namespace CoursePlus.Client.Pages.Admin
                 OneCourse.Image.Data = ms.ToArray();
             }
         }
-
-        protected void NavigateToList()
-        {
-            NavigationManager.NavigateTo("/admin/courses");
-        }
-
         protected async Task AddChapter()
         {
             ModalDataInputForm frm = new ModalDataInputForm("Add chapter", "Please give a title");
@@ -161,7 +153,6 @@ namespace CoursePlus.Client.Pages.Admin
                 StateHasChanged();
             }
         }
-
         protected async Task DeleteChapter(Chapter OneChapter)
         {
             MessageBoxDialogResult result = await ModalDialog.ShowMessageBoxAsync("Confirm Delete", "Are you sure you want to delete the chapter ?", MessageBoxButtons.YesNo, MessageBoxDefaultButton.Button2);
@@ -173,7 +164,6 @@ namespace CoursePlus.Client.Pages.Admin
                 StateHasChanged();
             }
         }
-
         protected async Task AddEpisode(Chapter OneChapter)
         {
             ModalDataInputForm frm = new ModalDataInputForm("Add episode", "Please fill in the information below");
@@ -193,23 +183,22 @@ namespace CoursePlus.Client.Pages.Admin
                 StateHasChanged();
             }
         }
-
         protected async Task EditEpisode(Chapter OneChapter, Episode OneEpisode)
         {
-            ModalDataInputForm frm = new ModalDataInputForm("Edit episode", "Please fill in the information below");
+            ModalDialogParameters parameters = new ModalDialogParameters();
 
-            var titleFld = frm.AddStringField("title", "Title", OneEpisode.Title, "The title of the episode");
-            var urlFld = frm.AddStringField("url", "Url", OneEpisode.VideoUrl, "The youtube url of the episode");
+            parameters.Add("Title", OneEpisode.Title);
+            parameters.Add("VideoUrl", OneEpisode.VideoUrl);
 
-            if (await frm.ShowAsync(ModalDialog))
+            var dialogResult = await ModalDialog.ShowDialogAsync<EpisodeEdit>("Edit episode", new ModalDialogOptions(), parameters);
+
+            if (dialogResult.Success)
             {
-                OneEpisode.Title = titleFld.Value;
-                OneEpisode.VideoUrl = urlFld.Value;
+                OneEpisode.Title = dialogResult.ReturnParameters.Get<string>("Title");
+                OneEpisode.VideoUrl = dialogResult.ReturnParameters.Get<string>("VideoUrl");
                 await EpisodeService.UpdateEpisode(OneEpisode);
-                StateHasChanged();
             }
         }
-
         protected async Task DeleteEpisode(Chapter OneChapter, Episode OneEpisode)
         {
             MessageBoxDialogResult result = await ModalDialog.ShowMessageBoxAsync("Confirm Delete", "Are you sure you want to delete the episode ?", MessageBoxButtons.YesNo, MessageBoxDefaultButton.Button2);

@@ -19,16 +19,35 @@ namespace CoursePlus.Server.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<PaginatedList<Course>> GetCourses(int? pageNumber, string sortField, string sortOrder, string filterField, string filterValue)
+        public async Task<PaginatedList<Course>> GetCourses(int? pageNumber, IDictionary<string, string> sortOrder, IDictionary<string, string> filters)
         {
             try
             {
                 int pageSize = 6;
                 var courseList = _dbContext.Courses
                                          .Include(x => x.Thumbnail)
-                                         .Include(x => x.Category)
-                                         .WhereDynamic(filterField, filterValue)
-                                         .OrderByDynamic(sortField, sortOrder);
+                                         .Include(x => x.Category).AsQueryable();
+
+                if (filters != null)
+                { 
+                    foreach (var filter in filters)
+                    {
+                        var filterField = filter.Key;
+                        var filterValue = filter.Value;
+
+                        courseList = courseList.WhereDynamic(filterField, filterValue);
+                    }
+                }
+                if (sortOrder != null)
+                { 
+                    foreach (var sort in sortOrder)
+                    {
+                        var sortField = sort.Key;
+                        var sortValue = sort.Value;
+
+                        courseList = courseList.OrderByDynamic(sortField, sortValue);
+                    }
+                }
 
                 return await PaginatedList<Course>.CreateAsync(courseList.AsNoTracking(), pageNumber ?? 1, pageSize);
             }
@@ -70,6 +89,8 @@ namespace CoursePlus.Server.Repositories
                 foundCourse.ImageId = course.ImageId;
                 foundCourse.ThumbnailId = course.ThumbnailId;
                 foundCourse.Language = course.Language;
+                foundCourse.Featured = course.Featured;
+                foundCourse.Popular = course.Popular;
 
                 //foundCourse.InstructorId = course.InstructorId; <<<<<<<<<<---------
 

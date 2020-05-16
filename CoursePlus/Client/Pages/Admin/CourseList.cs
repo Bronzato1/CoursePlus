@@ -78,7 +78,16 @@ namespace CoursePlus.Client.Pages.Admin
 
         public async Task RefreshListAsync()
         {
-            PaginatedList = await CourseService.GetCourses(currentPageNumber, currentSortField, currentSortOrder, currentFilterField, currentFilterValue);
+            var filters = new Dictionary<string, string>();
+            var sortOrder = new Dictionary<string, string>();
+
+            if (!string.IsNullOrEmpty(currentFilterField) && !string.IsNullOrEmpty(currentFilterValue))
+                filters.Add(currentFilterField, currentFilterValue);
+
+            if (!string.IsNullOrEmpty(currentSortField) && !string.IsNullOrEmpty(currentSortOrder))
+                sortOrder.Add(currentSortField, currentSortOrder);
+
+            PaginatedList = await CourseService.GetCourses(currentPageNumber, sortOrder, filters);
         }
 
         public async Task Sort(string sortField)

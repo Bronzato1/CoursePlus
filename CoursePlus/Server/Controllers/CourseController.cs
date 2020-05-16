@@ -24,9 +24,11 @@ namespace CoursePlus.Server.Controllers
         }
 
         [HttpGet("getcourses")]
-        public async Task<ActionResult<PaginatedList<Course>>> GetCourses(int? pageNumber, string sortField, string sortOrder, string filterField, string filterValue)
+        public async Task<ActionResult<PaginatedList<Course>>> GetCourses(int? pageNumber, string sortOrder, string filters)
         {
-            var list = await _courseRepository.GetCourses(pageNumber, sortField, sortOrder, filterField, filterValue);
+            var currentSortOrder = Newtonsoft.Json.JsonConvert.DeserializeObject<IDictionary<string, string>>(sortOrder);
+            var currentFilters = Newtonsoft.Json.JsonConvert.DeserializeObject<IDictionary<string, string>>(filters);
+            var list = await _courseRepository.GetCourses(pageNumber, currentSortOrder, currentFilters);
             return list;
         }
 

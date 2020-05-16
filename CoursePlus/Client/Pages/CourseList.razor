@@ -1,0 +1,319 @@
+﻿@page "/courses"
+@inherits CourseListBase
+@using CoursePlus.Shared.Infrastructure
+
+<div id="wrapper">
+
+    <Header Class="header" UkSticky="top:20; cls-active:header-sticky">
+        <Breadcrumbs>
+            <li><a href="/" uk-tooltip="title:Home; pos:bottom; offset:21"> <i class="uil-home-alt"></i> </a></li>
+            <li>Courses</li>
+        </Breadcrumbs>
+    </Header>
+
+    <SearchOnMobile></SearchOnMobile>
+
+    <SearchOnDesktop></SearchOnDesktop>
+
+    <SideNav></SideNav>
+
+    <div class="page-content">
+
+        <div class="container">
+
+            <h1>Courses</h1>
+
+            <div class="section-header pb-0 mt-5">
+                <div class="section-header-left">
+                    <h4> Learn at your own pace </h4>
+                </div>
+                <div class="section-header-right">
+
+                    <a href="#" class="btn-filter" uk-tooltip="title: Course Filter ; pos:  top-right"
+                       uk-toggle="target: #course-filter">
+                        <i class="icon-feather-filter"></i>
+                    </a>
+                    <div class="display-as">
+                        <a href="courses-list.html" uk-tooltip="title: Course list; pos: top-right">
+                            <i class="icon-feather-grid"></i>
+                        </a>
+                        <a href="#" class="active" uk-tooltip="title: Course Grid; pos: top-right">
+                            <i class="icon-feather-list"></i>
+                        </a>
+                    </div>
+
+                    <select class="selectpicker ml-3">
+                        <option value="0"> Newest </option>
+                        <option value="1"> Popular </option>
+                        <option value="2"> Featured </option>
+                        <option value="3"> Premium </option>
+                    </select>
+
+                </div>
+            </div>
+
+            <div class="section-small">
+
+                @if (SomeCourses != null)
+                {
+                    <div class="uk-child-width-1-4@m uk-child-width-1-3@s course-card-grid uk-grid-match" uk-grid>
+
+                        @foreach (var OneCourse in SomeCourses.Items)
+                        {
+                            <div class="uk-margin-small-bottom">
+                                <a href="course-intro.html">
+                                    <div class="course-card">
+                                        <div class="course-card-thumbnail">
+                                            @if (OneCourse.Thumbnail != null)
+                                            {
+                                                <img src="@String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(OneCourse.Thumbnail.Data))" style="object-fit: fill;">
+                                            }
+                                            <span class="play-button-trigger"></span>
+                                        </div>
+                                        <div class="course-card-body">
+                                            <div class="course-card-info">
+                                                <div>
+                                                    <span class="catagroy">HTML</span>
+                                                </div>
+                                                <div>
+                                                    <i class="icon-feather-bookmark icon-small"></i>
+                                                </div>
+                                            </div>
+
+                                            <h4>Ultimate Web Developer Course </h4>
+                                            <p> HTML is the building blocks of the web. It gives pages structure and ..</p>
+
+                                            <div class="course-card-footer">
+                                                <h5> <i class="icon-feather-film"></i> 33 Lectures </h5>
+                                                <h5> <i class="icon-feather-clock"></i> 26 Hours </h5>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </a>
+                            </div>
+                        }
+
+                    </div>
+
+                    <div class=" uk-flex uk-flex-center uk-margin-top uk-margin-bottom uk-width-expand">
+
+                        <Pager PageIndex=@SomeCourses.PageIndex TotalPages=@SomeCourses.TotalPages OnClick="@((newPageNumber) => PageIndexChanged(SomeCourses, newPageNumber))"
+                               HasNextPage=@SomeCourses.HasNextPage HasPreviousPage=@SomeCourses.HasPreviousPage>
+                        </Pager>
+
+                    </div>
+                }
+
+            </div>
+
+            <div id="course-filter" uk-offcanvas="flip: true; overlay: true">
+                <div class="uk-offcanvas-bar">
+
+                    <!-- close button -->
+                    <button class="uk-offcanvas-close" type="button" uk-close></button>
+
+                    <div class="sidebar-filter">
+
+                        <div class="sidebar-filter-contents">
+
+                            <EditForm Model="CurrentFilterModel">
+
+                                <h4> Filter By </h4>
+
+                                <ul class="sidebar-filter-list" uk-accordion="multiple: true">
+
+                                    <li>
+                                        <a class="uk-accordion-title" href="#"> Difficulty level </a>
+                                        <div class="uk-accordion-content">
+                                            <div class="uk-form-controls">
+                                                <label>
+                                                    <InputRadio class="uk-radio" SelectedValue="null" SelectedValueChanged="FilterCourses" @bind-Value="@CurrentFilterModel.DifficultyFilter" />
+                                                    <span class="test"> Any </span>
+                                                </label>
+                                                <label>
+                                                    <InputRadio class="uk-radio" SelectedValue="EnumDifficulty.Beginner" SelectedValueChanged="FilterCourses" @bind-Value="@CurrentFilterModel.DifficultyFilter" />
+                                                    <span class="test"> Beginner </span>
+                                                </label>
+                                                <label>
+                                                    <InputRadio class="uk-radio" SelectedValue="EnumDifficulty.Intermediate" SelectedValueChanged="FilterCourses" @bind-Value="@CurrentFilterModel.DifficultyFilter" />
+                                                    <span class="test"> Intermediate </span>
+                                                </label>
+                                                <label>
+                                                    <InputRadio class="uk-radio" SelectedValue="EnumDifficulty.Advanced" SelectedValueChanged="FilterCourses" @bind-Value="@CurrentFilterModel.DifficultyFilter" />
+                                                    <span class="test"> Advanced </span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <a class="uk-accordion-title" href="#"> Course type </a>
+                                        <div class="uk-accordion-content">
+                                            <div class="uk-form-controls">
+                                                <label>
+                                                    <input class="uk-radio" type="radio" name="radio2">
+                                                    <span class="test"> Any </span>
+                                                </label>
+                                                <label>
+                                                    <input class="uk-radio" type="radio" name="radio2">
+                                                    <span class="test"> Free </span>
+                                                </label>
+                                                <label>
+                                                    <input class="uk-radio" type="radio" name="radio2">
+                                                    <span class="test"> Paid </span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <a class="uk-accordion-title" href="#"> Duration time </a>
+                                        <div class="uk-accordion-content">
+                                            <div class="uk-form-controls">
+                                                <label>
+                                                    <input class="uk-radio" type="radio" name="radio3">
+                                                    <span class="test"> Any </span>
+                                                </label>
+                                                <label>
+                                                    <input class="uk-radio" type="radio" name="radio3">
+                                                    <span class="test"> +2 hours </span>
+                                                </label>
+                                                <label>
+                                                    <input class="uk-radio" type="radio" name="radio3">
+                                                    <span class="test"> +5 hours </span>
+                                                </label>
+                                                <label>
+                                                    <input class="uk-radio" type="radio" name="radio3">
+                                                    <span class="test"> +10 hours </span>
+                                                </label>
+                                                <label>
+                                                    <input class="uk-radio" type="radio" name="radio3">
+                                                    <span class="test"> +20 hours </span>
+                                                </label>
+                                                <label>
+                                                    <input class="uk-radio" type="radio" name="radio3">
+                                                    <span class="test"> +30 hours </span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <a class="uk-accordion-title" href="#"> Category </a>
+                                        <div class="uk-accordion-content">
+                                            <div class="uk-form-controls">
+                                                <label>
+                                                    <input class="uk-radio" type="radio" name="radio3">
+                                                    <span class="test"> Any </span>
+                                                </label>
+                                                <label>
+                                                    <input class="uk-radio" type="radio" name="radio3">
+                                                    <span class="test"> C# </span>
+                                                </label>
+                                                <label>
+                                                    <input class="uk-radio" type="radio" name="radio3">
+                                                    <span class="test"> HTML </span>
+                                                </label>
+                                                <label>
+                                                    <input class="uk-radio" type="radio" name="radio3">
+                                                    <span class="test"> CSS </span>
+                                                </label>
+                                                <label>
+                                                    <input class="uk-radio" type="radio" name="radio3">
+                                                    <span class="test"> JavaScript </span>
+                                                </label>
+                                                <label>
+                                                    <input class="uk-radio" type="radio" name="radio3">
+                                                    <span class="test"> TypeScript </span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <a class="uk-accordion-title" href="#"> Rating </a>
+                                        <div class="uk-accordion-content">
+                                            <div class="uk-form-controls">
+                                                <label>
+                                                    <input class="uk-radio" type="radio" name="radio3">
+                                                    <span class="test"> Any </span>
+                                                </label>
+                                                <label>
+                                                    <input class="uk-radio" type="radio" name="radio3">
+                                                    <span class="test"> 1 star and higher </span>
+                                                </label>
+                                                <label>
+                                                    <input class="uk-radio" type="radio" name="radio3">
+                                                    <span class="test"> 2 stars and higher </span>
+                                                </label>
+                                                <label>
+                                                    <input class="uk-radio" type="radio" name="radio3">
+                                                    <span class="test"> 3 stars and higher </span>
+                                                </label>
+                                                <label>
+                                                    <input class="uk-radio" type="radio" name="radio3">
+                                                    <span class="test"> 4 stars and higher </span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <a class="uk-accordion-title" href="#"> Date added </a>
+                                        <div class="uk-accordion-content">
+                                            <div class="uk-form-controls">
+                                                <label>
+                                                    <input class="uk-radio" type="radio" name="radio3">
+                                                    <span class="test"> Any </span>
+                                                </label>
+                                                <label>
+                                                    <input class="uk-radio" type="radio" name="radio3">
+                                                    <span class="test"> In the last year </span>
+                                                </label>
+                                                <label>
+                                                    <input class="uk-radio" type="radio" name="radio3">
+                                                    <span class="test"> In the last month </span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <a class="uk-accordion-title" href="#"> Classment </a>
+                                        <div class="uk-accordion-content">
+                                            <div class="uk-form-controls">
+                                                <label>
+                                                    <input class="uk-radio" type="radio" name="radio3">
+                                                    <span class="test"> Any </span>
+                                                </label>
+                                                <label>
+                                                    <input class="uk-radio" type="radio" name="radio3">
+                                                    <span class="test"> Featured courses only </span>
+                                                </label>
+                                                <label>
+                                                    <input class="uk-radio" type="radio" name="radio3">
+                                                    <span class="test"> Popular courses only </span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                </ul>
+
+                            </EditForm>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <Footer></Footer>
+
+        </div>
+
+    </div>
+
+</div>

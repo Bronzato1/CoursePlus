@@ -27,8 +27,8 @@ namespace CoursePlus.Server.Controllers
             _dbContext = dbContext;
         }
 
-        [HttpPost("api/upload/image")]
-        public async Task<IActionResult> PostImage()
+        [HttpPost("api/upload/image/{thumbwidth:int}/{thumbheight:int}")]
+        public async Task<IActionResult> PostImage(int thumbWidth, int thumbHeight)
         {
             if (HttpContext.Request.Form.Files.Count == 1)
             {
@@ -49,7 +49,7 @@ namespace CoursePlus.Server.Controllers
 
                 using (MemoryStream ms = new MemoryStream())
                 {
-                    thumb = img.GetThumbnailImage(300, 390, () => false, IntPtr.Zero);
+                    thumb = img.GetThumbnailImage(thumbWidth, thumbHeight, () => false, IntPtr.Zero);
                     thumb.Save(ms, ImageFormat.Jpeg);
                     newThumbnail = new Thumbnail { Data = ms.ToArray() };
                 }

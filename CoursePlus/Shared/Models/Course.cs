@@ -9,27 +9,30 @@ namespace CoursePlus.Shared.Models
     {
         [Required]
         public int Id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "{0} is required.")]
         public string Title { get; set; }
-        [Required]
+        [Required(ErrorMessage = "{0} is required.")]
         public string SubTitle { get; set; }
-        [Required]
+        [Required(ErrorMessage = "{0} is required.")]
         public string Description { get; set; }
         [Required]
         public int Price { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Category is required.")]
         public int? CategoryId { get; set; }
         public Category Category { get; set; }
-        [Required]
+        [Required(ErrorMessage = "{0} is required.")]
         public EnumLanguages? Language { get; set; }
-        [Required]
-        public EnumDifficulties? Difficulty { get; set; }
+        [Required(ErrorMessage = "{0} is required.")]
+        public EnumDifficulty? Difficulty { get; set; }
 
         public int? ImageId { get; set; }
         public virtual Image Image { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Instructor is required.")]
         public int? InstructorId { get; set; }
         public Instructor Instructor { get; set; }
+
+        public bool Featured { get; set; }
+        public bool Popular { get; set; }
 
         public virtual List<Enrollment> Enrollments { get; set; }
 

@@ -33,6 +33,7 @@
                 <ul class="uk-child-width-expand uk-tab"
                     uk-switcher="connect: #course-edit-tab ; animation: uk-animation-slide-left-medium, uk-animation-slide-right-medium">
                     <li class="uk-active"><a href="#"> Basic </a></li>
+                    <li><a href="#"> Extra </a></li>
                     <li><a href="#"> Episodes </a></li>
                     <li><a href="#"> Image </a></li>
                     <li><a href="#"> Requirements </a></li>
@@ -52,7 +53,7 @@
                                     <div class="col-xl-9 m-auto">
 
                                         <div class="form-group row mb-3">
-                                            <label class="col-md-3 col-form-label" for="course_title">
+                                            <label class="col-md-3 col-form-label" for="title">
                                                 Course title<span class="required">*</span>
                                             </label>
                                             <div class="col-md-9">
@@ -61,25 +62,36 @@
                                         </div>
 
                                         <div class="form-group row mb-3">
-                                            <label class="col-md-3 col-form-label" for="course_subtitle">
+                                            <label class="col-md-3 col-form-label" for="subtitle">
                                                 Subtitle
                                             </label>
                                             <div class="col-md-9">
-                                                <InputTextArea rows="1" class="form-control" @bind-Value="OneCourse.SubTitle" />
+                                                <InputTextArea Id="subtitle" rows="1" class="form-control" @bind-Value="OneCourse.SubTitle" />
                                             </div>
                                         </div>
 
                                         <div class="form-group row mb-3">
-                                            <label class="col-md-3 col-form-label" for="short_description">
+                                            <label class="col-md-3 col-form-label" for="description">
                                                 Description
                                             </label>
                                             <div class="col-md-9">
-                                                <InputTextArea rows="15" class="form-control" @bind-Value="OneCourse.Description" />
+                                                <InputTextArea Id="description" rows="15" class="form-control" @bind-Value="OneCourse.Description" />
                                             </div>
                                         </div>
 
+                                    </div>
+                                </div>
+
+
+                            </li>
+
+                            <li>
+
+                                <div class="row">
+                                    <div class="col-xl-9 m-auto">
+
                                         <div class="form-group row mb-3">
-                                            <label class="col-md-3 col-form-label" for="course_instructor">
+                                            <label class="col-md-3 col-form-label" for="instructor">
                                                 Instructor <span class="required">*</span>
                                             </label>
                                             <div class="col-md-9">
@@ -87,14 +99,14 @@
                                                     <option value=""></option>
                                                     @foreach (var instructor in Instructors)
                                                     {
-                                                <option value="@instructor.Id">@instructor.User.FirstName @instructor.User.LastName</option>
+                                                        <option value="@instructor.Id">@instructor.User.FirstName @instructor.User.LastName</option>
                                                     }
                                                 </InputSelectCustom>
                                             </div>
                                         </div>
 
                                         <div class="form-group row mb-3">
-                                            <label class="col-md-3 col-form-label" for="course_category">
+                                            <label class="col-md-3 col-form-label" for="category">
                                                 Category <span class="required">*</span>
                                             </label>
                                             <div class="col-md-9">
@@ -109,7 +121,7 @@
                                         </div>
 
                                         <div class="form-group row mb-3">
-                                            <label class="col-md-3 col-form-label" for="course_title">
+                                            <label class="col-md-3 col-form-label" for="language">
                                                 Language <span class="required">*</span>
                                             </label>
                                             <div class="col-md-9">
@@ -124,7 +136,7 @@
                                         </div>
 
                                         <div class="form-group row mb-3">
-                                            <label class="col-md-3 col-form-label" for="course_title">
+                                            <label class="col-md-3 col-form-label" for="difficulty">
                                                 Difficulty <span class="required">*</span>
                                             </label>
                                             <div class="col-md-9">
@@ -139,14 +151,19 @@
                                             </div>
                                         </div>
 
-                                        <div>
-                                            <DataAnnotationsValidator />
-                                            <ValidationSummary />
+                                        <div class="form-group row mb-3">
+                                            <div class="col-md-9">
+                                                <InputCheckbox id="featured" class="uk-checkbox" @bind-Value="@OneCourse.Featured"></InputCheckbox>
+                                                &nbsp;Featured
+                                            </div>
                                         </div>
 
-                                        
-
-
+                                        <div class="form-group row mb-3">
+                                            <div class="col-md-9">
+                                                <InputCheckbox id="popular" class="uk-checkbox" @bind-Value="@OneCourse.Popular"></InputCheckbox>
+                                                &nbsp;Popular
+                                            </div>
+                                        </div>
 
                                     </div>
                                 </div>
@@ -307,6 +324,12 @@
                         </ul>
 
                     </div>
+
+                    <div>
+                        <DataAnnotationsValidator />
+                        <ValidationSummary />
+                    </div>
+
 
                     <div class="uk-flex uk-flex-right pt-0 p-5">
                         <button class="btn btn-light mr-2" @onclick="NavigateToList">Cancel</button>
