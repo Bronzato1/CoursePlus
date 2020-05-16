@@ -69,23 +69,23 @@ namespace CoursePlus.Server.Repositories
             return instructor;
         }
 
-        public Instructor AddInstructor(Instructor instructor)
+        public async Task<Instructor> AddInstructor(Instructor instructor)
         {
             var newUser = new CustomUser { FirstName = instructor.User.FirstName, LastName = instructor.User.LastName, UserName = instructor.User.Email, Email = instructor.User.Email, AvatarId = instructor.User.AvatarId };
-            var result = _userManager.CreateAsync(newUser, "Pa$$w0rd").Result;
+            var result = await _userManager.CreateAsync(newUser, "Pa$$w0rd");
 
             if (!result.Succeeded)
             {
                 throw new ApplicationException();
             }
 
-            _userManager.AddToRoleAsync(newUser, "User");
+            await _userManager.AddToRoleAsync(newUser, "User");
 
             instructor.User = newUser;
 
             var addedEntity = _dbContext.Instructors.Add(instructor);
 
-            _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
 
             return addedEntity.Entity;
         }

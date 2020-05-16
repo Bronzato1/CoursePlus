@@ -15,7 +15,7 @@ namespace CoursePlus.Server.Repositories
 
         Instructor GetInstructor(int id);
 
-        Instructor AddInstructor(Instructor instructor);
+        Task<Instructor> AddInstructor(Instructor instructor);
 
         Instructor UpdateInstructor(Instructor instructor);
 

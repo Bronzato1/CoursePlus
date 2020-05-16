@@ -45,7 +45,7 @@ namespace CoursePlus.Server.Controllers
 
         [HttpPost]
         [Authorize(Policy = Policies.IsAdmin)]
-        public IActionResult CreateInstrutor([FromBody] Instructor instructor)
+        public async Task<IActionResult> CreateInstrutor([FromBody] Instructor instructor)
         {
             if (instructor == null)
                 return BadRequest();
@@ -58,7 +58,7 @@ namespace CoursePlus.Server.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var createdInstructor = _instructorRepository.AddInstructor(instructor);
+            var createdInstructor = await _instructorRepository.AddInstructor(instructor);
 
             return Created("instructor", createdInstructor);
         }
