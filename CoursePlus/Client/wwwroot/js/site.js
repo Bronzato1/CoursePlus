@@ -45,3 +45,8 @@ window.openBase64ImageInNewTab = (data) =>
     var w = window.open("");
     w.document.write(image.outerHTML);
 }
+
+window.selectpicker = (elm, value) =>
+{
+    $(elm).selectpicker('val', value);
+}

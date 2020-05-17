@@ -40,6 +40,11 @@ namespace CoursePlus.Client.Pages
             Categories = await CategoryService.GetCategories();
         }
 
+        //protected async Task ClassmentFilterChanged()
+        //{
+        //    Console.WriteLine("Changed");
+        //}
+
         protected async Task FilterCourses()
         {
             PaginatedList<Course> courses;
@@ -48,14 +53,11 @@ namespace CoursePlus.Client.Pages
             var currentSortOrder = new Dictionary<string, string>();
 
             if (CurrentFilterModel.DifficultyFilter.HasValue) 
-            {
                 currentFilters.Add("Difficulty", CurrentFilterModel.DifficultyFilter.Value.ToString());
-            }
-
             if (CurrentFilterModel.DurationFilter.HasValue)
-            {
                 currentFilters.Add("Duration", CurrentFilterModel.DurationFilter.Value.ToString());
-            }
+            if (CurrentFilterModel.CategoryFilter.HasValue)
+                currentFilters.Add("CategoryId", CurrentFilterModel.CategoryFilter.Value.ToString());
 
             //if (!string.IsNullOrEmpty(currentSortField) && !string.IsNullOrEmpty(currentSortOrder))
             //    currentSortOrder.Add(currentSortField, currentSortOrder);

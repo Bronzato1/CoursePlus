@@ -42,12 +42,14 @@
                         </a>
                     </div>
 
-                    <select class="selectpicker ml-3">
-                        <option value="0"> Newest </option>
-                        <option value="1"> Popular </option>
-                        <option value="2"> Featured </option>
-                        <option value="3"> Premium </option>
-                    </select>
+                <EditForm Model="CurrentFilterModel">
+                    <InputSelectCustom id="ClassmentFilter" class="selectpicker ml-3" @bind-Value="@CurrentFilterModel.ClassmentFilter">
+                        <option value="null"> Show all content </option>
+                        <option value="@EnumClassment.Popular"> Popular </option>
+                        <option value="@EnumClassment.Featured"> Featured </option>
+                        <option value="@EnumClassment.Novelty"> Novelty </option>
+                    </InputSelectCustom>
+                </EditForm>
 
                 </div>
             </div>
@@ -269,12 +271,12 @@
                                                     <span class="test"> Any </span>
                                                 </label>
                                                 <label>
-                                                    <InputRadio class="uk-radio" SelectedValue="EnumClassment.Featured" SelectedValueChanged="FilterCourses" @bind-Value="@CurrentFilterModel.ClassmentFilter" />
-                                                    <span class="test"> Featured only </span>
-                                                </label>
-                                                <label>
                                                     <InputRadio class="uk-radio" SelectedValue="EnumClassment.Popular" SelectedValueChanged="FilterCourses" @bind-Value="@CurrentFilterModel.ClassmentFilter" />
                                                     <span class="test"> Popular only </span>
+                                                </label>
+                                                <label>
+                                                    <InputRadio class="uk-radio" SelectedValue="EnumClassment.Featured" SelectedValueChanged="FilterCourses" @bind-Value="@CurrentFilterModel.ClassmentFilter" />
+                                                    <span class="test"> Featured only </span>
                                                 </label>
                                                 <label>
                                                     <InputRadio class="uk-radio" SelectedValue="EnumClassment.Novelty" SelectedValueChanged="FilterCourses" @bind-Value="@CurrentFilterModel.ClassmentFilter" />

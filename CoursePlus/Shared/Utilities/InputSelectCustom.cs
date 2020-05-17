@@ -6,11 +6,35 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using CoursePlus.Shared.Utilities;
+using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
+using System.Globalization;
 
 namespace CoursePlus.Shared.Utilities
 {
     public class InputSelectCustom<T> : InputSelect<T>
     {
+        [Inject]
+        protected IJSRuntime JsRuntime { get; set; }
+
+        [Parameter]
+        public EventCallback<ChangeEventArgs> SelectedValueChanged { get; set; }
+
+        protected override string FormatValueAsString(T value)
+        {
+            if (CssClass.Contains("selectpicker"))
+            {
+                var id = "#" + AdditionalAttributes.First(x => x.Key == "id").Value;
+                JsRuntime.InvokeAsync<object>("selectpicker", id, value.ToString());
+
+                //Console.WriteLine("x");
+                //ChangeEventArgs args = new ChangeEventArgs() { Value = "123" };
+                //SelectedValueChanged.InvokeAsync(args);
+            }
+
+            return base.FormatValueAsString(value);
+        }
+
         protected override bool TryParseValueFromString(string value, out T result, out string validationErrorMessage) 
         {
             if (typeof(T) == typeof(int) ||
