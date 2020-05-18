@@ -40,10 +40,14 @@ namespace CoursePlus.Client.Pages
             Categories = await CategoryService.GetCategories();
         }
 
-        //protected async Task ClassmentFilterChanged()
-        //{
-        //    Console.WriteLine("Changed");
-        //}
+        protected async Task ValueChangedForClassmentFilter(EnumClassment? theUserInput)
+        {
+            // You have to update the model manually because handling the ValueChanged event does not let you use @bind-Value
+            // For the validation to work you must now also define the ValueExpression because @bind-Value did it for you
+            CurrentFilterModel.ClassmentFilter = theUserInput;
+            // Refresh data based on filters
+            await FilterCourses();
+        }
 
         protected async Task FilterCourses()
         {
@@ -58,7 +62,21 @@ namespace CoursePlus.Client.Pages
                 currentFilters.Add("Duration", CurrentFilterModel.DurationFilter.Value.ToString());
             if (CurrentFilterModel.CategoryFilter.HasValue)
                 currentFilters.Add("CategoryId", CurrentFilterModel.CategoryFilter.Value.ToString());
-
+            if (CurrentFilterModel.ClassmentFilter.HasValue)
+            {
+                switch (CurrentFilterModel.ClassmentFilter.Value)
+                { 
+                    case EnumClassment.Featured:
+                        currentFilters.Add("Featured", "true");
+                        break;
+                    case EnumClassment.Popular:
+                        currentFilters.Add("Popular", "true");
+                        break;
+                    case EnumClassment.Novelty:
+                        break;
+                }
+            }
+                
             //if (!string.IsNullOrEmpty(currentSortField) && !string.IsNullOrEmpty(currentSortOrder))
             //    currentSortOrder.Add(currentSortField, currentSortOrder);
 

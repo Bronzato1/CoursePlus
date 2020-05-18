@@ -17,21 +17,13 @@ namespace CoursePlus.Shared.Utilities
         [Inject]
         protected IJSRuntime JsRuntime { get; set; }
 
-        [Parameter]
-        public EventCallback<ChangeEventArgs> SelectedValueChanged { get; set; }
-
         protected override string FormatValueAsString(T value)
         {
             if (CssClass.Contains("selectpicker"))
             {
                 var id = "#" + AdditionalAttributes.First(x => x.Key == "id").Value;
                 JsRuntime.InvokeAsync<object>("selectpicker", id, value.ToString());
-
-                //Console.WriteLine("x");
-                //ChangeEventArgs args = new ChangeEventArgs() { Value = "123" };
-                //SelectedValueChanged.InvokeAsync(args);
             }
-
             return base.FormatValueAsString(value);
         }
 

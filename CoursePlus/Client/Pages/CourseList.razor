@@ -42,14 +42,16 @@
                         </a>
                     </div>
 
-                <EditForm Model="CurrentFilterModel">
-                    <InputSelectCustom id="ClassmentFilter" class="selectpicker ml-3" @bind-Value="@CurrentFilterModel.ClassmentFilter">
-                        <option value="null"> Show all content </option>
-                        <option value="@EnumClassment.Popular"> Popular </option>
-                        <option value="@EnumClassment.Featured"> Featured </option>
-                        <option value="@EnumClassment.Novelty"> Novelty </option>
-                    </InputSelectCustom>
-                </EditForm>
+                    <EditForm Model="CurrentFilterModel">
+
+                        <InputSelectCustom id="ClassmentFilter" class="selectpicker ml-3" Value="@CurrentFilterModel.ClassmentFilter" ValueExpression="@( () => CurrentFilterModel.ClassmentFilter )" ValueChanged="@( (EnumClassment? s) => ValueChangedForClassmentFilter(s) )">
+                            <option value=""> Show all content </option>
+                            <option value="@EnumClassment.Popular"> Popular </option>
+                            <option value="@EnumClassment.Featured"> Featured </option>
+                            <option value="@EnumClassment.Novelty"> Novelty </option>
+                        </InputSelectCustom>
+
+                    </EditForm>
 
                 </div>
             </div>
