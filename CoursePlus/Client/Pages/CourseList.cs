@@ -24,6 +24,8 @@ namespace CoursePlus.Client.Pages
 
         public FilterModel CurrentFilterModel = new FilterModel();
 
+        public SortOrderModel CurrentSortOrderModel = new SortOrderModel() { SortOrder = EnumSortOrder.Newest };
+
         public class FilterModel
         {
             public EnumDifficulty? DifficultyFilter { get; set; }
@@ -34,17 +36,22 @@ namespace CoursePlus.Client.Pages
             public EnumClassment? ClassmentFilter { get; set; }
         }
 
+        public class SortOrderModel
+        {
+            public EnumSortOrder? SortOrder { get; set; }
+        }
+
         protected override async Task OnInitializedAsync()
         {
             await FilterCourses();
             Categories = await CategoryService.GetCategories();
         }
 
-        protected async Task ValueChangedForClassmentFilter(EnumClassment? theUserInput)
+        protected async Task ValueChangedForSortOrder(EnumSortOrder? theUserInput)
         {
             // You have to update the model manually because handling the ValueChanged event does not let you use @bind-Value
             // For the validation to work you must now also define the ValueExpression because @bind-Value did it for you
-            CurrentFilterModel.ClassmentFilter = theUserInput;
+            CurrentSortOrderModel.SortOrder = theUserInput;
             // Refresh data based on filters
             await FilterCourses();
         }
@@ -58,10 +65,13 @@ namespace CoursePlus.Client.Pages
 
             if (CurrentFilterModel.DifficultyFilter.HasValue) 
                 currentFilters.Add("Difficulty", CurrentFilterModel.DifficultyFilter.Value.ToString());
+
             if (CurrentFilterModel.DurationFilter.HasValue)
                 currentFilters.Add("Duration", CurrentFilterModel.DurationFilter.Value.ToString());
+
             if (CurrentFilterModel.CategoryFilter.HasValue)
                 currentFilters.Add("CategoryId", CurrentFilterModel.CategoryFilter.Value.ToString());
+
             if (CurrentFilterModel.ClassmentFilter.HasValue)
             {
                 switch (CurrentFilterModel.ClassmentFilter.Value)
@@ -72,13 +82,26 @@ namespace CoursePlus.Client.Pages
                     case EnumClassment.Popular:
                         currentFilters.Add("Popular", "true");
                         break;
-                    case EnumClassment.Novelty:
+                }
+            }
+
+            if (CurrentSortOrderModel.SortOrder.HasValue)
+            { 
+                switch (CurrentSortOrderModel.SortOrder.Value)
+                {
+                    case EnumSortOrder.Newest:
+                        currentSortOrder.Add("Id", "desc");
+                        break;
+                    case EnumSortOrder.Featured:
+                        currentSortOrder.Add("Featured", "asc");
+                        currentSortOrder.Add("Id", "desc");
+                        break;
+                    case EnumSortOrder.Popular:
+                        currentSortOrder.Add("Popular", "asc");
+                        currentSortOrder.Add("Id", "desc");
                         break;
                 }
             }
-                
-            //if (!string.IsNullOrEmpty(currentSortField) && !string.IsNullOrEmpty(currentSortOrder))
-            //    currentSortOrder.Add(currentSortField, currentSortOrder);
 
             courses = await CourseService.GetCourses(filters: currentFilters, sortOrder: currentSortOrder);
             

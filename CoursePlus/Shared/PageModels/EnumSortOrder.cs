@@ -4,8 +4,9 @@ using System.Text;
 
 namespace CoursePlus.Shared.Models
 {
-    public enum EnumClassment
+    public enum EnumSortOrder
     {
+        Newest,
         Featured,
         Popular
     }

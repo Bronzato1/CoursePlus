@@ -42,13 +42,12 @@
                         </a>
                     </div>
 
-                    <EditForm Model="CurrentFilterModel">
+                    <EditForm Model="CurrentSortOrderModel">
 
-                        <InputSelectCustom id="ClassmentFilter" class="selectpicker ml-3" Value="@CurrentFilterModel.ClassmentFilter" ValueExpression="@( () => CurrentFilterModel.ClassmentFilter )" ValueChanged="@( (EnumClassment? s) => ValueChangedForClassmentFilter(s) )">
-                            <option value=""> Show all content </option>
-                            <option value="@EnumClassment.Popular"> Popular </option>
-                            <option value="@EnumClassment.Featured"> Featured </option>
-                            <option value="@EnumClassment.Novelty"> Novelty </option>
+                        <InputSelectCustom id="SortOrder" class="selectpicker ml-3" Value="@CurrentSortOrderModel.SortOrder" ValueExpression="@( () => CurrentSortOrderModel.SortOrder )" ValueChanged="@( (EnumSortOrder? s) => ValueChangedForSortOrder(s) )">
+                            <option value="@EnumSortOrder.Newest"> Newest </option>
+                            <option value="@EnumSortOrder.Popular"> Popular </option>
+                            <option value="@EnumSortOrder.Featured"> Featured </option>
                         </InputSelectCustom>
 
                     </EditForm>
@@ -279,10 +278,6 @@
                                                 <label>
                                                     <InputRadio class="uk-radio" SelectedValue="EnumClassment.Featured" SelectedValueChanged="FilterCourses" @bind-Value="@CurrentFilterModel.ClassmentFilter" />
                                                     <span class="test"> Featured only </span>
-                                                </label>
-                                                <label>
-                                                    <InputRadio class="uk-radio" SelectedValue="EnumClassment.Novelty" SelectedValueChanged="FilterCourses" @bind-Value="@CurrentFilterModel.ClassmentFilter" />
-                                                    <span class="test"> Novelty only </span>
                                                 </label>
                                             </div>
                                         </div>
