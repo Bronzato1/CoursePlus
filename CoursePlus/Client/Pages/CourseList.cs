@@ -2,6 +2,7 @@
 using CoursePlus.Shared.Infrastructure;
 using CoursePlus.Shared.Models;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CoursePlus.Client.Pages
 {
-    public class CourseListBase : ComponentBase
+    public class CourseListBase : ComponentBase, IDisposable
     {
         [Inject]
         public ICourseService CourseService { get; set; }
@@ -25,6 +26,10 @@ namespace CoursePlus.Client.Pages
         public FilterModel CurrentFilterModel = new FilterModel();
 
         public SortOrderModel CurrentSortOrderModel = new SortOrderModel() { SortOrder = EnumSortOrder.Newest };
+
+        public EditContext EditContextForSortOrderModel;
+
+        public EditContext EditContextForFilterModel;
 
         public class FilterModel
         {
@@ -43,17 +48,19 @@ namespace CoursePlus.Client.Pages
 
         protected override async Task OnInitializedAsync()
         {
+            EditContextForSortOrderModel = new EditContext(CurrentSortOrderModel);
+            EditContextForSortOrderModel.OnFieldChanged += OnFieldChanged;
+
+            EditContextForFilterModel = new EditContext(CurrentSortOrderModel);
+            EditContextForFilterModel.OnFieldChanged += OnFieldChanged;
+
             await FilterCourses();
             Categories = await CategoryService.GetCategories();
         }
 
-        protected async Task ValueChangedForSortOrder(EnumSortOrder? theUserInput)
+        private void OnFieldChanged(object sender, FieldChangedEventArgs e)
         {
-            // You have to update the model manually because handling the ValueChanged event does not let you use @bind-Value
-            // For the validation to work you must now also define the ValueExpression because @bind-Value did it for you
-            CurrentSortOrderModel.SortOrder = theUserInput;
-            // Refresh data based on filters
-            await FilterCourses();
+            _ = FilterCourses();
         }
 
         protected async Task FilterCourses()
@@ -140,6 +147,11 @@ namespace CoursePlus.Client.Pages
         protected void ViewCourse(Course OneCourse)
         {
             NavigationManager.NavigateTo("/course/" + OneCourse.Id);
+        }
+
+        public void Dispose()
+        {
+            EditContextForSortOrderModel.OnFieldChanged -= OnFieldChanged;
         }
     }
 }
