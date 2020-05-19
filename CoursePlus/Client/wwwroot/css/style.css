@@ -3251,8 +3251,12 @@ ul.dropdown-user-menu .menu-divider {
   font-size: 15px;
 }
 
+.course-description-content {
+    font-weight: initial;
+}
+
 .course-description-content h4 {
-  font-weight: 600;
+    font-weight: 600;
 }
 
 .course-description-content h4:not(:first-child) {
@@ -6982,11 +6986,11 @@ ul.dropdown-nav .menu-divider {
   background-size: cover;
   content: '';
   position: absolute;
-  left: -35px;
+  left: -38px; /*-35px;*/
   top: 0;
   font-size: 31px;
   height: 47px;
-  width: 36px;
+  width: 38px; /*36px;*/
   -webkit-transition: all .3s ease-out;
   transition: all .3s ease-out;
 }
@@ -6996,11 +7000,11 @@ ul.dropdown-nav .menu-divider {
   background-size: cover;
   content: '';
   position: absolute;
-  right: -35px;
+  right: -38px; /*-35px;*/
   top: 0;
   color: #f91629;
   height: 47px;
-  width: 36px;
+  width: 38px; /*36px;*/
   -webkit-transition: all .3s ease-out;
   transition: all .3s ease-out;
 }

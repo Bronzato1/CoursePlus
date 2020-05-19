@@ -5,6 +5,7 @@ using CoursePlus.Shared.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,6 +23,8 @@ namespace CoursePlus.Client.Pages.Admin
         [Inject]
         public NavigationManager NavigationManager { get; set; }
         [Inject]
+        IJSRuntime JSRuntime { get; set; }
+        [Inject]
         public ICourseService CourseService { get; set; }
         [Inject]
         public IChapterService ChapterService { get; set; }
@@ -35,9 +38,16 @@ namespace CoursePlus.Client.Pages.Admin
         public HttpClient Client { get; set; }
         [Inject]
         public IModalDialogService ModalDialog { get; set; }
+        [JSInvokable]
+        public async Task QuillContentChanged()
+        {
+            OneCourse.Description = await JSRuntime.InvokeAsync<string>("QuillFunctions.getQuillHTML", divEditorElement);
+        }
 
         public EditForm FormContext { get; set; }
         public Course OneCourse { get; set; } = new Course();
+        public ElementReference divEditorElement;
+        public bool EditorEnabled = true;
 
         protected string Message = string.Empty;
         protected string StatusClass = string.Empty;
@@ -63,6 +73,16 @@ namespace CoursePlus.Client.Pages.Admin
                 OneCourse = await CourseService.GetCourse(Id);
             }
         }
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (firstRender)
+            {
+                await Task.Delay(1000);
+                await JSRuntime.InvokeVoidAsync("QuillFunctions.createQuill", divEditorElement);
+                await JSRuntime.InvokeVoidAsync("QuillFunctions.notifyQuillChanges", divEditorElement, DotNetObjectReference.Create(this));
+                await JSRuntime.InvokeVoidAsync("QuillFunctions.loadQuillContentFromHTML", divEditorElement, OneCourse.Description);
+            }
+        }
 
         protected void NavigateToList()
         {
@@ -73,6 +93,7 @@ namespace CoursePlus.Client.Pages.Admin
             StatusClass = "uk-text-warning";
             Message = "Validation errors";
         }
+
         protected async Task HandleValidSubmit()
         {
             if (Id == 0)
@@ -166,14 +187,21 @@ namespace CoursePlus.Client.Pages.Admin
         }
         protected async Task AddEpisode(Chapter OneChapter)
         {
-            ModalDataInputForm frm = new ModalDataInputForm("Add episode", "Please fill in the information below");
+            ModalDialogParameters parameters = new ModalDialogParameters();
 
-            var titleFld = frm.AddStringField("title", "Title", "", "The title of the episode");
-            var urlFld = frm.AddStringField("url", "Url", "", "The youtube url of the episode");
+            parameters.Add("Title", "");
+            parameters.Add("VideoUrl", "");
 
-            if (await frm.ShowAsync(ModalDialog))
+            var dialogResult = await ModalDialog.ShowDialogAsync<EpisodeEdit>("Add episode", new ModalDialogOptions(), parameters);
+
+            if (dialogResult.Success)
             {
-                var episode = new Episode { Title = titleFld.Value, VideoUrl = urlFld.Value, ChapterId = OneChapter.Id };
+                var episode = new Episode 
+                { 
+                    Title = dialogResult.ReturnParameters.Get<string>("Title"), 
+                    VideoUrl = dialogResult.ReturnParameters.Get<string>("VideoUrl"), 
+                    ChapterId = OneChapter.Id 
+                };
 
                 if (OneChapter.Episodes == null)
                     OneChapter.Episodes = new List<Episode>();

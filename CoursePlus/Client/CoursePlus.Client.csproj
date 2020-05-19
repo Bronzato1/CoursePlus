@@ -8,7 +8,6 @@
   <ItemGroup>
     <Compile Remove="Pages\BookDetailBase.cs" />
     <Compile Remove="Pages\BookListBase.cs" />
-    <Compile Remove="Pages\CourseDetail.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,7 +16,6 @@
     <Content Remove="Pages\Chat.razor" />
     <Content Remove="Pages\ComingSoon.razor" />
     <Content Remove="Pages\Components.razor" />
-    <Content Remove="Pages\CourseDetail.razor" />
     <Content Remove="Pages\Elements.razor" />
     <Content Remove="Pages\FormRegister.razor" />
     <Content Remove="Pages\Icons.razor" />

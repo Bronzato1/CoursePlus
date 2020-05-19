@@ -187,12 +187,12 @@ app {
 
 /****************** TLA *******************/
 
-li {
+/*li {
     font-weight: normal;
 }
 li.uk-active {
     font-weight: bold;
-}
+}*/
 
 .uk-display-inline-flex {
     display: inline-flex !important;
@@ -227,4 +227,20 @@ li.uk-active {
 
 .uk-enabled a {
     background-color: gainsboro;
+}
+
+#quill-tab {
+    margin: -30px -20px 0 -20px;
+    font-weight: initial;
+    color: initial;
+}
+
+#quill-toolbar {
+    border: 0px;
+    background-color: ghostwhite;
+    border-bottom: 1px solid lightgray;
+}
+
+#quill-editor {
+    border: 0px;
 }

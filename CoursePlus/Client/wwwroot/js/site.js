@@ -50,3 +50,47 @@ window.selectpicker = (elm, value) =>
 {
     $(elm).selectpicker('val', value);
 }
+
+window.QuillFunctions = {
+    createQuill: function (quillElement) {
+        var options = {
+            debug: 'info',
+            modules: {
+                toolbar: '#quill-toolbar'
+            },
+            placeholder: 'Description of the course...',
+            readOnly: false,
+            theme: 'snow'
+        };
+        // set quill at the object we can call
+        // methods on later
+        new Quill(quillElement, options);
+    },
+    getQuillContent: function (quillControl) {
+        // Delta format
+        return JSON.stringify(quillControl.__quill.getContents());
+    },
+    getQuillText: function (quillControl) {
+        // Text format
+        return quillControl.__quill.getText();
+    },
+    getQuillHTML: function (quillControl) {
+        // HTML format
+        return quillControl.__quill.root.innerHTML;
+    },
+    loadQuillContent: function (quillControl, quillContent) {
+        // From Delta format
+        content = JSON.parse(quillContent);
+        return quillControl.__quill.setContents(content, 'api');
+    },
+    loadQuillContentFromHTML: function (quillControl, htmlContent) {
+        // From HTML format
+        const delta = quillControl.__quill.clipboard.convert(htmlContent);
+        return quillControl.__quill.setContents(delta, 'api');
+    },
+    notifyQuillChanges: function (quillControl, dotnetHelper) {
+        quillControl.__quill.on('text-change', function (delta, oldDelta, source) {
+            dotnetHelper.invokeMethodAsync('QuillContentChanged');
+        });
+    }
+};
