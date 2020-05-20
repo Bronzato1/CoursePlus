@@ -9,6 +9,8 @@ namespace CoursePlus.Shared.Models
         public int Id { get; set; }
         public string VideoUrl { get; set; }
         public string Title { get; set; }
+        public int Duration { get; set; }
+        public string Trailer { get; set; }
 
         public int ChapterId { get; set; }
         public Chapter Chapter { get; set; }

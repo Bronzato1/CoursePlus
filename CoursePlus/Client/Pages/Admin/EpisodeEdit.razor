@@ -1,20 +1,30 @@
 ﻿@inject IModalDialogService Modal
 
-<div class="simple-form">
+    <div class="simple-form">
 
-    <div class="form-group">
-        <label for="movie-name">Title</label>
-        <input @bind="@Title" type="text" class="form-control" id="title" />
+        <div class="form-group">
+            <label for="movie-name">Title</label>
+            <input @bind="@Title" type="text" class="form-control" id="title" />
+        </div>
+
+        <div class="form-group">
+            <label for="year">Video Url</label>
+            <input @bind="@VideoUrl" type="text" class="form-control" id="url" />
+        </div>
+
+        <div class="form-group">
+            <label for="year">Duration (in minutes)</label>
+            <input @bind="@Duration" type="text" class="form-control" id="duration" />
+        </div>
+
+        <div class="form-group">
+            <label for="year">Trailer</label>
+            <input @bind="@Trailer" type="text" class="form-control" id="trailer" />
+        </div>
+
+        <button @onclick="@Ok" class="btn btn-primary">Ok</button>
+        <button @onclick="@Cancel" class="btn btn-secondary">Cancel</button>
     </div>
-
-    <div class="form-group">
-        <label for="year">Video Url</label>
-        <input @bind="@VideoUrl" type="text" class="form-control" id="url" />
-    </div>
-
-    <button @onclick="@Ok" class="btn btn-primary">Ok</button>
-    <button @onclick="@Cancel" class="btn btn-secondary">Cancel</button>
-</div>
 
 @code 
 {
@@ -22,12 +32,18 @@
     public string Title { get; set; }
     [Parameter]
     public string VideoUrl { get; set; }
+    [Parameter]
+    public int Duration { get; set; }
+    [Parameter]
+    public string Trailer { get; set; }
 
     void Ok()
     {
         ModalDialogParameters returnParameters = new ModalDialogParameters();
         returnParameters.Add("Title", Title);
         returnParameters.Add("VideoUrl", VideoUrl);
+        returnParameters.Add("Duration", Duration);
+        returnParameters.Add("Trailer", Trailer);
         Modal.Close(true, returnParameters);
     }
     void Cancel()

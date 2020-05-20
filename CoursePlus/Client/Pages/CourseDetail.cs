@@ -2,6 +2,7 @@
 using CoursePlus.Shared.Infrastructure;
 using CoursePlus.Shared.Models;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,8 @@ namespace CoursePlus.Client.Pages
     {
         [Parameter]
         public int Id { get; set; }
+        [Inject]
+        IJSRuntime JSRuntime { get; set; }
         [Inject]
         public NavigationManager NavigationManager { get; set; }
         [Inject]
@@ -28,6 +31,11 @@ namespace CoursePlus.Client.Pages
         protected override async Task OnInitializedAsync()
         {
             OneCourse = await CourseService.GetCourse(Id);
+        }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("resetSticky", ".course-card-trailer");
         }
     }
 }

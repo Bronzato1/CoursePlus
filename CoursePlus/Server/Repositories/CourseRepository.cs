@@ -88,11 +88,11 @@ namespace CoursePlus.Server.Repositories
                 foundCourse.Description = course.Description;
                 foundCourse.ImageId = course.ImageId;
                 foundCourse.ThumbnailId = course.ThumbnailId;
+                foundCourse.InstructorId = course.InstructorId;
+                foundCourse.CategoryId = course.CategoryId;
                 foundCourse.Language = course.Language;
                 foundCourse.Featured = course.Featured;
                 foundCourse.Popular = course.Popular;
-
-                //foundCourse.InstructorId = course.InstructorId; <<<<<<<<<<---------
 
                 _dbContext.SaveChanges();
 

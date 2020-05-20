@@ -64,7 +64,7 @@
                         @foreach (var OneCourse in SomeCourses.Items)
                         {
                             <div class="uk-margin-small-bottom">
-                                <a href="course-intro.html">
+                                <a href="/course/@OneCourse.Id">
                                     <div class="course-card">
                                         <div class="course-card-thumbnail">
                                             @if (OneCourse.Thumbnail != null)
@@ -76,15 +76,15 @@
                                         <div class="course-card-body">
                                             <div class="course-card-info">
                                                 <div>
-                                                    <span class="catagroy">HTML</span>
+                                                    <span class="catagroy"> @OneCourse.Category.Name </span>
                                                 </div>
                                                 <div>
                                                     <i class="icon-feather-bookmark icon-small"></i>
                                                 </div>
                                             </div>
 
-                                            <h4>Ultimate Web Developer Course </h4>
-                                            <p> HTML is the building blocks of the web. It gives pages structure and ..</p>
+                                            <h4> @OneCourse.Title </h4>
+                                            <p>  @OneCourse.SubTitle </p>
 
                                             <div class="course-card-footer">
                                                 <h5> <i class="icon-feather-film"></i> 33 Lectures </h5>

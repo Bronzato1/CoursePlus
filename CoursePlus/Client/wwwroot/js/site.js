@@ -94,3 +94,26 @@ window.QuillFunctions = {
         });
     }
 };
+
+window.resetSticky = (element) =>
+{
+    window.onscroll = function ()
+    {
+        var B = document.body; //IE 'quirks'
+        var D = document.documentElement; //IE with doctype
+        D = (D.clientHeight) ? D : B;
+
+        if (D.scrollTop == 0) {
+            var resizeNeeded = !$(element).hasClass('uk-active');
+            if (resizeNeeded) window.setTimeout(triggerResizeEvent, 100);
+        }
+    }
+    
+    function triggerResizeEvent()
+    {
+        var el = document;
+        var event = document.createEvent('HTMLEvents');
+        event.initEvent('resize', true, false);
+        el.dispatchEvent(event);
+    }
+}

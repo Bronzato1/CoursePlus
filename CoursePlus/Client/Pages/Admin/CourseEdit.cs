@@ -191,6 +191,8 @@ namespace CoursePlus.Client.Pages.Admin
 
             parameters.Add("Title", "");
             parameters.Add("VideoUrl", "");
+            parameters.Add("Duration", "");
+            parameters.Add("Trailer", "");
 
             var dialogResult = await ModalDialog.ShowDialogAsync<EpisodeEdit>("Add episode", new ModalDialogOptions(), parameters);
 
@@ -199,7 +201,9 @@ namespace CoursePlus.Client.Pages.Admin
                 var episode = new Episode 
                 { 
                     Title = dialogResult.ReturnParameters.Get<string>("Title"), 
-                    VideoUrl = dialogResult.ReturnParameters.Get<string>("VideoUrl"), 
+                    VideoUrl = dialogResult.ReturnParameters.Get<string>("VideoUrl"),
+                    Duration = dialogResult.ReturnParameters.Get<int>("Duration"),
+                    Trailer = dialogResult.ReturnParameters.Get<string>("Trailer"),
                     ChapterId = OneChapter.Id 
                 };
 
@@ -217,6 +221,8 @@ namespace CoursePlus.Client.Pages.Admin
 
             parameters.Add("Title", OneEpisode.Title);
             parameters.Add("VideoUrl", OneEpisode.VideoUrl);
+            parameters.Add("Duration", OneEpisode.Duration);
+            parameters.Add("Trailer", OneEpisode.Trailer);
 
             var dialogResult = await ModalDialog.ShowDialogAsync<EpisodeEdit>("Edit episode", new ModalDialogOptions(), parameters);
 
@@ -224,6 +230,8 @@ namespace CoursePlus.Client.Pages.Admin
             {
                 OneEpisode.Title = dialogResult.ReturnParameters.Get<string>("Title");
                 OneEpisode.VideoUrl = dialogResult.ReturnParameters.Get<string>("VideoUrl");
+                OneEpisode.Duration = dialogResult.ReturnParameters.Get<int>("Duration");
+                OneEpisode.Trailer = dialogResult.ReturnParameters.Get<string>("Trailer");
                 await EpisodeService.UpdateEpisode(OneEpisode);
             }
         }

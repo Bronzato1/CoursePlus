@@ -3412,6 +3412,7 @@ ul.dropdown-user-menu .menu-divider {
   border-radius: 10px;
   background-color: white;
   box-shadow: -12px 12px 21px -5px rgba(25, 42, 70, .13);
+  z-index: 100 !important; /*TLA*/
 }
 
 .course-resume-wrapper {
