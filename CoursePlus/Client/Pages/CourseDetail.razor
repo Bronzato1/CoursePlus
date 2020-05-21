@@ -569,36 +569,17 @@
                         <div class="course-card-trailer" uk-sticky="top: 1 ; offset: 85 ; media: @@m">
 
                             <div class="course-thumbnail">
-                                <img src="/images/course/1.png" alt="">
-                                <a class="play-button-trigger show" href="#trailer-modal" uk-toggle> </a>
-                            </div>
 
-                            <!-- video demo model -->
-                            <div id="trailer-modal" uk-modal style="visibility:hidden;">
-                                <div class="uk-modal-dialog">
-                                    <button class="uk-modal-close-default mt-2  mr-1" type="button" uk-close></button>
-                                    <div class="uk-modal-header">
-                                        <h4> Trailer video </h4>
-                                    </div>
-                                    <div class="video-responsive">
-                                        @*<iframe src="https://www.youtube.com/embed/nOCXXHGMezU"
-                                        class="uk-padding-remove" uuuuk-video="automute: true" frameborder="0"
-                                        aaaallowfullscreen uuuuk-responsive></iframe>*@
+                                <a href="/course/@OneCourse.Id/player">
 
-                                    </div>
+                                    @if (OneCourse.Image != null)
+                                    {
+                                        <img src="@String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(OneCourse.Image.Data))" alt="">
+                                    }
 
-                                    <div class="uk-modal-body">
-                                        <h3>Build Responsive Websites </h3>
-                                        <p>
-                                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                                            dolore
-                                            eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                                            proident,
-                                            sunt
-                                            in culpa qui officia deserunt mollit anim id est laborum.
-                                        </p>
-                                    </div>
-                                </div>
+                                    <span class="play-button-trigger show"> </span>
+                                </a>
+
                             </div>
 
                             <div class="p-3">
@@ -607,20 +588,18 @@
                                     <span class="uk-h1"> $00.00 </span>
                                 </p>
 
-                                <p class="text-center"> 
+                                <p class="text-center">
                                     Absolutely free !
                                 </p>
 
                                 <div class="uk-child-width-1-2 uk-grid-small mb-4" uk-grid>
                                     <div>
-                                        <a href="course-resume.html"
-                                            class="uk-width-1-1 btn btn-default transition-3d-hover">
+                                        <a href="course-resume.html" class="uk-width-1-1 btn btn-default transition-3d-hover">
                                             <i class="uil-play"></i> Start
                                         </a>
                                     </div>
                                     <div>
-                                        <a href="course-resume.html"
-                                            class="btn btn-danger uk-width-1-1 transition-3d-hover">
+                                        <a href="course-resume.html" class="btn btn-danger uk-width-1-1 transition-3d-hover">
                                             <i class="uil-heart"></i> Add wishlist
                                         </a>
                                     </div>

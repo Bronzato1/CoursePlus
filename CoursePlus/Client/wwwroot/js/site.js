@@ -1,7 +1,6 @@
 ﻿function nightMode()
 {
     // For Night mode
-
     if (!('localStorage' in window)) return;
     var nightMode = localStorage.getItem('gmtNightMode');
     if (nightMode) {
@@ -51,7 +50,8 @@ window.selectpicker = (elm, value) =>
     $(elm).selectpicker('val', value);
 }
 
-window.QuillFunctions = {
+window.QuillFunctions =
+{
     createQuill: function (quillElement) {
         var options = {
             debug: 'info',
@@ -97,23 +97,34 @@ window.QuillFunctions = {
 
 window.resetSticky = (element) =>
 {
+    window.setTimeout(triggerResizeEvent, 100);
+    
     window.onscroll = function ()
     {
         var B = document.body; //IE 'quirks'
         var D = document.documentElement; //IE with doctype
         D = (D.clientHeight) ? D : B;
 
-        if (D.scrollTop == 0) {
-            var resizeNeeded = !$(element).hasClass('uk-active');
-            if (resizeNeeded) window.setTimeout(triggerResizeEvent, 100);
-        }
+        if (D.scrollTop == 0)
+            window.setTimeout(triggerResizeEvent, 100);
     }
     
     function triggerResizeEvent()
     {
-        var el = document;
-        var event = document.createEvent('HTMLEvents');
-        event.initEvent('resize', true, false);
-        el.dispatchEvent(event);
+        var resizeNeeded = !$(element).hasClass('uk-active');
+        if (resizeNeeded)
+        {
+            var el = document;
+            var event = document.createEvent('HTMLEvents');
+            event.initEvent('resize', true, false);
+            el.dispatchEvent(event);
+        }
     }
 }
+
+window.History =
+{
+    goBack: function () {
+        window.history.go(-1);
+    }
+};

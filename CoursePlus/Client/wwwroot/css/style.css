@@ -4795,6 +4795,13 @@ ul.course-curriculum-list {
   font-size: 1rem;
 }
 
+/*TLA*/
+.course-sidebar-title .btns {
+    font-size: 23px;
+    vertical-align: sub;
+    padding-right: 10px;
+}
+
 /* if toggle hidden sidebar */
 .course-layouts.course-sidebar-collapse .course-sidebar {
   transition: 0.3s;
