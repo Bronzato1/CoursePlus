@@ -67,7 +67,7 @@ namespace CoursePlus.Server
                 config.AddPolicy(Policies.IsUser, Policies.IsUserPolicy());
             });
 
-            services.AddHttpClient<IStudentRepository, StudentRepository>(client =>
+            services.AddHttpClient<IProfileRepository, ProfileRepository>(client =>
             {
                 client.BaseAddress = new Uri("https://fakedata.dev/users/v1/");
             });
@@ -76,7 +76,7 @@ namespace CoursePlus.Server
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IInstructorRepository, InstructorRepository>();
             services.AddScoped<IAvatarRepository, AvatarRepository>();
-            services.AddScoped<ICourseRepository, CourseRepository>();
+            services.AddScoped<IPlaylistRepository, PlaylistRepository>();
             services.AddScoped<IChapterRepository, ChapterRepository>();
             services.AddScoped<IEpisodeRepository, EpisodeRepository>();
             

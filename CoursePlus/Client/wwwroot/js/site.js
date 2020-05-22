@@ -58,7 +58,7 @@ window.QuillFunctions =
             modules: {
                 toolbar: '#quill-toolbar'
             },
-            placeholder: 'Description of the course...',
+            placeholder: 'Description of the playlist...',
             readOnly: false,
             theme: 'snow'
         };

@@ -9,7 +9,7 @@ namespace CoursePlus.Server.Data.Migrations
         {
             migrationBuilder.DropColumn(
                 name: "Joinded",
-                table: "Students");
+                table: "Profiles");
 
             migrationBuilder.DropColumn(
                 name: "Joinded",
@@ -17,7 +17,7 @@ namespace CoursePlus.Server.Data.Migrations
 
             migrationBuilder.AddColumn<DateTime>(
                 name: "Joined",
-                table: "Students",
+                table: "Profiles",
                 nullable: false,
                 defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
@@ -32,7 +32,7 @@ namespace CoursePlus.Server.Data.Migrations
         {
             migrationBuilder.DropColumn(
                 name: "Joined",
-                table: "Students");
+                table: "Profiles");
 
             migrationBuilder.DropColumn(
                 name: "Joined",
@@ -40,7 +40,7 @@ namespace CoursePlus.Server.Data.Migrations
 
             migrationBuilder.AddColumn<DateTime>(
                 name: "Joinded",
-                table: "Students",
+                table: "Profiles",
                 type: "datetime2",
                 nullable: false,
                 defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));

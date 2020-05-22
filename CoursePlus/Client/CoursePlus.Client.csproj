@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <Content Remove="Pages\Blog_1.razor" />
-    <Content Remove="Pages\BookDetail.razor" />
     <Content Remove="Pages\Chat.razor" />
     <Content Remove="Pages\ComingSoon.razor" />
     <Content Remove="Pages\Components.razor" />
@@ -25,7 +24,6 @@
     <Content Remove="Pages\PagePricing.razor" />
     <Content Remove="Pages\PagePrivacy.razor" />
     <Content Remove="Pages\PageTerm.razor" />
-    <Content Remove="Pages\Signup.razor" />
     <Content Remove="Pages\UserProfile.razor" />
     <Content Remove="Pages\UserProfileEdit.razor" />
   </ItemGroup>

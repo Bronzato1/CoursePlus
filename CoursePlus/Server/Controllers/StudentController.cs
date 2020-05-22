@@ -14,47 +14,47 @@ namespace CoursePlus.Server.Controllers
 {
     [ApiController]
     [Route("api/[Controller]")]
-    public class StudentController : ControllerBase
+    public class ProfileController : ControllerBase
     {
-        private readonly IStudentRepository _studentRepository;
+        private readonly IProfileRepository _profileRepository;
         private readonly IAvatarRepository _avatarRepository;
 
-        public StudentController(IStudentRepository studentRepository, IAvatarRepository avatarRepository)
+        public ProfileController(IProfileRepository profileRepository, IAvatarRepository avatarRepository)
         {
-            _studentRepository = studentRepository;
+            _profileRepository = profileRepository;
             _avatarRepository = avatarRepository;
         }
 
         [HttpGet]
-        [Route("getstudents")]
-        public async Task<ActionResult<PaginatedList<Student>>> Get(int? pageNumber, string sortField, string sortOrder, string filterField, string filterValue)
+        [Route("getprofiles")]
+        public async Task<ActionResult<PaginatedList<Profile>>> Get(int? pageNumber, string sortField, string sortOrder, string filterField, string filterValue)
         {
-            var list = await _studentRepository.GetStudents(pageNumber, sortField, sortOrder, filterField, filterValue);
+            var list = await _profileRepository.GetProfiles(pageNumber, sortField, sortOrder, filterField, filterValue);
             return list;
         }
 
         [HttpGet("{id:int}")]
-        public IActionResult GetStudent(int id)
+        public IActionResult GetProfile(int id)
         {
-            return Ok(_studentRepository.GetStudent(id));
+            return Ok(_profileRepository.GetProfile(id));
         }
 
         [HttpGet]
-        [Route("getStudentByUserId")]
-        public IActionResult GetStudentByUserId(string userId)
+        [Route("getProfileByUserId")]
+        public IActionResult GetProfileByUserId(string userId)
         {
-            var student = _studentRepository.GetStudentByUserId(userId);
-            return Ok(student);
+            var profile = _profileRepository.GetProfileByUserId(userId);
+            return Ok(profile);
         }
 
         [HttpPost]
         [Authorize(Policy = Policies.IsAdmin)]
-        public async Task<IActionResult> CreateStudent([FromBody] Student student)
+        public async Task<IActionResult> CreateProfile([FromBody] Profile profile)
         {
-            if (student == null)
+            if (profile == null)
                 return BadRequest();
 
-            if (student.User.FirstName == string.Empty || student.User.LastName == string.Empty)
+            if (profile.User.FirstName == string.Empty || profile.User.LastName == string.Empty)
             {
                 ModelState.AddModelError("Firstname/Lastname", "The firstname or lastname shouldn't be empty");
             }
@@ -62,19 +62,19 @@ namespace CoursePlus.Server.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var createdStudent = await _studentRepository.AddStudent(student);
+            var createdProfile = await _profileRepository.AddProfile(profile);
 
-            return Created("student", createdStudent);
+            return Created("profile", createdProfile);
         }
 
         [HttpPut]
         [Authorize(Policy = Policies.IsAdmin)]
-        public IActionResult UpdateStudent([FromBody] Student student)
+        public IActionResult UpdateProfile([FromBody] Profile profile)
         {
-            if (student == null)
+            if (profile == null)
                 return BadRequest();
 
-            if (student.User.FirstName == string.Empty || student.User.LastName == string.Empty)
+            if (profile.User.FirstName == string.Empty || profile.User.LastName == string.Empty)
             {
                 ModelState.AddModelError("Firstname/Lastname", "The firstname or lastname shouldn't be empty");
             }
@@ -82,37 +82,37 @@ namespace CoursePlus.Server.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var studentToUpdate = _studentRepository.GetStudent(student.Id);
+            var profileToUpdate = _profileRepository.GetProfile(profile.Id);
 
-            if (studentToUpdate == null)
+            if (profileToUpdate == null)
                 return NotFound();
 
-            _studentRepository.UpdateStudent(student);
+            _profileRepository.UpdateProfile(profile);
 
             return NoContent(); //success
         }
 
         [HttpDelete("{id:int}")]
         [Authorize(Policy = Policies.IsAdmin)]
-        public IActionResult DeleteStudent(int id)
+        public IActionResult DeleteProfile(int id)
         {
-            var studentToDelete = _studentRepository.GetStudent(id);
-            if (studentToDelete == null)
+            var profileToDelete = _profileRepository.GetProfile(id);
+            if (profileToDelete == null)
                 return NotFound();
 
-            _studentRepository.DeleteStudent(id);
+            _profileRepository.DeleteProfile(id);
 
             return NoContent();//success
         }
 
-        [HttpGet("getFakeStudents")]
-        public async Task<FakeStudentModel[]> GetFakeStudents()
+        [HttpGet("getFakeProfiles")]
+        public async Task<FakeProfileModel[]> GetFakeProfiles()
         {
-            return await _studentRepository.GetFakeStudents();
+            return await _profileRepository.GetFakeProfiles();
         }
 
-        [HttpPost("createFakeStudents")]
-        public async Task<IActionResult> CreateFakeStudents([FromBody] List<FakeStudentModel> users)
+        [HttpPost("createFakeProfiles")]
+        public async Task<IActionResult> CreateFakeProfiles([FromBody] List<FakeProfileModel> users)
         {
             var cptrSucceed = 0;
             var cptrFailed = 0;
@@ -121,7 +121,7 @@ namespace CoursePlus.Server.Controllers
             {
                 var avatarId = await _avatarRepository.CreateAvatarFromUrl(user.PhotoUrl);
                 
-                var student = new Student
+                var profile = new Profile
                 {
                     User = new CustomUser
                     {
@@ -131,15 +131,15 @@ namespace CoursePlus.Server.Controllers
                         AvatarId = avatarId
                     }
                 };
-                var createdStudent = await _studentRepository.AddStudent(student);
+                var createdProfile = await _profileRepository.AddProfile(profile);
 
-                if (createdStudent != null)
+                if (createdProfile != null)
                     cptrSucceed++;
                 else
                     cptrFailed++;
             }
 
-            return Ok(new CreateFakeStudentsResult { CptrSucceed = cptrSucceed, CptrFailed = cptrFailed });
+            return Ok(new CreateFakeProfilesResult { CptrSucceed = cptrSucceed, CptrFailed = cptrFailed });
         }
     }
 }

@@ -13,8 +13,8 @@ namespace CoursePlus.Shared.Models
         public virtual Episode Episode { get; set; }
 
         [Key, Column(Order = 1)]
-        public int StudentId { get; set; }
-        public virtual Student Student { get; set; }
+        public int ProfileId { get; set; }
+        public virtual Profile Profile { get; set; }
 
         public DateTime CreatedTime { get; set; }
         public DateTime? UpdatedTime { get; set; }

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoursePlus.Server.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200511123514_AddJoindedOnStudentAndInstructor")]
-    partial class AddJoindedOnStudentAndInstructor
+    [Migration("20200511123514_AddJoindedOnProfileAndInstructor")]
+    partial class AddJoindedOnProfileAndInstructor
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -323,7 +323,7 @@ namespace CoursePlus.Server.Data.Migrations
                     b.ToTable("Instructors");
                 });
 
-            modelBuilder.Entity("CoursePlus.Shared.Models.Student", b =>
+            modelBuilder.Entity("CoursePlus.Shared.Models.Profile", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -352,7 +352,7 @@ namespace CoursePlus.Server.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Students");
+                    b.ToTable("Profiles");
                 });
 
             modelBuilder.Entity("CoursePlus.Shared.Models.Thumbnail", b =>
@@ -552,7 +552,7 @@ namespace CoursePlus.Server.Data.Migrations
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("CoursePlus.Shared.Models.Student", b =>
+            modelBuilder.Entity("CoursePlus.Shared.Models.Profile", b =>
                 {
                     b.HasOne("CoursePlus.Shared.Models.CustomUser", "User")
                         .WithMany()

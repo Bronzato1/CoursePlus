@@ -11,8 +11,8 @@ namespace CoursePlus.Shared.Models
         
         public List<Episode> Episodes { get; set; }
 
-        public int CourseId { get; set; }
-        public Course Course { get; set; }
+        public int PlaylistId { get; set; }
+        public Playlist Playlist { get; set; }
 
         public DateTime CreatedTime { get; set; }
         public DateTime? UpdatedTime { get; set; }

@@ -362,7 +362,7 @@ namespace CoursePlus.Server.Data.Migrations
                     b.ToTable("Instructors");
                 });
 
-            modelBuilder.Entity("CoursePlus.Shared.Models.Student", b =>
+            modelBuilder.Entity("CoursePlus.Shared.Models.Profile", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -394,7 +394,7 @@ namespace CoursePlus.Server.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Students");
+                    b.ToTable("Profiles");
                 });
 
             modelBuilder.Entity("CoursePlus.Shared.Models.Thumbnail", b =>
@@ -609,7 +609,7 @@ namespace CoursePlus.Server.Data.Migrations
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("CoursePlus.Shared.Models.Student", b =>
+            modelBuilder.Entity("CoursePlus.Shared.Models.Profile", b =>
                 {
                     b.HasOne("CoursePlus.Shared.Models.CustomUser", "User")
                         .WithMany()

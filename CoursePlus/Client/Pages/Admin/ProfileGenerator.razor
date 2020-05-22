@@ -1,0 +1,109 @@
+﻿@page "/admin/profile-generator"
+@inherits ProfileGeneratorBase
+@attribute [Authorize(Policy = Policies.IsAdmin)]
+
+<div id="wrapper">
+
+        <Header Class="header" UkSticky="top:20; cls-active:header-sticky">
+            <Breadcrumbs>
+                <li><a href="/" uk-tooltip="title:Home; pos:bottom; offset:21"> <i class="uil-home-alt"></i> </a></li>
+                <li><a href="/admin/dashboard">Admin dashboard</a></li>
+                <li>Fake profile generator</li>
+            </Breadcrumbs>
+        </Header>
+
+        <SearchOnMobile></SearchOnMobile>
+
+        <SearchOnDesktop></SearchOnDesktop>
+
+        <SideNav></SideNav>
+
+        <div class="page-content">
+            <div class="page-content-inner">
+
+                <div class="card">
+
+                    <!-- Card header -->
+                    <div class="card-header actions-toolbar border-0">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h4 class="d-inline-block mb-0">Fake profile generator</h4>
+                            <div class="d-flex">
+                                <a href="#" class="btn btn-icon btn-hover btn-circle" uk-tooltip="More">
+                                    <i class="uil-ellipsis-h"></i>
+                                </a>
+                                <div uk-dropdown="pos: bottom-right ; mode: click ;animation: uk-animation-scale-up">
+                                    <ul class="uk-nav uk-dropdown-nav">
+                                        <li><a @onclick="LoadMoreUsers">Load more users</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Table -->
+                    <div class="table-responsive">
+                        <table class="table table-borderless table-hover align-items-center">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-center"><span>Photo</span></th>
+                                    <th scope="col" class="text-center"><span>FirstName</span></th>
+                                    <th scope="col" class="text-center"><span>LastName</span></th>
+                                    <th scope="col" class="text-center"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="list">
+                                @if (SomeUsers != null)
+                                {
+                                    @foreach (var OneUser in SomeUsers)
+                                    {
+                                        <tr>
+                                            <td class="text-center">
+                                                <img class="avatar rounded-circle" src="@OneUser.PhotoUrl" />
+                                            </td>
+                                    
+                                            <td class="text-left">
+                                                <input class="m-0 align-middle" id="@($"elm{OneUser.Index}")" value="@OneUser.FirstName" 
+                                                       @onchange="@(e => SomeUsers[OneUser.Index].FirstName = e.Value.ToString())" />
+                                            </td>
+
+                                            <td class="text-left">
+                                                <input class="m-0 align-middle" id="@($"elm{OneUser.Index}")" value="@OneUser.LastName" 
+                                                       @onchange="@(e => SomeUsers[OneUser.Index].LastName = e.Value.ToString())" />
+                                            </td>
+
+                                            <td class="text-right">
+                                                <!-- Actions -->
+                                                <div class="actions ml-3">
+                                                    <a class="btn btn-icon btn-hover btn-sm btn-circle" uk-tooltip="Delete" @onclick="@(() => Delete(OneUser))">
+                                                        <i class="uil-trash-alt text-danger"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Card footer -->
+                    <div class="card-footer">
+                        <div class="uk-flex uk-flex-middle">
+                            <div class="uk-width-1-2">
+                                @SomeUsers?.Count items
+                            </div>
+                            <div class="uk-width-1-2 uk-text-right uk-margin-top uk-margin-bottom">
+                                <a href="javascript:void(0)" @onclick="CreateProfiles" class="btn btn-default uk-visible@s"> <i class="uil-plus"></i> Create profiles </a>
+                            </div>
+                            </div>
+                        </div>
+
+                </div>
+
+                <Footer></Footer>
+
+            </div>
+
+        </div>
+
+    </div>

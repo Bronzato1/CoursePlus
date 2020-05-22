@@ -1,0 +1,147 @@
+﻿@page "/admin/profiles"
+@inherits ProfileListBase 
+@attribute [Authorize(Policy = Policies.IsAdmin)]
+
+<div id="wrapper">
+
+    <Header Class="header" UkSticky="top:20; cls-active:header-sticky">
+        <Breadcrumbs>
+            <li><a href="/" uk-tooltip="title:Home; pos:bottom; offset:21"> <i class="uil-home-alt"></i> </a></li>
+            <li><a href="/admin/dashboard">Admin dashboard</a></li>
+            <li>All profiles</li>
+        </Breadcrumbs>
+    </Header>
+
+    <SearchOnMobile></SearchOnMobile>
+
+    <SearchOnDesktop></SearchOnDesktop>
+
+    <SideNav></SideNav>
+
+    <!-- content -->
+    <div class="page-content">
+        <div class="page-content-inner">
+
+            <div class="card">
+                <!-- Card header -->
+                <div class="card-header actions-toolbar border-0">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2 class="d-inline-block mb-0"> Profiles </h2>
+                        <div class="d-flex">
+
+                            <a href="#" class="btn btn-icon btn-hover  btn-circle" uk-tooltip="Search product">
+                                <i class="uil-search"></i>
+                            </a>
+                            <div class="uk-drop" uk-drop="mode: click; pos: left-center; offset: 0">
+                                <form class="uk-search uk-search-navbar uk-width-1-1">
+                                    <input class="uk-search-input shadow-0 uk-form-small" type="search"
+                                            placeholder="Search..." autofocus>
+                                </form>
+                            </div>
+
+                            <a href="#" class="btn btn-icon btn-hover  btn-circle" uk-tooltip="Filter">
+                                <i class="uil-filter"></i>
+                            </a>
+                            <div uk-dropdown="pos: bottom-right ; mode: click ;animation: uk-animation-scale-up">
+                                <ul class="uk-nav uk-dropdown-nav">
+                                    <li class="uk-active"><a href="#"> Newest </a></li>
+                                    <li><a href="#">From A-Z</a></li>
+                                    <li><a href="#">From Z-A</a></li>
+                                </ul>
+                            </div>
+
+
+                            <a href="#" class="btn btn-icon btn-hover  btn-circle" uk-tooltip="More">
+                                <i class="uil-ellipsis-h"></i>
+                            </a>
+                            <div uk-dropdown="pos: bottom-right ; mode: click ;animation: uk-animation-scale-up">
+                                <ul class="uk-nav uk-dropdown-nav">
+                                    <li><a @onclick="RefreshListAsync">Refresh</a></li>
+                                    <li><a @onclick="AddProfile">Add profile</a></li>
+                                </ul>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                <!-- Table -->
+                <div class="table-responsive">
+                    <table class="table align-items-center">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-left"><span class="uk-margin-large-left" @onclick="@(() => Sort("User.FirstName"))">Firstname</span><i class="@(SortIndicator("User.FirstName"))"></i></th>
+                                <th scope="col" class="text-center"><span @onclick="@(() => Sort("Joined"))">Joined</span><i class="@(SortIndicator("Joined"))"></i></th>
+                                <th scope="col" class="text-center"><span @onclick="@(() => Sort("Enrolled"))">Enrolled</span><i class="@(SortIndicator("Enrolled"))"></i></th>
+                                <th scope="col">Total payments</th>
+                                <th scope="col">Activity</th>
+                                <th scope="col"> </th>
+                            </tr>
+                        </thead>
+                        <tbody class="list">
+                            @if (SomeProfiles != null)
+                            {
+                                foreach (var OneProfile in SomeProfiles)
+                                {
+                                    <tr>
+                                        <th scope="row">
+                                            <div class="media align-items-center">
+                                                <div>
+                                                    <div class="avatar-parent-child" style="width: max-content">
+                                                        <img alt="Image placeholder"
+                                                             src="@String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(OneProfile.User.Avatar.Data))"
+                                                             class="avatar  rounded-circle">
+                                                        <span class="avatar-child avatar-badge bg-success"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="media-body ml-4">
+                                                    <a href="#" class="name h6 mb-0 text-sm">@OneProfile.User.FirstName @OneProfile.User.LastName</a>
+                                                    <small class="d-block font-weight-bold">#1001</small>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <td> @OneProfile.Joined.ToString("dd/MM/yyyy") </td>
+                                        <td> @OneProfile.Enrolled </td>
+                                        <td> $1035,00 </td>
+                                        <td>
+                                            <div class="progress" style="height: 7px;">
+                                                <div class="progress-bar" role="progressbar" style="width: 45%;"></div>
+                                            </div>
+                                        </td>
+                                        <td class="text-right">
+                                            <!-- Actions -->
+                                            <div class="actions ml-3">
+                                                <a href="#" class="btn btn-icon btn-hover btn-sm btn-circle"
+                                                   uk-tooltip="Quick view">
+                                                    <i class="uil-external-link-alt "></i>
+                                                </a>
+                                                <a @onclick="@(() => EditProfile(OneProfile))" class="btn btn-icon btn-hover btn-sm btn-circle"
+                                                   uk-tooltip="Edit">
+                                                    <i class="uil-pen "></i>
+                                                </a>
+                                                <a @onclick="@(() => DeleteProfile(OneProfile))" class="btn btn-icon btn-hover btn-sm btn-circle"
+                                                   uk-tooltip="Delete user">
+                                                    <i class="uil-trash-alt text-danger"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer">
+                    <Pager PageIndex=@PaginatedList.PageIndex TotalPages=@PaginatedList.TotalPages OnClick="PageIndexChanged" AlignClass="uk-flex-right"
+                           HasNextPage=@PaginatedList.HasNextPage HasPreviousPage=@PaginatedList.HasPreviousPage>
+                    </Pager>
+                </div>
+            </div>
+
+            <Footer></Footer>
+
+        </div>
+
+    </div>
+
+</div>

@@ -386,12 +386,12 @@ namespace CoursePlus.Server.Data.Migrations
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
 
-                    b.Property<int>("StudentId")
+                    b.Property<int>("ProfileId")
                         .HasColumnType("int");
 
-                    b.HasKey("CourseId", "StudentId");
+                    b.HasKey("CourseId", "ProfileId");
 
-                    b.HasIndex("StudentId");
+                    b.HasIndex("ProfileId");
 
                     b.ToTable("Enrollments");
                 });
@@ -478,7 +478,7 @@ namespace CoursePlus.Server.Data.Migrations
                     b.ToTable("Instructors");
                 });
 
-            modelBuilder.Entity("CoursePlus.Shared.Models.Student", b =>
+            modelBuilder.Entity("CoursePlus.Shared.Models.Profile", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -510,7 +510,7 @@ namespace CoursePlus.Server.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Students");
+                    b.ToTable("Profiles");
                 });
 
             modelBuilder.Entity("CoursePlus.Shared.Models.Thumbnail", b =>
@@ -743,9 +743,9 @@ namespace CoursePlus.Server.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CoursePlus.Shared.Models.Student", "Student")
+                    b.HasOne("CoursePlus.Shared.Models.Profile", "Profile")
                         .WithMany("Enrollments")
-                        .HasForeignKey("StudentId")
+                        .HasForeignKey("ProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -766,7 +766,7 @@ namespace CoursePlus.Server.Data.Migrations
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("CoursePlus.Shared.Models.Student", b =>
+            modelBuilder.Entity("CoursePlus.Shared.Models.Profile", b =>
                 {
                     b.HasOne("CoursePlus.Shared.Models.CustomUser", "User")
                         .WithMany()

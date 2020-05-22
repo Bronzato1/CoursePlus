@@ -10,10 +10,10 @@ namespace CoursePlus.Shared.Models
     {
         [Key, Column(Order = 0)]
         public int CourseId { get; set; }
-        public virtual Course Course { get; set; }
+        public virtual Playlist Playlist { get; set; }
 
         [Key, Column(Order = 1)]
-        public int StudentId { get; set; }
-        public virtual Student Student { get; set; }
+        public int ProfileId { get; set; }
+        public virtual Profile Profile { get; set; }
     }
 }

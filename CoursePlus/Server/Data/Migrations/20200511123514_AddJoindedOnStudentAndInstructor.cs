@@ -3,13 +3,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CoursePlus.Server.Data.Migrations
 {
-    public partial class AddJoindedOnStudentAndInstructor : Migration
+    public partial class AddJoindedOnProfileAndInstructor : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<DateTime>(
                 name: "Joinded",
-                table: "Students",
+                table: "Profiles",
                 nullable: false,
                 defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
@@ -24,7 +24,7 @@ namespace CoursePlus.Server.Data.Migrations
         {
             migrationBuilder.DropColumn(
                 name: "Joinded",
-                table: "Students");
+                table: "Profiles");
 
             migrationBuilder.DropColumn(
                 name: "Joinded",

@@ -28,8 +28,8 @@ namespace CoursePlus.Server.Data
         public DbSet<Avatar> Avatars { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Instructor> Instructors { get; set; }
-        public DbSet<Student> Students { get; set; }
-        public DbSet<Course> Courses { get; set; }
+        public DbSet<Profile> Profiles { get; set; }
+        public DbSet<Playlist> Playlists { get; set; }
         public DbSet<Chapter> Chapters { get; set; }
         public DbSet<Episode> Episodes { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
@@ -41,8 +41,8 @@ namespace CoursePlus.Server.Data
             builder.Seed();
             base.OnModelCreating(builder);
 
-            builder.Entity<Enrollment>().HasKey(c => new { c.CourseId, c.StudentId });
-            builder.Entity<WatchHistory>().HasKey(c => new { c.EpisodeId, c.StudentId });
+            builder.Entity<Enrollment>().HasKey(c => new { c.CourseId, c.ProfileId });
+            builder.Entity<WatchHistory>().HasKey(c => new { c.EpisodeId, c.ProfileId });
         }
 
         public override int SaveChanges()

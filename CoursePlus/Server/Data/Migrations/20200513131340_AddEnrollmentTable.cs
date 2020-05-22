@@ -11,11 +11,11 @@ namespace CoursePlus.Server.Data.Migrations
                 columns: table => new
                 {
                     CourseId = table.Column<int>(nullable: false),
-                    StudentId = table.Column<int>(nullable: false)
+                    ProfileId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Enrollments", x => new { x.CourseId, x.StudentId });
+                    table.PrimaryKey("PK_Enrollments", x => new { x.CourseId, x.ProfileId });
                     table.ForeignKey(
                         name: "FK_Enrollments_Courses_CourseId",
                         column: x => x.CourseId,
@@ -23,17 +23,17 @@ namespace CoursePlus.Server.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Enrollments_Students_StudentId",
-                        column: x => x.StudentId,
-                        principalTable: "Students",
+                        name: "FK_Enrollments_Profiles_ProfileId",
+                        column: x => x.ProfileId,
+                        principalTable: "Profiles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Enrollments_StudentId",
+                name: "IX_Enrollments_ProfileId",
                 table: "Enrollments",
-                column: "StudentId");
+                column: "ProfileId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

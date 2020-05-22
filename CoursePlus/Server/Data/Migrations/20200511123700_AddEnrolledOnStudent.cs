@@ -2,13 +2,13 @@
 
 namespace CoursePlus.Server.Data.Migrations
 {
-    public partial class AddEnrolledOnStudent : Migration
+    public partial class AddEnrolledOnProfile : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<int>(
                 name: "Enrolled",
-                table: "Students",
+                table: "Profiles",
                 nullable: false,
                 defaultValue: 0);
         }
@@ -17,7 +17,7 @@ namespace CoursePlus.Server.Data.Migrations
         {
             migrationBuilder.DropColumn(
                 name: "Enrolled",
-                table: "Students");
+                table: "Profiles");
         }
     }
 }
