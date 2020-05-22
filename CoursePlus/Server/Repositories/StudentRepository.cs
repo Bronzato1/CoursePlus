@@ -56,6 +56,17 @@ namespace CoursePlus.Server.Repositories
             return student;
         }
 
+        public Student GetStudentByUserId(string userId)
+        {
+            var student = _dbContext.Students
+                                       .Include(x => x.User)
+                                       .Include(x => x.User.Avatar)
+                                       .Where(x => x.UserId == userId)
+                                       .FirstOrDefault();
+
+            return student;
+        }
+
         public async Task<Student> AddStudent(Student student)
         {
             try

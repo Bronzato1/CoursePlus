@@ -127,4 +127,25 @@ window.History =
     goBack: function () {
         window.history.go(-1);
     }
-};
+}
+
+window.Player =
+{
+    initialize: function () {
+        const player = new Plyr('#player');
+        window.player = player;
+    },
+    loadYouTubeVideo: function (videoId)
+    {
+        window.player.source = {
+            type: 'video',
+            sources: [
+                {
+                    src: videoId,
+                    provider: 'youtube'
+                }
+            ]
+        };
+    }
+}
+

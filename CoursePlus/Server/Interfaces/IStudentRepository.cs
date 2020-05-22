@@ -13,6 +13,8 @@ namespace CoursePlus.Server.Repositories
 
         public Student GetStudent(int id);
 
+        public Student GetStudentByUserId(string userId);
+
         public Task<Student> AddStudent(Student student);
 
         public Student UpdateStudent(Student student);

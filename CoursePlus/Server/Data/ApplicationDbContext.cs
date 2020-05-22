@@ -33,6 +33,7 @@ namespace CoursePlus.Server.Data
         public DbSet<Chapter> Chapters { get; set; }
         public DbSet<Episode> Episodes { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
+        public DbSet<WatchHistory> WatchHistories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -41,6 +42,7 @@ namespace CoursePlus.Server.Data
             base.OnModelCreating(builder);
 
             builder.Entity<Enrollment>().HasKey(c => new { c.CourseId, c.StudentId });
+            builder.Entity<WatchHistory>().HasKey(c => new { c.EpisodeId, c.StudentId });
         }
 
         public override int SaveChanges()

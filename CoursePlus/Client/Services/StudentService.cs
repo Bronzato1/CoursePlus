@@ -41,6 +41,17 @@ namespace CoursePlus.Client.Services
             return await JsonSerializer.DeserializeAsync<Student>(await _httpClient.GetStreamAsync($"api/student/{id}"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
         }
 
+        public async Task<Student> GetStudentByUserId(string userId)
+        {
+            var responseStream = await _httpClient.GetStreamAsync($"api/student/getStudentByUserId?userId={userId}");
+
+            if (responseStream.Length > 0)
+            {
+                return await JsonSerializer.DeserializeAsync<Student>(responseStream, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+            }
+            return null;   
+        }
+
         public async Task<Student> AddStudent(Student student)
         {
             var studentJson = new StringContent(JsonSerializer.Serialize(student), Encoding.UTF8, "application/json");

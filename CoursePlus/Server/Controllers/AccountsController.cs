@@ -5,6 +5,7 @@ using CoursePlus.Shared.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using CoursePlus.Server.Data;
+using System.Security.Claims;
 
 namespace CoursePlus.Server.Controllers
 {

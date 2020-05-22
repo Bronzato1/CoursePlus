@@ -39,6 +39,14 @@ namespace CoursePlus.Server.Controllers
             return Ok(_studentRepository.GetStudent(id));
         }
 
+        [HttpGet]
+        [Route("getStudentByUserId")]
+        public IActionResult GetStudentByUserId(string userId)
+        {
+            var student = _studentRepository.GetStudentByUserId(userId);
+            return Ok(student);
+        }
+
         [HttpPost]
         [Authorize(Policy = Policies.IsAdmin)]
         public async Task<IActionResult> CreateStudent([FromBody] Student student)

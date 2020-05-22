@@ -13,6 +13,8 @@ namespace CoursePlus.Client.Services
 
         Task<Student> GetStudent(int id);
 
+        Task<Student> GetStudentByUserId(string userId);
+
         Task<Student> AddStudent(Student student);
 
         Task UpdateStudent(Student student);

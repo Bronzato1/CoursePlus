@@ -5064,7 +5064,7 @@ ul.course-video-list-2 li.uk-active a {
 }
 
 .course-content-inner {
-  max-width: 1024px;
+  max-width: 80%; /*1024px;*/
   height: calc(99vh - 90px) !important;
   margin: auto;
   justify-content: center;
