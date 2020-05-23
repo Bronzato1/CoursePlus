@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
 using System.Text;
 
 namespace CoursePlus.Shared.Utilities
@@ -42,6 +44,15 @@ namespace CoursePlus.Shared.Utilities
         public static bool IsEnumerableType(Type type)
         {
             return (type.GetInterface(nameof(IEnumerable)) != null);
+        }
+
+        public static byte[] ImageToByteArray(string imageUrl)
+        {
+            using (var webClient = new WebClient())
+            {
+                byte[] imageBytes = webClient.DownloadData(imageUrl);
+                return imageBytes;
+            }
         }
     }
 

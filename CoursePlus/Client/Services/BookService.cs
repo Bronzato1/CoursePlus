@@ -64,5 +64,10 @@ namespace CoursePlus.Client.Services
         {
             await _httpClient.DeleteAsync($"api/book/{id}");
         }
+
+        public async Task<string> GenerateImagesAndThumbnailsFromUrl()
+        {
+            return await JsonSerializer.DeserializeAsync<string>(await _httpClient.GetStreamAsync($"api/book/generateImagesAndThumbnailsFromUrl"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+        }
     }
 }

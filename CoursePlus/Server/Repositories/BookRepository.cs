@@ -1,10 +1,13 @@
 ﻿using CoursePlus.Server.Data;
 using CoursePlus.Shared.Infrastructure;
 using CoursePlus.Shared.Models;
+using CoursePlus.Shared.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -89,6 +92,43 @@ namespace CoursePlus.Server.Repositories
 
             _dbContext.Books.Remove(foundBook);
             _dbContext.SaveChanges();
+        }
+
+        public async Task<bool> GenerateImagesAndThumbnailsFromUrl()
+        {
+            var books = _dbContext.Books.Include(x => x.Image);
+
+            foreach(var book in books)
+            {
+                if (book.Image == null && !string.IsNullOrEmpty(book.ImageUrl))
+                {
+                    var data = CustomFunctions.ImageToByteArray(book.ImageUrl);
+                    var newImage = new Image { Data = data };
+                    book.Image = newImage;
+                }
+
+                if (book.Thumbnail == null && !string.IsNullOrEmpty(book.ThumbnailUrl))
+                {
+                    System.Drawing.Image img;
+                    System.Drawing.Image thumb;
+
+                    using (var ms = new MemoryStream(book.Image.Data))
+                    {
+                        img = System.Drawing.Image.FromStream(ms);
+                    }
+
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        thumb = img.GetThumbnailImage(300, 390, () => false, IntPtr.Zero);
+                        thumb.Save(ms, ImageFormat.Jpeg);
+                        var newThumbnail = new Thumbnail { Data = ms.ToArray() };
+                        book.Thumbnail = newThumbnail;
+                    }
+                }
+            }
+
+            await _dbContext.SaveChangesAsync();
+            return true;
         }
     }
 }

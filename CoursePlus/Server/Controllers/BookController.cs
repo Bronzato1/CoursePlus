@@ -96,5 +96,16 @@ namespace CoursePlus.Server.Controllers
 
             return NoContent();//success
         }
+
+        [HttpGet("generateImagesAndThumbnailsFromUrl")]
+        public async Task<string> GenerateImagesAndThumbnailsFromUrl()
+        {
+            var success = await _bookRepository.GenerateImagesAndThumbnailsFromUrl();
+
+            if (success)
+                return "Operation finished successfully";
+            else
+                return "Operation failed";
+        }
     }
 }

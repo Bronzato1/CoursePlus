@@ -18,5 +18,7 @@ namespace CoursePlus.Client.Services
         Task UpdateBook(Book book);
 
         Task DeleteBook(int id);
+
+        Task<string> GenerateImagesAndThumbnailsFromUrl();
     }
 }

@@ -12,35 +12,49 @@ namespace CoursePlus.Client.Pages.Admin
 {
     public class BookListBase : ComponentBase
     {
-        [Inject]
-        public IBookService BookService { get; set; }
-        [Inject]
-        public ICategoryService CategoryService { get; set; }
-        [Inject]
-        public NavigationManager NavigationManager { get; set; }
-        [Inject]
-        public IModalDialogService ModalDialog { get; set; }
+        [Inject] public IBookService BookService { get; set; }
+        [Inject] public ICategoryService CategoryService { get; set; }
+        [Inject] public NavigationManager NavigationManager { get; set; }
+        [Inject] public IModalDialogService ModalDialog { get; set; }
 
         public PaginatedList<Book> PaginatedList = new PaginatedList<Book>();
-
         public IEnumerable<Book> SomeBooks { get { return PaginatedList.Items; } }
-
         public IEnumerable<Category> SomeCategories { get; set; }
 
         int currentPageNumber = 1;
-
         string currentSortField = "Title";
-
         string currentSortOrder = "Asc";
-
         string currentFilterField = string.Empty;
-
         string currentFilterValue = string.Empty;
 
         protected override async Task OnInitializedAsync()
         {
             SomeCategories = await CategoryService.GetCategories();
             await RefreshListAsync();
+        }
+        protected void EditBook(Book book)
+        {
+            NavigationManager.NavigateTo("/admin/book/" + book.Id);
+        }
+        protected void AddBook()
+        {
+            NavigationManager.NavigateTo("/admin/book/0");
+        }
+        public string SortIndicator(string sortField)
+        {
+            if (sortField.Equals(currentSortField))
+            {
+                return currentSortOrder.Equals("Asc") ? "icon-material-outline-arrow-drop-down" : "icon-material-outline-arrow-drop-up";
+            }
+            return string.Empty;
+        }
+        public string FilterIndicator(string filterField, string filterValue)
+        {
+            if (filterField.Equals(currentFilterField) && filterValue.Equals(currentFilterValue))
+            {
+                return "uk-active";
+            }
+            return string.Empty;
         }
 
         public async void PageIndexChanged(int newPageNumber)
@@ -54,17 +68,6 @@ namespace CoursePlus.Client.Pages.Admin
             await RefreshListAsync();
             StateHasChanged();
         }
-
-        protected void EditBook(Book book)
-        {
-            NavigationManager.NavigateTo("/admin/book/" + book.Id);
-        }
-
-        protected void AddBook()
-        {
-            NavigationManager.NavigateTo("/admin/book/0");
-        }
-
         public async Task DeleteBook(Book book)
         {
             MessageBoxDialogResult result = await ModalDialog.ShowMessageBoxAsync("Confirm Delete", "Are you sure you want to delete the book ?", MessageBoxButtons.YesNo, MessageBoxDefaultButton.Button2);
@@ -75,12 +78,10 @@ namespace CoursePlus.Client.Pages.Admin
                 await RefreshListAsync();
             }
         }
-
         public async Task RefreshListAsync()
         {
             PaginatedList = await BookService.GetBooks(currentPageNumber, currentSortField, currentSortOrder, currentFilterField, currentFilterValue);
         }
-
         public async Task Sort(string sortField)
         {
             if (sortField.Equals(currentSortField))
@@ -94,16 +95,6 @@ namespace CoursePlus.Client.Pages.Admin
             }
             await RefreshListAsync();
         }
-
-        public string SortIndicator(string sortField)
-        {
-            if (sortField.Equals(currentSortField))
-            {
-                return currentSortOrder.Equals("Asc") ? "icon-material-outline-arrow-drop-down" : "icon-material-outline-arrow-drop-up";
-            }
-            return string.Empty;
-        }
-
         public async Task Filter(string field, string value)
         {
             currentPageNumber = 1;
@@ -111,15 +102,6 @@ namespace CoursePlus.Client.Pages.Admin
             currentFilterValue = value;
 
             await RefreshListAsync();
-        }
-
-        public string FilterIndicator(string filterField, string filterValue)
-        {
-            if (filterField.Equals(currentFilterField) && filterValue.Equals(currentFilterValue))
-            {
-                return "uk-active";
-            }
-            return string.Empty;
         }
     }
 }

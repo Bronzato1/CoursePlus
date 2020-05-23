@@ -11,12 +11,14 @@ namespace CoursePlus.Server.Repositories
     {
         Task<PaginatedList<Book>> GetBooks(int? pageNumber, string sortField, string sortOrder, string filterField, string filterValue);
 
-        public Book GetBook(int id);
+        Book GetBook(int id);
 
-        public Book AddBook(Book book);
+        Book AddBook(Book book);
 
-        public Book UpdateBook(Book book);
+        Book UpdateBook(Book book);
 
-        public void DeleteBook(int id);
+        void DeleteBook(int id);
+
+        Task<bool> GenerateImagesAndThumbnailsFromUrl();
     }
 }
