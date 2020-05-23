@@ -49,8 +49,6 @@ namespace CoursePlus.Client.Services
 
             if (response.IsSuccessStatusCode)
             {
-                //return await JsonSerializer.DeserializeAsync<Chapter>(await response.Content.ReadAsStreamAsync(), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
-
                 using var responseStream = await response.Content.ReadAsStreamAsync();
                 var result = await JsonSerializer.DeserializeAsync<Chapter>(responseStream, new JsonSerializerOptions
                 {

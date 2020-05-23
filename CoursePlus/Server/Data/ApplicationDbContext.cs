@@ -28,7 +28,6 @@ namespace CoursePlus.Server.Data
         public DbSet<Thumbnail> Thumbnails { get; set; }
         public DbSet<Avatar> Avatars { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<Instructor> Instructors { get; set; }
         public DbSet<Profile> Profiles { get; set; }
         public DbSet<Playlist> Playlists { get; set; }
         public DbSet<Chapter> Chapters { get; set; }
@@ -44,16 +43,7 @@ namespace CoursePlus.Server.Data
 
             builder.Entity<Enrollment>().HasKey(c => new { c.PlaylistId, c.ProfileId });
             builder.Entity<WatchHistory>().HasKey(c => new { c.EpisodeId, c.ProfileId });
-
             builder.Entity<Playlist>().HasOne(x => x.Profile).WithMany().OnDelete(DeleteBehavior.NoAction);
-
-            //builder.Entity<WatchHistory>().HasOne(x => x.Profile).WithMany().OnDelete(DeleteBehavior.NoAction);
-
-            //builder.Entity<Profile>().HasMany(x => x.WatchHistory).WithOne().OnDelete(DeleteBehavior.NoAction);
-
-            //builder.Entity<WatchHistory>().HasOne(x => x.Profile).WithMany().OnDelete(DeleteBehavior.NoAction);
-
-            //builder.Entity<Enrollment>().HasOne(x => x.Playlist).WithMany().OnDelete(DeleteBehavior.NoAction);
         }
 
         public override int SaveChanges()

@@ -47,7 +47,7 @@ namespace CoursePlus.Client.Pages.Admin
 
         protected override async Task OnInitializedAsync()
         {
-            if (Id == 0) // new instructor is being created
+            if (Id == 0) // new profile is being created
             {
                 OneProfile = new Profile { User = new CustomUser(), Joined = DateTime.Now };
             }
@@ -124,7 +124,7 @@ namespace CoursePlus.Client.Pages.Admin
                 var uploadAvatarResult = JsonSerializer.Deserialize<UploadAvatarResult>(await result.Content.ReadAsStringAsync(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
                 OneProfile.User.AvatarId = uploadAvatarResult.AvatarId;
 
-                if (OneProfile.User.Avatar == null) // First time image for this instructor
+                if (OneProfile.User.Avatar == null) // First time image for this user profile
                     OneProfile.User.Avatar = new CoursePlus.Shared.Models.Avatar();
 
                 OneProfile.User.Avatar.Data = ms.ToArray();

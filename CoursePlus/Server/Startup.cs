@@ -74,7 +74,6 @@ namespace CoursePlus.Server
 
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
-            services.AddScoped<IInstructorRepository, InstructorRepository>();
             services.AddScoped<IAvatarRepository, AvatarRepository>();
             services.AddScoped<IPlaylistRepository, PlaylistRepository>();
             services.AddScoped<IChapterRepository, ChapterRepository>();
