@@ -36,6 +36,21 @@ namespace CoursePlus.Client.Services
             return result;
         }
 
+        public async Task<List<Profile>> GetAllProfiles()
+        {
+            var response = await _httpClient.GetAsync($"api/profile/getallprofiles");
+            response.EnsureSuccessStatusCode();
+
+            using var responseStream = await response.Content.ReadAsStreamAsync();
+            var result = await JsonSerializer.DeserializeAsync<List<Profile>>(responseStream, new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                PropertyNameCaseInsensitive = true,
+            });
+            return result;
+        }
+
+
         public async Task<Profile> GetProfile(int id)
         {
             return await JsonSerializer.DeserializeAsync<Profile>(await _httpClient.GetStreamAsync($"api/profile/{id}"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });

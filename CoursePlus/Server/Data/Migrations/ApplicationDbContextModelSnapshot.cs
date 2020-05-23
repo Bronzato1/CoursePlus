@@ -308,13 +308,13 @@ namespace CoursePlus.Server.Data.Migrations
 
             modelBuilder.Entity("CoursePlus.Shared.Models.Enrollment", b =>
                 {
-                    b.Property<int>("CourseId")
+                    b.Property<int>("PlaylistId")
                         .HasColumnType("int");
 
                     b.Property<int>("ProfileId")
                         .HasColumnType("int");
 
-                    b.HasKey("CourseId", "ProfileId");
+                    b.HasKey("PlaylistId", "ProfileId");
 
                     b.HasIndex("ProfileId");
 
@@ -439,10 +439,6 @@ namespace CoursePlus.Server.Data.Migrations
                     b.Property<int?>("ImageId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("InstructorId")
-                        .IsRequired()
-                        .HasColumnType("int");
-
                     b.Property<int>("Language")
                         .HasColumnType("int");
 
@@ -450,6 +446,10 @@ namespace CoursePlus.Server.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProfileId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("SubTitle")
@@ -475,7 +475,7 @@ namespace CoursePlus.Server.Data.Migrations
 
                     b.HasIndex("ImageId");
 
-                    b.HasIndex("InstructorId");
+                    b.HasIndex("ProfileId");
 
                     b.HasIndex("ThumbnailId");
 
@@ -745,9 +745,9 @@ namespace CoursePlus.Server.Data.Migrations
 
             modelBuilder.Entity("CoursePlus.Shared.Models.Enrollment", b =>
                 {
-                    b.HasOne("CoursePlus.Shared.Models.Playlist", "Course")
+                    b.HasOne("CoursePlus.Shared.Models.Playlist", "Playlist")
                         .WithMany("Enrollments")
-                        .HasForeignKey("CourseId")
+                        .HasForeignKey("PlaylistId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -786,10 +786,10 @@ namespace CoursePlus.Server.Data.Migrations
                         .WithMany()
                         .HasForeignKey("ImageId");
 
-                    b.HasOne("CoursePlus.Shared.Models.Instructor", "Instructor")
+                    b.HasOne("CoursePlus.Shared.Models.Profile", "Profile")
                         .WithMany()
-                        .HasForeignKey("InstructorId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("ProfileId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("CoursePlus.Shared.Models.Thumbnail", "Thumbnail")

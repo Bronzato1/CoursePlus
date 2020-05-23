@@ -9,7 +9,7 @@ namespace CoursePlus.Shared.Models
     public class Enrollment
     {
         [Key, Column(Order = 0)]
-        public int CourseId { get; set; }
+        public int PlaylistId { get; set; }
         public virtual Playlist Playlist { get; set; }
 
         [Key, Column(Order = 1)]

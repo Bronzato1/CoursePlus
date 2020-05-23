@@ -51,7 +51,7 @@ namespace CoursePlus.Server.Repositories
 
                 return await PaginatedList<Playlist>.CreateAsync(playlistList.AsNoTracking(), pageNumber ?? 1, pageSize);
             }
-            catch
+            catch (Exception ex)
             {
                 throw new ApplicationException();
             }
@@ -63,7 +63,7 @@ namespace CoursePlus.Server.Repositories
                 .Where(x => x.Id == id)
                 .Include(x => x.Image)
                 .Include(x => x.Category)
-                .Include(x => x.Instructor.User)
+                .Include(x => x.Profile.User)
                 .Include(x => x.Chapters).ThenInclude(x => x.Episodes).ThenInclude(x => x.WatchHistory)
                 .Include(x => x.Enrollments).ThenInclude(x => x.Profile)
                 .FirstOrDefault();
@@ -88,7 +88,7 @@ namespace CoursePlus.Server.Repositories
                 foundPlaylist.Description = playlist.Description;
                 foundPlaylist.ImageId = playlist.ImageId;
                 foundPlaylist.ThumbnailId = playlist.ThumbnailId;
-                foundPlaylist.InstructorId = playlist.InstructorId;
+                foundPlaylist.ProfileId = playlist.ProfileId;
                 foundPlaylist.CategoryId = playlist.CategoryId;
                 foundPlaylist.Language = playlist.Language;
                 foundPlaylist.Featured = playlist.Featured;

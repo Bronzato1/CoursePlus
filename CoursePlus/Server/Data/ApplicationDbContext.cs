@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography.X509Certificates;
 using System.Security.Principal;
 using System.Threading;
 using static CoursePlus.Server.Data.ApplicationDbContext;
@@ -41,8 +42,18 @@ namespace CoursePlus.Server.Data
             builder.Seed();
             base.OnModelCreating(builder);
 
-            builder.Entity<Enrollment>().HasKey(c => new { c.CourseId, c.ProfileId });
+            builder.Entity<Enrollment>().HasKey(c => new { c.PlaylistId, c.ProfileId });
             builder.Entity<WatchHistory>().HasKey(c => new { c.EpisodeId, c.ProfileId });
+
+            builder.Entity<Playlist>().HasOne(x => x.Profile).WithMany().OnDelete(DeleteBehavior.NoAction);
+
+            //builder.Entity<WatchHistory>().HasOne(x => x.Profile).WithMany().OnDelete(DeleteBehavior.NoAction);
+
+            //builder.Entity<Profile>().HasMany(x => x.WatchHistory).WithOne().OnDelete(DeleteBehavior.NoAction);
+
+            //builder.Entity<WatchHistory>().HasOne(x => x.Profile).WithMany().OnDelete(DeleteBehavior.NoAction);
+
+            //builder.Entity<Enrollment>().HasOne(x => x.Playlist).WithMany().OnDelete(DeleteBehavior.NoAction);
         }
 
         public override int SaveChanges()

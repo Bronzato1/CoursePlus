@@ -18,42 +18,30 @@ namespace CoursePlus.Client.Pages.Admin
 {
     public class PlaylistEditBase : ComponentBase
     {
-        [Parameter]
-        public int Id { get; set; }
-        [Inject]
-        public NavigationManager NavigationManager { get; set; }
-        [Inject]
-        IJSRuntime JSRuntime { get; set; }
-        [Inject]
-        public IPlaylistService PlaylistService { get; set; }
-        [Inject]
-        public IChapterService ChapterService { get; set; }
-        [Inject]
-        public IEpisodeService EpisodeService { get; set; }
-        [Inject]
-        public ICategoryService CategoryService { get; set; }
-        [Inject]
-        public IInstructorService InstructorService { get; set; }
-        [Inject]
-        public HttpClient Client { get; set; }
-        [Inject]
-        public IModalDialogService ModalDialog { get; set; }
-        [JSInvokable]
-        public async Task QuillContentChanged()
+        [Parameter] public int Id { get; set; }
+        [JSInvokable] public async Task QuillContentChanged()
         {
             OnePlaylist.Description = await JSRuntime.InvokeAsync<string>("QuillFunctions.getQuillHTML", divEditorElement);
         }
-
+        [Inject] public NavigationManager NavigationManager { get; set; }
+        [Inject] public IJSRuntime JSRuntime { get; set; }
+        [Inject] public IPlaylistService PlaylistService { get; set; }
+        [Inject] public IChapterService ChapterService { get; set; }
+        [Inject] public IEpisodeService EpisodeService { get; set; }
+        [Inject] public ICategoryService CategoryService { get; set; }
+        [Inject] public IProfileService ProfileService { get; set; }
+        [Inject] public HttpClient Client { get; set; }
+        [Inject] public IModalDialogService ModalDialog { get; set; }
+        
         public EditForm FormContext { get; set; }
         public Playlist OnePlaylist { get; set; } = new Playlist();
         public ElementReference divEditorElement;
-        public bool EditorEnabled = true;
+        public List<Category> Categories { get; set; } = new List<Category>();
+        public List<Profile> Profiles { get; set; } = new List<Profile>();
 
+        public bool EditorEnabled = true;
         protected string Message = string.Empty;
         protected string StatusClass = string.Empty;
-
-        public List<Category> Categories { get; set; } = new List<Category>();
-        public List<Instructor> Instructors { get; set; } = new List<Instructor>();
 
         protected override void OnParametersSet()
         {
@@ -62,7 +50,7 @@ namespace CoursePlus.Client.Pages.Admin
         protected override async Task OnInitializedAsync()
         {
             Categories = (await CategoryService.GetCategories()).ToList();
-            Instructors = (await InstructorService.GetAllInstructors()).ToList();
+            Profiles = (await ProfileService.GetAllProfiles()).ToList();
 
             if (Id == 0) // new playlist is being created
             {
@@ -96,21 +84,33 @@ namespace CoursePlus.Client.Pages.Admin
 
         protected async Task HandleValidSubmit()
         {
+            var success = await TrySavingChanges();
+            if (success == true)
+            {
+                await Task.Delay(2000);
+                NavigationManager.NavigateTo("/admin/playlists");
+            }
+        }
+        protected async Task<bool> TrySavingChanges()
+        {
             if (Id == 0)
             {
                 var addedPlaylist = await PlaylistService.AddPlaylist(OnePlaylist);
                 if (addedPlaylist != null)
                 {
+                    Console.WriteLine("Id:{0}", addedPlaylist.Id);
+                    Id = addedPlaylist.Id;
+                    OnePlaylist.Id = addedPlaylist.Id;
                     StatusClass = "uk-text-success";
                     Message = "New playlist added successfully";
                     StateHasChanged();
-                    await Task.Delay(2000);
-                    NavigationManager.NavigateTo("/admin/playlists");
+                    return true;
                 }
                 else
                 {
                     StatusClass = "uk-text-danger";
                     Message = "Something went wrong";
+                    return false;
                 }
             }
             else
@@ -119,8 +119,7 @@ namespace CoursePlus.Client.Pages.Admin
                 StatusClass = "uk-text-success";
                 Message = "Playlist updated successfully";
                 StateHasChanged();
-                await Task.Delay(1000);
-                NavigationManager.NavigateTo("/admin/playlists");
+                return true;
             }
         }
         protected async Task DeletePlaylist()
@@ -162,6 +161,14 @@ namespace CoursePlus.Client.Pages.Admin
         }
         protected async Task AddChapter()
         {
+            if (OnePlaylist.Id == 0)
+            {
+                var response = await ModalDialog.ShowMessageBoxAsync("Question", "Do you want to save this new playlist ?", MessageBoxButtons.YesNo);
+                if (response == MessageBoxDialogResult.No) return;
+                var result = await TrySavingChanges();
+                if (result == false) return;
+            }
+
             ModalDataInputForm frm = new ModalDataInputForm("Add chapter", "Please give a title");
 
             var titleFld = frm.AddStringField("title", "Title", "", "The title of the chapter");
@@ -170,6 +177,10 @@ namespace CoursePlus.Client.Pages.Admin
             {
                 var chapter = new Chapter { Title = titleFld.Value, PlaylistId = OnePlaylist.Id };
                 var addedChapter = await ChapterService.AddChapter(chapter);
+
+                if (OnePlaylist.Chapters == null)
+                    OnePlaylist.Chapters = new List<Chapter>();
+
                 OnePlaylist.Chapters.Add(addedChapter);
                 StateHasChanged();
             }
@@ -187,11 +198,19 @@ namespace CoursePlus.Client.Pages.Admin
         }
         protected async Task AddEpisode(Chapter OneChapter)
         {
+            if (OnePlaylist.Id == 0)
+            {
+                var response = await ModalDialog.ShowMessageBoxAsync("Question", "Do you want to save this new playlist ?", MessageBoxButtons.YesNo);
+                if (response == MessageBoxDialogResult.No) return;
+                var result = await TrySavingChanges();
+                if (result == false) return;
+            }
+
             ModalDialogParameters parameters = new ModalDialogParameters();
 
             parameters.Add("Title", "");
             parameters.Add("VideoUrl", "");
-            parameters.Add("Duration", "");
+            parameters.Add("Duration", 0);
             parameters.Add("Trailer", "");
 
             var dialogResult = await ModalDialog.ShowDialogAsync<EpisodeEdit>("Add episode", new ModalDialogOptions(), parameters);

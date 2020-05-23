@@ -33,6 +33,13 @@ namespace CoursePlus.Server.Controllers
             return list;
         }
 
+        [HttpGet("getallprofiles")]
+        public async Task<ActionResult<List<Profile>>> GetAllProfiles()
+        {
+            var list = await _profileRepository.GetAllProfiles();
+            return list;
+        }
+
         [HttpGet("{id:int}")]
         public IActionResult GetProfile(int id)
         {

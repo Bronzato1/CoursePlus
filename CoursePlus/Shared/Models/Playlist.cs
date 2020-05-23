@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace CoursePlus.Shared.Models
@@ -18,8 +19,10 @@ namespace CoursePlus.Shared.Models
         [Required]
         public int Price { get; set; }
         [Required(ErrorMessage = "Category is required.")]
+
         public int? CategoryId { get; set; }
         public Category Category { get; set; }
+
         [Required(ErrorMessage = "{0} is required.")]
         public EnumLanguages? Language { get; set; }
         [Required(ErrorMessage = "{0} is required.")]
@@ -27,9 +30,11 @@ namespace CoursePlus.Shared.Models
 
         public int? ImageId { get; set; }
         public virtual Image Image { get; set; }
-        [Required(ErrorMessage = "Instructor is required.")]
-        public int? InstructorId { get; set; }
-        public Instructor Instructor { get; set; }
+
+        [Required(ErrorMessage = "Profile is required.")]
+        public int? ProfileId { get; set; }
+        //[ForeignKey("ProfileId")]
+        public Profile Profile { get; set; }
 
         public bool Featured { get; set; }
         public bool Popular { get; set; }

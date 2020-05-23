@@ -11,6 +11,8 @@ namespace CoursePlus.Client.Services
     {
         Task<PaginatedList<Profile>> GetProfiles(int pageNumber = 1, string sortField = "", string sortOrder = "", string filterField = "", string filterValue = "");
 
+        Task<List<Profile>> GetAllProfiles();
+
         Task<Profile> GetProfile(int id);
 
         Task<Profile> GetProfileByUserId(string userId);

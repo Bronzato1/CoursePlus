@@ -51,12 +51,17 @@ namespace CoursePlus.Client.Services
         public async Task<Playlist> AddPlaylist(Playlist playlist)
         {
             var playlistJson = new StringContent(JsonSerializer.Serialize(playlist), Encoding.UTF8, "application/json");
-
             var response = await _httpClient.PostAsync("api/playlist", playlistJson);
 
             if (response.IsSuccessStatusCode)
             {
-                return await JsonSerializer.DeserializeAsync<Playlist>(await response.Content.ReadAsStreamAsync());
+                using var responseStream = await response.Content.ReadAsStreamAsync();
+                var result = await JsonSerializer.DeserializeAsync<Playlist>(responseStream, new JsonSerializerOptions
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                    PropertyNameCaseInsensitive = true,
+                });
+                return result;
             }
 
             return null;

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoursePlus.Server.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200521100436_AddWatchHistoryTable")]
-    partial class AddWatchHistoryTable
+    [Migration("20200522180012_MyFirstMigration")]
+    partial class MyFirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -207,14 +207,14 @@ namespace CoursePlus.Server.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedUser")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PlaylistId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
@@ -227,82 +227,9 @@ namespace CoursePlus.Server.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CourseId");
+                    b.HasIndex("PlaylistId");
 
                     b.ToTable("Chapters");
-                });
-
-            modelBuilder.Entity("CoursePlus.Shared.Models.Course", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("CategoryId")
-                        .IsRequired()
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedUser")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Difficulty")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Featured")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("ImageId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("InstructorId")
-                        .IsRequired()
-                        .HasColumnType("int");
-
-                    b.Property<int>("Language")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Popular")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
-
-                    b.Property<string>("SubTitle")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ThumbnailId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedUser")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("ImageId");
-
-                    b.HasIndex("InstructorId");
-
-                    b.HasIndex("ThumbnailId");
-
-                    b.ToTable("Courses");
                 });
 
             modelBuilder.Entity("CoursePlus.Shared.Models.CustomUser", b =>
@@ -383,13 +310,13 @@ namespace CoursePlus.Server.Data.Migrations
 
             modelBuilder.Entity("CoursePlus.Shared.Models.Enrollment", b =>
                 {
-                    b.Property<int>("CourseId")
+                    b.Property<int>("PlaylistId")
                         .HasColumnType("int");
 
                     b.Property<int>("ProfileId")
                         .HasColumnType("int");
 
-                    b.HasKey("CourseId", "ProfileId");
+                    b.HasKey("PlaylistId", "ProfileId");
 
                     b.HasIndex("ProfileId");
 
@@ -482,6 +409,79 @@ namespace CoursePlus.Server.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Instructors");
+                });
+
+            modelBuilder.Entity("CoursePlus.Shared.Models.Playlist", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("CategoryId")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedUser")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Difficulty")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Featured")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("ImageId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Language")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Popular")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProfileId")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<string>("SubTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ThumbnailId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedUser")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("ImageId");
+
+                    b.HasIndex("ProfileId");
+
+                    b.HasIndex("ThumbnailId");
+
+                    b.ToTable("Playlists");
                 });
 
             modelBuilder.Entity("CoursePlus.Shared.Models.Profile", b =>
@@ -731,34 +731,11 @@ namespace CoursePlus.Server.Data.Migrations
 
             modelBuilder.Entity("CoursePlus.Shared.Models.Chapter", b =>
                 {
-                    b.HasOne("CoursePlus.Shared.Models.Course", "Course")
+                    b.HasOne("CoursePlus.Shared.Models.Playlist", "Playlist")
                         .WithMany("Chapters")
-                        .HasForeignKey("CourseId")
+                        .HasForeignKey("PlaylistId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("CoursePlus.Shared.Models.Course", b =>
-                {
-                    b.HasOne("CoursePlus.Shared.Models.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CoursePlus.Shared.Models.Image", "Image")
-                        .WithMany()
-                        .HasForeignKey("ImageId");
-
-                    b.HasOne("CoursePlus.Shared.Models.Instructor", "Instructor")
-                        .WithMany()
-                        .HasForeignKey("InstructorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CoursePlus.Shared.Models.Thumbnail", "Thumbnail")
-                        .WithMany()
-                        .HasForeignKey("ThumbnailId");
                 });
 
             modelBuilder.Entity("CoursePlus.Shared.Models.CustomUser", b =>
@@ -770,9 +747,9 @@ namespace CoursePlus.Server.Data.Migrations
 
             modelBuilder.Entity("CoursePlus.Shared.Models.Enrollment", b =>
                 {
-                    b.HasOne("CoursePlus.Shared.Models.Course", "Course")
+                    b.HasOne("CoursePlus.Shared.Models.Playlist", "Playlist")
                         .WithMany("Enrollments")
-                        .HasForeignKey("CourseId")
+                        .HasForeignKey("PlaylistId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -799,6 +776,29 @@ namespace CoursePlus.Server.Data.Migrations
                         .HasForeignKey("UserId");
                 });
 
+            modelBuilder.Entity("CoursePlus.Shared.Models.Playlist", b =>
+                {
+                    b.HasOne("CoursePlus.Shared.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CoursePlus.Shared.Models.Image", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId");
+
+                    b.HasOne("CoursePlus.Shared.Models.Profile", "Profile")
+                        .WithMany()
+                        .HasForeignKey("ProfileId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("CoursePlus.Shared.Models.Thumbnail", "Thumbnail")
+                        .WithMany()
+                        .HasForeignKey("ThumbnailId");
+                });
+
             modelBuilder.Entity("CoursePlus.Shared.Models.Profile", b =>
                 {
                     b.HasOne("CoursePlus.Shared.Models.CustomUser", "User")
@@ -809,13 +809,13 @@ namespace CoursePlus.Server.Data.Migrations
             modelBuilder.Entity("CoursePlus.Shared.Models.WatchHistory", b =>
                 {
                     b.HasOne("CoursePlus.Shared.Models.Episode", "Episode")
-                        .WithMany()
+                        .WithMany("WatchHistory")
                         .HasForeignKey("EpisodeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CoursePlus.Shared.Models.Profile", "Profile")
-                        .WithMany()
+                        .WithMany("WatchHistory")
                         .HasForeignKey("ProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

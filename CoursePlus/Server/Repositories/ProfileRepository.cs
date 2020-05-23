@@ -45,6 +45,23 @@ namespace CoursePlus.Server.Repositories
             }
         }
 
+        public async Task<List<Profile>> GetAllProfiles()
+        {
+            try
+            {
+                var profileList = _dbContext.Profiles
+                                               .Include(x => x.User)
+                                               .OrderBy(x => x.User.FirstName);
+
+                return await profileList.ToListAsync();
+            }
+            catch
+            {
+                throw new ApplicationException();
+            }
+        }
+
+
         public Profile GetProfile(int id)
         {
             var profile = _dbContext.Profiles
