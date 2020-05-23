@@ -236,21 +236,105 @@ namespace CoursePlus.Server.Data
                     PurchaseLink = "https://www.apress.com/gp/book/9781484236024",
                     ThumbnailUrl = "https://images.springer.com/sgw/books/medium/9781484236024.jpg",
                     ImageUrl = "https://images.springer.com/sgw/books/medium/9781484236024.jpg"
+                },
+                new Book
+                {
+                    Id = 5,
+                    Title = "Illustrated C# 7",
+                    Description = "<p> Get to work quickly with C# with a uniquely succinct and visual format used to present the C# 7.0 language. Whether you’re getting to grips with C# for the first time or working to deepen your understanding, you’ll find this book to be a clear and refreshing take on each aspect of the language.</p><p>Figures are of prime importance in this book. While teaching programming seminars,&nbsp;Daniel Solis found that he could almost watch the light bulbs going on over the students’ heads as he drew the figures on the whiteboard. In this text, he has distilled each important concept into simple but accurate illustrations. For this latest edition, Dan is joined by fellow experienced teacher and programmer,&nbsp;Cal Schrotenboer, to bring you the very latest C# language features, along with an understanding of the frameworks it most often lives in: .NET and the new .NET Core.</p><p>For something as intricate and precise as a programming language, there must be text as well as figures. But rather than long, wordy explanations, the authors use short, concise descriptions and bullet lists to make each important piece of information visually distinct and memorable.</p><p></p><p><b>What You’ll Learn</b><br></p><p></p><p></p><p></p><p></p><p></p><ul><li>Start with an overview of C# programming and how the language works under the hood<br></li><li>Put things in context with a little useful history of C# and .NET<br></li><li>Know how .NET Core fits into the picture<br></li><li>Understand how C# handles types</li><li>Benefit from clear, concise explanations of each language feature, from classes and inheritance to enumerators and iterators, and the new C# 7.0 tuples</li><li>Quickly access material via this book's visual introduction to asynchronous programming with C#</li></ul><p><b>Who This Book Is For</b></p><p>Novice to intermediate C# programmers, and more experienced programmers moving to C# from other languages</p>",
+                    Author = "Daniel Solis",
+                    Language = EnumLanguages.English,
+                    CategoryId = 28,
+                    PageCount = 799,
+                    PublishingDate = new DateTime(2018, 01, 01),
+                    PurchaseLink = "https://www.apress.com/gp/book/9781484232873",
+                    ThumbnailUrl = "https://images.springer.com/sgw/books/medium/9781484232873.jpg",
+                    ImageUrl = "https://images.springer.com/sgw/books/medium/9781484232873.jpg"
+                },
+                new Book
+                {
+                    Id = 6,
+                    Title = "Interactive C#",
+                    Description = "<p>Discover object - oriented programming with core concepts of C# in this unique tutorial. The book consists of four major sections which cover 15 core topics - nine of them are dedicated to object-oriented programming, five of them are dedicated to advanced concepts of C#, and one of them is dedicated to design patterns, with coverage of three Gang of Four design patterns with C# implementations. Finally,&nbsp;<i>Interactive C#</i>&nbsp;contains an FAQ section to cover all of these topics.</p><p>This book uniquely presents a two-way discussion&nbsp;between a teacher and students. So, with this book you will have the feel of learning C# in a classroom environment or with your private tutor. Your teacher will discuss the problems/topics and ask you questions; at the same time, counter questions are provided to clarify points where necessary.</p><p><b>What You Will Learn</b></p><ul><li>Become proficient in object-oriented programming<br></li><li>Remake yourself as a great C# programmer<br></li><li>Test your skills in C# fundamentals<br></li><li>Use Visual Studio to write, compile and execute your code</li></ul><b>Who This Book Is For</b><p>Programmers who want to understand the concepts and implementation of object-oriented programming in C#.</p>",
+                    Author = "Vaskaran Sarcar",
+                    Language = EnumLanguages.English,
+                    CategoryId = 28,
+                    PageCount = 494,
+                    PublishingDate = new DateTime(2018, 01, 01),
+                    PurchaseLink = "https://www.apress.com/gp/book/9781484233382",
+                    ThumbnailUrl = "https://images.springer.com/sgw/books/medium/9781484233382.jpg",
+                    ImageUrl = "https://images.springer.com/sgw/books/medium/9781484233382.jpg"
+                },
+                new Book
+                {
+                    Id = 7,
+                    Title = "C# Programming for Absolute Beginners",
+                    Description = "<p>Get started using the C# programming language. Based on the author’s 15 years of experience teaching beginners, the book provides you with a step-by-step introduction to the principles of programming, or rather, how to think like a programmer. The task-solution approach will get you immersed, with minimum theory and maximum action.<br><b>What You Will Learn</b></p><ul><li>Understand what programming is all about<br></li><li>Write simple, but non-trivial, programs<br></li><li>Become familiar with basic programming constructs such as statements, types, variables, conditions, and loops<br></li><li>Learn to think like a programmer and combine these programming constructs in new ways<br></li><li>Get to know C# as a modern, mainstream programming language, and Visual Studio as one of the world’s most popular programming tools</li></ul><b>Who This Book Is For</b><br>Those with very little or no experience in computer programming, who know how to use a computer, install a program, and navigate the web.",
+                    Author = "Radek Vystavel",
+                    Language = EnumLanguages.English,
+                    CategoryId = 28,
+                    PageCount = 356,
+                    PublishingDate = new DateTime(2017, 01, 01),
+                    PurchaseLink = "https://www.apress.com/gp/book/9781484233177",
+                    ThumbnailUrl = "https://images.springer.com/sgw/books/medium/9781484233177.jpg",
+                    ImageUrl = "https://images.springer.com/sgw/books/medium/9781484233177.jpg"
+                },
+                new Book
+                {
+                    Id = 8,
+                    Title = "Pro C# 7",
+                    Description = "<p>This essential classic title provides a comprehensive foundation in the C# programming language and the frameworks it lives in. Now in its 8th edition, you’ll find all the very latest C# 7.1 and .NET 4.7 features here, along with four brand new chapters on Microsoft’s lightweight, cross-platform framework, .NET Core, up to and including .NET Core 2.0. Coverage of ASP.NET Core, Entity Framework (EF) Core, and more, sits alongside the latest updates to .NET, including Windows Presentation Foundation (WPF), Windows Communication Foundation (WCF), and ASP.NET MVC.<br>Dive in and discover why <i>Pro C#</i> has been a favorite of C# developers worldwide for over 15 years. Gain a solid foundation in object-oriented development techniques, attributes and reflection, generics and collections as well as numerous advanced topics not found in other texts (such as CIL opcodes and emitting dynamic assemblies). With the help of this book you’ll have the confidence to put C# into practice and explore the .NET universe on your own terms.<br><b>What You Will Learn</b></p><ul><li>Discover the latest C# 7.1 features, from tuples to pattern matching<br></li><li>Hit the ground running with Microsoft’s lightweight, open source .NET Core platform, including ASP.NET Core MVC, ASP.NET Core web services, and Entity Framework Core<br></li><li>Find complete coverage of XAML, .NET 4.7, and Visual Studio 2017<br></li><li>Understand the philosophy behind .NET and the new, cross-platform alternative, .NET Core</li></ul>",
+                    Author = "Andrew Troelsen",
+                    Language = EnumLanguages.English,
+                    CategoryId = 28,
+                    PageCount = 1372,
+                    PublishingDate = new DateTime(2017, 01, 01),
+                    PurchaseLink = "https://www.apress.com/gp/book/9781484230176",
+                    ThumbnailUrl = "https://images.springer.com/sgw/books/medium/9781484230176.jpg",
+                    ImageUrl = "https://images.springer.com/sgw/books/medium/9781484230176.jpg"
+                },
+                new Book
+                {
+                    Id = 9,
+                    Title = "Beginning XML with C# 7",
+                    Description = "<p>Master the basics of XML as well as the namespaces and objects you need to know in order to work efficiently with XML.You’ll learn extensive support for XML in everything from data access to configuration, from raw parsing to code documentation.You will see clear, practical examples that illustrate best practices in implementing XML APIs and services as part of your C#-based Windows 10 applications.<br><i>Beginning XML with C# 7 </i>is completely revised to cover the XML features of .NET Framework 4.7 using C# 7 programming language. In this update, you’ll discover the tight integration of XML with ADO.NET and LINQ as well as additional .NET support for today’s RESTful web services and Web API.<br>Written by a Microsoft Most Valuable Professional and developer, this book demystifies everything to do with XML and C# 7.<br><b>What You Will Learn:</b></p><ul><li>Discover how XML works with the .NET Framework<br></li><li>Read, write, access, validate, and manipulate XML documents<br></li><li>Transform XML with XSLT<br></li><li>Use XML serialization and web services<br></li><li>Combine XML in ADO.NET and SQL Server<br></li><li>Create services using Windows Communication Foundation<br></li><li>Work with LINQ<br></li><li>Use XML with Web API and more<br></li></ul><b>Who This Book Is For :</b>Those with experience in C# and .NET new to the nuances of using XML.&nbsp; Some XML experience is helpful.",
+                    Author = "Bipin Joshi",
+                    Language = EnumLanguages.English,
+                    CategoryId = 28,
+                    PageCount = 453,
+                    PublishingDate = new DateTime(2017, 01, 01),
+                    PurchaseLink = "https://www.apress.com/gp/book/9781484231043",
+                    ThumbnailUrl = "https://images.springer.com/sgw/books/medium/9781484231043.jpg",
+                    ImageUrl = "https://images.springer.com/sgw/books/medium/9781484231043.jpg"
+                },
+                new Book
+                {
+                    Id = 10,
+                    Title = "Selenium WebDriver Recipes in C#",
+                    Description = "<p>Solve your Selenium WebDriver problems with this quick guide to automated testing of web applications with Selenium WebDriver in C#. <i>Selenium WebDriver Recipes in C#, Second Edition </i>contains hundreds of solutions to real-world problems, with clear explanations and ready - to - run Selenium test scripts that you can use in your own projects.</p> <p>You'll learn:</p> <ul> <li>How to locate web elements and test functions for hyperlinks, buttons, TextFields and TextAreas, radio buttons, CheckBoxes, and more</li> <li>How to use Selenium WebDriver for select lists, navigation, assertions, frames, file upload and pop-up dialogs</li> <li>How to debug test scripts and test data</li> <li>How to manage and deal with browser profiles and capabilities&lt;</li> <li>How to manage tests for advanced user interactions and experiences(UX)</li> <li>How to work with and manage tests and testing using Selenium Remote Control and Selenium Server</li></ul><br>AudienceThis book is for experienced.NET and C# Windows application programmers/developers.",
+                    Author = "Zhimin Zhan",
+                    Language = EnumLanguages.English,
+                    CategoryId = 28,
+                    PageCount = 164,
+                    PublishingDate = new DateTime(2015, 01, 01),
+                    PurchaseLink = "https://www.apress.com/gp/book/9781484217412",
+                    ThumbnailUrl = "https://images.springer.com/sgw/books/medium/9781484217412.jpg",
+                    ImageUrl = "https://images.springer.com/sgw/books/medium/9781484217412.jpg"
                 }
-                //new Book
-                //{
-                //    Id = 5,
-                //    Title = "",
-                //    Description = "",
-                //    Author = "",
-                //    Language = EnumLanguages.English,
-                //    CategoryId = 28,
-                //    PageCount = 0,
-                //    PublishingDate = new DateTime(2019, 01, 01),
-                //    PurchaseLink = "",
-                //    ThumbnailUrl = "",
-                //    ImageUrl = ""
-                //}
+            //new Book
+            //{
+            //    Id = 5,
+            //    Title = "",
+            //    Description = "",
+            //    Author = "",
+            //    Language = EnumLanguages.English,
+            //    CategoryId = 28,
+            //    PageCount = 0,
+            //    PublishingDate = new DateTime(2019, 01, 01),
+            //    PurchaseLink = "",
+            //    ThumbnailUrl = "",
+            //    ImageUrl = ""
+            //}
             );
         }
 
