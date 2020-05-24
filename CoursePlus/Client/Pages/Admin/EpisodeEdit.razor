@@ -8,8 +8,8 @@
         </div>
 
         <div class="form-group">
-            <label for="year">Video Url</label>
-            <input @bind="@VideoUrl" type="text" class="form-control" id="url" />
+            <label for="year">Video ID</label>
+            <input @bind="@VideoId" type="text" class="form-control" id="url" />
         </div>
 
         <div class="form-group">
@@ -31,7 +31,7 @@
     [Parameter]
     public string Title { get; set; }
     [Parameter]
-    public string VideoUrl { get; set; }
+    public string VideoId { get; set; }
     [Parameter]
     public int Duration { get; set; }
     [Parameter]
@@ -41,7 +41,7 @@
     {
         ModalDialogParameters returnParameters = new ModalDialogParameters();
         returnParameters.Add("Title", Title);
-        returnParameters.Add("VideoUrl", VideoUrl);
+        returnParameters.Add("VideoId", VideoId);
         returnParameters.Add("Duration", Duration);
         returnParameters.Add("Trailer", Trailer);
         Modal.Close(true, returnParameters);

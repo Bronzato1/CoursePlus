@@ -54,7 +54,7 @@ namespace CoursePlus.Server.Repositories
             if (foundEpisode != null)
             {
                 foundEpisode.Title = episode.Title;
-                foundEpisode.VideoUrl = episode.VideoUrl;
+                foundEpisode.VideoId = episode.VideoId;
                 foundEpisode.Duration = episode.Duration;
                 foundEpisode.Trailer = episode.Trailer;
 

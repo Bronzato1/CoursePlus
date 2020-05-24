@@ -121,32 +121,44 @@ namespace CoursePlus.Server.Controllers
         [HttpPost("createFakeProfiles")]
         public async Task<IActionResult> CreateFakeProfiles([FromBody] List<FakeProfileModel> users)
         {
-            var cptrSucceed = 0;
-            var cptrFailed = 0;
-
-            foreach (var user in users)
+            try
             {
-                var avatarId = await _avatarRepository.CreateAvatarFromUrl(user.PhotoUrl);
-                
-                var profile = new Profile
+                var cptrSucceed = 0;
+                var cptrFailed = 0;
+
+                foreach (var user in users)
                 {
-                    User = new CustomUser
+                    var email = user.FirstName + "." + user.LastName + "@ululu.com";
+                    var found = _profileRepository.GetProfileByUserName(email) != null;
+                    if (found) continue;
+
+                    var avatarId = await _avatarRepository.CreateAvatarFromUrl(user.PhotoUrl);
+
+                    var profile = new Profile
                     {
-                        FirstName = user.FirstName,
-                        LastName = user.LastName,
-                        Email = user.FirstName + "." + user.LastName + "@ululu.com",
-                        AvatarId = avatarId
-                    }
-                };
-                var createdProfile = await _profileRepository.AddProfile(profile);
+                        User = new CustomUser
+                        {
+                            FirstName = user.FirstName,
+                            LastName = user.LastName,
+                            Email = email,
+                            AvatarId = avatarId
+                        }
+                    };
+                    var createdProfile = await _profileRepository.AddProfile(profile);
 
-                if (createdProfile != null)
-                    cptrSucceed++;
-                else
-                    cptrFailed++;
+                    if (createdProfile != null)
+                        cptrSucceed++;
+                    else
+                        cptrFailed++;
+                }
+
+                return Ok(new CreateFakeProfilesResult { CptrSucceed = cptrSucceed, CptrFailed = cptrFailed });
             }
-
-            return Ok(new CreateFakeProfilesResult { CptrSucceed = cptrSucceed, CptrFailed = cptrFailed });
+            catch
+            {
+                throw new ApplicationException();
+            }
+            
         }
     }
 }

@@ -9,6 +9,8 @@ using System.Net.Http;
 using CoursePlus.Shared.Policies;
 using Blazor.ModalDialog;
 using CoursePlus.Shared.Infrastructure;
+using Syncfusion.Blazor;
+using CoursePlus.Shared.Utilities;
 
 namespace CoursePlus.Client
 {
@@ -16,6 +18,7 @@ namespace CoursePlus.Client
     {
         public static async Task Main(string[] args)
         {
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(Secret.SyncfusionLicenceKey);
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.Services.AddBlazoredLocalStorage();
             builder.Services.AddOptions();
@@ -35,6 +38,7 @@ namespace CoursePlus.Client
             builder.Services.AddScoped<UserValidator>();
             builder.Services.AddSingleton(new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             builder.Services.AddModalDialog();
+            builder.Services.AddSyncfusionBlazor();
             builder.RootComponents.Add<App>("app");
             await builder.Build().RunAsync();
         }

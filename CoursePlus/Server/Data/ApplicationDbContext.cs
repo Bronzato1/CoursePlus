@@ -44,7 +44,7 @@ namespace CoursePlus.Server.Data
 
             builder.Entity<Enrollment>().HasKey(c => new { c.PlaylistId, c.ProfileId });
             builder.Entity<WatchHistory>().HasKey(c => new { c.EpisodeId, c.ProfileId });
-            builder.Entity<Playlist>().HasOne(x => x.Profile).WithMany().OnDelete(DeleteBehavior.NoAction);
+            builder.Entity<Playlist>().HasOne(x => x.Owner).WithMany().OnDelete(DeleteBehavior.NoAction);
         }
 
         public override int SaveChanges()
@@ -99,66 +99,66 @@ namespace CoursePlus.Server.Data
         {
             modelBuilder.Entity<Category>().HasData
             (
-                new Category
-                {
-                    Id = 1,
-                    Name = "Film & Animation"
-                },
-                new Category
-                {
-                    Id = 2,
-                    Name = "Autos & Vehicles"
-                },
-                new Category
-                {
-                    Id = 10,
-                    Name = "Music"
-                },
-                new Category
-                {
-                    Id = 15,
-                    Name = "Pets & Animals"
-                },
-                new Category
-                {
-                    Id = 17,
-                    Name = "Sports"
-                },
+                //new Category
+                //{
+                //    Id = 1,
+                //    Name = "Film & Animation"
+                //},
+                //new Category
+                //{
+                //    Id = 2,
+                //    Name = "Autos & Vehicles"
+                //},
+                //new Category
+                //{
+                //    Id = 10,
+                //    Name = "Music"
+                //},
+                //new Category
+                //{
+                //    Id = 15,
+                //    Name = "Pets & Animals"
+                //},
+                //new Category
+                //{
+                //    Id = 17,
+                //    Name = "Sports"
+                //},
                 new Category
                 {
                     Id = 19,
                     Name = "Travel & Events"
                 },
-                new Category
-                {
-                    Id = 20,
-                    Name = "Gaming"
-                },
-                new Category
-                {
-                    Id = 22,
-                    Name = "People & Blogs"
-                },
-                new Category
-                {
-                    Id = 23,
-                    Name = "Comedy"
-                },
-                new Category
-                {
-                    Id = 24,
-                    Name = "Entertainment"
-                },
-                new Category
-                {
-                    Id = 25,
-                    Name = "News & Politics"
-                },
-                new Category
-                {
-                    Id = 26,
-                    Name = "Howto & Style"
-                },
+                //new Category
+                //{
+                //    Id = 20,
+                //    Name = "Gaming"
+                //},
+                //new Category
+                //{
+                //    Id = 22,
+                //    Name = "People & Blogs"
+                //},
+                //new Category
+                //{
+                //    Id = 23,
+                //    Name = "Comedy"
+                //},
+                //new Category
+                //{
+                //    Id = 24,
+                //    Name = "Entertainment"
+                //},
+                //new Category
+                //{
+                //    Id = 25,
+                //    Name = "News & Politics"
+                //},
+                //new Category
+                //{
+                //    Id = 26,
+                //    Name = "Howto & Style"
+                //},
                 new Category
                 {
                     Id = 27,
@@ -168,12 +168,12 @@ namespace CoursePlus.Server.Data
                 {
                     Id = 28,
                     Name = "Science & Technology"
-                },
-                new Category
-                {
-                    Id = 29,
-                    Name = "Nonprofits & Activism"
                 }
+                //new Category
+                //{
+                //    Id = 29,
+                //    Name = "Nonprofits & Activism"
+                //}
             );
         }
 

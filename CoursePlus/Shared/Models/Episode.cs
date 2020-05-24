@@ -7,7 +7,7 @@ namespace CoursePlus.Shared.Models
     public class Episode : IAuditable
     {
         public int Id { get; set; }
-        public string VideoUrl { get; set; }
+        public string VideoId { get; set; }
         public string Title { get; set; }
         public int Duration { get; set; }
         public string Trailer { get; set; }

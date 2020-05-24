@@ -32,9 +32,9 @@ namespace CoursePlus.Shared.Models
         public virtual Image Image { get; set; }
 
         [Required(ErrorMessage = "Profile is required.")]
-        public int? ProfileId { get; set; }
+        public int? OwnerId { get; set; }
         //[ForeignKey("ProfileId")]
-        public Profile Profile { get; set; }
+        public Profile Owner { get; set; }
 
         public bool Featured { get; set; }
         public bool Popular { get; set; }

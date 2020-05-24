@@ -298,63 +298,8 @@ namespace CoursePlus.Server.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            Name = "Film & Animation"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Autos & Vehicles"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Name = "Music"
-                        },
-                        new
-                        {
-                            Id = 15,
-                            Name = "Pets & Animals"
-                        },
-                        new
-                        {
-                            Id = 17,
-                            Name = "Sports"
-                        },
-                        new
-                        {
                             Id = 19,
                             Name = "Travel & Events"
-                        },
-                        new
-                        {
-                            Id = 20,
-                            Name = "Gaming"
-                        },
-                        new
-                        {
-                            Id = 22,
-                            Name = "People & Blogs"
-                        },
-                        new
-                        {
-                            Id = 23,
-                            Name = "Comedy"
-                        },
-                        new
-                        {
-                            Id = 24,
-                            Name = "Entertainment"
-                        },
-                        new
-                        {
-                            Id = 25,
-                            Name = "News & Politics"
-                        },
-                        new
-                        {
-                            Id = 26,
-                            Name = "Howto & Style"
                         },
                         new
                         {
@@ -365,11 +310,6 @@ namespace CoursePlus.Server.Data.Migrations
                         {
                             Id = 28,
                             Name = "Science & Technology"
-                        },
-                        new
-                        {
-                            Id = 29,
-                            Name = "Nonprofits & Activism"
                         });
                 });
 
@@ -527,7 +467,7 @@ namespace CoursePlus.Server.Data.Migrations
                     b.Property<string>("UpdatedUser")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("VideoUrl")
+                    b.Property<string>("VideoId")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -585,14 +525,14 @@ namespace CoursePlus.Server.Data.Migrations
                     b.Property<int>("Language")
                         .HasColumnType("int");
 
+                    b.Property<int?>("OwnerId")
+                        .IsRequired()
+                        .HasColumnType("int");
+
                     b.Property<bool>("Popular")
                         .HasColumnType("bit");
 
                     b.Property<int>("Price")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ProfileId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("SubTitle")
@@ -618,7 +558,7 @@ namespace CoursePlus.Server.Data.Migrations
 
                     b.HasIndex("ImageId");
 
-                    b.HasIndex("ProfileId");
+                    b.HasIndex("OwnerId");
 
                     b.HasIndex("ThumbnailId");
 
@@ -922,9 +862,9 @@ namespace CoursePlus.Server.Data.Migrations
                         .WithMany()
                         .HasForeignKey("ImageId");
 
-                    b.HasOne("CoursePlus.Shared.Models.Profile", "Profile")
+                    b.HasOne("CoursePlus.Shared.Models.Profile", "Owner")
                         .WithMany()
-                        .HasForeignKey("ProfileId")
+                        .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 

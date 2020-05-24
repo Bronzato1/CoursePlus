@@ -84,6 +84,17 @@ namespace CoursePlus.Server.Repositories
             return profile;
         }
 
+        public Profile GetProfileByUserName(string userName)
+        {
+            var profile = _dbContext.Profiles
+                                       .Include(x => x.User)
+                                       .Include(x => x.User.Avatar)
+                                       .Where(x => x.User.UserName == userName)
+                                       .FirstOrDefault();
+
+            return profile;
+        }
+
         public async Task<Profile> AddProfile(Profile profile)
         {
             try

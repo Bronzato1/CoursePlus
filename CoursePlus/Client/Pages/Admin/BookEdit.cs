@@ -18,24 +18,16 @@ namespace CoursePlus.Client.Pages.Admin
 {
     public class BookEditBase : ComponentBase
     {
-        [Parameter]
-        public int Id { get; set; }
-        [Inject]
-        public NavigationManager NavigationManager { get; set; }
-        [Inject]
-        public IBookService BookService { get; set; }
-        [Inject]
-        public ICategoryService CategoryService { get; set; }
-        [Inject]
-        public HttpClient Client { get; set; }
-        [Inject]
-        public IModalDialogService ModalDialog { get; set; }
+        [Parameter] public int Id { get; set; }
+        [Inject] public NavigationManager NavigationManager { get; set; }
+        [Inject] public IBookService BookService { get; set; }
+        [Inject] public ICategoryService CategoryService { get; set; }
+        [Inject] public HttpClient Client { get; set; }
+        [Inject] public IModalDialogService ModalDialog { get; set; }
 
         public EditForm FormContext { get; set; }
-
         public Book OneBook { get; set; } = new Book();
 
-        //used to store state of screen
         protected string Message = string.Empty;
         protected string StatusClass = string.Empty;
 
@@ -46,7 +38,6 @@ namespace CoursePlus.Client.Pages.Admin
             //Console.WriteLine(Id);
             base.OnParametersSet();
         }
-
         protected override async Task OnInitializedAsync()
         {
             Categories = (await CategoryService.GetCategories()).ToList();
@@ -60,7 +51,6 @@ namespace CoursePlus.Client.Pages.Admin
                 OneBook = await BookService.GetBook(Id);
             }
         }
-
         protected async Task HandleValidSubmit()
         {
             if (Id == 0)
@@ -90,13 +80,6 @@ namespace CoursePlus.Client.Pages.Admin
                 NavigationManager.NavigateTo("/admin/books");
             }
         }
-
-        protected void HandleInvalidSubmit()
-        {
-            StatusClass = "uk-text-warning";
-            Message = "Validation errors";
-        }
-
         protected async Task DeleteBook()
         {
             MessageBoxDialogResult result = await ModalDialog.ShowMessageBoxAsync("Confirm Delete", "Are you sure you want to delete the book ?", MessageBoxButtons.YesNo, MessageBoxDefaultButton.Button2);
@@ -109,9 +92,8 @@ namespace CoursePlus.Client.Pages.Admin
                 StateHasChanged();
                 await Task.Delay(1000);
                 NavigationManager.NavigateTo("/admin/books");
-            }            
+            }
         }
-
         protected async Task HandleSelection(IFileListEntry[] files)
         {
             var file = files.FirstOrDefault();
@@ -135,7 +117,11 @@ namespace CoursePlus.Client.Pages.Admin
                 OneBook.Image.Data = ms.ToArray();
             }
         }
-
+        protected void HandleInvalidSubmit()
+        {
+            StatusClass = "uk-text-warning";
+            Message = "Validation errors";
+        }
         protected void NavigateToList()
         {
             NavigationManager.NavigateTo("/admin/books");

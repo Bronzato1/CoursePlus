@@ -13,15 +13,17 @@ namespace CoursePlus.Server.Repositories
 
         Task<List<Profile>> GetAllProfiles();
 
-        public Profile GetProfile(int id);
+        Profile GetProfile(int id);
 
-        public Profile GetProfileByUserId(string profileId);
+        Profile GetProfileByUserId(string profileId);
 
-        public Task<Profile> AddProfile(Profile profile);
+        Profile GetProfileByUserName(string userName);
 
-        public Profile UpdateProfile(Profile profile);
+        Task<Profile> AddProfile(Profile profile);
 
-        public void DeleteProfile(int id);
+        Profile UpdateProfile(Profile profile);
+
+        void DeleteProfile(int id);
 
         Task<FakeProfileModel[]> GetFakeProfiles();
     }

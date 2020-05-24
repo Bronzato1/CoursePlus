@@ -55,7 +55,7 @@ namespace CoursePlus.Client.Pages
 
         protected async Task LoadYouTubeVideo(Episode OneEpisode)
         {
-            await JSRuntime.InvokeVoidAsync("Player.loadYouTubeVideo", OneEpisode.VideoUrl);
+            await JSRuntime.InvokeVoidAsync("Player.loadYouTubeVideo", OneEpisode.VideoId);
         }
 
         protected async Task GoBack()
