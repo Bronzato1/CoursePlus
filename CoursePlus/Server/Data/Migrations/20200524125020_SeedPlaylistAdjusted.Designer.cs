@@ -4,14 +4,16 @@ using CoursePlus.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CoursePlus.Server.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200524125020_SeedPlaylistAdjusted")]
+    partial class SeedPlaylistAdjusted
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -589,7 +591,7 @@ namespace CoursePlus.Server.Data.Migrations
                         {
                             Id = 1,
                             CategoryId = 28,
-                            CreatedTime = new DateTime(2020, 5, 24, 14, 56, 47, 196, DateTimeKind.Local).AddTicks(1757),
+                            CreatedTime = new DateTime(2020, 5, 24, 14, 50, 18, 871, DateTimeKind.Local).AddTicks(2309),
                             CreatedUser = "azur.consult@gmail.com",
                             Description = "My description",
                             Difficulty = 0,
@@ -600,7 +602,7 @@ namespace CoursePlus.Server.Data.Migrations
                             Price = 0,
                             SubTitle = "My subtitle",
                             Title = "My title",
-                            UpdatedTime = new DateTime(2020, 5, 24, 14, 56, 47, 196, DateTimeKind.Local).AddTicks(3068),
+                            UpdatedTime = new DateTime(2020, 5, 24, 14, 50, 18, 871, DateTimeKind.Local).AddTicks(3130),
                             UpdatedUser = "azur.consult@gmail.com"
                         });
                 });
@@ -643,11 +645,11 @@ namespace CoursePlus.Server.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedTime = new DateTime(2020, 5, 24, 14, 56, 47, 187, DateTimeKind.Local).AddTicks(6545),
+                            CreatedTime = new DateTime(2020, 5, 24, 14, 50, 18, 863, DateTimeKind.Local).AddTicks(6013),
                             CreatedUser = "azur.consult@gmail.com",
                             Enrolled = 0,
                             Joined = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            UpdatedTime = new DateTime(2020, 5, 24, 14, 56, 47, 193, DateTimeKind.Local).AddTicks(8300),
+                            UpdatedTime = new DateTime(2020, 5, 24, 14, 50, 18, 869, DateTimeKind.Local).AddTicks(3553),
                             UpdatedUser = "azur.consult@gmail.com",
                             UserId = "e29790bd-b712-4594-8b3f-c13cbc2943ac"
                         });

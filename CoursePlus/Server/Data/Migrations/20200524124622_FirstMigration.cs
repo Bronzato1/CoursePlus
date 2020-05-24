@@ -450,6 +450,11 @@ namespace CoursePlus.Server.Data.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "AvatarId", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "e29790bd-b712-4594-8b3f-c13cbc2943ac", 0, null, "803efe9a-0e73-4bdc-b7cb-bc6a61438662", "azur.consult@gmail.com", false, "John", "Doe", true, null, "AZUR.CONSULT@GMAIL.COM", "AZUR.CONSULT@GMAIL.COM", "AQAAAAEAACcQAAAAEF1U8tBWJdEBcTyOsj0imq1JhvieXmbNRHMr8TKmjWlYVy+xc80JWOXEfrS/tLdNSw==", null, false, "IDTUR5JQA5ZLV2MDXIB44ZBBPPJKUWMS", false, "azur.consult@gmail.com" });
+
+            migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
@@ -457,6 +462,15 @@ namespace CoursePlus.Server.Data.Migrations
                     { 19, "Travel & Events" },
                     { 27, "Education" },
                     { 28, "Science & Technology" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "UserId", "RoleId" },
+                values: new object[,]
+                {
+                    { "e29790bd-b712-4594-8b3f-c13cbc2943ac", "0a3d93c9-e5d8-4ed5-b79d-d1e6a3768228" },
+                    { "e29790bd-b712-4594-8b3f-c13cbc2943ac", "1002a5ed-a8e4-4c5c-9587-b8a8e1aa320b" }
                 });
 
             migrationBuilder.InsertData(
@@ -475,6 +489,11 @@ namespace CoursePlus.Server.Data.Migrations
                     { 9, "Bipin Joshi", 28, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "<p>Master the basics of XML as well as the namespaces and objects you need to know in order to work efficiently with XML.You’ll learn extensive support for XML in everything from data access to configuration, from raw parsing to code documentation.You will see clear, practical examples that illustrate best practices in implementing XML APIs and services as part of your C#-based Windows 10 applications.<br><i>Beginning XML with C# 7 </i>is completely revised to cover the XML features of .NET Framework 4.7 using C# 7 programming language. In this update, you’ll discover the tight integration of XML with ADO.NET and LINQ as well as additional .NET support for today’s RESTful web services and Web API.<br>Written by a Microsoft Most Valuable Professional and developer, this book demystifies everything to do with XML and C# 7.<br><b>What You Will Learn:</b></p><ul><li>Discover how XML works with the .NET Framework<br></li><li>Read, write, access, validate, and manipulate XML documents<br></li><li>Transform XML with XSLT<br></li><li>Use XML serialization and web services<br></li><li>Combine XML in ADO.NET and SQL Server<br></li><li>Create services using Windows Communication Foundation<br></li><li>Work with LINQ<br></li><li>Use XML with Web API and more<br></li></ul><b>Who This Book Is For :</b>Those with experience in C# and .NET new to the nuances of using XML.&nbsp; Some XML experience is helpful.", false, null, "https://images.springer.com/sgw/books/medium/9781484231043.jpg", 0, 453, false, new DateTime(2017, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "https://www.apress.com/gp/book/9781484231043", null, "https://images.springer.com/sgw/books/medium/9781484231043.jpg", "Beginning XML with C# 7", null, null },
                     { 10, "Zhimin Zhan", 28, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "<p>Solve your Selenium WebDriver problems with this quick guide to automated testing of web applications with Selenium WebDriver in C#. <i>Selenium WebDriver Recipes in C#, Second Edition </i>contains hundreds of solutions to real-world problems, with clear explanations and ready - to - run Selenium test scripts that you can use in your own projects.</p> <p>You'll learn:</p> <ul> <li>How to locate web elements and test functions for hyperlinks, buttons, TextFields and TextAreas, radio buttons, CheckBoxes, and more</li> <li>How to use Selenium WebDriver for select lists, navigation, assertions, frames, file upload and pop-up dialogs</li> <li>How to debug test scripts and test data</li> <li>How to manage and deal with browser profiles and capabilities&lt;</li> <li>How to manage tests for advanced user interactions and experiences(UX)</li> <li>How to work with and manage tests and testing using Selenium Remote Control and Selenium Server</li></ul><br>AudienceThis book is for experienced.NET and C# Windows application programmers/developers.", false, null, "https://images.springer.com/sgw/books/medium/9781484217412.jpg", 0, 164, false, new DateTime(2015, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "https://www.apress.com/gp/book/9781484217412", null, "https://images.springer.com/sgw/books/medium/9781484217412.jpg", "Selenium WebDriver Recipes in C#", null, null }
                 });
+
+            migrationBuilder.InsertData(
+                table: "Profiles",
+                columns: new[] { "Id", "CreatedTime", "CreatedUser", "Enrolled", "Joined", "UpdatedTime", "UpdatedUser", "UserId" },
+                values: new object[] { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, "e29790bd-b712-4594-8b3f-c13cbc2943ac" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

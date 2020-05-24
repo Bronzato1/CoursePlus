@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Syncfusion.Blazor.Notifications;
 using System;
 using System.Linq;
 using System.Security.Claims;
@@ -85,16 +86,28 @@ namespace CoursePlus.Server.Data
 
     public static class DbInitializer
     {
-        public static void Seed(this ModelBuilder modelBuilder)
+        public  static void Initialize(ApplicationDbContext context)
+        {
+            // Appelé à chaque démarrage de l'application
+
+            context.Database.EnsureCreated(); // <-- Provoque l'appel de la méthode Seed
+
+            if (context.ChangeTracker.HasChanges())
+                context.SaveChanges();
+        }
+        public  static void Seed(this ModelBuilder modelBuilder)
         {
             // Appelé à chaque démarrage de l'application à travers la méthode Initialize
             // Tout changement implique l'ajout d'une étape de migration
 
             SeedRoles(modelBuilder);
+            SeedUsers(modelBuilder);
+            SeedUserRoles(modelBuilder);
             SeedCategories(modelBuilder);
             SeedBooks(modelBuilder);
+            SeedProfiles(modelBuilder);
+            SeedPlaylists(modelBuilder);
         }
-
         private static void SeedCategories(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Category>().HasData
@@ -176,7 +189,6 @@ namespace CoursePlus.Server.Data
                 //}
             );
         }
-
         private static void SeedBooks(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Book>().HasData
@@ -337,22 +349,76 @@ namespace CoursePlus.Server.Data
             //}
             );
         }
-
+        private static void SeedUsers(this ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<CustomUser>().HasData
+            (
+                new CustomUser
+                {
+                    Id = "e29790bd-b712-4594-8b3f-c13cbc2943ac",
+                    UserName = Secret.AdminUserName.ToLower(),
+                    NormalizedUserName = Secret.AdminUserName.ToUpper(),
+                    Email = Secret.AdminEmail.ToLower(),
+                    NormalizedEmail = Secret.AdminEmail.ToUpper(),
+                    PasswordHash = Secret.AdminPasswordHash,
+                    SecurityStamp = Secret.AdminSecurityStamp,
+                    ConcurrencyStamp = Secret.AdminConcurrencyStamp,
+                    LockoutEnabled = true,
+                    FirstName = Secret.AdminFirstName,
+                    LastName = Secret.AdminLastName,
+                    AvatarId = null
+                }
+            ) ;
+        }
         private static void SeedRoles(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole { Name = "User", NormalizedName = "USER", Id = "0a3d93c9-e5d8-4ed5-b79d-d1e6a3768228", ConcurrencyStamp = "7ff46a67-2016-40cb-ab9d-3cbe2594018e" });
             modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole { Name = "Admin", NormalizedName = "ADMIN", Id = "1002a5ed-a8e4-4c5c-9587-b8a8e1aa320b", ConcurrencyStamp = "9d0ed9a1-83a4-44b8-8de6-25e3d82dd1e9" });
         }
-
-        public static void Initialize(ApplicationDbContext context)
+        private static void SeedUserRoles(this ModelBuilder modelBuilder)
         {
-            // Appelé à chaque démarrage de l'application
-
-            context.Database.EnsureCreated(); // <-- Provoque l'appel de la méthode Seed
-
-            if (context.ChangeTracker.HasChanges())
-                context.SaveChanges();
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string> {UserId = "e29790bd-b712-4594-8b3f-c13cbc2943ac", RoleId = "0a3d93c9-e5d8-4ed5-b79d-d1e6a3768228" });
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string> { UserId = "e29790bd-b712-4594-8b3f-c13cbc2943ac", RoleId = "1002a5ed-a8e4-4c5c-9587-b8a8e1aa320b" });
         }
+        private static void SeedProfiles(this ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Profile>().HasData
+            (
+                new Profile
+                {
+                    Id = 1,
+                    UserId = "e29790bd-b712-4594-8b3f-c13cbc2943ac",
+                    CreatedTime = DateTime.Now,
+                    UpdatedTime = DateTime.Now,
+                    CreatedUser = "azur.consult@gmail.com",
+                    UpdatedUser = "azur.consult@gmail.com"
+                }
+            );
+        }
+        private static void SeedPlaylists(this ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Playlist>().HasData
+            (
+                new Playlist
+                {
+                    Id = 1,
+                    Title = "My title",
+                    SubTitle = "My subtitle",
+                    Description = "My description",
+                    CategoryId = 28,
+                    Difficulty = EnumDifficulty.Beginner,
+                    Language = EnumLanguages.English,
+                    OwnerId = 1,
+                    Featured = false,
+                    Popular = false,
+                    CreatedTime = DateTime.Now,
+                    UpdatedTime = DateTime.Now,
+                    CreatedUser = "azur.consult@gmail.com",
+                    UpdatedUser = "azur.consult@gmail.com"
+                }
+            );
+        }
+        
 
     }
 }

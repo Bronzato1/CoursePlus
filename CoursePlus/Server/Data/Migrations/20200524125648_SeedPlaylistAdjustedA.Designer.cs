@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoursePlus.Server.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200524092048_FirstMigration")]
-    partial class FirstMigration
+    [Migration("20200524125648_SeedPlaylistAdjustedA")]
+    partial class SeedPlaylistAdjustedA
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -421,6 +421,26 @@ namespace CoursePlus.Server.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "e29790bd-b712-4594-8b3f-c13cbc2943ac",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "803efe9a-0e73-4bdc-b7cb-bc6a61438662",
+                            Email = "azur.consult@gmail.com",
+                            EmailConfirmed = false,
+                            FirstName = "John",
+                            LastName = "Doe",
+                            LockoutEnabled = true,
+                            NormalizedEmail = "AZUR.CONSULT@GMAIL.COM",
+                            NormalizedUserName = "AZUR.CONSULT@GMAIL.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEF1U8tBWJdEBcTyOsj0imq1JhvieXmbNRHMr8TKmjWlYVy+xc80JWOXEfrS/tLdNSw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "IDTUR5JQA5ZLV2MDXIB44ZBBPPJKUWMS",
+                            TwoFactorEnabled = false,
+                            UserName = "azur.consult@gmail.com"
+                        });
                 });
 
             modelBuilder.Entity("CoursePlus.Shared.Models.Enrollment", b =>
@@ -565,6 +585,26 @@ namespace CoursePlus.Server.Data.Migrations
                     b.HasIndex("ThumbnailId");
 
                     b.ToTable("Playlists");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CategoryId = 28,
+                            CreatedTime = new DateTime(2020, 5, 24, 14, 56, 47, 196, DateTimeKind.Local).AddTicks(1757),
+                            CreatedUser = "azur.consult@gmail.com",
+                            Description = "My description",
+                            Difficulty = 0,
+                            Featured = false,
+                            Language = 0,
+                            OwnerId = 1,
+                            Popular = false,
+                            Price = 0,
+                            SubTitle = "My subtitle",
+                            Title = "My title",
+                            UpdatedTime = new DateTime(2020, 5, 24, 14, 56, 47, 196, DateTimeKind.Local).AddTicks(3068),
+                            UpdatedUser = "azur.consult@gmail.com"
+                        });
                 });
 
             modelBuilder.Entity("CoursePlus.Shared.Models.Profile", b =>
@@ -600,6 +640,19 @@ namespace CoursePlus.Server.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Profiles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedTime = new DateTime(2020, 5, 24, 14, 56, 47, 187, DateTimeKind.Local).AddTicks(6545),
+                            CreatedUser = "azur.consult@gmail.com",
+                            Enrolled = 0,
+                            Joined = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedTime = new DateTime(2020, 5, 24, 14, 56, 47, 193, DateTimeKind.Local).AddTicks(8300),
+                            UpdatedUser = "azur.consult@gmail.com",
+                            UserId = "e29790bd-b712-4594-8b3f-c13cbc2943ac"
+                        });
                 });
 
             modelBuilder.Entity("CoursePlus.Shared.Models.Thumbnail", b =>
@@ -772,6 +825,18 @@ namespace CoursePlus.Server.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "e29790bd-b712-4594-8b3f-c13cbc2943ac",
+                            RoleId = "0a3d93c9-e5d8-4ed5-b79d-d1e6a3768228"
+                        },
+                        new
+                        {
+                            UserId = "e29790bd-b712-4594-8b3f-c13cbc2943ac",
+                            RoleId = "1002a5ed-a8e4-4c5c-9587-b8a8e1aa320b"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

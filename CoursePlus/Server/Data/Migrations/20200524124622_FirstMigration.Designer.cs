@@ -4,14 +4,16 @@ using CoursePlus.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CoursePlus.Server.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200524124622_FirstMigration")]
+    partial class FirstMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -583,26 +585,6 @@ namespace CoursePlus.Server.Data.Migrations
                     b.HasIndex("ThumbnailId");
 
                     b.ToTable("Playlists");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CategoryId = 28,
-                            CreatedTime = new DateTime(2020, 5, 24, 14, 56, 47, 196, DateTimeKind.Local).AddTicks(1757),
-                            CreatedUser = "azur.consult@gmail.com",
-                            Description = "My description",
-                            Difficulty = 0,
-                            Featured = false,
-                            Language = 0,
-                            OwnerId = 1,
-                            Popular = false,
-                            Price = 0,
-                            SubTitle = "My subtitle",
-                            Title = "My title",
-                            UpdatedTime = new DateTime(2020, 5, 24, 14, 56, 47, 196, DateTimeKind.Local).AddTicks(3068),
-                            UpdatedUser = "azur.consult@gmail.com"
-                        });
                 });
 
             modelBuilder.Entity("CoursePlus.Shared.Models.Profile", b =>
@@ -643,12 +625,9 @@ namespace CoursePlus.Server.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedTime = new DateTime(2020, 5, 24, 14, 56, 47, 187, DateTimeKind.Local).AddTicks(6545),
-                            CreatedUser = "azur.consult@gmail.com",
+                            CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Enrolled = 0,
                             Joined = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            UpdatedTime = new DateTime(2020, 5, 24, 14, 56, 47, 193, DateTimeKind.Local).AddTicks(8300),
-                            UpdatedUser = "azur.consult@gmail.com",
                             UserId = "e29790bd-b712-4594-8b3f-c13cbc2943ac"
                         });
                 });
