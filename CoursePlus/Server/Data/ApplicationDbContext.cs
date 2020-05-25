@@ -36,6 +36,7 @@ namespace CoursePlus.Server.Data
         public DbSet<Episode> Episodes { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
         public DbSet<WatchHistory> WatchHistories { get; set; }
+        public DbSet<Quiz> Quizzes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -388,8 +389,8 @@ namespace CoursePlus.Server.Data
                 {
                     Id = 1,
                     UserId = "e29790bd-b712-4594-8b3f-c13cbc2943ac",
-                    CreatedTime = DateTime.Now,
-                    UpdatedTime = DateTime.Now,
+                    CreatedTime = new DateTime(2020, 05, 01),
+                    UpdatedTime = new DateTime(2020, 05, 01),
                     CreatedUser = "azur.consult@gmail.com",
                     UpdatedUser = "azur.consult@gmail.com"
                 }
@@ -411,14 +412,12 @@ namespace CoursePlus.Server.Data
                     OwnerId = 1,
                     Featured = false,
                     Popular = false,
-                    CreatedTime = DateTime.Now,
-                    UpdatedTime = DateTime.Now,
+                    CreatedTime = new DateTime(2020,05,01),
+                    UpdatedTime = new DateTime(2020, 05, 01),
                     CreatedUser = "azur.consult@gmail.com",
                     UpdatedUser = "azur.consult@gmail.com"
                 }
             );
         }
-        
-
     }
 }

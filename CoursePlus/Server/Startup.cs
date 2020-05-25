@@ -78,7 +78,8 @@ namespace CoursePlus.Server
             services.AddScoped<IPlaylistRepository, PlaylistRepository>();
             services.AddScoped<IChapterRepository, ChapterRepository>();
             services.AddScoped<IEpisodeRepository, EpisodeRepository>();
-            
+            services.AddScoped<IQuizRepository, QuizRepository>();
+
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); 
         }
 
