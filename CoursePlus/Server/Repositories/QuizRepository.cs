@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -57,6 +58,14 @@ namespace CoursePlus.Server.Repositories
             }
         }
 
+        public async Task<List<Quiz>> GetPopularQuizzes()
+        {
+            return await _dbContext.Quizzes
+                                   .Include(x => x.Category)
+                                   .Include(x => x.Image)
+                                   .Take(10).ToListAsync();
+        }
+
         public Quiz GetQuiz(int id)
         {
             var quiz = _dbContext.Quizzes
@@ -102,6 +111,31 @@ namespace CoursePlus.Server.Repositories
 
             _dbContext.Quizzes.Remove(foundQuiz);
             _dbContext.SaveChanges();
+        }
+
+        public async Task<bool> GenerateImagesAndThumbnailsFromPath()
+        {
+            var quizzes = _dbContext.Quizzes.Include(x => x.Image);
+
+            foreach (var quiz in quizzes)
+            {
+                if (quiz.Image == null && !string.IsNullOrEmpty(quiz.ImagePath))
+                {
+                    var data = await File.ReadAllBytesAsync(quiz.ImagePath);
+                    var newImage = new Image { Data = data };
+                    quiz.Image = newImage;
+                }
+
+                if (quiz.Thumbnail == null && !string.IsNullOrEmpty(quiz.ThumbnailPath))
+                {
+                    var data = await File.ReadAllBytesAsync(quiz.ThumbnailPath);
+                    var newThumbnail = new Thumbnail { Data = data };
+                    quiz.Thumbnail = newThumbnail;
+                }
+            }
+
+            await _dbContext.SaveChangesAsync();
+            return true;
         }
     }
 }

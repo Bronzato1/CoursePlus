@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Syncfusion.Blazor.Notifications;
 using System;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
@@ -105,89 +106,146 @@ namespace CoursePlus.Server.Data
             SeedUsers(modelBuilder);
             SeedUserRoles(modelBuilder);
             SeedCategories(modelBuilder);
-            SeedBooks(modelBuilder);
+            //SeedBooks(modelBuilder);
             SeedProfiles(modelBuilder);
-            SeedPlaylists(modelBuilder);
+            //SeedPlaylists(modelBuilder);
+            SeedQuizzes(modelBuilder);
         }
         private static void SeedCategories(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Category>().HasData
             (
-                //new Category
-                //{
-                //    Id = 1,
-                //    Name = "Film & Animation"
-                //},
-                //new Category
-                //{
-                //    Id = 2,
-                //    Name = "Autos & Vehicles"
-                //},
-                //new Category
-                //{
-                //    Id = 10,
-                //    Name = "Music"
-                //},
-                //new Category
-                //{
-                //    Id = 15,
-                //    Name = "Pets & Animals"
-                //},
-                //new Category
-                //{
-                //    Id = 17,
-                //    Name = "Sports"
-                //},
+                new Category
+                {
+                    Id = 1,
+                    Name = "Animaux"
+                },
+                new Category
+                {
+                    Id = 2,
+                    Name = "Archéologie"
+                },
+                new Category
+                {
+                    Id = 3,
+                    Name = "Music"
+                },
+                new Category
+                {
+                    Id = 4,
+                    Name = "Architecture"
+                },
+                new Category
+                {
+                    Id = 5,
+                    Name = "Arts"
+                },
+                new Category
+                {
+                    Id = 6,
+                    Name = "Bande dessinée"
+                },
+                new Category
+                {
+                    Id = 7,
+                    Name = "Célébrités"
+                },
+                new Category
+                {
+                    Id = 8,
+                    Name = "Cinéma"
+                },
+                new Category
+                {
+                    Id = 9,
+                    Name = "Culture générale"
+                },
+                new Category
+                {
+                    Id = 10,
+                    Name = "Gastronomie"
+                },
+                new Category
+                {
+                    Id = 11,
+                    Name = "Géographie"
+                },
+                new Category
+                {
+                    Id = 12,
+                    Name = "Histoire"
+                },
+                new Category
+                {
+                    Id = 13,
+                    Name = "Informatique"
+                },
+                new Category
+                {
+                    Id = 14,
+                    Name = "OpenBSD"
+                },
+                new Category
+                {
+                    Id = 15,
+                    Name = "Littérature"
+                },
+                new Category
+                {
+                    Id = 16,
+                    Name = "Loisirs"
+                },
+                new Category
+                {
+                    Id = 17,
+                    Name = "Musique"
+                },
+                new Category
+                {
+                    Id = 18,
+                    Name = "Nature"
+                },
                 new Category
                 {
                     Id = 19,
-                    Name = "Travel & Events"
-                },
-                //new Category
-                //{
-                //    Id = 20,
-                //    Name = "Gaming"
-                //},
-                //new Category
-                //{
-                //    Id = 22,
-                //    Name = "People & Blogs"
-                //},
-                //new Category
-                //{
-                //    Id = 23,
-                //    Name = "Comedy"
-                //},
-                //new Category
-                //{
-                //    Id = 24,
-                //    Name = "Entertainment"
-                //},
-                //new Category
-                //{
-                //    Id = 25,
-                //    Name = "News & Politics"
-                //},
-                //new Category
-                //{
-                //    Id = 26,
-                //    Name = "Howto & Style"
-                //},
-                new Category
-                {
-                    Id = 27,
-                    Name = "Education"
+                    Name = "Payx du monde"
                 },
                 new Category
                 {
-                    Id = 28,
-                    Name = "Science & Technology"
+                    Id = 20,
+                    Name = "Pour adultes"
+                },
+                new Category
+                {
+                    Id = 21,
+                    Name = "Sciences"
+                },
+                new Category
+                {
+                    Id = 22,
+                    Name = "Sports"
+                },
+                new Category
+                {
+                    Id = 23,
+                    Name = "Télévision"
+                },
+                new Category
+                {
+                    Id = 24,
+                    Name = "Tourisme"
+                },
+                new Category
+                {
+                    Id = 25,
+                    Name = "Vie quotidienne"
+                },
+                new Category
+                {
+                    Id = 26,
+                    Name = "Web"
                 }
-                //new Category
-                //{
-                //    Id = 29,
-                //    Name = "Nonprofits & Activism"
-                //}
+
             );
         }
         private static void SeedBooks(this ModelBuilder modelBuilder)
@@ -203,9 +261,9 @@ namespace CoursePlus.Server.Data
                     Language = EnumLanguages.English,
                     CategoryId = 28,
                     PageCount = 383,
-                    PublishingDate = new DateTime(2019,01,01),
+                    PublishingDate = new DateTime(2019, 01, 01),
                     PurchaseLink = "https://www.apress.com/gp/book/9781484237717",
-                    ThumbnailUrl = "https://images.springer.com/sgw/books/medium/9781484237717.jpg",  
+                    ThumbnailUrl = "https://images.springer.com/sgw/books/medium/9781484237717.jpg",
                     ImageUrl = "https://images.springer.com/sgw/books/medium/9781484237717.jpg"
                 },
                 new Book
@@ -417,6 +475,24 @@ namespace CoursePlus.Server.Data
                     CreatedUser = "azur.consult@gmail.com",
                     UpdatedUser = "azur.consult@gmail.com"
                 }
+            );
+        }
+        private static void SeedQuizzes(this ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Quiz>().HasData
+            (
+                new Quiz { Id =  1, CategoryId = 4, CreatedTime = new DateTime(2020, 05, 01), UpdatedTime = new DateTime(2020, 05, 01), CreatedUser = "azur.consult@gmail.com", UpdatedUser = "azur.consult@gmail.com", Title = "Chateau de Chambord", Description = "...", ImagePath = "Data/Quiz/Images/Architecture/chateau-de-chambord.png", ThumbnailPath = "Data/Quiz/Thumbnails/Architecture/chateau-de-chambord.png",  },
+                new Quiz { Id =  2, CategoryId = 2, CreatedTime = new DateTime(2020, 05, 01), UpdatedTime = new DateTime(2020, 05, 01), CreatedUser = "azur.consult@gmail.com", UpdatedUser = "azur.consult@gmail.com", Title = "Machu Pichu", Description = "...", ImagePath = "Data/Quiz/Images/Archeologie/machu-pichu.png", ThumbnailPath = "Data/Quiz/Thumbnails/Archeologie/machu-pichu.png" },
+                new Quiz { Id =  3, CategoryId = 1, CreatedTime = new DateTime(2020, 05, 01), UpdatedTime = new DateTime(2020, 05, 01), CreatedUser = "azur.consult@gmail.com", UpdatedUser = "azur.consult@gmail.com", Title = "Animaux célèbres", Description = "...", ImagePath = "Data/Quiz/Images/Animaux/animaux-celebres.png", ThumbnailPath = "Data/Quiz/Thumbnails/Animaux/animaux-celebres.png" },
+                new Quiz { Id =  4, CategoryId = 1, CreatedTime = new DateTime(2020, 05, 01), UpdatedTime = new DateTime(2020, 05, 01), CreatedUser = "azur.consult@gmail.com", UpdatedUser = "azur.consult@gmail.com", Title = "Animaux en chiffres", Description = "...", ImagePath = "Data/Quiz/Images/Animaux/animaux-en-chiffres.png", ThumbnailPath = "Data/Quiz/Thumbnails/Animaux/animaux-en-chiffres.png" },
+                new Quiz { Id =  5, CategoryId = 1, CreatedTime = new DateTime(2020, 05, 01), UpdatedTime = new DateTime(2020, 05, 01), CreatedUser = "azur.consult@gmail.com", UpdatedUser = "azur.consult@gmail.com", Title = "Animaux en tout genre", Description = "...", ImagePath= "Data/Quiz/Images/Animaux/animaux-en-tout-genre.png", ThumbnailPath = "Data/Quiz/Thumbnails/Animaux/animaux-en-tout-genre.png" },
+                new Quiz { Id =  6, CategoryId = 1, CreatedTime = new DateTime(2020, 05, 01), UpdatedTime = new DateTime(2020, 05, 01), CreatedUser = "azur.consult@gmail.com", UpdatedUser = "azur.consult@gmail.com", Title = "Animaux et habitat", Description = "...", ImagePath = "Data/Quiz/Images/Animaux/animaux-et-habitat.png", ThumbnailPath = "Data/Quiz/Thumbnails/Animaux/animaux-et-habitat.png" },
+                new Quiz { Id =  7, CategoryId = 1, CreatedTime = new DateTime(2020, 05, 01), UpdatedTime = new DateTime(2020, 05, 01), CreatedUser = "azur.consult@gmail.com", UpdatedUser = "azur.consult@gmail.com", Title = "Chevaux", Description = "...", ImagePath = "Data/Quiz/Images/Animaux/chevaux.png", ThumbnailPath = "Data/Quiz/Thumbnails/Animaux/chevaux.png" },
+                new Quiz { Id =  8, CategoryId = 1, CreatedTime = new DateTime(2020, 05, 01), UpdatedTime = new DateTime(2020, 05, 01), CreatedUser = "azur.consult@gmail.com", UpdatedUser = "azur.consult@gmail.com", Title = "Dragon", Description = "...", ImagePath = "Data/Quiz/Images/Animaux/dragon.png", ThumbnailPath = "Data/Quiz/Thumbnails/Animaux/dragon.png" },
+                new Quiz { Id =  9, CategoryId = 1, CreatedTime = new DateTime(2020, 05, 01), UpdatedTime = new DateTime(2020, 05, 01), CreatedUser = "azur.consult@gmail.com", UpdatedUser = "azur.consult@gmail.com", Title = "Fourmis", Description = "...", ImagePath = "Data/Quiz/Images/Animaux/fourmis.png", ThumbnailPath = "Data/Quiz/Thumbnails/Animaux/fourmis.png" },
+                new Quiz { Id = 10, CategoryId = 1, CreatedTime = new DateTime(2020, 05, 01), UpdatedTime = new DateTime(2020, 05, 01), CreatedUser = "azur.consult@gmail.com", UpdatedUser = "azur.consult@gmail.com", Title = "Nos amis les chats", Description = "...", ImagePath = "Data/Quiz/Images/Animaux/nos-amis-les-chats.png", ThumbnailPath = "Data/Quiz/Thumbnails/Animaux/nos-amis-les-chats.png" },
+                new Quiz { Id = 11, CategoryId = 1, CreatedTime = new DateTime(2020, 05, 01), UpdatedTime = new DateTime(2020, 05, 01), CreatedUser = "azur.consult@gmail.com", UpdatedUser = "azur.consult@gmail.com", Title = "Oiseaux", Description = "...", ImagePath = "Data/Quiz/Images/Animaux/oiseaux.png", ThumbnailPath = "Data/Quiz/Thumbnails/Animaux/oiseaux.png" },
+                new Quiz { Id = 12, CategoryId = 1, CreatedTime = new DateTime(2020, 05, 01), UpdatedTime = new DateTime(2020, 05, 01), CreatedUser = "azur.consult@gmail.com", UpdatedUser = "azur.consult@gmail.com", Title = "Requins", Description = "...", ImagePath = "Data/Quiz/Images/Animaux/requins.png", ThumbnailPath = "Data/Quiz/Thumbnails/Animaux/requins.png" } 
             );
         }
     }

@@ -32,6 +32,12 @@ namespace CoursePlus.Server.Controllers
             return list;
         }
 
+        [HttpGet("getpopularquizzes")]
+        public async Task<ActionResult<List<Quiz>>> GetPopularQuizzes()
+        {
+            return await _quizRepository.GetPopularQuizzes();
+        }
+
         [HttpGet("{id:int}")]
         public IActionResult GetQuiz(int id)
         {
@@ -99,6 +105,17 @@ namespace CoursePlus.Server.Controllers
             _quizRepository.DeleteQuiz(id);
 
             return NoContent();//success
+        }
+
+        [HttpGet("generateImagesAndThumbnailsFromPath")]
+        public async Task<string> GenerateImagesAndThumbnailsFromPath()
+        {
+            var success = await _quizRepository.GenerateImagesAndThumbnailsFromPath();
+
+            if (success)
+                return "Operation finished successfully";
+            else
+                return "Operation failed";
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using CoursePlus.Client.Services;
+using CoursePlus.Shared.Models;
+using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
@@ -9,6 +11,13 @@ namespace CoursePlus.Client.Pages
 {
     public class HomeBase : ComponentBase
     {
-        
+        [Inject] IQuizService QuizService { get; set; }
+
+        public List<Quiz> PopularQuizzes { get; set; }
+
+        protected override async Task OnInitializedAsync()
+        {
+            PopularQuizzes = await QuizService.GetPopularQuizzes();
+        }
     }
 }

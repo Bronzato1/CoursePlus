@@ -238,17 +238,14 @@
 
             </div>
 
-            <!-- Browse Web Development Episodes -->
+            <!-- Browse popular quizzes -->
             <div class="section-small pt-0">
 
                 <div class="playlist-grid-slider" uk-slider="finite: true">
 
                     <div class="grid-slider-header">
                         <div>
-                            <h4 class="uk-text-truncate">
-                                Browse Web Development
-                                <a href="episode.html" class="text-muted">Episodes</a>
-                            </h4>
+                            <h4 class="uk-text-truncate">Browse popular quizzes</h4>
                         </div>
                         <div class="grid-slider-header-link">
 
@@ -260,81 +257,26 @@
                     </div>
 
                     <ul class="uk-slider-items uk-child-width-1-4@m uk-child-width-1-3@s uk-grid">
-                        <li>
-                            <a href="episode-details.html">
-                                <div class="playlist-card episode-card animate-this">
-                                    <div class="playlist-card-thumbnail ">
-                                        <span class="item-tag">HTML</span>
-                                        <span class="duration">2:39</span>
-                                        <img src="images/playlist/geographie.png">
-                                        <span class="play-button-trigger"></span>
-                                    </div>
-                                    <div class="playlist-card-body">
-                                        <h4 class="mb-0">Géographie</h4>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="episode-details.html">
-                                <div class="playlist-card episode-card animate-this">
-                                    <div class="playlist-card-thumbnail ">
-                                        <span class="item-tag">Tips</span>
-                                        <span class="duration">5:39</span>
-                                        <img src="images/episodes/3.png">
-                                        <span class="play-button-trigger"></span>
-                                    </div>
-                                    <div class="playlist-card-body">
-                                        <h4 class="mb-0"> er Creating a Laravel Package </h4>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="episode-details.html">
-                                <div class="playlist-card episode-card animate-this">
-                                    <div class="playlist-card-thumbnail ">
-                                        <span class="item-tag">PHP</span>
-                                        <span class="duration">5:39</span>
-                                        <img src="images/episodes/1.png">
-                                        <span class="play-button-trigger"></span>
-                                    </div>
-                                    <div class="playlist-card-body">
-                                        <h4 class="mb-0"> The PHP Singleton class </h4>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="episode-details.html">
-                                <div class="playlist-card episode-card animate-this">
-                                    <div class="playlist-card-thumbnail ">
-                                        <span class="item-tag">Design</span>
-                                        <span class="duration">2:39</span>
-                                        <img src="images/episodes/5.png">
-                                        <span class="play-button-trigger"></span>
-                                    </div>
-                                    <div class="playlist-card-body">
-                                        <h4 class="mb-0"> Dev Design Quickie </h4>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="episode-details.html">
-                                <div class="playlist-card episode-card animate-this">
-                                    <div class="playlist-card-thumbnail ">
-                                        <span class="item-tag">HTML</span>
-                                        <span class="duration">2:39</span>
-                                        <img src="images/episodes/2.png">
-                                        <span class="play-button-trigger"></span>
-                                    </div>
-                                    <div class="playlist-card-body">
-                                        <h4 class="mb-0"> Creating sticky in HTML </h4>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
+
+                        @if (PopularQuizzes != null)
+                            foreach (var OneQuiz in PopularQuizzes)
+                            {
+                                <li>
+                                    <a href="episode-details.html">
+                                        <div class="playlist-card episode-card animate-this">
+                                            <div class="playlist-card-thumbnail ">
+                                                <span class="item-tag">@OneQuiz.Category.Name</span>
+                                                <span class="duration">2:39</span>
+                                                <img src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(OneQuiz.Image.Data))">
+                                                <span class="play-button-trigger"></span>
+                                            </div>
+                                            <div class="playlist-card-body">
+                                                <h4 class="mb-0">@OneQuiz.Title</h4>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            }
                     </ul>
 
                 </div>

@@ -11,6 +11,8 @@ namespace CoursePlus.Client.Services
     {
         Task<PaginatedList<Quiz>> GetQuizzes(int pageNumber = 1, IDictionary<string, string> sortOrder = null, IDictionary<string, string> filters = null);
 
+        Task<List<Quiz>> GetPopularQuizzes();
+
         Task<Quiz> GetQuiz(int id);
 
         Task<Quiz> AddQuiz(Quiz quiz);

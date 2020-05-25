@@ -38,6 +38,11 @@ namespace CoursePlus.Client.Services
             return result;
         }
 
+        public async Task<List<Quiz>> GetPopularQuizzes()
+        {
+            return await JsonSerializer.DeserializeAsync<List<Quiz>>(await _httpClient.GetStreamAsync($"api/quiz/getpopularquizzes"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+        }
+
         public async Task<Quiz> GetQuiz(int id)
         {
             var data = await JsonSerializer.DeserializeAsync<Quiz>(await _httpClient.GetStreamAsync($"api/quiz/{id}"), new JsonSerializerOptions()

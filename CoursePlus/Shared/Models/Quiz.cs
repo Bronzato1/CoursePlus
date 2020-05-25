@@ -13,9 +13,11 @@ namespace CoursePlus.Shared.Models
         public int? CategoryId { get; set; }
         public Category Category { get; set; }
 
+        public string ImagePath { get; set; }
         public int? ImageId { get; set; }
         public virtual Image Image { get; set; }
 
+        public string ThumbnailPath { get; set; }
         public int? ThumbnailId { get; set; }
         public virtual Thumbnail Thumbnail { get; set; }
 
