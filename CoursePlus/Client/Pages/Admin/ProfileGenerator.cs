@@ -15,28 +15,19 @@ namespace CoursePlus.Client.Pages.Admin
 {
     public class ProfileGeneratorBase : ComponentBase
     {
-        [Inject]
-        public IProfileService ProfileService { get; set; }
-        [Inject]
-        public IModalDialogService ModalDialog { get; set; }
-        [Inject] 
-        HttpClient HttpClient { get; set; }
-
-        public WebClient WebClient = new WebClient();
+        [Inject] public IProfileService ProfileService { get; set; }
+        [Inject] public IModalDialogService ModalDialog { get; set; }
 
         public List<FakeProfileModel> SomeUsers { get; set; } = new List<FakeProfileModel>();
-
         protected override async Task OnInitializedAsync()
         {
             await LoadMoreUsers();
         }
-
         protected async Task LoadMoreUsers()
         {
             var users = await ProfileService.GetFakeProfiles();
             SomeUsers.AddRange(users);
         }
-
         protected async Task CreateProfiles()
         {
             var result = await ProfileService.CreateFakeProfiles(SomeUsers);
@@ -47,7 +38,6 @@ namespace CoursePlus.Client.Pages.Admin
                 await ModalDialog.ShowMessageBoxAsync("Profile profiles created successfully", $"Profiles created: {result.CptrSucceed} - Failed: {result.CptrFailed}", MessageBoxButtons.OK, MessageBoxDefaultButton.Button1);
             }
         }
-
         public void Delete(FakeProfileModel OneUser)
         {
             SomeUsers.Remove(OneUser);

@@ -1,0 +1,130 @@
+﻿@page "/admin/quiz-generator"
+@inherits QuizGeneratorBase
+@attribute [Authorize(Policy = Policies.IsAdmin)]
+
+    <div id="wrapper">
+
+        <Header Class="header" UkSticky="top:20; cls-active:header-sticky">
+            <Breadcrumbs>
+                <li><a href="/"> <i class="uil-home-alt"></i> </a></li>
+                <li><a href="/admin/dashboard">Admin dashboard</a></li>
+                <li>Quiz generator</li>
+            </Breadcrumbs>
+        </Header>
+
+        <SearchOnMobile></SearchOnMobile>
+
+        <SearchOnDesktop></SearchOnDesktop>
+
+        <SideNav></SideNav>
+
+        <div class="page-content">
+            <div class="page-content-inner">
+
+                <div class="card">
+
+                    <!-- Card header -->
+                    <div class="card-header actions-toolbar border-0">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h4 class="d-inline-block mb-0">Quiz generator</h4>
+                            <div class="d-flex">
+                                <a href="#" class="btn btn-icon btn-hover btn-circle" uk-tooltip="More">
+                                    <i class="uil-ellipsis-h"></i>
+                                </a>
+                                <div uk-dropdown="pos: bottom-right ; mode: click ;animation: uk-animation-scale-up">
+                                    <ul class="uk-nav uk-dropdown-nav">
+                                        <li><a href="#">.........</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Table -->
+                    <div class="table-responsive">
+                        <table class="table table-borderless table-hover align-items-center">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-center"><span>#</span></th>
+                                    <th scope="col" class="text-center"><span>Thème</span></th>
+                                    <th scope="col" class="text-center"><span>fr</span></th>
+                                    <th scope="col" class="text-center"><span>en</span></th>
+                                    <th scope="col" class="text-center"><span>de</span></th>
+                                    <th scope="col" class="text-center"><span>es</span></th>
+                                    <th scope="col" class="text-center"><span>it</span></th>
+                                    <th scope="col" class="text-center"><span>nl</span></th>
+                                    <th scope="col" class="text-center"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="list">
+                                @if (SomeQuizzes != null)
+                                {
+                                    @foreach (var OneQuiz in SomeQuizzes)
+                                    {
+                                        <tr>
+                                            <td class="text-center">
+                                                @OneQuiz.Id
+                                            </td>
+
+                                            <td class="text-left">
+                                                @OneQuiz.Theme
+                                            </td>
+
+                                            <td class="text-left">
+                                                @CountElements(OneQuiz, EnumLanguages.French)
+                                            </td>
+
+                                            <td class="text-left">
+                                                @CountElements(OneQuiz, EnumLanguages.English)
+                                            </td>
+
+                                            <td class="text-left">
+                                                @CountElements(OneQuiz, EnumLanguages.Deutch)
+                                            </td>
+
+                                            <td class="text-left">
+                                                @CountElements(OneQuiz, EnumLanguages.Spanish)
+                                            </td>
+
+                                            <td class="text-left">
+                                                @CountElements(OneQuiz, EnumLanguages.Italian)
+                                            </td>
+
+                                            <td class="text-left">
+                                                @CountElements(OneQuiz, EnumLanguages.Netherland)
+                                            </td>
+
+                                            <td class="text-right">
+                                                <!-- Actions -->
+                                                <div class="actions ml-3">
+                                            
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Card footer -->
+                    <div class="card-footer">
+                        <div class="uk-flex uk-flex-middle">
+                            <div class="uk-width-1-2">
+                                @SomeQuizzes?.Count items
+                            </div>
+                            <div class="uk-width-1-2 uk-text-right uk-margin-top uk-margin-bottom">
+                                <a href="javascript:void(0)" @onclick="CreateQuizzes" class="btn btn-default uk-visible@s"> <i class="uil-plus"></i> Create quizzes from OpenQuizzDB </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <Footer></Footer>
+
+            </div>
+
+        </div>
+
+    </div>

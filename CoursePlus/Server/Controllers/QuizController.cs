@@ -24,16 +24,16 @@ namespace CoursePlus.Server.Controllers
         }
 
         [HttpGet("getquizzes")]
-        public async Task<ActionResult<PaginatedList<Quiz>>> GetQuizzes(int? pageNumber, string sortOrder, string filters)
+        public async Task<ActionResult<PaginatedList<QuizTopic>>> GetQuizzes(int? pageNumber, string sortOrder, string filters)
         {
-            var currentSortOrder = Newtonsoft.Json.JsonConvert.DeserializeObject<IDictionary<string, string>>(sortOrder);
-            var currentFilters = Newtonsoft.Json.JsonConvert.DeserializeObject<IDictionary<string, string>>(filters);
+            IDictionary<string, string> currentSortOrder = null; // Newtonsoft.Json.JsonConvert.DeserializeObject<IDictionary<string, string>>(sortOrder);
+            IDictionary<string, string> currentFilters = null; // Newtonsoft.Json.JsonConvert.DeserializeObject<IDictionary<string, string>>(filters);
             var list = await _quizRepository.GetQuizzes(pageNumber, currentSortOrder, currentFilters);
             return list;
         }
 
         [HttpGet("getpopularquizzes")]
-        public async Task<ActionResult<List<Quiz>>> GetPopularQuizzes()
+        public async Task<ActionResult<List<QuizTopic>>> GetPopularQuizzes()
         {
             return await _quizRepository.GetPopularQuizzes();
         }
@@ -48,7 +48,7 @@ namespace CoursePlus.Server.Controllers
 
         [HttpPost]
         [Authorize(Policy = Policies.IsAdmin)]
-        public IActionResult CreateQuiz([FromBody] Quiz quiz)
+        public IActionResult CreateQuiz([FromBody] QuizTopic quiz)
         {
             if (quiz == null)
                 return BadRequest();
@@ -68,7 +68,7 @@ namespace CoursePlus.Server.Controllers
 
         [HttpPut]
         [Authorize(Policy = Policies.IsAdmin)]
-        public IActionResult UpdateQuiz([FromBody] Quiz quiz)
+        public IActionResult UpdateQuiz([FromBody] QuizTopic quiz)
         {
             if (quiz == null)
                 return BadRequest();
@@ -107,15 +107,10 @@ namespace CoursePlus.Server.Controllers
             return NoContent();//success
         }
 
-        [HttpGet("generateImagesAndThumbnailsFromPath")]
-        public async Task<string> GenerateImagesAndThumbnailsFromPath()
+        [HttpGet("createQuizzesFromJsonOfOpenQuizzDB")]
+        public async Task<int> CreateQuizzesFromJsonOfOpenQuizzDB()
         {
-            var success = await _quizRepository.GenerateImagesAndThumbnailsFromPath();
-
-            if (success)
-                return "Operation finished successfully";
-            else
-                return "Operation failed";
+            return await _quizRepository.CreateQuizzesFromJsonOfOpenQuizzDB();
         }
     }
 }

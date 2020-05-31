@@ -9,18 +9,18 @@ namespace CoursePlus.Server.Repositories
 {
     public interface IQuizRepository
     {
-        Task<PaginatedList<Quiz>> GetQuizzes(int? pageNumber, IDictionary<string, string> sortOrder, IDictionary<string, string> filters);
+        Task<PaginatedList<QuizTopic>> GetQuizzes(int? pageNumber, IDictionary<string, string> sortOrder, IDictionary<string, string> filters);
 
-        public Task<List<Quiz>> GetPopularQuizzes();
+        Task<List<QuizTopic>> GetPopularQuizzes();
          
-        public Quiz GetQuiz(int id);
+        QuizTopic GetQuiz(int id);
 
-        public Quiz AddQuiz(Quiz quiz);
+        QuizTopic AddQuiz(QuizTopic quiz);
 
-        public Quiz UpdateQuiz(Quiz quiz);
+        QuizTopic UpdateQuiz(QuizTopic quiz);
 
-        public void DeleteQuiz(int id);
+        void DeleteQuiz(int id);
 
-        Task<bool> GenerateImagesAndThumbnailsFromPath();
+        Task<int> CreateQuizzesFromJsonOfOpenQuizzDB();
     }
 }

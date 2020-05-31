@@ -7,7 +7,7 @@ namespace CoursePlus.Shared.Models
     public enum EnumDifficulty
     {
         Beginner,
-        Intermediate,
-        Advanced
+        Confirmed,
+        Expert
     }
 }

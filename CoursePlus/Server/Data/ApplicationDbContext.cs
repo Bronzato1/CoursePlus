@@ -1,10 +1,12 @@
 using CoursePlus.Shared.Models;
 using CoursePlus.Shared.Utilities;
+using JsonNet.PrivateSettersContractResolvers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using Syncfusion.Blazor.Notifications;
 using System;
 using System.IO;
@@ -37,7 +39,9 @@ namespace CoursePlus.Server.Data
         public DbSet<Episode> Episodes { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
         public DbSet<WatchHistory> WatchHistories { get; set; }
-        public DbSet<Quiz> Quizzes { get; set; }
+        public DbSet<QuizTopic> QuizTopics { get; set; }
+        public DbSet<QuizItem> QuizItems { get; set; }
+        public DbSet<QuizProposal> QuizProposals { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -109,7 +113,6 @@ namespace CoursePlus.Server.Data
             //SeedBooks(modelBuilder);
             SeedProfiles(modelBuilder);
             //SeedPlaylists(modelBuilder);
-            SeedQuizzes(modelBuilder);
         }
         private static void SeedCategories(this ModelBuilder modelBuilder)
         {
@@ -475,24 +478,6 @@ namespace CoursePlus.Server.Data
                     CreatedUser = "azur.consult@gmail.com",
                     UpdatedUser = "azur.consult@gmail.com"
                 }
-            );
-        }
-        private static void SeedQuizzes(this ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Quiz>().HasData
-            (
-                new Quiz { Id =  1, CategoryId = 4, CreatedTime = new DateTime(2020, 05, 01), UpdatedTime = new DateTime(2020, 05, 01), CreatedUser = "azur.consult@gmail.com", UpdatedUser = "azur.consult@gmail.com", Title = "Chateau de Chambord", Description = "...", ImagePath = "Data/Quiz/Images/Architecture/chateau-de-chambord.png", ThumbnailPath = "Data/Quiz/Thumbnails/Architecture/chateau-de-chambord.png",  },
-                new Quiz { Id =  2, CategoryId = 2, CreatedTime = new DateTime(2020, 05, 01), UpdatedTime = new DateTime(2020, 05, 01), CreatedUser = "azur.consult@gmail.com", UpdatedUser = "azur.consult@gmail.com", Title = "Machu Pichu", Description = "...", ImagePath = "Data/Quiz/Images/Archeologie/machu-pichu.png", ThumbnailPath = "Data/Quiz/Thumbnails/Archeologie/machu-pichu.png" },
-                new Quiz { Id =  3, CategoryId = 1, CreatedTime = new DateTime(2020, 05, 01), UpdatedTime = new DateTime(2020, 05, 01), CreatedUser = "azur.consult@gmail.com", UpdatedUser = "azur.consult@gmail.com", Title = "Animaux célèbres", Description = "...", ImagePath = "Data/Quiz/Images/Animaux/animaux-celebres.png", ThumbnailPath = "Data/Quiz/Thumbnails/Animaux/animaux-celebres.png" },
-                new Quiz { Id =  4, CategoryId = 1, CreatedTime = new DateTime(2020, 05, 01), UpdatedTime = new DateTime(2020, 05, 01), CreatedUser = "azur.consult@gmail.com", UpdatedUser = "azur.consult@gmail.com", Title = "Animaux en chiffres", Description = "...", ImagePath = "Data/Quiz/Images/Animaux/animaux-en-chiffres.png", ThumbnailPath = "Data/Quiz/Thumbnails/Animaux/animaux-en-chiffres.png" },
-                new Quiz { Id =  5, CategoryId = 1, CreatedTime = new DateTime(2020, 05, 01), UpdatedTime = new DateTime(2020, 05, 01), CreatedUser = "azur.consult@gmail.com", UpdatedUser = "azur.consult@gmail.com", Title = "Animaux en tout genre", Description = "...", ImagePath= "Data/Quiz/Images/Animaux/animaux-en-tout-genre.png", ThumbnailPath = "Data/Quiz/Thumbnails/Animaux/animaux-en-tout-genre.png" },
-                new Quiz { Id =  6, CategoryId = 1, CreatedTime = new DateTime(2020, 05, 01), UpdatedTime = new DateTime(2020, 05, 01), CreatedUser = "azur.consult@gmail.com", UpdatedUser = "azur.consult@gmail.com", Title = "Animaux et habitat", Description = "...", ImagePath = "Data/Quiz/Images/Animaux/animaux-et-habitat.png", ThumbnailPath = "Data/Quiz/Thumbnails/Animaux/animaux-et-habitat.png" },
-                new Quiz { Id =  7, CategoryId = 1, CreatedTime = new DateTime(2020, 05, 01), UpdatedTime = new DateTime(2020, 05, 01), CreatedUser = "azur.consult@gmail.com", UpdatedUser = "azur.consult@gmail.com", Title = "Chevaux", Description = "...", ImagePath = "Data/Quiz/Images/Animaux/chevaux.png", ThumbnailPath = "Data/Quiz/Thumbnails/Animaux/chevaux.png" },
-                new Quiz { Id =  8, CategoryId = 1, CreatedTime = new DateTime(2020, 05, 01), UpdatedTime = new DateTime(2020, 05, 01), CreatedUser = "azur.consult@gmail.com", UpdatedUser = "azur.consult@gmail.com", Title = "Dragon", Description = "...", ImagePath = "Data/Quiz/Images/Animaux/dragon.png", ThumbnailPath = "Data/Quiz/Thumbnails/Animaux/dragon.png" },
-                new Quiz { Id =  9, CategoryId = 1, CreatedTime = new DateTime(2020, 05, 01), UpdatedTime = new DateTime(2020, 05, 01), CreatedUser = "azur.consult@gmail.com", UpdatedUser = "azur.consult@gmail.com", Title = "Fourmis", Description = "...", ImagePath = "Data/Quiz/Images/Animaux/fourmis.png", ThumbnailPath = "Data/Quiz/Thumbnails/Animaux/fourmis.png" },
-                new Quiz { Id = 10, CategoryId = 1, CreatedTime = new DateTime(2020, 05, 01), UpdatedTime = new DateTime(2020, 05, 01), CreatedUser = "azur.consult@gmail.com", UpdatedUser = "azur.consult@gmail.com", Title = "Nos amis les chats", Description = "...", ImagePath = "Data/Quiz/Images/Animaux/nos-amis-les-chats.png", ThumbnailPath = "Data/Quiz/Thumbnails/Animaux/nos-amis-les-chats.png" },
-                new Quiz { Id = 11, CategoryId = 1, CreatedTime = new DateTime(2020, 05, 01), UpdatedTime = new DateTime(2020, 05, 01), CreatedUser = "azur.consult@gmail.com", UpdatedUser = "azur.consult@gmail.com", Title = "Oiseaux", Description = "...", ImagePath = "Data/Quiz/Images/Animaux/oiseaux.png", ThumbnailPath = "Data/Quiz/Thumbnails/Animaux/oiseaux.png" },
-                new Quiz { Id = 12, CategoryId = 1, CreatedTime = new DateTime(2020, 05, 01), UpdatedTime = new DateTime(2020, 05, 01), CreatedUser = "azur.consult@gmail.com", UpdatedUser = "azur.consult@gmail.com", Title = "Requins", Description = "...", ImagePath = "Data/Quiz/Images/Animaux/requins.png", ThumbnailPath = "Data/Quiz/Thumbnails/Animaux/requins.png" } 
             );
         }
     }

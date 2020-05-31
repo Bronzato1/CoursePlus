@@ -20,7 +20,7 @@ namespace CoursePlus.Client.Services
             _httpClient = httpClient;
         }
 
-        public async Task<PaginatedList<Quiz>> GetQuizzes(int pageNumber = 1, IDictionary<string, string> sortOrder = null, IDictionary<string, string> filters = null)
+        public async Task<PaginatedList<QuizTopic>> GetQuizzes(int pageNumber = 1, IDictionary<string, string> sortOrder = null, IDictionary<string, string> filters = null)
         {
             string currentFilters = Newtonsoft.Json.JsonConvert.SerializeObject(filters);
             string currentSortOrder = Newtonsoft.Json.JsonConvert.SerializeObject(sortOrder);
@@ -30,7 +30,7 @@ namespace CoursePlus.Client.Services
             response.EnsureSuccessStatusCode();
 
             using var responseStream = await response.Content.ReadAsStreamAsync();
-            var result = await JsonSerializer.DeserializeAsync<PaginatedList<Quiz>>(responseStream, new JsonSerializerOptions
+            var result = await JsonSerializer.DeserializeAsync<PaginatedList<QuizTopic>>(responseStream, new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 PropertyNameCaseInsensitive = true,
@@ -38,14 +38,14 @@ namespace CoursePlus.Client.Services
             return result;
         }
 
-        public async Task<List<Quiz>> GetPopularQuizzes()
+        public async Task<List<QuizTopic>> GetPopularQuizzes()
         {
-            return await JsonSerializer.DeserializeAsync<List<Quiz>>(await _httpClient.GetStreamAsync($"api/quiz/getpopularquizzes"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+            return await JsonSerializer.DeserializeAsync<List<QuizTopic>>(await _httpClient.GetStreamAsync($"api/quiz/getpopularquizzes"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
         }
 
-        public async Task<Quiz> GetQuiz(int id)
+        public async Task<QuizTopic> GetQuiz(int id)
         {
-            var data = await JsonSerializer.DeserializeAsync<Quiz>(await _httpClient.GetStreamAsync($"api/quiz/{id}"), new JsonSerializerOptions()
+            var data = await JsonSerializer.DeserializeAsync<QuizTopic>(await _httpClient.GetStreamAsync($"api/quiz/{id}"), new JsonSerializerOptions()
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 PropertyNameCaseInsensitive = true
@@ -53,7 +53,7 @@ namespace CoursePlus.Client.Services
             return data;
         }
 
-        public async Task<Quiz> AddQuiz(Quiz quiz)
+        public async Task<QuizTopic> AddQuiz(QuizTopic quiz)
         {
             var quizJson = new StringContent(JsonSerializer.Serialize(quiz), Encoding.UTF8, "application/json");
             var response = await _httpClient.PostAsync("api/quiz", quizJson);
@@ -61,7 +61,7 @@ namespace CoursePlus.Client.Services
             if (response.IsSuccessStatusCode)
             {
                 using var responseStream = await response.Content.ReadAsStreamAsync();
-                var result = await JsonSerializer.DeserializeAsync<Quiz>(responseStream, new JsonSerializerOptions
+                var result = await JsonSerializer.DeserializeAsync<QuizTopic>(responseStream, new JsonSerializerOptions
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                     PropertyNameCaseInsensitive = true,
@@ -72,7 +72,7 @@ namespace CoursePlus.Client.Services
             return null;
         }
 
-        public async Task UpdateQuiz(Quiz quiz)
+        public async Task UpdateQuiz(QuizTopic quiz)
         {
             var quizJson = new StringContent(JsonSerializer.Serialize(quiz), Encoding.UTF8, "application/json");
 
@@ -83,5 +83,22 @@ namespace CoursePlus.Client.Services
         {
             await _httpClient.DeleteAsync($"api/quiz/{id}");
         }
+
+        public async Task<int> CreateQuizzesFromJsonOfOpenQuizzDB()
+        {
+            var response = await _httpClient.GetAsync($"api/quiz/createQuizzesFromJsonOfOpenQuizzDB");
+            response.EnsureSuccessStatusCode();
+
+            using var responseStream = await response.Content.ReadAsStreamAsync();
+
+            var result = await JsonSerializer.DeserializeAsync<int>(responseStream, new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                PropertyNameCaseInsensitive = true,
+            });
+
+            return result;
+        }
+
     }
 }

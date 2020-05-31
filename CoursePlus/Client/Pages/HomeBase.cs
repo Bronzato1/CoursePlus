@@ -13,11 +13,11 @@ namespace CoursePlus.Client.Pages
     {
         [Inject] IQuizService QuizService { get; set; }
 
-        public List<Quiz> PopularQuizzes { get; set; }
+        public List<QuizTopic> PopularQuizzes { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            PopularQuizzes = await QuizService.GetPopularQuizzes();
+            //PopularQuizzes = await QuizService.GetPopularQuizzes();
         }
     }
 }

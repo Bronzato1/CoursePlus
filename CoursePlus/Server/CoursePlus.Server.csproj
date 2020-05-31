@@ -6,132 +6,129 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Data\Quiz\Images\animaux-et-habitat.png" />
-    <None Remove="Data\Quiz\Images\animaux\animaux-celebres.png" />
-    <None Remove="Data\Quiz\Images\animaux\animaux-en-chiffres.png" />
-    <None Remove="Data\Quiz\Images\animaux\animaux-en-tout-genre.png" />
-    <None Remove="Data\Quiz\Images\animaux\chevaux.png" />
-    <None Remove="Data\Quiz\Images\animaux\dragon.png" />
-    <None Remove="Data\Quiz\Images\animaux\fourmis.png" />
-    <None Remove="Data\Quiz\Images\animaux\nos-amis-les-chats.png" />
-    <None Remove="Data\Quiz\Images\animaux\oiseaux.png" />
-    <None Remove="Data\Quiz\Images\animaux\requins.png" />
-    <None Remove="Data\Quiz\Images\archeologie\machu-pichu.png" />
-    <None Remove="Data\Quiz\Images\architecture\chateau-de-chambord.png" />
-    <None Remove="Data\Quiz\Thumbnails\animaux\animaux-celebres.png" />
-    <None Remove="Data\Quiz\Thumbnails\animaux\animaux-en-chiffres.png" />
-    <None Remove="Data\Quiz\Thumbnails\animaux\animaux-en-tout-genre.png" />
-    <None Remove="Data\Quiz\Thumbnails\animaux\animaux-et-habitat.png" />
-    <None Remove="Data\Quiz\Thumbnails\animaux\chevaux.png" />
-    <None Remove="Data\Quiz\Thumbnails\animaux\dragon.png" />
-    <None Remove="Data\Quiz\Thumbnails\animaux\fourmis.png" />
-    <None Remove="Data\Quiz\Thumbnails\animaux\nos-amis-les-chats.png" />
-    <None Remove="Data\Quiz\Thumbnails\animaux\oiseaux.png" />
-    <None Remove="Data\Quiz\Thumbnails\animaux\requins.png" />
-    <None Remove="Data\Quiz\Thumbnails\archeologie\machu-pichu.png" />
-    <None Remove="Data\Quiz\Thumbnails\architecture\chateau-de-chambord.png" />
+    <None Remove="Data\Secret\Images\animaux-et-habitat.png" />
+    <None Remove="Data\Secret\Images\animaux\animaux-celebres.png" />
+    <None Remove="Data\Secret\Images\animaux\animaux-en-chiffres.png" />
+    <None Remove="Data\Secret\Images\animaux\animaux-en-tout-genre.png" />
+    <None Remove="Data\Secret\Images\animaux\chevaux.png" />
+    <None Remove="Data\Secret\Images\animaux\dragon.png" />
+    <None Remove="Data\Secret\Images\animaux\fourmis.png" />
+    <None Remove="Data\Secret\Images\animaux\nos-amis-les-chats.png" />
+    <None Remove="Data\Secret\Images\animaux\oiseaux.png" />
+    <None Remove="Data\Secret\Images\animaux\requins.png" />
+    <None Remove="Data\Secret\Images\archeologie\machu-pichu.png" />
+    <None Remove="Data\Secret\Images\architecture\chateau-de-chambord.png" />
+    <None Remove="Data\Secret\Thumbnails\animaux\animaux-celebres.png" />
+    <None Remove="Data\Secret\Thumbnails\animaux\animaux-en-chiffres.png" />
+    <None Remove="Data\Secret\Thumbnails\animaux\animaux-en-tout-genre.png" />
+    <None Remove="Data\Secret\Thumbnails\animaux\animaux-et-habitat.png" />
+    <None Remove="Data\Secret\Thumbnails\animaux\chevaux.png" />
+    <None Remove="Data\Secret\Thumbnails\animaux\dragon.png" />
+    <None Remove="Data\Secret\Thumbnails\animaux\fourmis.png" />
+    <None Remove="Data\Secret\Thumbnails\animaux\nos-amis-les-chats.png" />
+    <None Remove="Data\Secret\Thumbnails\animaux\oiseaux.png" />
+    <None Remove="Data\Secret\Thumbnails\animaux\requins.png" />
+    <None Remove="Data\Secret\Thumbnails\archeologie\machu-pichu.png" />
+    <None Remove="Data\Secret\Thumbnails\architecture\chateau-de-chambord.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Data\Quiz\Images\animaux-et-habitat.png">
+    <Content Include="Data\Secret\Images\animaux\animaux-celebres.png">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Include="Data\Quiz\Images\animaux\animaux-celebres.png">
+    <Content Include="Data\Secret\Images\animaux\animaux-en-chiffres.png">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Include="Data\Quiz\Images\animaux\animaux-en-chiffres.png">
+    <Content Include="Data\Secret\Images\animaux\animaux-en-tout-genre.png">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Include="Data\Quiz\Images\animaux\animaux-en-tout-genre.png">
+    <Content Include="Data\Secret\Images\animaux\chevaux.png">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Include="Data\Quiz\Images\animaux\chevaux.png">
+    <Content Include="Data\Secret\Images\animaux\dragon.png">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Include="Data\Quiz\Images\animaux\dragon.png">
+    <Content Include="Data\Secret\Images\animaux\fourmis.png">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Include="Data\Quiz\Images\animaux\fourmis.png">
+    <Content Include="Data\Secret\Images\animaux\nos-amis-les-chats.png">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Include="Data\Quiz\Images\animaux\nos-amis-les-chats.png">
+    <Content Include="Data\Secret\Images\animaux\oiseaux.png">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Include="Data\Quiz\Images\animaux\oiseaux.png">
+    <Content Include="Data\Secret\Images\animaux\requins.png">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Include="Data\Quiz\Images\animaux\requins.png">
+    <Content Include="Data\Secret\Images\archeologie\machu-pichu.png">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Include="Data\Quiz\Images\archeologie\machu-pichu.png">
+    <Content Include="Data\Secret\Images\architecture\chateau-de-chambord.png">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Include="Data\Quiz\Images\architecture\chateau-de-chambord.png">
+    <Content Include="Data\Secret\Thumbnails\animaux\animaux-celebres.png">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Include="Data\Quiz\Thumbnails\animaux\animaux-celebres.png">
+    <Content Include="Data\Secret\Thumbnails\animaux\animaux-en-chiffres.png">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Include="Data\Quiz\Thumbnails\animaux\animaux-en-chiffres.png">
+    <Content Include="Data\Secret\Thumbnails\animaux\animaux-en-tout-genre.png">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Include="Data\Quiz\Thumbnails\animaux\animaux-en-tout-genre.png">
+    <Content Include="Data\Secret\Thumbnails\animaux\animaux-et-habitat.png">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Include="Data\Quiz\Thumbnails\animaux\animaux-et-habitat.png">
+    <Content Include="Data\Secret\Thumbnails\animaux\chevaux.png">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Include="Data\Quiz\Thumbnails\animaux\chevaux.png">
+    <Content Include="Data\Secret\Thumbnails\animaux\dragon.png">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Include="Data\Quiz\Thumbnails\animaux\dragon.png">
+    <Content Include="Data\Secret\Thumbnails\animaux\fourmis.png">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Include="Data\Quiz\Thumbnails\animaux\fourmis.png">
+    <Content Include="Data\Secret\Thumbnails\animaux\nos-amis-les-chats.png">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Include="Data\Quiz\Thumbnails\animaux\nos-amis-les-chats.png">
+    <Content Include="Data\Secret\Thumbnails\animaux\oiseaux.png">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Include="Data\Quiz\Thumbnails\animaux\oiseaux.png">
+    <Content Include="Data\Secret\Thumbnails\animaux\requins.png">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Include="Data\Quiz\Thumbnails\animaux\requins.png">
+    <Content Include="Data\Secret\Thumbnails\archeologie\machu-pichu.png">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Include="Data\Quiz\Thumbnails\archeologie\machu-pichu.png">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="Data\Quiz\Thumbnails\architecture\chateau-de-chambord.png">
+    <Content Include="Data\Secret\Thumbnails\architecture\chateau-de-chambord.png">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
   </ItemGroup>
   
   <ItemGroup>
+    <PackageReference Include="JsonNet.PrivateSettersContractResolvers" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.4" />
     <PackageReference Include="Microsoft.AspNetCore.Blazor.HttpClient" Version="3.2.0-preview3.20168.3" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="3.2.0-rc1.20223.4" />

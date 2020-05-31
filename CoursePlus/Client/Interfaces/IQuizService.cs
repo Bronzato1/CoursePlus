@@ -9,16 +9,18 @@ namespace CoursePlus.Client.Services
 {
     public interface IQuizService
     {
-        Task<PaginatedList<Quiz>> GetQuizzes(int pageNumber = 1, IDictionary<string, string> sortOrder = null, IDictionary<string, string> filters = null);
+        Task<PaginatedList<QuizTopic>> GetQuizzes(int pageNumber = 1, IDictionary<string, string> sortOrder = null, IDictionary<string, string> filters = null);
 
-        Task<List<Quiz>> GetPopularQuizzes();
+        Task<List<QuizTopic>> GetPopularQuizzes();
 
-        Task<Quiz> GetQuiz(int id);
+        Task<QuizTopic> GetQuiz(int id);
 
-        Task<Quiz> AddQuiz(Quiz quiz);
+        Task<QuizTopic> AddQuiz(QuizTopic quiz);
 
-        Task UpdateQuiz(Quiz quiz);
+        Task UpdateQuiz(QuizTopic quiz);
 
         Task DeleteQuiz(int id);
+
+        Task<int> CreateQuizzesFromJsonOfOpenQuizzDB();
     }
 }

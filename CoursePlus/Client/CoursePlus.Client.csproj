@@ -6,24 +6,48 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\Admin\BookEdit.cs" />
+    <Compile Remove="Pages\Admin\BookList.cs" />
+    <Compile Remove="Pages\Admin\PlaylistEdit.cs" />
+    <Compile Remove="Pages\Admin\PlaylistList.cs" />
+    <Compile Remove="Pages\Admin\ProfileEdit.cs" />
+    <Compile Remove="Pages\Admin\ProfileList.cs" />
+    <Compile Remove="Pages\BookDetail.cs" />
     <Compile Remove="Pages\BookDetailBase.cs" />
+    <Compile Remove="Pages\BookList.cs" />
     <Compile Remove="Pages\BookListBase.cs" />
+    <Compile Remove="Pages\PlaylistDetail.cs" />
+    <Compile Remove="Pages\PlaylistList.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="Pages\Admin\BookEdit.razor" />
+    <Content Remove="Pages\Admin\BookList.razor" />
+    <Content Remove="Pages\Admin\Categories.razor" />
+    <Content Remove="Pages\Admin\Dashboard.razor" />
+    <Content Remove="Pages\Admin\EpisodeEdit.razor" />
+    <Content Remove="Pages\Admin\PlaylistEdit.razor" />
+    <Content Remove="Pages\Admin\PlaylistList.razor" />
+    <Content Remove="Pages\Admin\ProfileEdit.razor" />
+    <Content Remove="Pages\Admin\ProfileList.razor" />
     <Content Remove="Pages\Blog_1.razor" />
+    <Content Remove="Pages\BookDetail.razor" />
+    <Content Remove="Pages\BookList.razor" />
     <Content Remove="Pages\Chat.razor" />
     <Content Remove="Pages\ComingSoon.razor" />
     <Content Remove="Pages\Components.razor" />
     <Content Remove="Pages\Elements.razor" />
+    <Content Remove="Pages\Episodes.razor" />
     <Content Remove="Pages\FormRegister.razor" />
-    <Content Remove="Pages\Icons.razor" />
     <Content Remove="Pages\Logout.razor" />
     <Content Remove="Pages\Maintenance.razor" />
     <Content Remove="Pages\PageFaq.razor" />
     <Content Remove="Pages\PagePricing.razor" />
     <Content Remove="Pages\PagePrivacy.razor" />
     <Content Remove="Pages\PageTerm.razor" />
+    <Content Remove="Pages\PlaylistDetail.razor" />
+    <Content Remove="Pages\PlaylistList.razor" />
+    <Content Remove="Pages\PlaylistPath.razor" />
     <Content Remove="Pages\UserProfile.razor" />
     <Content Remove="Pages\UserProfileEdit.razor" />
   </ItemGroup>

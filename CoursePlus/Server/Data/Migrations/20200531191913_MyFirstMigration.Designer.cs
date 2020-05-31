@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoursePlus.Server.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200525191554_FirstMigration")]
-    partial class FirstMigration
+    [Migration("20200531191913_MyFirstMigration")]
+    partial class MyFirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -578,7 +578,59 @@ namespace CoursePlus.Server.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("CoursePlus.Shared.Models.Quiz", b =>
+            modelBuilder.Entity("CoursePlus.Shared.Models.QuizItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Anecdote")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Answer")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Difficulty")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Language")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Question")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("QuizTopicId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuizTopicId");
+
+                    b.ToTable("QuizItems");
+                });
+
+            modelBuilder.Entity("CoursePlus.Shared.Models.QuizProposal", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Proposition")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("QuizItemId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuizItemId");
+
+                    b.ToTable("QuizProposals");
+                });
+
+            modelBuilder.Entity("CoursePlus.Shared.Models.QuizTopic", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -597,17 +649,23 @@ namespace CoursePlus.Server.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Difficulty")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Editor")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("ImageId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ImagePath")
+                    b.Property<string>("Provider")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Theme")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("ThumbnailId")
                         .HasColumnType("int");
-
-                    b.Property<string>("ThumbnailPath")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
@@ -626,165 +684,7 @@ namespace CoursePlus.Server.Data.Migrations
 
                     b.HasIndex("ThumbnailId");
 
-                    b.ToTable("Quizzes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CategoryId = 4,
-                            CreatedTime = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedUser = "azur.consult@gmail.com",
-                            Description = "...",
-                            ImagePath = "Data/Quiz/Images/Architecture/chateau-de-chambord.png",
-                            ThumbnailPath = "Data/Quiz/Thumbnails/Architecture/chateau-de-chambord.png",
-                            Title = "Chateau de Chambord",
-                            UpdatedTime = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            UpdatedUser = "azur.consult@gmail.com"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CategoryId = 2,
-                            CreatedTime = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedUser = "azur.consult@gmail.com",
-                            Description = "...",
-                            ImagePath = "Data/Quiz/Images/Archeologie/machu-pichu.png",
-                            ThumbnailPath = "Data/Quiz/Thumbnails/Archeologie/machu-pichu.png",
-                            Title = "Machu Pichu",
-                            UpdatedTime = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            UpdatedUser = "azur.consult@gmail.com"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CategoryId = 1,
-                            CreatedTime = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedUser = "azur.consult@gmail.com",
-                            Description = "...",
-                            ImagePath = "Data/Quiz/Images/Animaux/animaux-celebres.png",
-                            ThumbnailPath = "Data/Quiz/Thumbnails/Animaux/animaux-celebres.png",
-                            Title = "Animaux célèbres",
-                            UpdatedTime = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            UpdatedUser = "azur.consult@gmail.com"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CategoryId = 1,
-                            CreatedTime = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedUser = "azur.consult@gmail.com",
-                            Description = "...",
-                            ImagePath = "Data/Quiz/Images/Animaux/animaux-en-chiffres.png",
-                            ThumbnailPath = "Data/Quiz/Thumbnails/Animaux/animaux-en-chiffres.png",
-                            Title = "Animaux en chiffres",
-                            UpdatedTime = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            UpdatedUser = "azur.consult@gmail.com"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CategoryId = 1,
-                            CreatedTime = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedUser = "azur.consult@gmail.com",
-                            Description = "...",
-                            ImagePath = "Data/Quiz/Images/Animaux/animaux-en-tout-genre.png",
-                            ThumbnailPath = "Data/Quiz/Thumbnails/Animaux/animaux-en-tout-genre.png",
-                            Title = "Animaux en tout genre",
-                            UpdatedTime = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            UpdatedUser = "azur.consult@gmail.com"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            CategoryId = 1,
-                            CreatedTime = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedUser = "azur.consult@gmail.com",
-                            Description = "...",
-                            ImagePath = "Data/Quiz/Images/Animaux/animaux-et-habitat.png",
-                            ThumbnailPath = "Data/Quiz/Thumbnails/Animaux/animaux-et-habitat.png",
-                            Title = "Animaux et habitat",
-                            UpdatedTime = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            UpdatedUser = "azur.consult@gmail.com"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            CategoryId = 1,
-                            CreatedTime = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedUser = "azur.consult@gmail.com",
-                            Description = "...",
-                            ImagePath = "Data/Quiz/Images/Animaux/chevaux.png",
-                            ThumbnailPath = "Data/Quiz/Thumbnails/Animaux/chevaux.png",
-                            Title = "Chevaux",
-                            UpdatedTime = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            UpdatedUser = "azur.consult@gmail.com"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            CategoryId = 1,
-                            CreatedTime = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedUser = "azur.consult@gmail.com",
-                            Description = "...",
-                            ImagePath = "Data/Quiz/Images/Animaux/dragon.png",
-                            ThumbnailPath = "Data/Quiz/Thumbnails/Animaux/dragon.png",
-                            Title = "Dragon",
-                            UpdatedTime = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            UpdatedUser = "azur.consult@gmail.com"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            CategoryId = 1,
-                            CreatedTime = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedUser = "azur.consult@gmail.com",
-                            Description = "...",
-                            ImagePath = "Data/Quiz/Images/Animaux/fourmis.png",
-                            ThumbnailPath = "Data/Quiz/Thumbnails/Animaux/fourmis.png",
-                            Title = "Fourmis",
-                            UpdatedTime = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            UpdatedUser = "azur.consult@gmail.com"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            CategoryId = 1,
-                            CreatedTime = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedUser = "azur.consult@gmail.com",
-                            Description = "...",
-                            ImagePath = "Data/Quiz/Images/Animaux/nos-amis-les-chats.png",
-                            ThumbnailPath = "Data/Quiz/Thumbnails/Animaux/nos-amis-les-chats.png",
-                            Title = "Nos amis les chats",
-                            UpdatedTime = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            UpdatedUser = "azur.consult@gmail.com"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            CategoryId = 1,
-                            CreatedTime = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedUser = "azur.consult@gmail.com",
-                            Description = "...",
-                            ImagePath = "Data/Quiz/Images/Animaux/oiseaux.png",
-                            ThumbnailPath = "Data/Quiz/Thumbnails/Animaux/oiseaux.png",
-                            Title = "Oiseaux",
-                            UpdatedTime = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            UpdatedUser = "azur.consult@gmail.com"
-                        },
-                        new
-                        {
-                            Id = 12,
-                            CategoryId = 1,
-                            CreatedTime = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedUser = "azur.consult@gmail.com",
-                            Description = "...",
-                            ImagePath = "Data/Quiz/Images/Animaux/requins.png",
-                            ThumbnailPath = "Data/Quiz/Thumbnails/Animaux/requins.png",
-                            Title = "Requins",
-                            UpdatedTime = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            UpdatedUser = "azur.consult@gmail.com"
-                        });
+                    b.ToTable("QuizTopics");
                 });
 
             modelBuilder.Entity("CoursePlus.Shared.Models.Thumbnail", b =>
@@ -1079,7 +979,21 @@ namespace CoursePlus.Server.Data.Migrations
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("CoursePlus.Shared.Models.Quiz", b =>
+            modelBuilder.Entity("CoursePlus.Shared.Models.QuizItem", b =>
+                {
+                    b.HasOne("CoursePlus.Shared.Models.QuizTopic", null)
+                        .WithMany("Items")
+                        .HasForeignKey("QuizTopicId");
+                });
+
+            modelBuilder.Entity("CoursePlus.Shared.Models.QuizProposal", b =>
+                {
+                    b.HasOne("CoursePlus.Shared.Models.QuizItem", null)
+                        .WithMany("Proposals")
+                        .HasForeignKey("QuizItemId");
+                });
+
+            modelBuilder.Entity("CoursePlus.Shared.Models.QuizTopic", b =>
                 {
                     b.HasOne("CoursePlus.Shared.Models.Category", "Category")
                         .WithMany()

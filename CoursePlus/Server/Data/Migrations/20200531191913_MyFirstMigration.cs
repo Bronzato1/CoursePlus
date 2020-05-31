@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CoursePlus.Server.Data.Migrations
 {
-    public partial class FirstMigration : Migration
+    public partial class MyFirstMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -177,7 +177,7 @@ namespace CoursePlus.Server.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Quizzes",
+                name: "QuizTopics",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -185,10 +185,12 @@ namespace CoursePlus.Server.Data.Migrations
                     Title = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     CategoryId = table.Column<int>(nullable: true),
-                    ImagePath = table.Column<string>(nullable: true),
                     ImageId = table.Column<int>(nullable: true),
-                    ThumbnailPath = table.Column<string>(nullable: true),
                     ThumbnailId = table.Column<int>(nullable: true),
+                    Provider = table.Column<string>(nullable: true),
+                    Editor = table.Column<string>(nullable: true),
+                    Theme = table.Column<string>(nullable: true),
+                    Difficulty = table.Column<int>(nullable: false),
                     CreatedTime = table.Column<DateTime>(nullable: false),
                     UpdatedTime = table.Column<DateTime>(nullable: true),
                     CreatedUser = table.Column<string>(nullable: true),
@@ -196,21 +198,21 @@ namespace CoursePlus.Server.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Quizzes", x => x.Id);
+                    table.PrimaryKey("PK_QuizTopics", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Quizzes_Categories_CategoryId",
+                        name: "FK_QuizTopics_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Quizzes_Images_ImageId",
+                        name: "FK_QuizTopics_Images_ImageId",
                         column: x => x.ImageId,
                         principalTable: "Images",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Quizzes_Thumbnails_ThumbnailId",
+                        name: "FK_QuizTopics_Thumbnails_ThumbnailId",
                         column: x => x.ThumbnailId,
                         principalTable: "Thumbnails",
                         principalColumn: "Id",
@@ -328,6 +330,30 @@ namespace CoursePlus.Server.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "QuizItems",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Language = table.Column<int>(nullable: false),
+                    Difficulty = table.Column<int>(nullable: false),
+                    Question = table.Column<string>(nullable: true),
+                    Answer = table.Column<string>(nullable: true),
+                    Anecdote = table.Column<string>(nullable: true),
+                    QuizTopicId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QuizItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_QuizItems_QuizTopics_QuizTopicId",
+                        column: x => x.QuizTopicId,
+                        principalTable: "QuizTopics",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Playlists",
                 columns: table => new
                 {
@@ -374,6 +400,26 @@ namespace CoursePlus.Server.Data.Migrations
                         name: "FK_Playlists_Thumbnails_ThumbnailId",
                         column: x => x.ThumbnailId,
                         principalTable: "Thumbnails",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "QuizProposals",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Proposition = table.Column<string>(nullable: true),
+                    QuizItemId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QuizProposals", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_QuizProposals_QuizItems_QuizItemId",
+                        column: x => x.QuizItemId,
+                        principalTable: "QuizItems",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -531,35 +577,17 @@ namespace CoursePlus.Server.Data.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "UserId", "RoleId" },
-                values: new object[,]
-                {
-                    { "e29790bd-b712-4594-8b3f-c13cbc2943ac", "0a3d93c9-e5d8-4ed5-b79d-d1e6a3768228" },
-                    { "e29790bd-b712-4594-8b3f-c13cbc2943ac", "1002a5ed-a8e4-4c5c-9587-b8a8e1aa320b" }
-                });
+                values: new object[] { "e29790bd-b712-4594-8b3f-c13cbc2943ac", "0a3d93c9-e5d8-4ed5-b79d-d1e6a3768228" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "UserId", "RoleId" },
+                values: new object[] { "e29790bd-b712-4594-8b3f-c13cbc2943ac", "1002a5ed-a8e4-4c5c-9587-b8a8e1aa320b" });
 
             migrationBuilder.InsertData(
                 table: "Profiles",
                 columns: new[] { "Id", "CreatedTime", "CreatedUser", "Enrolled", "Joined", "UpdatedTime", "UpdatedUser", "UserId" },
                 values: new object[] { 1, new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "azur.consult@gmail.com", 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "azur.consult@gmail.com", "e29790bd-b712-4594-8b3f-c13cbc2943ac" });
-
-            migrationBuilder.InsertData(
-                table: "Quizzes",
-                columns: new[] { "Id", "CategoryId", "CreatedTime", "CreatedUser", "Description", "ImageId", "ImagePath", "ThumbnailId", "ThumbnailPath", "Title", "UpdatedTime", "UpdatedUser" },
-                values: new object[,]
-                {
-                    { 3, 1, new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "azur.consult@gmail.com", "...", null, "Data/Quiz/Images/Animaux/animaux-celebres.png", null, "Data/Quiz/Thumbnails/Animaux/animaux-celebres.png", "Animaux célèbres", new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "azur.consult@gmail.com" },
-                    { 4, 1, new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "azur.consult@gmail.com", "...", null, "Data/Quiz/Images/Animaux/animaux-en-chiffres.png", null, "Data/Quiz/Thumbnails/Animaux/animaux-en-chiffres.png", "Animaux en chiffres", new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "azur.consult@gmail.com" },
-                    { 5, 1, new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "azur.consult@gmail.com", "...", null, "Data/Quiz/Images/Animaux/animaux-en-tout-genre.png", null, "Data/Quiz/Thumbnails/Animaux/animaux-en-tout-genre.png", "Animaux en tout genre", new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "azur.consult@gmail.com" },
-                    { 6, 1, new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "azur.consult@gmail.com", "...", null, "Data/Quiz/Images/Animaux/animaux-et-habitat.png", null, "Data/Quiz/Thumbnails/Animaux/animaux-et-habitat.png", "Animaux et habitat", new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "azur.consult@gmail.com" },
-                    { 7, 1, new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "azur.consult@gmail.com", "...", null, "Data/Quiz/Images/Animaux/chevaux.png", null, "Data/Quiz/Thumbnails/Animaux/chevaux.png", "Chevaux", new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "azur.consult@gmail.com" },
-                    { 8, 1, new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "azur.consult@gmail.com", "...", null, "Data/Quiz/Images/Animaux/dragon.png", null, "Data/Quiz/Thumbnails/Animaux/dragon.png", "Dragon", new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "azur.consult@gmail.com" },
-                    { 9, 1, new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "azur.consult@gmail.com", "...", null, "Data/Quiz/Images/Animaux/fourmis.png", null, "Data/Quiz/Thumbnails/Animaux/fourmis.png", "Fourmis", new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "azur.consult@gmail.com" },
-                    { 10, 1, new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "azur.consult@gmail.com", "...", null, "Data/Quiz/Images/Animaux/nos-amis-les-chats.png", null, "Data/Quiz/Thumbnails/Animaux/nos-amis-les-chats.png", "Nos amis les chats", new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "azur.consult@gmail.com" },
-                    { 11, 1, new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "azur.consult@gmail.com", "...", null, "Data/Quiz/Images/Animaux/oiseaux.png", null, "Data/Quiz/Thumbnails/Animaux/oiseaux.png", "Oiseaux", new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "azur.consult@gmail.com" },
-                    { 12, 1, new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "azur.consult@gmail.com", "...", null, "Data/Quiz/Images/Animaux/requins.png", null, "Data/Quiz/Thumbnails/Animaux/requins.png", "Requins", new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "azur.consult@gmail.com" },
-                    { 2, 2, new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "azur.consult@gmail.com", "...", null, "Data/Quiz/Images/Archeologie/machu-pichu.png", null, "Data/Quiz/Thumbnails/Archeologie/machu-pichu.png", "Machu Pichu", new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "azur.consult@gmail.com" },
-                    { 1, 4, new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "azur.consult@gmail.com", "...", null, "Data/Quiz/Images/Architecture/chateau-de-chambord.png", null, "Data/Quiz/Thumbnails/Architecture/chateau-de-chambord.png", "Chateau de Chambord", new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "azur.consult@gmail.com" }
-                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -661,18 +689,28 @@ namespace CoursePlus.Server.Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Quizzes_CategoryId",
-                table: "Quizzes",
+                name: "IX_QuizItems_QuizTopicId",
+                table: "QuizItems",
+                column: "QuizTopicId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_QuizProposals_QuizItemId",
+                table: "QuizProposals",
+                column: "QuizItemId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_QuizTopics_CategoryId",
+                table: "QuizTopics",
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Quizzes_ImageId",
-                table: "Quizzes",
+                name: "IX_QuizTopics_ImageId",
+                table: "QuizTopics",
                 column: "ImageId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Quizzes_ThumbnailId",
-                table: "Quizzes",
+                name: "IX_QuizTopics_ThumbnailId",
+                table: "QuizTopics",
                 column: "ThumbnailId");
 
             migrationBuilder.CreateIndex(
@@ -705,7 +743,7 @@ namespace CoursePlus.Server.Data.Migrations
                 name: "Enrollments");
 
             migrationBuilder.DropTable(
-                name: "Quizzes");
+                name: "QuizProposals");
 
             migrationBuilder.DropTable(
                 name: "WatchHistories");
@@ -714,7 +752,13 @@ namespace CoursePlus.Server.Data.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "QuizItems");
+
+            migrationBuilder.DropTable(
                 name: "Episodes");
+
+            migrationBuilder.DropTable(
+                name: "QuizTopics");
 
             migrationBuilder.DropTable(
                 name: "Chapters");

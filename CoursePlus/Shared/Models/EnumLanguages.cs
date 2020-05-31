@@ -6,7 +6,11 @@ namespace CoursePlus.Shared.Models
 {
     public enum EnumLanguages
     {
+        French,
         English,
-        French
+        Deutch,
+        Spanish,
+        Italian,
+        Netherland
     }
 }
