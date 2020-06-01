@@ -38,7 +38,7 @@ namespace CoursePlus.Shared.Models
         {
             QuizTopic quiz = new QuizTopic();
 
-            quiz.Theme = quizA.Thème;
+            quiz.Title = quizA.Titre;
             quiz.Difficulty = quizA.Difficulté;
             quiz.Editor = quizA.Rédacteur;
             quiz.Provider = quizA.Fournisseur;
@@ -54,7 +54,7 @@ namespace CoursePlus.Shared.Models
         {
             QuizTopic quiz = new QuizTopic();
 
-            quiz.Theme = quizB.Thème;
+            quiz.Title = quizB.Titre;
             quiz.Difficulty = quizB.Difficulté;
             quiz.Editor = quizB.Rédacteur;
             quiz.Provider = quizB.Fournisseur;

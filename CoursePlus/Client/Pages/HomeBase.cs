@@ -17,7 +17,7 @@ namespace CoursePlus.Client.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            //PopularQuizzes = await QuizService.GetPopularQuizzes();
+            PopularQuizzes = await QuizService.GetPopularQuizzes();
         }
     }
 }

@@ -126,23 +126,40 @@ namespace CoursePlus.Server.Repositories
 
                 for (var index=1; index<=230; index++)
                 {
-                    var jsonData = await System.IO.File.ReadAllTextAsync($"./Data/Secret/Quizz/{index:D3}/openquizzdb_{index}.json");
+                    Debug.WriteLine($"index: {index}");
+                    var jsonFilename  = System.IO.Directory.GetFiles($"./Data/Secret/Quizz/{index:D3}", "*.json");
+                    var thumbFilename = System.IO.Directory.GetFiles($"./Data/Secret/Quizz/{index:D3}", "thumbnail-*.png");
+                    var imageFilename = System.IO.Directory.GetFiles($"./Data/Secret/Quizz/{index:D3}", "image-*.png");
+
+                    if (jsonFilename.Length  != 1) continue;
+                    if (thumbFilename.Length != 1) continue;
+                    if (imageFilename.Length != 1) continue;
+
+                    var json  = await System.IO.File.ReadAllTextAsync(jsonFilename[0]);
+                    var thumb = await System.IO.File.ReadAllBytesAsync(thumbFilename[0]);
+                    var image = await System.IO.File.ReadAllBytesAsync(imageFilename[0]);
 
                     JsonSerializerSettings settings = new JsonSerializerSettings
                     {
                         ContractResolver = new PrivateSetterContractResolver()
                     };
 
-                    if (jsonData.Contains("\"fr\""))
+                    if (json.Contains("\"fr\""))
                     {
-                        QuizModelB quizB = JsonConvert.DeserializeObject<QuizModelB>(jsonData, settings);
+                        QuizModelB quizB = JsonConvert.DeserializeObject<QuizModelB>(json, settings);
                         quiz = quizB;
                     }
                     else 
                     {
-                        QuizModelA quizA = JsonConvert.DeserializeObject<QuizModelA>(jsonData, settings);
+                        QuizModelA quizA = JsonConvert.DeserializeObject<QuizModelA>(json, settings);
                         quiz = quizA;
                     }
+
+                    quiz.Thumbnail = new Thumbnail { Data = thumb };
+                    _dbContext.Thumbnails.Add(quiz.Thumbnail);
+
+                    quiz.Image = new Image { Data = image };
+                    _dbContext.Images.Add(quiz.Image);
 
                     _dbContext.QuizTopics.Add(quiz);
                     cptr++;
@@ -153,7 +170,7 @@ namespace CoursePlus.Server.Repositories
 
                 return cptr;
             }
-            catch
+            catch (Exception ex)
             {
                 throw new ApplicationException("CreateQuizzesFromJsonOfOpenQuizzDB");
             }
