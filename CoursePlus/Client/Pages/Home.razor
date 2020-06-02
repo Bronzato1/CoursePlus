@@ -269,7 +269,11 @@
                                             <div class="playlist-card-thumbnail">
 
                                                 <span class="duration">2:39</span>
-                                                <img class="@(index==2 ? "greyed" : "") " src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(OneQuiz.Thumbnail.Data))">
+                                                @if (OneQuiz.Thumbnail != null)
+                                                {
+                                                    <img class="@(index==2 ? "greyed" : "") " src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(OneQuiz.Thumbnail.Data))">
+                                                }
+
 
                                                 @if (index == 2)
                                                 {

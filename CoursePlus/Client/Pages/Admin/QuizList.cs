@@ -19,13 +19,9 @@ namespace CoursePlus.Client.Pages.Admin
 
         public List<QuizTopic> SomeQuizzes { get; set; } = new List<QuizTopic>();
 
-        //protected override async Task OnInitializedAsync()
-        //{
-            
-        //}
-        protected int CountElements(QuizTopic OneQuiz, EnumLanguages language)
+        protected override async Task OnInitializedAsync()
         {
-            return OneQuiz.Items.Count(x => x.Language == language);
+            SomeQuizzes = await QuizService.GetPopularQuizzes();
         }
         public async Task CreateQuizzes()
         {

@@ -66,8 +66,8 @@ namespace CoursePlus.Server.Repositories
         {
             return await _dbContext.QuizTopics
                                    .Include(x => x.Category)
-                                   .Include(x => x.Thumbnail)
-                                   .Take(6).ToListAsync();
+                                   .Include(x => x.Thumbnail).ToListAsync();
+                                   //.Take(6).ToListAsync();
         }
 
         public QuizTopic GetQuiz(int id)
@@ -127,9 +127,9 @@ namespace CoursePlus.Server.Repositories
                 for (var index=1; index<=230; index++)
                 {
                     Debug.WriteLine($"index: {index}");
-                    var jsonFilename  = System.IO.Directory.GetFiles($"./Data/Secret/Quizz/{index:D3}", "*.json");
-                    var thumbFilename = System.IO.Directory.GetFiles($"./Data/Secret/Quizz/{index:D3}", "thumbnail-*.png");
-                    var imageFilename = System.IO.Directory.GetFiles($"./Data/Secret/Quizz/{index:D3}", "image-*.png");
+                    var jsonFilename  = System.IO.Directory.GetFiles($"./Data/Secret/Quizz/{index:D3}", $"openquizzdb_{index}.json");
+                    var thumbFilename = System.IO.Directory.GetFiles($"./Data/Secret/Quizz/{index:D3}", $"Thumbnail_{index}.jpg");
+                    var imageFilename = System.IO.Directory.GetFiles($"./Data/Secret/Quizz/{index:D3}", $"Image_{index}.jpg");
 
                     if (jsonFilename.Length  != 1) continue;
                     if (thumbFilename.Length != 1) continue;

@@ -1,0 +1,73 @@
+﻿@page "/admin/quizzes"
+@inherits QuizGeneratorBase
+@attribute [Authorize(Policy = Policies.IsAdmin)]
+
+
+<div id="wrapper">
+
+    <Header Class="header" UkSticky="top:20; cls-active:header-sticky">
+        <Breadcrumbs>
+            <li><a href="/"> <i class="uil-home-alt"></i> </a></li>
+            <li><a href="/admin/dashboard">Admin dashboard</a></li>
+            <li>Quizzes</li>
+        </Breadcrumbs>
+    </Header>
+
+    <SearchOnMobile></SearchOnMobile>
+
+    <SearchOnDesktop></SearchOnDesktop>
+
+    <SideNav></SideNav>
+
+    <div class="page-content">
+        <div class="page-content-inner">
+
+            <div class="card">
+
+                <!-- Card header -->
+                <div class="card-header actions-toolbar border-0">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="d-inline-block mb-0">Quizzes</h4>
+                        <div class="d-flex">
+                            <a href="#" class="btn btn-icon btn-hover btn-circle" uk-tooltip="More">
+                                <i class="uil-ellipsis-h"></i>
+                            </a>
+                            <div uk-dropdown="pos: bottom-right ; mode: click ;animation: uk-animation-scale-up">
+                                <ul class="uk-nav uk-dropdown-nav">
+                                    <li><a href="#">.........</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <SfGrid DataSource="@SomeQuizzes" AllowPaging="true">
+                        <GridColumns>
+                            <GridColumn Field=@nameof(QuizTopic.Id) HeaderText="Quiz ID" TextAlign="TextAlign.Right" Width="120"></GridColumn>
+                            <GridColumn Field=@nameof(QuizTopic.Title) HeaderText="Title" Width="150"></GridColumn>
+                        </GridColumns>
+                    </SfGrid>
+                </div>
+
+                <!-- Card footer -->
+                <div class="card-footer">
+                    <div class="uk-flex uk-flex-middle">
+                        <div class="uk-width-1-2">
+                            @SomeQuizzes?.Count items
+                        </div>
+                        <div class="uk-width-1-2 uk-text-right uk-margin-top uk-margin-bottom">
+                            <a href="javascript:void(0)" @onclick="CreateQuizzes" class="btn btn-default uk-visible@s"> <i class="uil-plus"></i> Create quizzes from OpenQuizzDB </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <Footer></Footer>
+
+        </div>
+
+    </div>
+
+</div>
