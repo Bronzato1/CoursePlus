@@ -20,12 +20,12 @@ namespace CoursePlus.Client.Services
             _httpClient = httpClient;
         }
 
-        public async Task<PaginatedList<QuizTopic>> GetQuizzes(int pageNumber = 1, IDictionary<string, string> sortOrder = null, IDictionary<string, string> filters = null)
+        public async Task<PaginatedList<QuizTopic>> GetQuizzes(int pageNumber = 1, int pageSize = 8, IDictionary<string, string> sortOrder = null, IDictionary<string, string> filters = null)
         {
             string currentFilters = Newtonsoft.Json.JsonConvert.SerializeObject(filters);
             string currentSortOrder = Newtonsoft.Json.JsonConvert.SerializeObject(sortOrder);
 
-            var response = await _httpClient.GetAsync($"api/quiz/getquizzes?pageNumber={pageNumber}&sortOrder={currentSortOrder}&filters={currentFilters}");
+            var response = await _httpClient.GetAsync($"api/quiz/getquizzes?pageNumber={pageNumber}&pageSize={pageSize}&sortOrder={currentSortOrder}&filters={currentFilters}");
 
             response.EnsureSuccessStatusCode();
 

@@ -24,11 +24,10 @@ namespace CoursePlus.Server.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<PaginatedList<QuizTopic>> GetQuizzes(int? pageNumber, IDictionary<string, string> sortOrder, IDictionary<string, string> filters)
+        public async Task<PaginatedList<QuizTopic>> GetQuizzes(int? pageNumber, int? pageSize, IDictionary<string, string> sortOrder, IDictionary<string, string> filters)
         {
             try
             {
-                int pageSize = 6;
                 var quizList = _dbContext.QuizTopics
                                          .Include(x => x.Thumbnail)
                                          .Include(x => x.Category).AsQueryable();
@@ -54,7 +53,7 @@ namespace CoursePlus.Server.Repositories
                     }
                 }
 
-                return await PaginatedList<QuizTopic>.CreateAsync(quizList.AsNoTracking(), pageNumber ?? 1, pageSize);
+                return await PaginatedList<QuizTopic>.CreateAsync(quizList.AsNoTracking(), pageNumber ?? 1, pageSize ?? 6);
             }
             catch
             {
@@ -66,8 +65,8 @@ namespace CoursePlus.Server.Repositories
         {
             return await _dbContext.QuizTopics
                                    .Include(x => x.Category)
-                                   .Include(x => x.Thumbnail).ToListAsync();
-                                   //.Take(6).ToListAsync();
+                                   .Include(x => x.Thumbnail)
+                                   .Take(6).ToListAsync();
         }
 
         public QuizTopic GetQuiz(int id)
@@ -148,11 +147,13 @@ namespace CoursePlus.Server.Repositories
                     {
                         QuizModelB quizB = JsonConvert.DeserializeObject<QuizModelB>(json, settings);
                         quiz = quizB;
+                        quiz.Category = new CategoryRepository(_dbContext).GetCategoryByName(quizB.Catégorie);
                     }
                     else 
                     {
                         QuizModelA quizA = JsonConvert.DeserializeObject<QuizModelA>(json, settings);
                         quiz = quizA;
+                        quiz.Category = new CategoryRepository(_dbContext).GetCategoryByName(quizA.Catégorie);
                     }
 
                     quiz.Thumbnail = new Thumbnail { Data = thumb };

@@ -24,11 +24,11 @@ namespace CoursePlus.Server.Controllers
         }
 
         [HttpGet("getquizzes")]
-        public async Task<ActionResult<PaginatedList<QuizTopic>>> GetQuizzes(int? pageNumber, string sortOrder, string filters)
+        public async Task<ActionResult<PaginatedList<QuizTopic>>> GetQuizzes(int? pageNumber, int?pageSize, string sortOrder, string filters)
         {
-            IDictionary<string, string> currentSortOrder = null; // Newtonsoft.Json.JsonConvert.DeserializeObject<IDictionary<string, string>>(sortOrder);
-            IDictionary<string, string> currentFilters = null; // Newtonsoft.Json.JsonConvert.DeserializeObject<IDictionary<string, string>>(filters);
-            var list = await _quizRepository.GetQuizzes(pageNumber, currentSortOrder, currentFilters);
+            IDictionary<string, string> currentSortOrder = Newtonsoft.Json.JsonConvert.DeserializeObject<IDictionary<string, string>>(sortOrder);
+            IDictionary<string, string> currentFilters = Newtonsoft.Json.JsonConvert.DeserializeObject<IDictionary<string, string>>(filters);
+            var list = await _quizRepository.GetQuizzes(pageNumber, pageSize, currentSortOrder, currentFilters);
             return list;
         }
 

@@ -9,7 +9,7 @@ namespace CoursePlus.Server.Repositories
 {
     public interface IQuizRepository
     {
-        Task<PaginatedList<QuizTopic>> GetQuizzes(int? pageNumber, IDictionary<string, string> sortOrder, IDictionary<string, string> filters);
+        Task<PaginatedList<QuizTopic>> GetQuizzes(int? pageNumber, int? pageSize, IDictionary<string, string> sortOrder, IDictionary<string, string> filters);
 
         Task<List<QuizTopic>> GetPopularQuizzes();
          

@@ -25,5 +25,10 @@ namespace CoursePlus.Server.Repositories
         {
             return _dbContext.Categories.FirstOrDefault(c => c.Id == categoryId);
         }
+
+        public Category GetCategoryByName(string categoryName)
+        {
+            return _dbContext.Categories.FirstOrDefault(c => c.Name == categoryName);
+        }
     }
 }

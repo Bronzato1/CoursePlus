@@ -553,7 +553,7 @@ namespace CoursePlus.Server.Data.Migrations
                     { 22, "Sports" },
                     { 21, "Sciences" },
                     { 20, "Pour adultes" },
-                    { 19, "Payx du monde" },
+                    { 19, "Pays du monde" },
                     { 18, "Nature" },
                     { 17, "Musique" },
                     { 16, "Loisirs" },
@@ -568,7 +568,7 @@ namespace CoursePlus.Server.Data.Migrations
                     { 6, "Bande dessinée" },
                     { 5, "Arts" },
                     { 4, "Architecture" },
-                    { 3, "Music" },
+                    { 3, "Musique" },
                     { 2, "Archéologie" },
                     { 14, "OpenBSD" },
                     { 1, "Animaux" }

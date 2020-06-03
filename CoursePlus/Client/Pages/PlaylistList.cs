@@ -12,23 +12,15 @@ namespace CoursePlus.Client.Pages
 {
     public class PlaylistListBase : ComponentBase, IDisposable
     {
-        [Inject]
-        public IPlaylistService PlaylistService { get; set; }
-        [Inject]
-        public ICategoryService CategoryService { get; set; }
-        [Inject]
-        public NavigationManager NavigationManager { get; set; }
+        [Inject] public IPlaylistService PlaylistService { get; set; }
+        [Inject] public ICategoryService CategoryService { get; set; }
+        [Inject] public NavigationManager NavigationManager { get; set; }
 
         public PaginatedList<Playlist> SomePlaylists { get; set; }
-
         public IEnumerable<Category> Categories { get; set; }
-
         public FilterModel CurrentFilterModel = new FilterModel();
-
-        public SortOrderModel CurrentSortOrderModel = new SortOrderModel() { SortOrder = EnumSortOrder.Newest };
-
+        public SortOrderModel CurrentSortOrderModel = new SortOrderModel() { SortOrder = EnumSortOrder.NewestFirst };
         public EditContext EditContextForSortOrderModel;
-
         public EditContext EditContextForFilterModel;
 
         public class FilterModel
@@ -40,12 +32,14 @@ namespace CoursePlus.Client.Pages
             public EnumPeriode? PeriodeFilter { get; set; }
             public EnumClassment? ClassmentFilter { get; set; }
         }
-
         public class SortOrderModel
         {
             public EnumSortOrder? SortOrder { get; set; }
         }
-
+        public void Dispose()
+        {
+            EditContextForSortOrderModel.OnFieldChanged -= OnFieldChanged;
+        }
         protected override async Task OnInitializedAsync()
         {
             EditContextForSortOrderModel = new EditContext(CurrentSortOrderModel);
@@ -57,12 +51,14 @@ namespace CoursePlus.Client.Pages
             await FilterPlaylists();
             Categories = await CategoryService.GetCategories();
         }
-
-        private void OnFieldChanged(object sender, FieldChangedEventArgs e)
+        protected void OnFieldChanged(object sender, FieldChangedEventArgs e)
         {
             _ = FilterPlaylists();
         }
-
+        protected void ViewPlaylist(Playlist OnePlaylist)
+        {
+            NavigationManager.NavigateTo("/playlist/" + OnePlaylist.Id);
+        } 
         protected async Task FilterPlaylists()
         {
             PaginatedList<Playlist> playlists;
@@ -96,14 +92,13 @@ namespace CoursePlus.Client.Pages
             { 
                 switch (CurrentSortOrderModel.SortOrder.Value)
                 {
-                    case EnumSortOrder.Newest:
+                    case EnumSortOrder.NewestFirst:
                         currentSortOrder.Add("Id", "desc");
                         break;
-                    case EnumSortOrder.Featured:
-                        currentSortOrder.Add("Featured", "asc");
-                        currentSortOrder.Add("Id", "desc");
+                    case EnumSortOrder.OldestFirst:
+                        currentSortOrder.Add("Id", "asc");
                         break;
-                    case EnumSortOrder.Popular:
+                    case EnumSortOrder.MostPlayed:
                         currentSortOrder.Add("Popular", "asc");
                         currentSortOrder.Add("Id", "desc");
                         break;
@@ -113,8 +108,9 @@ namespace CoursePlus.Client.Pages
             playlists = await PlaylistService.GetPlaylists(filters: currentFilters, sortOrder: currentSortOrder);
             
             SomePlaylists = playlists;
-        }
 
+            StateHasChanged();
+        }
         protected async void PageIndexChanged(PaginatedList<Playlist> context, int newPageNumber)
         {
             if (newPageNumber < 1 || newPageNumber > context.TotalPages)
@@ -142,16 +138,6 @@ namespace CoursePlus.Client.Pages
             context.TotalPages = data.TotalPages;
 
             StateHasChanged();
-        }
-
-        protected void ViewPlaylist(Playlist OnePlaylist)
-        {
-            NavigationManager.NavigateTo("/playlist/" + OnePlaylist.Id);
-        }
-
-        public void Dispose()
-        {
-            EditContextForSortOrderModel.OnFieldChanged -= OnFieldChanged;
         }
     }
 }

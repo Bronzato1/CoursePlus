@@ -20,48 +20,292 @@
     <SideNav></SideNav>
 
     <div class="page-content">
-        <div class="page-content-inner">
 
-            <div class="card">
+        <div class="container">
 
-                <!-- Card header -->
-                <div class="card-header actions-toolbar border-0">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h4 class="d-inline-block mb-0">Quizzes</h4>
-                        <div class="d-flex">
-                            <a href="#" class="btn btn-icon btn-hover btn-circle" uk-tooltip="More">
-                                <i class="uil-ellipsis-h"></i>
-                            </a>
-                            <div uk-dropdown="pos: bottom-right ; mode: click ;animation: uk-animation-scale-up">
-                                <ul class="uk-nav uk-dropdown-nav">
-                                    <li><a href="#">.........</a></li>
-                                </ul>
+            <h1>Quizzes</h1>
+
+            <div class="section-header pb-0 mt-5">
+                <div class="section-header-left">
+                    <h4> All the quizzes </h4>
+                </div>
+                <div class="section-header-right">
+
+                    <a href="#" class="btn-filter" uk-tooltip="title: Quizzes Filter ; pos:  top-right"
+                       uk-toggle="target: #quizzes-filter">
+                        <i class="icon-feather-filter"></i>
+                    </a>
+                    <div class="display-as">
+                        <a href="#" uk-tooltip="title: List; pos: top-right">
+                            <i class="icon-feather-grid"></i>
+                        </a>
+                        <a href="#" class="active" uk-tooltip="title: Grid; pos: top-right">
+                            <i class="icon-feather-list"></i>
+                        </a>
+                    </div>
+
+                    <a href="#" class="btn btn-icon btn-hover  btn-circle" uk-tooltip="More">
+                        <i class="uil-ellipsis-h"></i>
+                    </a>
+                    <div uk-dropdown="pos: bottom-right ; mode: click ;animation: uk-animation-scale-up">
+                        <ul class="uk-nav uk-dropdown-nav">
+                            <li><a @onclick="FilterPlaylists">Refresh</a></li>
+                            <li><a @onclick="AddQuiz">Add quiz</a></li>
+                            <li><a @onclick="CreateQuizzes">Create quizzes</a></li>
+                            <li class="uk-nav-divider"></li>
+                            <li class="@(PageSizeIndicator(8))"><a @onclick="@( () => SetPageSize(8) )">2 rows per page</a></li>
+                            <li class="@(PageSizeIndicator(16))"><a @onclick="@( () => SetPageSize(16) )">4 rows per page</a></li>
+                            <li class="@(PageSizeIndicator(32))"><a @onclick="@( () => SetPageSize(32) )">8 rows per page</a></li>
+                        </ul>
+                    </div>
+
+                    <EditForm EditContext="@EditContextForSortOrderModel">
+
+                        <InputSelectCustom id="SortOrder" class="selectpicker ml-3" @bind-Value="CurrentSortOrderModel.SortOrder">
+                            <option value="@EnumSortOrder.NewestFirst"> Newest first </option>
+                            <option value="@EnumSortOrder.OldestFirst"> Oldest first </option>
+                            <option value="@EnumSortOrder.MostPlayed"> Most played </option>
+                        </InputSelectCustom>
+
+                    </EditForm>
+
+                </div>
+            </div>
+
+            <div class="section-small">
+
+                @if (SomeQuizzes != null && SomeQuizzes.Items != null && SomeQuizzes.Items.Count() > 0)
+                {
+                    <div class="uk-child-width-1-4@m uk-child-width-1-3@s playlist-card-grid uk-grid-match" uk-grid>
+
+                        @foreach (var OneQuiz in SomeQuizzes.Items)
+                        {
+                            <div class="uk-margin-small-bottom">
+                                <a href="/quiz/@OneQuiz.Id">
+                                    <div class="playlist-card">
+                                        <div class="playlist-card-thumbnail">
+                                            <img src="@String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(OneQuiz.Thumbnail.Data))" style="object-fit: fill;">
+                                            <span class="play-button-trigger"></span>
+                                        </div>
+                                        <div class="playlist-card-body">
+                                            <div class="playlist-card-info">
+                                                <div>
+                                                    <span class="catagroy"> @OneQuiz.Category.Name </span>
+                                                </div>
+                                                <div>
+                                                    <i class="icon-feather-bookmark icon-small"></i>
+                                                </div>
+                                            </div>
+
+                                            <h4> @OneQuiz.Title </h4>
+                                            <p>  OneQuiz.SubTitle goes here </p>
+
+                                            <div class="playlist-card-footer">
+                                                <h5> <i class="icon-feather-film"></i> 33 Lectures </h5>
+                                                <h5> <i class="icon-feather-clock"></i> 26 Hours </h5>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </a>
                             </div>
-                        </div>
+                        }
+
                     </div>
-                </div>
 
-                <div>
-                    <SfGrid DataSource="@SomeQuizzes" AllowPaging="true">
-                        <GridColumns>
-                            <GridColumn Field=@nameof(QuizTopic.Id) HeaderText="Quiz ID" TextAlign="TextAlign.Right" Width="120"></GridColumn>
-                            <GridColumn Field=@nameof(QuizTopic.Title) HeaderText="Title" Width="150"></GridColumn>
-                        </GridColumns>
-                    </SfGrid>
-                </div>
+                    <div class=" uk-flex uk-flex-center uk-margin-top uk-margin-bottom uk-width-expand">
 
-                <!-- Card footer -->
-                <div class="card-footer">
-                    <div class="uk-flex uk-flex-middle">
-                        <div class="uk-width-1-2">
-                            @SomeQuizzes?.Count items
-                        </div>
-                        <div class="uk-width-1-2 uk-text-right uk-margin-top uk-margin-bottom">
-                            <a href="javascript:void(0)" @onclick="CreateQuizzes" class="btn btn-default uk-visible@s"> <i class="uil-plus"></i> Create quizzes from OpenQuizzDB </a>
-                        </div>
+                        <Pager PageIndex=@SomeQuizzes.PageIndex TotalPages=@SomeQuizzes.TotalPages OnClick="@((newPageNumber) => PageIndexChanged(SomeQuizzes, newPageNumber))"
+                               HasNextPage=@SomeQuizzes.HasNextPage HasPreviousPage=@SomeQuizzes.HasPreviousPage>
+                        </Pager>
+
                     </div>
-                </div>
+                }
 
+            </div>
+
+            <div id="quizzes-filter" uk-offcanvas="flip: true; overlay: true">
+                <div class="uk-offcanvas-bar">
+
+                    <!-- close button -->
+                    <button class="uk-offcanvas-close" type="button" uk-close></button>
+
+                    <div class="sidebar-filter">
+
+                        <div class="sidebar-filter-contents">
+
+                            <EditForm EditContext="@EditContextForFilterModel">
+
+                                <h4> Filter By </h4>
+
+                                <ul class="sidebar-filter-list" uk-accordion="multiple: true">
+
+                                    <li>
+                                        <a class="uk-accordion-title" href="#"> Difficulty level </a>
+                                        <div class="uk-accordion-content">
+                                            <div class="uk-form-controls">
+                                                <label>
+                                                    <InputRadio class="uk-radio" SelectedValue="null" @bind-Value="@CurrentFilterModel.DifficultyFilter" />
+                                                    <span class="test"> Any </span>
+                                                </label>
+                                                <label>
+                                                    <InputRadio class="uk-radio" SelectedValue="EnumDifficulty.Beginner" @bind-Value="@CurrentFilterModel.DifficultyFilter" />
+                                                    <span class="test"> Beginner </span>
+                                                </label>
+                                                <label>
+                                                    <InputRadio class="uk-radio" SelectedValue="EnumDifficulty.Confirmed" @bind-Value="@CurrentFilterModel.DifficultyFilter" />
+                                                    <span class="test"> Confirmed </span>
+                                                </label>
+                                                <label>
+                                                    <InputRadio class="uk-radio" SelectedValue="EnumDifficulty.Expert" @bind-Value="@CurrentFilterModel.DifficultyFilter" />
+                                                    <span class="test"> Expert </span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <a class="uk-accordion-title" href="#"> Duration time </a>
+                                        <div class="uk-accordion-content">
+                                            <div class="uk-form-controls">
+                                                <label>
+                                                    <InputRadio class="uk-radio" SelectedValue="null" @bind-Value="@CurrentFilterModel.DurationFilter" />
+                                                    <span class="test"> Any </span>
+                                                </label>
+                                                <label>
+                                                    <InputRadio class="uk-radio" SelectedValue="EnumDuration.MoreThan2Hours" @bind-Value="@CurrentFilterModel.DurationFilter" />
+                                                    <span class="test"> +2 hours </span>
+                                                </label>
+                                                <label>
+                                                    <InputRadio class="uk-radio" SelectedValue="EnumDuration.MoreThan5Hours" @bind-Value="@CurrentFilterModel.DurationFilter" />
+                                                    <span class="test"> +5 hours </span>
+                                                </label>
+                                                <label>
+                                                    <InputRadio class="uk-radio" SelectedValue="EnumDuration.MoreThan10Hours" @bind-Value="@CurrentFilterModel.DurationFilter" />
+                                                    <span class="test"> +10 hours </span>
+                                                </label>
+                                                <label>
+                                                    <InputRadio class="uk-radio" SelectedValue="EnumDuration.MoreThan20Hours" @bind-Value="@CurrentFilterModel.DurationFilter" />
+                                                    <span class="test"> +20 hours </span>
+                                                </label>
+                                                <label>
+                                                    <InputRadio class="uk-radio" SelectedValue="EnumDuration.MoreThan30Hours" @bind-Value="@CurrentFilterModel.DurationFilter" />
+                                                    <span class="test"> +30 hours </span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <a class="uk-accordion-title" href="#"> Category </a>
+                                        <div class="uk-accordion-content">
+                                            <div class="uk-form-controls">
+
+                                                <label>
+                                                    <InputRadio class="uk-radio" SelectedValue="null" @bind-Value="@CurrentFilterModel.CategoryFilter" />
+                                                    <span class="test"> Any </span>
+                                                </label>
+
+                                                @if (Categories != null)
+                                                {
+                                                    foreach (var Category in Categories)
+                                                    {
+                                                        <label>
+                                                            <InputRadio class="uk-radio" SelectedValue="@Category.Id" @bind-Value="@CurrentFilterModel.CategoryFilter" />
+                                                            <span class="test"> @Category.Name </span>
+                                                        </label>
+                                                    }
+                                                }
+
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <a class="uk-accordion-title" href="#"> Rating </a>
+                                        <div class="uk-accordion-content">
+                                            <div class="uk-form-controls">
+                                                <label>
+                                                    <InputRadio class="uk-radio" SelectedValue="null" @bind-Value="@CurrentFilterModel.RatingFilter" />
+                                                    <span class="test"> Any </span>
+                                                </label>
+                                                <label>
+                                                    <InputRadio class="uk-radio" SelectedValue="EnumRating.OneStarAndHigher" @bind-Value="@CurrentFilterModel.RatingFilter" />
+                                                    <span class="test"> 1 star and higher </span>
+                                                </label>
+                                                <label>
+                                                    <InputRadio class="uk-radio" SelectedValue="EnumRating.TwoStarsAndHigher" @bind-Value="@CurrentFilterModel.RatingFilter" />
+                                                    <span class="test"> 2 stars and higher </span>
+                                                </label>
+                                                <label>
+                                                    <InputRadio class="uk-radio" SelectedValue="EnumRating.FourStarsAndHigher" @bind-Value="@CurrentFilterModel.RatingFilter" />
+                                                    <span class="test"> 3 stars and higher </span>
+                                                </label>
+                                                <label>
+                                                    <InputRadio class="uk-radio" SelectedValue="EnumRating.FourStarsAndHigher" @bind-Value="@CurrentFilterModel.RatingFilter" />
+                                                    <span class="test"> 4 stars and higher </span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <a class="uk-accordion-title" href="#"> Date added </a>
+                                        <div class="uk-accordion-content">
+                                            <div class="uk-form-controls">
+                                                <label>
+                                                    <InputRadio class="uk-radio" SelectedValue="null" @bind-Value="@CurrentFilterModel.PeriodeFilter" />
+                                                    <span class="test"> Any </span>
+                                                </label>
+                                                <label>
+                                                    <InputRadio class="uk-radio" SelectedValue="EnumPeriode.LastMonth" @bind-Value="@CurrentFilterModel.PeriodeFilter" />
+                                                    <span class="test"> In the last month </span>
+                                                </label>
+                                                <label>
+                                                    <InputRadio class="uk-radio" SelectedValue="EnumPeriode.Last3Months" @bind-Value="@CurrentFilterModel.PeriodeFilter" />
+                                                    <span class="test"> In the last 3 months </span>
+                                                </label>
+                                                <label>
+                                                    <InputRadio class="uk-radio" SelectedValue="EnumPeriode.Last6Months" @bind-Value="@CurrentFilterModel.PeriodeFilter" />
+                                                    <span class="test"> In the last 6 months </span>
+                                                </label>
+                                                <label>
+                                                    <InputRadio class="uk-radio" SelectedValue="EnumPeriode.Last12Months" @bind-Value="@CurrentFilterModel.PeriodeFilter" />
+                                                    <span class="test"> In the last year </span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <a class="uk-accordion-title" href="#"> Classment </a>
+                                        <div class="uk-accordion-content">
+                                            <div class="uk-form-controls">
+                                                <label>
+                                                    <InputRadio class="uk-radio" SelectedValue="null" @bind-Value="@CurrentFilterModel.ClassmentFilter" />
+                                                    <span class="test"> Any </span>
+                                                </label>
+                                                <label>
+                                                    <InputRadio class="uk-radio" SelectedValue="EnumClassment.Popular" @bind-Value="@CurrentFilterModel.ClassmentFilter" />
+                                                    <span class="test"> Popular only </span>
+                                                </label>
+                                                <label>
+                                                    <InputRadio class="uk-radio" SelectedValue="EnumClassment.Featured" @bind-Value="@CurrentFilterModel.ClassmentFilter" />
+                                                    <span class="test"> Featured only </span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                </ul>
+
+                            </EditForm>
+
+                        </div>
+
+                    </div>
+
+                </div>
             </div>
 
             <Footer></Footer>

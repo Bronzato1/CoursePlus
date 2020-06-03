@@ -14,10 +14,8 @@ namespace CoursePlus.Shared.Models
         public string Thème { get; set; }
         public string Titre { get; set; }
         public string Description { get; set; }
+        public string Catégorie { get; set; }
         public int Difficulté { get; set; }
-
-        public int? CategoryId { get; set; }
-        public Category Category { get; set; }
 
         public int? ImageId { get; set; }
         public virtual Image Image { get; set; }

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoursePlus.Server.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200601132809_MyFirstMigration")]
+    [Migration("20200603065834_MyFirstMigration")]
     partial class MyFirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -139,7 +139,7 @@ namespace CoursePlus.Server.Data.Migrations
                         new
                         {
                             Id = 3,
-                            Name = "Music"
+                            Name = "Musique"
                         },
                         new
                         {
@@ -219,7 +219,7 @@ namespace CoursePlus.Server.Data.Migrations
                         new
                         {
                             Id = 19,
-                            Name = "Payx du monde"
+                            Name = "Pays du monde"
                         },
                         new
                         {

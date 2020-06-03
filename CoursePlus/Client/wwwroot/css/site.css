@@ -245,3 +245,6 @@ li.uk-active {
     border: 0px;
 }
 
+.list-style-type-disk {
+    list-style-type: disc;
+}

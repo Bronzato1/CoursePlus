@@ -11,13 +11,14 @@
     <Compile Remove="Pages\Admin\PlaylistEdit.cs" />
     <Compile Remove="Pages\Admin\PlaylistList.cs" />
     <Compile Remove="Pages\Admin\ProfileEdit.cs" />
+    <Compile Remove="Pages\Admin\ProfileGenerator.cs" />
     <Compile Remove="Pages\Admin\ProfileList.cs" />
     <Compile Remove="Pages\BookDetail.cs" />
     <Compile Remove="Pages\BookDetailBase.cs" />
     <Compile Remove="Pages\BookList.cs" />
     <Compile Remove="Pages\BookListBase.cs" />
     <Compile Remove="Pages\PlaylistDetail.cs" />
-    <Compile Remove="Pages\PlaylistList.cs" />
+    <Compile Remove="Pages\VideoPlayer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,6 +30,7 @@
     <Content Remove="Pages\Admin\PlaylistEdit.razor" />
     <Content Remove="Pages\Admin\PlaylistList.razor" />
     <Content Remove="Pages\Admin\ProfileEdit.razor" />
+    <Content Remove="Pages\Admin\ProfileGenerator.razor" />
     <Content Remove="Pages\Admin\ProfileList.razor" />
     <Content Remove="Pages\Blog_1.razor" />
     <Content Remove="Pages\BookDetail.razor" />
@@ -39,6 +41,7 @@
     <Content Remove="Pages\Elements.razor" />
     <Content Remove="Pages\Episodes.razor" />
     <Content Remove="Pages\FormRegister.razor" />
+    <Content Remove="Pages\Login.razor" />
     <Content Remove="Pages\Logout.razor" />
     <Content Remove="Pages\Maintenance.razor" />
     <Content Remove="Pages\PageFaq.razor" />
@@ -46,10 +49,11 @@
     <Content Remove="Pages\PagePrivacy.razor" />
     <Content Remove="Pages\PageTerm.razor" />
     <Content Remove="Pages\PlaylistDetail.razor" />
-    <Content Remove="Pages\PlaylistList.razor" />
     <Content Remove="Pages\PlaylistPath.razor" />
+    <Content Remove="Pages\Signup.razor" />
     <Content Remove="Pages\UserProfile.razor" />
     <Content Remove="Pages\UserProfileEdit.razor" />
+    <Content Remove="Pages\VideoPlayer.razor" />
   </ItemGroup>
 
   <ItemGroup>

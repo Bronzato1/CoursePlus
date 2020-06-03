@@ -11,5 +11,7 @@ namespace CoursePlus.Server.Repositories
         IEnumerable<Category> GetAllCategories();
 
         Category GetCategoryById(int categoryId);
+
+        Category GetCategoryByName(string categoryName);
     }
 }

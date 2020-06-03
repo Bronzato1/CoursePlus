@@ -9,7 +9,7 @@ namespace CoursePlus.Client.Services
 {
     public interface IQuizService
     {
-        Task<PaginatedList<QuizTopic>> GetQuizzes(int pageNumber = 1, IDictionary<string, string> sortOrder = null, IDictionary<string, string> filters = null);
+        Task<PaginatedList<QuizTopic>> GetQuizzes(int pageNumber = 1, int pageSize = 6, IDictionary<string, string> sortOrder = null, IDictionary<string, string> filters = null);
 
         Task<List<QuizTopic>> GetPopularQuizzes();
 

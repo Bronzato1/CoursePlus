@@ -137,7 +137,7 @@ namespace CoursePlus.Server.Data.Migrations
                         new
                         {
                             Id = 3,
-                            Name = "Music"
+                            Name = "Musique"
                         },
                         new
                         {
@@ -217,7 +217,7 @@ namespace CoursePlus.Server.Data.Migrations
                         new
                         {
                             Id = 19,
-                            Name = "Payx du monde"
+                            Name = "Pays du monde"
                         },
                         new
                         {

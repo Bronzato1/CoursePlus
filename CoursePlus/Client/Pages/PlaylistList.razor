@@ -30,7 +30,7 @@
                 <div class="section-header-right">
 
                     <a href="#" class="btn-filter" uk-tooltip="title: Playlist Filter ; pos:  top-right"
-                       uk-toggle="target: #platlist-filter">
+                       uk-toggle="target: #playlist-filter">
                         <i class="icon-feather-filter"></i>
                     </a>
                     <div class="display-as">
@@ -45,9 +45,9 @@
                     <EditForm EditContext="@EditContextForSortOrderModel">
 
                         <InputSelectCustom id="SortOrder" class="selectpicker ml-3" @bind-Value="CurrentSortOrderModel.SortOrder">
-                            <option value="@EnumSortOrder.Newest"> Newest </option>
-                            <option value="@EnumSortOrder.Popular"> Popular </option>
-                            <option value="@EnumSortOrder.Featured"> Featured </option>
+                            <option value="@EnumSortOrder.NewestFirst"> Newest first </option>
+                            <option value="@EnumSortOrder.OldestFirst"> Oldest first </option>
+                            <option value="@EnumSortOrder.MostPlayed"> Most played </option>
                         </InputSelectCustom>
 
                     </EditForm>
@@ -139,12 +139,12 @@
                                                     <span class="test"> Beginner </span>
                                                 </label>
                                                 <label>
-                                                    <InputRadio class="uk-radio" SelectedValue="EnumDifficulty.Intermediate" @bind-Value="@CurrentFilterModel.DifficultyFilter" />
-                                                    <span class="test"> Intermediate </span>
+                                                    <InputRadio class="uk-radio" SelectedValue="EnumDifficulty.Confirmed" @bind-Value="@CurrentFilterModel.DifficultyFilter" />
+                                                    <span class="test"> Confirmed </span>
                                                 </label>
                                                 <label>
-                                                    <InputRadio class="uk-radio" SelectedValue="EnumDifficulty.Advanced" @bind-Value="@CurrentFilterModel.DifficultyFilter" />
-                                                    <span class="test"> Advanced </span>
+                                                    <InputRadio class="uk-radio" SelectedValue="EnumDifficulty.Expert" @bind-Value="@CurrentFilterModel.DifficultyFilter" />
+                                                    <span class="test"> Expert </span>
                                                 </label>
                                             </div>
                                         </div>

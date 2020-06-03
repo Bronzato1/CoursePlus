@@ -6,8 +6,8 @@ namespace CoursePlus.Shared.Models
 {
     public enum EnumSortOrder
     {
-        Newest,
-        Featured,
-        Popular
+        NewestFirst,
+        OldestFirst,
+        MostPlayed
     }
 }

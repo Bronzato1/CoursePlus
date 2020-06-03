@@ -131,7 +131,7 @@ namespace CoursePlus.Server.Data
                 new Category
                 {
                     Id = 3,
-                    Name = "Music"
+                    Name = "Musique"
                 },
                 new Category
                 {
@@ -211,7 +211,7 @@ namespace CoursePlus.Server.Data
                 new Category
                 {
                     Id = 19,
-                    Name = "Payx du monde"
+                    Name = "Pays du monde"
                 },
                 new Category
                 {
