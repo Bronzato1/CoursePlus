@@ -34,9 +34,6 @@ namespace CoursePlus.Client.Pages.Admin
             {
                 var filters = new Dictionary<string, string>();
 
-                if (CurrentFilterModel.DifficultyFilter.HasValue)
-                    filters.Add("Difficulty", CurrentFilterModel.DifficultyFilter.Value.ToString());
-
                 if (CurrentFilterModel.DurationFilter.HasValue)
                     filters.Add("Duration", CurrentFilterModel.DurationFilter.Value.ToString());
 
@@ -86,7 +83,6 @@ namespace CoursePlus.Client.Pages.Admin
         }
         public class FilterModel
         {
-            public EnumDifficulty? DifficultyFilter { get; set; }
             public EnumDuration? DurationFilter { get; set; }
             public int? CategoryFilter { get; set; }
             public EnumRating? RatingFilter { get; set; }
@@ -156,14 +152,34 @@ namespace CoursePlus.Client.Pages.Admin
             PageSize = size;
             await FilterPlaylists();
         }
-        protected async Task CreateQuizzes()
+        protected async Task InjectQuizzes()
         {
             var result = await QuizService.CreateQuizzesFromJsonOfOpenQuizzDB();
-            await ModalDialog.ShowMessageBoxAsync("Quizzes creation", $"Operation finished. Total quizzes created: {result}", MessageBoxButtons.OK);
+            await ModalDialog.ShowMessageBoxAsync("Quizzes injection", $"Operation finished. Total quizzes created: {result}", MessageBoxButtons.OK);
         }
         protected async Task AddQuiz()
         {
 
+        }
+        protected async Task EditQuiz(QuizTopic OneQuiz)
+        {
+
+        }
+        protected async Task DeleteQuiz(QuizTopic OneQuiz)
+        {
+            var response = await ModalDialog.ShowMessageBoxAsync("Question", "Delete quiz ?", MessageBoxButtons.YesNo, MessageBoxDefaultButton.Button1);
+
+            if (response == MessageBoxDialogResult.Yes)
+            {
+                await QuizService.DeleteQuiz(OneQuiz.Id);
+                SomeQuizzes = await QuizService.GetQuizzes(pageNumber: SomeQuizzes.PageIndex, pageSize: PageSize, sortOrder: GetCurrentSortOrder, filters: GetCurrentFilters);
+                StateHasChanged();
+            }
+        }
+        protected async Task SwitchFeatured(QuizTopic OneQuiz)
+        {
+            OneQuiz.Featured = !OneQuiz.Featured;
+            await QuizService.UpdateQuiz(OneQuiz);
         }
     }
 }

@@ -27,7 +27,7 @@
 
             <div class="section-header pb-0 mt-5">
                 <div class="section-header-left">
-                    <h4> All the quizzes </h4>
+                    <h4> @SomeQuizzes?.TotalItems @(SomeQuizzes?.TotalItems==1 ? "Quiz":"Quizzes") @(GetCurrentFilters.Count>0 ? "(Filtered)":"") </h4>
                 </div>
                 <div class="section-header-right">
 
@@ -51,7 +51,7 @@
                         <ul class="uk-nav uk-dropdown-nav">
                             <li><a @onclick="FilterPlaylists">Refresh</a></li>
                             <li><a @onclick="AddQuiz">Add quiz</a></li>
-                            <li><a @onclick="CreateQuizzes">Create quizzes</a></li>
+                            <li><a @onclick="InjectQuizzes">Inject quizzes</a></li>
                             <li class="uk-nav-divider"></li>
                             <li class="@(PageSizeIndicator(8))"><a @onclick="@( () => SetPageSize(8) )">2 rows per page</a></li>
                             <li class="@(PageSizeIndicator(16))"><a @onclick="@( () => SetPageSize(16) )">4 rows per page</a></li>
@@ -81,11 +81,10 @@
                         @foreach (var OneQuiz in SomeQuizzes.Items)
                         {
                             <div class="uk-margin-small-bottom">
-                                <a href="/quiz/@OneQuiz.Id">
+                                @*<a href="/quiz/@OneQuiz.Id">*@
                                     <div class="playlist-card">
                                         <div class="playlist-card-thumbnail">
                                             <img src="@String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(OneQuiz.Thumbnail.Data))" style="object-fit: fill;">
-                                            <span class="play-button-trigger"></span>
                                         </div>
                                         <div class="playlist-card-body">
                                             <div class="playlist-card-info">
@@ -93,21 +92,32 @@
                                                     <span class="catagroy"> @OneQuiz.Category.Name </span>
                                                 </div>
                                                 <div>
-                                                    <i class="icon-feather-bookmark icon-small"></i>
+                                                    <a href="javascript: void(0)" @onclick="@( () => SwitchFeatured(OneQuiz) )">
+                                                        <i class="icon-material-outline-star@(OneQuiz.Featured?"":"-border") icon-small"></i>
+                                                    </a>
                                                 </div>
                                             </div>
 
                                             <h4> @OneQuiz.Title </h4>
-                                            <p>  OneQuiz.SubTitle goes here </p>
 
                                             <div class="playlist-card-footer">
-                                                <h5> <i class="icon-feather-film"></i> 33 Lectures </h5>
-                                                <h5> <i class="icon-feather-clock"></i> 26 Hours </h5>
+                                                <h5> <i class="icon-feather-play"></i> Played @OneQuiz.PlayCount times </h5>
+                                                <div class="actions">
+                                                    <a href="/book/@OneQuiz.Id" class="btn btn-icon btn-hover btn-sm btn-circle" uk-tooltip="Quick view">
+                                                        <i class="uil-external-link-alt"></i>
+                                                    </a>
+                                                    <a class="btn btn-icon btn-hover btn-sm btn-circle" uk-tooltip="Edit" @onclick="@(e => EditQuiz(OneQuiz))">
+                                                        <i class="uil-pen"></i>
+                                                    </a>
+                                                    <a class="btn btn-icon btn-hover btn-sm btn-circle" uk-tooltip="Delete" @onclick="@(e => DeleteQuiz(OneQuiz))">
+                                                        <i class="uil-trash-alt text-danger"></i>
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
 
                                     </div>
-                                </a>
+                                @*</a>*@
                             </div>
                         }
 
@@ -139,30 +149,6 @@
                                 <h4> Filter By </h4>
 
                                 <ul class="sidebar-filter-list" uk-accordion="multiple: true">
-
-                                    <li>
-                                        <a class="uk-accordion-title" href="#"> Difficulty level </a>
-                                        <div class="uk-accordion-content">
-                                            <div class="uk-form-controls">
-                                                <label>
-                                                    <InputRadio class="uk-radio" SelectedValue="null" @bind-Value="@CurrentFilterModel.DifficultyFilter" />
-                                                    <span class="test"> Any </span>
-                                                </label>
-                                                <label>
-                                                    <InputRadio class="uk-radio" SelectedValue="EnumDifficulty.Beginner" @bind-Value="@CurrentFilterModel.DifficultyFilter" />
-                                                    <span class="test"> Beginner </span>
-                                                </label>
-                                                <label>
-                                                    <InputRadio class="uk-radio" SelectedValue="EnumDifficulty.Confirmed" @bind-Value="@CurrentFilterModel.DifficultyFilter" />
-                                                    <span class="test"> Confirmed </span>
-                                                </label>
-                                                <label>
-                                                    <InputRadio class="uk-radio" SelectedValue="EnumDifficulty.Expert" @bind-Value="@CurrentFilterModel.DifficultyFilter" />
-                                                    <span class="test"> Expert </span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </li>
 
                                     <li>
                                         <a class="uk-accordion-title" href="#"> Duration time </a>

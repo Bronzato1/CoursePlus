@@ -12,6 +12,7 @@ namespace CoursePlus.Shared.Models
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
+        public int PlayCount { get; set; }
 
         public int? CategoryId { get; set; }
         public Category Category { get; set; }
@@ -25,7 +26,9 @@ namespace CoursePlus.Shared.Models
         public string Provider { get; set; }
         public string Editor { get; set; }
         public string Theme { get; set; }
-        public int Difficulty { get; set; }
+
+        public bool Featured { get; set; }
+        public bool Popular { get; set; }
 
         public List<QuizItem> Items { get; set; }
         
@@ -39,7 +42,6 @@ namespace CoursePlus.Shared.Models
             QuizTopic quiz = new QuizTopic();
 
             quiz.Title = quizA.Titre;
-            quiz.Difficulty = quizA.Difficulté;
             quiz.Editor = quizA.Rédacteur;
             quiz.Provider = quizA.Fournisseur;
 
@@ -55,7 +57,6 @@ namespace CoursePlus.Shared.Models
             QuizTopic quiz = new QuizTopic();
 
             quiz.Title = quizB.Titre;
-            quiz.Difficulty = quizB.Difficulté;
             quiz.Editor = quizB.Rédacteur;
             quiz.Provider = quizB.Fournisseur;
 

@@ -49,9 +49,11 @@ namespace CoursePlus.Server.Data
             builder.Seed();
             base.OnModelCreating(builder);
 
-            builder.Entity<Enrollment>().HasKey(c => new { c.PlaylistId, c.ProfileId });
-            builder.Entity<WatchHistory>().HasKey(c => new { c.EpisodeId, c.ProfileId });
+            builder.Entity<Enrollment>().HasKey(x => new { x.PlaylistId, x.ProfileId });
+            builder.Entity<WatchHistory>().HasKey(x => new { x.EpisodeId, x.ProfileId });
             builder.Entity<Playlist>().HasOne(x => x.Owner).WithMany().OnDelete(DeleteBehavior.NoAction);
+            builder.Entity<QuizTopic>().HasMany(x => x.Items).WithOne().OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<QuizItem>().HasMany(x => x.Proposals).WithOne().OnDelete(DeleteBehavior.Cascade);
         }
 
         public override int SaveChanges()

@@ -647,14 +647,20 @@ namespace CoursePlus.Server.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Difficulty")
-                        .HasColumnType("int");
-
                     b.Property<string>("Editor")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("Featured")
+                        .HasColumnType("bit");
+
                     b.Property<int?>("ImageId")
                         .HasColumnType("int");
+
+                    b.Property<int>("PlayCount")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Popular")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Provider")
                         .HasColumnType("nvarchar(max)");
@@ -981,14 +987,16 @@ namespace CoursePlus.Server.Data.Migrations
                 {
                     b.HasOne("CoursePlus.Shared.Models.QuizTopic", null)
                         .WithMany("Items")
-                        .HasForeignKey("QuizTopicId");
+                        .HasForeignKey("QuizTopicId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("CoursePlus.Shared.Models.QuizProposal", b =>
                 {
                     b.HasOne("CoursePlus.Shared.Models.QuizItem", null)
                         .WithMany("Proposals")
-                        .HasForeignKey("QuizItemId");
+                        .HasForeignKey("QuizItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("CoursePlus.Shared.Models.QuizTopic", b =>

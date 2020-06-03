@@ -184,13 +184,15 @@ namespace CoursePlus.Server.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
+                    PlayCount = table.Column<int>(nullable: false),
                     CategoryId = table.Column<int>(nullable: true),
                     ImageId = table.Column<int>(nullable: true),
                     ThumbnailId = table.Column<int>(nullable: true),
                     Provider = table.Column<string>(nullable: true),
                     Editor = table.Column<string>(nullable: true),
                     Theme = table.Column<string>(nullable: true),
-                    Difficulty = table.Column<int>(nullable: false),
+                    Featured = table.Column<bool>(nullable: false),
+                    Popular = table.Column<bool>(nullable: false),
                     CreatedTime = table.Column<DateTime>(nullable: false),
                     UpdatedTime = table.Column<DateTime>(nullable: true),
                     CreatedUser = table.Column<string>(nullable: true),
@@ -350,7 +352,7 @@ namespace CoursePlus.Server.Data.Migrations
                         column: x => x.QuizTopicId,
                         principalTable: "QuizTopics",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -421,7 +423,7 @@ namespace CoursePlus.Server.Data.Migrations
                         column: x => x.QuizItemId,
                         principalTable: "QuizItems",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

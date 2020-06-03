@@ -98,6 +98,8 @@ namespace CoursePlus.Server.Repositories
                 foundQuiz.ImageId = quiz.ImageId;
                 foundQuiz.ThumbnailId = quiz.ThumbnailId;
                 foundQuiz.CategoryId = quiz.CategoryId;
+                foundQuiz.Featured = quiz.Featured;
+                foundQuiz.Popular = quiz.Popular;
 
                 _dbContext.SaveChanges();
 

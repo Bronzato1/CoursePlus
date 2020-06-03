@@ -41,8 +41,6 @@
     <Content Remove="Pages\Elements.razor" />
     <Content Remove="Pages\Episodes.razor" />
     <Content Remove="Pages\FormRegister.razor" />
-    <Content Remove="Pages\Login.razor" />
-    <Content Remove="Pages\Logout.razor" />
     <Content Remove="Pages\Maintenance.razor" />
     <Content Remove="Pages\PageFaq.razor" />
     <Content Remove="Pages\PagePricing.razor" />
