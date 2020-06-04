@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace CoursePlus.Client.Pages
 {
-    public class PlaylistListBase : ComponentBase, IDisposable
+    public class QuizListBase : ComponentBase, IDisposable
     {
-        [Inject] public IPlaylistService PlaylistService { get; set; }
+        [Inject] public IQuizService QuizService { get; set; }
         [Inject] public ICategoryService CategoryService { get; set; }
         [Inject] public NavigationManager NavigationManager { get; set; }
 
-        public PaginatedList<Playlist> SomePlaylists { get; set; }
+        public PaginatedList<QuizTopic> SomeQuizzes { get; set; }
         public IEnumerable<Category> Categories { get; set; }
         public FilterModel CurrentFilterModel = new FilterModel();
         public SortOrderModel CurrentSortOrderModel = new SortOrderModel() { SortOrder = EnumSortOrder.NewestFirst };
@@ -25,7 +25,6 @@ namespace CoursePlus.Client.Pages
 
         public class FilterModel
         {
-            public EnumDifficulty? DifficultyFilter { get; set; }
             public EnumDuration? DurationFilter { get; set; }
             public int? CategoryFilter { get; set; }
             public EnumRating? RatingFilter { get; set; }
@@ -48,26 +47,23 @@ namespace CoursePlus.Client.Pages
             EditContextForFilterModel = new EditContext(CurrentSortOrderModel);
             EditContextForFilterModel.OnFieldChanged += OnFieldChanged;
 
-            await FilterPlaylists();
+            await FilterQuizzes();
             Categories = await CategoryService.GetCategories();
         }
         protected void OnFieldChanged(object sender, FieldChangedEventArgs e)
         {
-            _ = FilterPlaylists();
+            _ = FilterQuizzes();
         }
-        protected void ViewPlaylist(Playlist OnePlaylist)
+        protected void ViewQuiz(QuizTopic OneQuiz)
         {
-            NavigationManager.NavigateTo("/playlist/" + OnePlaylist.Id);
+            NavigationManager.NavigateTo("/quiz/" + OneQuiz.Id);
         } 
-        protected async Task FilterPlaylists()
+        protected async Task FilterQuizzes()
         {
-            PaginatedList<Playlist> playlists;
+            PaginatedList<QuizTopic> quizzes;
 
             var currentFilters = new Dictionary<string, string>();
             var currentSortOrder = new Dictionary<string, string>();
-
-            if (CurrentFilterModel.DifficultyFilter.HasValue) 
-                currentFilters.Add("Difficulty", CurrentFilterModel.DifficultyFilter.Value.ToString());
 
             if (CurrentFilterModel.DurationFilter.HasValue)
                 currentFilters.Add("Duration", CurrentFilterModel.DurationFilter.Value.ToString());
@@ -105,13 +101,13 @@ namespace CoursePlus.Client.Pages
                 }
             }
 
-            playlists = await PlaylistService.GetPlaylists(filters: currentFilters, sortOrder: currentSortOrder);
+            quizzes = await QuizService.GetQuizzes(filters: currentFilters, sortOrder: currentSortOrder);
             
-            SomePlaylists = playlists;
+            SomeQuizzes = quizzes;
 
             StateHasChanged();
         }
-        protected async void PageIndexChanged(PaginatedList<Playlist> context, int newPageNumber)
+        protected async void PageIndexChanged(PaginatedList<QuizTopic> context, int newPageNumber)
         {
             if (newPageNumber < 1 || newPageNumber > context.TotalPages)
             {
@@ -120,12 +116,9 @@ namespace CoursePlus.Client.Pages
 
             var cptr = context.Items.Count;
 
-            //var data = await PlaylistService.GetPlaylists(pageNumber: newPageNumber, filterField: "Difficulty", filterValue: CurrentFilterModel.DifficultyFilter.ToString());
-
             var filters = new Dictionary<string, string>();
-            if (!string.IsNullOrEmpty(CurrentFilterModel.DifficultyFilter.ToString()))
-                filters.Add("Difficulty", CurrentFilterModel.DifficultyFilter.ToString());
-            var data = await PlaylistService.GetPlaylists(pageNumber: newPageNumber, filters: filters);
+           
+            var data = await QuizService.GetQuizzes(pageNumber: newPageNumber, filters: filters);
 
             foreach (var elm in data.Items)
             {

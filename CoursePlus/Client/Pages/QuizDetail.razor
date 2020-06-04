@@ -1,12 +1,12 @@
-﻿@page "/playlist/{Id:int}"
-@inherits PlaylistDetailBase
+﻿@page "/quiz/{Id:int}"
+@inherits QuizDetailBase
 
 <div id="wrapper">
 
     <Header Class="header header-transparent uk-light" UkSticky="top: 85 ; cls-active: header-sticky ; cls-inactive: uk-light">
         <Breadcrumbs>
             <li><a href="/"> <i class="uil-home-alt"></i> </a></li>
-            <li>Playlist XYZ</li>
+            <li>Quiz XYZ</li>
         </Breadcrumbs>
     </Header>
 
@@ -16,7 +16,7 @@
 
     <SideNav></SideNav>
 
-    @if (OnePlaylist != null)
+    @if (OneQuiz != null)
     {
         <!-- content -->
         <div class="page-content">
@@ -29,9 +29,9 @@
                         <div class="uk-width-2-3@m">
 
                             <div class="playlist-details">
-                                <h1> @OnePlaylist.Title </h1>
+                                <h1> @OneQuiz.Title </h1>
                                 <p>
-                                    @OnePlaylist.SubTitle
+                                    Subtitle...
                                 </p>
 
                                 <div class="playlist-details-info mt-4">
@@ -41,15 +41,15 @@
                                                 <span class="avg"> 4.9 </span> <span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span>
                                             </div>
                                         </li>
-                                        <li> <i class="icon-feather-users"></i> @OnePlaylist.Enrollments.Count() Enrolled </li>
+                                        <li> <i class="icon-feather-users"></i> @OneQuiz.Enrollments.Count() Enrolled </li>
                                     </ul>
                                 </div>
 
                                 <div class="playlist-details-info">
 
                                     <ul>
-                                        <li> Created by <a href="#"> @OnePlaylist.Owner.User.FirstName @OnePlaylist.Owner.User.LastName </a> </li>
-                                        <li> Last updated @OnePlaylist.UpdatedTime.Value.ToString("MM/yyyy")</li>
+                                        <li> Created by <a href="#"> @OneQuiz.Owner.User.FirstName @OneQuiz.Owner.User.LastName </a> </li>
+                                        <li> Last updated @OneQuiz.UpdatedTime.Value.ToString("MM/yyyy")</li>
                                     </ul>
 
                                 </div>
@@ -79,7 +79,7 @@
                             <!-- playlist description -->
                             <li class="playlist-description-content">
 
-                                @((MarkupString)OnePlaylist.Description)
+                                @((MarkupString)OneQuiz.Description)
 
                             </li>
 
@@ -88,11 +88,11 @@
 
                                 <ul class="playlist-curriculum" uk-accordion="multiple: true">
 
-                                    @if (OnePlaylist != null)
+                                    @if (OneQuiz != null)
                                     {
                                         var index = 0;
 
-                                        foreach (var OneChapter in OnePlaylist.Chapters)
+                                        foreach (var OneChapter in OneQuiz.Chapters)
                                         {
                                             <li class="@(index == 0 ? "uk-open" : "")">
                                                 <a class="uk-accordion-title" href="#"> @OneChapter.Title </a>
@@ -126,7 +126,7 @@
                             <!-- playlist Faq-->
                             <li>
 
-                                <h4 class="my-4"> Playlist Faq</h4>
+                                <h4 class="my-4"> Quiz Faq</h4>
 
                                 <ul class="playlist-faq" uk-accordion>
 
@@ -570,11 +570,11 @@
 
                             <div class="playlist-thumbnail">
 
-                                <a href="/playlist/@OnePlaylist.Id/player">
+                                <a href="/quiz/@OneQuiz.Id/player">
 
-                                    @if (OnePlaylist.Image != null)
+                                    @if (OneQuiz.Image != null)
                                     {
-                                        <img src="@String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(OnePlaylist.Image.Data))" alt="">
+                                        <img src="@String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(OneQuiz.Image.Data))" alt="">
                                     }
 
                                     <span class="play-button-trigger show"> </span>
@@ -594,7 +594,7 @@
 
                                 <div class="uk-child-width-1-2 uk-grid-small mb-4" uk-grid>
                                     <div>
-                                        <a href="/playlist/@OnePlaylist.Id/player" class="uk-width-1-1 btn btn-default transition-3d-hover">
+                                        <a href="/quiz/@OneQuiz.Id/player" class="uk-width-1-1 btn btn-default transition-3d-hover">
                                             <i class="uil-play"></i> Start
                                         </a>
                                     </div>

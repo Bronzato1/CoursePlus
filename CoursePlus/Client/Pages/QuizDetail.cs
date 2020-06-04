@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CoursePlus.Client.Pages
 {
-    public class PlaylistDetailBase : ComponentBase
+    public class QuizDetailBase : ComponentBase
     {
         [Parameter]
         public int Id { get; set; }
@@ -19,9 +19,9 @@ namespace CoursePlus.Client.Pages
         [Inject]
         public NavigationManager NavigationManager { get; set; }
         [Inject]
-        public IPlaylistService PlaylistService { get; set; }
+        public IQuizService QuizService { get; set; }
 
-        public Playlist OnePlaylist { get; set; }
+        public QuizTopic OneQuiz { get; set; }
 
         protected override void OnParametersSet()
         {
@@ -30,7 +30,7 @@ namespace CoursePlus.Client.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            OnePlaylist = await PlaylistService.GetPlaylist(Id);
+            OneQuiz = await QuizService.GetQuiz(Id);
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)

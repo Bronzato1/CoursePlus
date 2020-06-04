@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CoursePlus.Server.Data.Migrations
 {
-    public partial class MyFirstMigration : Migration
+    public partial class FirstMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -287,57 +287,6 @@ namespace CoursePlus.Server.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Playlists",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(nullable: false),
-                    SubTitle = table.Column<string>(nullable: false),
-                    Description = table.Column<string>(nullable: false),
-                    Price = table.Column<int>(nullable: false),
-                    CategoryId = table.Column<int>(nullable: false),
-                    Language = table.Column<int>(nullable: false),
-                    Difficulty = table.Column<int>(nullable: false),
-                    ImageId = table.Column<int>(nullable: true),
-                    OwnerId = table.Column<int>(nullable: false),
-                    Featured = table.Column<bool>(nullable: false),
-                    Popular = table.Column<bool>(nullable: false),
-                    ThumbnailId = table.Column<int>(nullable: true),
-                    CreatedTime = table.Column<DateTime>(nullable: false),
-                    UpdatedTime = table.Column<DateTime>(nullable: true),
-                    CreatedUser = table.Column<string>(nullable: true),
-                    UpdatedUser = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Playlists", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Playlists_Categories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Categories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Playlists_Images_ImageId",
-                        column: x => x.ImageId,
-                        principalTable: "Images",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Playlists_Profiles_OwnerId",
-                        column: x => x.OwnerId,
-                        principalTable: "Profiles",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Playlists_Thumbnails_ThumbnailId",
-                        column: x => x.ThumbnailId,
-                        principalTable: "Thumbnails",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "QuizTopics",
                 columns: table => new
                 {
@@ -346,7 +295,7 @@ namespace CoursePlus.Server.Data.Migrations
                     Title = table.Column<string>(nullable: false),
                     Description = table.Column<string>(nullable: false),
                     PlayCount = table.Column<int>(nullable: false),
-                    CategoryId = table.Column<int>(nullable: true),
+                    CategoryId = table.Column<int>(nullable: false),
                     ImageId = table.Column<int>(nullable: true),
                     ThumbnailId = table.Column<int>(nullable: true),
                     Provider = table.Column<string>(nullable: true),
@@ -368,7 +317,7 @@ namespace CoursePlus.Server.Data.Migrations
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_QuizTopics_Images_ImageId",
                         column: x => x.ImageId,
@@ -389,30 +338,6 @@ namespace CoursePlus.Server.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Enrollments",
-                columns: table => new
-                {
-                    PlaylistId = table.Column<int>(nullable: false),
-                    ProfileId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Enrollments", x => new { x.PlaylistId, x.ProfileId });
-                    table.ForeignKey(
-                        name: "FK_Enrollments_Playlists_PlaylistId",
-                        column: x => x.PlaylistId,
-                        principalTable: "Playlists",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Enrollments_Profiles_ProfileId",
-                        column: x => x.ProfileId,
-                        principalTable: "Profiles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Chapters",
                 columns: table => new
                 {
@@ -430,6 +355,30 @@ namespace CoursePlus.Server.Data.Migrations
                     table.PrimaryKey("PK_Chapters", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Chapters_QuizTopics_QuizTopicId",
+                        column: x => x.QuizTopicId,
+                        principalTable: "QuizTopics",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Enrollments",
+                columns: table => new
+                {
+                    QuizTopicId = table.Column<int>(nullable: false),
+                    ProfileId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Enrollments", x => new { x.QuizTopicId, x.ProfileId });
+                    table.ForeignKey(
+                        name: "FK_Enrollments_Profiles_ProfileId",
+                        column: x => x.ProfileId,
+                        principalTable: "Profiles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Enrollments_QuizTopics_QuizTopicId",
                         column: x => x.QuizTopicId,
                         principalTable: "QuizTopics",
                         principalColumn: "Id",
@@ -672,26 +621,6 @@ namespace CoursePlus.Server.Data.Migrations
                 column: "ChapterId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Playlists_CategoryId",
-                table: "Playlists",
-                column: "CategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Playlists_ImageId",
-                table: "Playlists",
-                column: "ImageId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Playlists_OwnerId",
-                table: "Playlists",
-                column: "OwnerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Playlists_ThumbnailId",
-                table: "Playlists",
-                column: "ThumbnailId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Profiles_UserId",
                 table: "Profiles",
                 column: "UserId");
@@ -763,9 +692,6 @@ namespace CoursePlus.Server.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
-
-            migrationBuilder.DropTable(
-                name: "Playlists");
 
             migrationBuilder.DropTable(
                 name: "QuizItems");

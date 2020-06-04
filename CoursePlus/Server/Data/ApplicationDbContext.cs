@@ -34,7 +34,6 @@ namespace CoursePlus.Server.Data
         public DbSet<Avatar> Avatars { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Profile> Profiles { get; set; }
-        public DbSet<Playlist> Playlists { get; set; }
         public DbSet<Chapter> Chapters { get; set; }
         public DbSet<Episode> Episodes { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
@@ -49,9 +48,8 @@ namespace CoursePlus.Server.Data
             builder.Seed();
             base.OnModelCreating(builder);
 
-            builder.Entity<Enrollment>().HasKey(x => new { x.PlaylistId, x.ProfileId });
+            builder.Entity<Enrollment>().HasKey(x => new { x.QuizTopicId, x.ProfileId });
             builder.Entity<WatchHistory>().HasKey(x => new { x.EpisodeId, x.ProfileId });
-            builder.Entity<Playlist>().HasOne(x => x.Owner).WithMany().OnDelete(DeleteBehavior.NoAction);
             builder.Entity<QuizTopic>().HasMany(x => x.Items).WithOne().OnDelete(DeleteBehavior.Cascade);
             builder.Entity<QuizTopic>().HasOne(x => x.Owner).WithMany().OnDelete(DeleteBehavior.NoAction);
             builder.Entity<QuizItem>().HasMany(x => x.Proposals).WithOne().OnDelete(DeleteBehavior.Cascade);
@@ -115,7 +113,6 @@ namespace CoursePlus.Server.Data
             SeedCategories(modelBuilder);
             //SeedBooks(modelBuilder);
             SeedProfiles(modelBuilder);
-            //SeedPlaylists(modelBuilder);
         }
         private static void SeedCategories(this ModelBuilder modelBuilder)
         {
@@ -454,29 +451,6 @@ namespace CoursePlus.Server.Data
                     Id = 1,
                     UserId = "e29790bd-b712-4594-8b3f-c13cbc2943ac",
                     CreatedTime = new DateTime(2020, 05, 01),
-                    UpdatedTime = new DateTime(2020, 05, 01),
-                    CreatedUser = "azur.consult@gmail.com",
-                    UpdatedUser = "azur.consult@gmail.com"
-                }
-            );
-        }
-        private static void SeedPlaylists(this ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Playlist>().HasData
-            (
-                new Playlist
-                {
-                    Id = 1,
-                    Title = "My title",
-                    SubTitle = "My subtitle",
-                    Description = "My description",
-                    CategoryId = 28,
-                    Difficulty = EnumDifficulty.Beginner,
-                    Language = EnumLanguages.English,
-                    OwnerId = 1,
-                    Featured = false,
-                    Popular = false,
-                    CreatedTime = new DateTime(2020,05,01),
                     UpdatedTime = new DateTime(2020, 05, 01),
                     CreatedUser = "azur.consult@gmail.com",
                     UpdatedUser = "azur.consult@gmail.com"

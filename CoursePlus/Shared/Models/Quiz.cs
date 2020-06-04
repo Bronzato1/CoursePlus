@@ -42,6 +42,8 @@ namespace CoursePlus.Shared.Models
         public bool Featured { get; set; }
         public bool Popular { get; set; }
 
+        public List<Enrollment> Enrollments { get; set; }
+
         public List<QuizItem> Items { get; set; }
         public List<Chapter> Chapters { get; set; }
 

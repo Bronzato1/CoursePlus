@@ -32,7 +32,6 @@ namespace CoursePlus.Client
             builder.Services.AddScoped<IBookService, BookService>();
             builder.Services.AddScoped<ICategoryService, CategoryService>();
             builder.Services.AddScoped<IProfileService, ProfileService>();
-            builder.Services.AddScoped<IPlaylistService, PlaylistService>();
             builder.Services.AddScoped<IChapterService, ChapterService>();
             builder.Services.AddScoped<IEpisodeService, EpisodeService>();
             builder.Services.AddScoped<IQuizService, QuizService>();

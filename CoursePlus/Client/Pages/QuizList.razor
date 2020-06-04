@@ -1,5 +1,5 @@
-﻿@page "/playlists"
-@inherits PlaylistListBase
+﻿@page "/quizzes"
+@inherits QuizListBase
 @using CoursePlus.Shared.Infrastructure
 
 <div id="wrapper">
@@ -7,7 +7,7 @@
     <Header Class="header" UkSticky="top:20; cls-active:header-sticky">
         <Breadcrumbs>
             <li><a href="/"> <i class="uil-home-alt"></i> </a></li>
-            <li>Playists</li>
+            <li>Quizzes</li>
         </Breadcrumbs>
     </Header>
 
@@ -21,7 +21,7 @@
 
         <div class="container">
 
-            <h1>Playlists</h1>
+            <h1>Quizzes</h1>
 
             <div class="section-header pb-0 mt-5">
                 <div class="section-header-left">
@@ -30,7 +30,7 @@
                 <div class="section-header-right">
 
                     <a href="#" class="btn-filter" uk-tooltip="title: Playlist Filter ; pos:  top-right"
-                       uk-toggle="target: #playlist-filter">
+                       uk-toggle="target: #quiz-filter">
                         <i class="icon-feather-filter"></i>
                     </a>
                     <div class="display-as">
@@ -57,34 +57,34 @@
 
             <div class="section-small">
 
-                @if (SomePlaylists != null)
+                @if (SomeQuizzes != null)
                 {
                     <div class="uk-child-width-1-4@m uk-child-width-1-3@s playlist-card-grid uk-grid-match" uk-grid>
 
-                        @foreach (var OnePlaylist in SomePlaylists.Items)
+                        @foreach (var OneQuiz in SomeQuizzes.Items)
                         {
                             <div class="uk-margin-small-bottom">
-                                <a href="/playlist/@OnePlaylist.Id">
+                                <a href="/quiz/@OneQuiz.Id">
                                     <div class="playlist-card">
                                         <div class="playlist-card-thumbnail">
-                                            @if (OnePlaylist.Thumbnail != null)
+                                            @if (OneQuiz.Thumbnail != null)
                                             {
-                                                <img src="@String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(OnePlaylist.Thumbnail.Data))" style="object-fit: fill;">
+                                                <img src="@String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(OneQuiz.Thumbnail.Data))" style="object-fit: fill;">
                                             }
                                             <span class="play-button-trigger"></span>
                                         </div>
                                         <div class="playlist-card-body">
                                             <div class="playlist-card-info">
                                                 <div>
-                                                    <span class="catagroy"> @OnePlaylist.Category.Name </span>
+                                                    <span class="catagroy"> @OneQuiz.Category.Name </span>
                                                 </div>
                                                 <div>
                                                     <i class="icon-feather-bookmark icon-small"></i>
                                                 </div>
                                             </div>
 
-                                            <h4> @OnePlaylist.Title </h4>
-                                            <p>  @OnePlaylist.SubTitle </p>
+                                            <h4> @OneQuiz.Title </h4>
+                                            <p>  subtitle... </p>
 
                                             <div class="playlist-card-footer">
                                                 <h5> <i class="icon-feather-film"></i> 33 Lectures </h5>
@@ -101,8 +101,8 @@
 
                     <div class=" uk-flex uk-flex-center uk-margin-top uk-margin-bottom uk-width-expand">
 
-                        <Pager PageIndex=@SomePlaylists.PageIndex TotalPages=@SomePlaylists.TotalPages OnClick="@((newPageNumber) => PageIndexChanged(SomePlaylists, newPageNumber))"
-                               HasNextPage=@SomePlaylists.HasNextPage HasPreviousPage=@SomePlaylists.HasPreviousPage>
+                        <Pager PageIndex=@SomeQuizzes.PageIndex TotalPages=@SomeQuizzes.TotalPages OnClick="@((newPageNumber) => PageIndexChanged(SomeQuizzes, newPageNumber))"
+                               HasNextPage=@SomeQuizzes.HasNextPage HasPreviousPage=@SomeQuizzes.HasPreviousPage>
                         </Pager>
 
                     </div>
@@ -110,7 +110,7 @@
 
             </div>
 
-            <div id="playlist-filter" uk-offcanvas="flip: true; overlay: true">
+            <div id="quiz-filter" uk-offcanvas="flip: true; overlay: true">
                 <div class="uk-offcanvas-bar">
 
                     <!-- close button -->
@@ -125,30 +125,6 @@
                                 <h4> Filter By </h4>
 
                                 <ul class="sidebar-filter-list" uk-accordion="multiple: true">
-
-                                    <li>
-                                        <a class="uk-accordion-title" href="#"> Difficulty level </a>
-                                        <div class="uk-accordion-content">
-                                            <div class="uk-form-controls">
-                                                <label>
-                                                    <InputRadio class="uk-radio" SelectedValue="null" @bind-Value="@CurrentFilterModel.DifficultyFilter" />
-                                                    <span class="test"> Any </span>
-                                                </label>
-                                                <label>
-                                                    <InputRadio class="uk-radio" SelectedValue="EnumDifficulty.Beginner" @bind-Value="@CurrentFilterModel.DifficultyFilter" />
-                                                    <span class="test"> Beginner </span>
-                                                </label>
-                                                <label>
-                                                    <InputRadio class="uk-radio" SelectedValue="EnumDifficulty.Confirmed" @bind-Value="@CurrentFilterModel.DifficultyFilter" />
-                                                    <span class="test"> Confirmed </span>
-                                                </label>
-                                                <label>
-                                                    <InputRadio class="uk-radio" SelectedValue="EnumDifficulty.Expert" @bind-Value="@CurrentFilterModel.DifficultyFilter" />
-                                                    <span class="test"> Expert </span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </li>
 
                                     <li>
                                         <a class="uk-accordion-title" href="#"> Duration time </a>
