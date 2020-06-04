@@ -18,8 +18,8 @@ namespace CoursePlus.Shared.Models
         public string Description { get; set; }
         [Required]
         public int Price { get; set; }
-        [Required(ErrorMessage = "Category is required.")]
 
+        [Required(ErrorMessage = "Category is required.")]
         public int? CategoryId { get; set; }
         public Category Category { get; set; }
 
@@ -44,7 +44,7 @@ namespace CoursePlus.Shared.Models
         public int? ThumbnailId { get; set; }
         public virtual Thumbnail Thumbnail { get; set; }
 
-        public List<Chapter> Chapters { get; set; }
+        //public List<Chapter> Chapters { get; set; }
 
         public DateTime CreatedTime { get; set; }
         public DateTime? UpdatedTime { get; set; }

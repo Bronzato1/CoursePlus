@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Net.Http.Headers;
@@ -9,11 +10,18 @@ namespace CoursePlus.Shared.Models
 {
     public class QuizTopic : IAuditable
     {
+        [Required]
         public int Id { get; set; }
+        
+        [Required(ErrorMessage = "{0} is required.")]
         public string Title { get; set; }
+
+        [Required(ErrorMessage = "{0} is required.")]
         public string Description { get; set; }
+        
         public int PlayCount { get; set; }
 
+        [Required(ErrorMessage = "Category is required.")]
         public int? CategoryId { get; set; }
         public Category Category { get; set; }
 
@@ -27,11 +35,16 @@ namespace CoursePlus.Shared.Models
         public string Editor { get; set; }
         public string Theme { get; set; }
 
+        [Required(ErrorMessage = "Owner is required.")]
+        public int? OwnerId { get; set; }
+        public Profile Owner { get; set; }
+
         public bool Featured { get; set; }
         public bool Popular { get; set; }
 
         public List<QuizItem> Items { get; set; }
-        
+        public List<Chapter> Chapters { get; set; }
+
         public DateTime CreatedTime { get; set; }
         public DateTime? UpdatedTime { get; set; }
         public string CreatedUser { get; set; }

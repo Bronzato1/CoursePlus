@@ -3,7 +3,10 @@ using CoursePlus.Shared.Infrastructure;
 using CoursePlus.Shared.Models;
 using JsonNet.PrivateSettersContractResolvers;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
@@ -11,6 +14,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CoursePlus.Server.Repositories
@@ -18,10 +23,14 @@ namespace CoursePlus.Server.Repositories
     public class QuizRepository : IQuizRepository
     {
         private readonly ApplicationDbContext _dbContext;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IProfileRepository _profileRepository;
 
-        public QuizRepository(ApplicationDbContext dbContext)
+        public QuizRepository(ApplicationDbContext dbContext, IHttpContextAccessor httpContextAccessor, IProfileRepository profileRepository)
         {
             _dbContext = dbContext;
+            _httpContextAccessor = httpContextAccessor;
+            _profileRepository = profileRepository;
         }
 
         public async Task<PaginatedList<QuizTopic>> GetQuizzes(int? pageNumber, int? pageSize, IDictionary<string, string> sortOrder, IDictionary<string, string> filters)
@@ -75,6 +84,7 @@ namespace CoursePlus.Server.Repositories
                 .Where(x => x.Id == id)
                 .Include(x => x.Image)
                 .Include(x => x.Category)
+                .Include(x => x.Chapters).ThenInclude(x => x.Episodes).ThenInclude(x => x.WatchHistory)
                 .FirstOrDefault();
 
             return quiz;
@@ -157,6 +167,13 @@ namespace CoursePlus.Server.Repositories
                         quiz = quizA;
                         quiz.Category = new CategoryRepository(_dbContext).GetCategoryByName(quizA.Catégorie);
                     }
+
+                    var email = _httpContextAccessor.HttpContext.User.Identity.Name;
+                    var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+                    quiz.Owner = _profileRepository.GetProfileByUserId(userId);
+
+                    quiz.Description = "<i>to be filled later</i>";
 
                     quiz.Thumbnail = new Thumbnail { Data = thumb };
                     _dbContext.Thumbnails.Add(quiz.Thumbnail);

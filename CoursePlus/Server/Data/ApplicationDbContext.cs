@@ -53,6 +53,7 @@ namespace CoursePlus.Server.Data
             builder.Entity<WatchHistory>().HasKey(x => new { x.EpisodeId, x.ProfileId });
             builder.Entity<Playlist>().HasOne(x => x.Owner).WithMany().OnDelete(DeleteBehavior.NoAction);
             builder.Entity<QuizTopic>().HasMany(x => x.Items).WithOne().OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<QuizTopic>().HasOne(x => x.Owner).WithMany().OnDelete(DeleteBehavior.NoAction);
             builder.Entity<QuizItem>().HasMany(x => x.Proposals).WithOne().OnDelete(DeleteBehavior.Cascade);
         }
 

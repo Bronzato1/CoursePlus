@@ -269,7 +269,7 @@ namespace CoursePlus.Server.Data.Migrations
                     b.Property<string>("CreatedUser")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PlaylistId")
+                    b.Property<int>("QuizTopicId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -283,7 +283,7 @@ namespace CoursePlus.Server.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PlaylistId");
+                    b.HasIndex("QuizTopicId");
 
                     b.ToTable("Chapters");
                 });
@@ -645,6 +645,7 @@ namespace CoursePlus.Server.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Editor")
@@ -654,6 +655,10 @@ namespace CoursePlus.Server.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int?>("ImageId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("OwnerId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int>("PlayCount")
@@ -672,6 +677,7 @@ namespace CoursePlus.Server.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedTime")
@@ -685,6 +691,8 @@ namespace CoursePlus.Server.Data.Migrations
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("ImageId");
+
+                    b.HasIndex("OwnerId");
 
                     b.HasIndex("ThumbnailId");
 
@@ -915,9 +923,9 @@ namespace CoursePlus.Server.Data.Migrations
 
             modelBuilder.Entity("CoursePlus.Shared.Models.Chapter", b =>
                 {
-                    b.HasOne("CoursePlus.Shared.Models.Playlist", "Playlist")
+                    b.HasOne("CoursePlus.Shared.Models.QuizTopic", "QuizTopic")
                         .WithMany("Chapters")
-                        .HasForeignKey("PlaylistId")
+                        .HasForeignKey("QuizTopicId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -1008,6 +1016,12 @@ namespace CoursePlus.Server.Data.Migrations
                     b.HasOne("CoursePlus.Shared.Models.Image", "Image")
                         .WithMany()
                         .HasForeignKey("ImageId");
+
+                    b.HasOne("CoursePlus.Shared.Models.Profile", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("CoursePlus.Shared.Models.Thumbnail", "Thumbnail")
                         .WithMany()

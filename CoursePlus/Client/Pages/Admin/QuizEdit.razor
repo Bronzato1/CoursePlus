@@ -1,5 +1,5 @@
-﻿@page "/admin/playlist/{Id:int}"
-@inherits PlaylistEditBase
+﻿@page "/admin/quiz/{Id:int}"
+@inherits QuizEditBase
 @attribute [Authorize(Policy = Policies.IsAdmin)]
 
 <div id="wrapper">
@@ -8,8 +8,8 @@
         <Breadcrumbs>
             <li><a href="/"> <i class="uil-home-alt"></i> </a></li>
             <li><a href="/admin/dashboard">Admin dashboard</a></li>
-            <li><a href="/admin/playlists">All playlists</a></li>
-            <li>@OnePlaylist.Title</li>
+            <li><a href="/admin/quizzes">All quizzes</a></li>
+            <li>@OneQuiz.Title</li>
         </Breadcrumbs>
     </Header>
 
@@ -25,13 +25,13 @@
 
             <div class="card">
                 <div class="card-header border-bottom-0 py-4">
-                    <h4 class="float-left mb-0"> Playlist @OnePlaylist.Id </h4>
+                    <h4 class="float-left mb-0"> Quiz @OneQuiz.Id </h4>
                     <div class="float-right @StatusClass"><b>@Message</b></div>
                 </div>
 
 
                 <ul class="uk-child-width-expand uk-tab"
-                    uk-switcher="connect: #playlist-edit-tab ; animation: uk-animation-fade">
+                    uk-switcher="connect: #quiz-edit-tab ; animation: uk-animation-fade">
                     <li class="uk-active"><a href="#"> Title </a></li>
                     <li><a href="#"> Description </a></li>
                     <li><a href="#"> Extra </a></li>
@@ -41,11 +41,11 @@
                     <li><a href="#"> Finish </a></li>
                 </ul>
 
-                <EditForm Model="@OnePlaylist" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit" ccclass="uk-child-width-1-1@s uk-grid-small p-4">
+                <EditForm Model="@OneQuiz" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit" ccclass="uk-child-width-1-1@s uk-grid-small p-4">
 
                     <div class="card-body">
 
-                        <ul class="uk-switcher uk-margin" id="playlist-edit-tab">
+                        <ul class="uk-switcher uk-margin" id="quiz-edit-tab">
 
                             <li>
 
@@ -54,21 +54,21 @@
 
                                         <div class="form-group row mb-3">
                                             <label class="col-md-3 col-form-label" for="title">
-                                                Playlist title<span class="required">*</span>
+                                                Quiz title<span class="required">*</span>
                                             </label>
                                             <div class="col-md-9">
-                                                <InputText Id="title" class="uuuuk-input form-control" @bind-Value="OnePlaylist.Title" placeholder="" />
+                                                <InputText Id="title" class="uuuuk-input form-control" @bind-Value="OneQuiz.Title" placeholder="" />
                                             </div>
                                         </div>
 
-                                        <div class="form-group row mb-3">
+                                        @*<div class="form-group row mb-3">
                                             <label class="col-md-3 col-form-label" for="subtitle">
                                                 Subtitle
                                             </label>
                                             <div class="col-md-9">
-                                                <InputTextArea Id="subtitle" rows="1" class="form-control" @bind-Value="OnePlaylist.SubTitle" />
+                                                <InputTextArea Id="subtitle" rows="1" class="form-control" @bind-Value="OneQuiz.SubTitle" />
                                             </div>
-                                        </div>
+                                        </div>*@
 
                                     </div>
                                 </div>
@@ -135,7 +135,7 @@
                                                 Owner <span class="required">*</span>
                                             </label>
                                             <div class="col-md-9">
-                                                 <InputSelectCustom id="owner" class="form-control col-sm-8" @bind-Value="@OnePlaylist.OwnerId">
+                                                 <InputSelectCustom id="owner" class="form-control col-sm-8" @bind-Value="@OneQuiz.OwnerId">
                                                     <option value=""></option>
                                                     @foreach (var profile in Profiles)
                                                     {
@@ -150,7 +150,7 @@
                                                 Category <span class="required">*</span>
                                             </label>
                                             <div class="col-md-9">
-                                                <InputSelectCustom id="category" class="form-control col-sm-8" @bind-Value="@OnePlaylist.CategoryId">
+                                                <InputSelectCustom id="category" class="form-control col-sm-8" @bind-Value="@OneQuiz.CategoryId">
                                                     <option value=""></option>
                                                     @foreach (var category in Categories)
                                                     {
@@ -160,28 +160,28 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-group row mb-3">
+                                        @*<div class="form-group row mb-3">
                                             <label class="col-md-3 col-form-label" for="language">
                                                 Language <span class="required">*</span>
                                             </label>
                                             <div class="col-md-9">
 
-                                                <InputSelectCustom Id="language" class="form-control col-sm-8" @bind-Value="OnePlaylist.Language">
+                                                <InputSelectCustom Id="language" class="form-control col-sm-8" @bind-Value="OneQuiz.Language">
                                                     <option value=""></option>
                                                     <option value="English">English</option>
                                                     <option value="French">French</option>
                                                 </InputSelectCustom>
 
                                             </div>
-                                        </div>
+                                        </div>*@
 
-                                        <div class="form-group row mb-3">
+                                        @*<div class="form-group row mb-3">
                                             <label class="col-md-3 col-form-label" for="difficulty">
                                                 Difficulty <span class="required">*</span>
                                             </label>
                                             <div class="col-md-9">
 
-                                                <InputSelectCustom Id="difficulty" class="uuuuk-select form-control col-sm-8" @bind-Value="OnePlaylist.Difficulty">
+                                                <InputSelectCustom Id="difficulty" class="uuuuk-select form-control col-sm-8" @bind-Value="OneQuiz.Difficulty">
                                                     <option value=""></option>
                                                     <option value="Beginner"> Beginner </option>
                                                     <option value="Intermediate"> Intermediate </option>
@@ -189,18 +189,18 @@
                                                 </InputSelectCustom>
 
                                             </div>
-                                        </div>
+                                        </div>*@
 
                                         <div class="form-group row mb-3">
                                             <div class="col-md-9">
-                                                <InputCheckbox id="featured" class="uk-checkbox" @bind-Value="@OnePlaylist.Featured"></InputCheckbox>
+                                                <InputCheckbox id="featured" class="uk-checkbox" @bind-Value="@OneQuiz.Featured"></InputCheckbox>
                                                 &nbsp;Featured
                                             </div>
                                         </div>
 
                                         <div class="form-group row mb-3">
                                             <div class="col-md-9">
-                                                <InputCheckbox id="popular" class="uk-checkbox" @bind-Value="@OnePlaylist.Popular"></InputCheckbox>
+                                                <InputCheckbox id="popular" class="uk-checkbox" @bind-Value="@OneQuiz.Popular"></InputCheckbox>
                                                 &nbsp;Popular
                                             </div>
                                         </div>
@@ -216,9 +216,9 @@
                                 <div class="row">
                                     <div class="col-xl-10 m-auto">
                                         <ul class="c-curriculum" uk-accordion>
-                                            @*@if (OnePlaylist.Chapters != null && OnePlaylist.Chapters.Count() > 0)
+                                            @if (OneQuiz.Chapters != null && OneQuiz.Chapters.Count() > 0)
                                             {
-                                                foreach (var OneChapter in OnePlaylist.Chapters)
+                                                foreach (var OneChapter in OneQuiz.Chapters)
                                                 {
                                                     <li class="uk-open">
                                                         <a class="uk-accordion-title" href="#">
@@ -256,7 +256,7 @@
                                                         </div>
                                                     </li>
                                                 }
-                                            }*@
+                                            }
 
                                         </ul>
                                         <a href="javascript:void(0)" @onclick="AddChapter" class="btn btn-default mt-3 mr-2"><i class="uil-folder"></i> Add chapter </a>
@@ -274,9 +274,9 @@
                                             Drop a file here or click to choose one
                                         </div>
 
-                                        @if (OnePlaylist.Image != null)
+                                        @if (OneQuiz.Image != null)
                                         {
-                                            <img src="@String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(OnePlaylist.Image.Data))" />
+                                            <img src="@String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(OneQuiz.Image.Data))" />
                                         }
                                     </div> <!-- end col -->
                                 </div>
@@ -313,7 +313,7 @@
                                             <h2 class="mt-0"><i class="icon-feather-check-circle text-success"></i></h2>
                                             <h3 class="mt-0">Thank you !</h3>
 
-                                            <p class="w-75 mb-2 mx-auto"> Submit This Playlist For Reweiw  </p>
+                                            <p class="w-75 mb-2 mx-auto"> Submit This quiz For Reweiw  </p>
 
                                             <div class="mb-3 mt-3">
                                                 <button type="button" class="btn btn-default">Submit</button>
@@ -338,9 +338,9 @@
                     <div class="uk-flex uk-flex-right pt-0 p-5">
                         <button class="btn btn-light mr-2" @onclick="NavigateToList">Cancel</button>
                         <button class="btn btn-default mr-2" type="submit">Save Changes</button>
-                        @if (OnePlaylist.Id > 0)
+                        @if (OneQuiz.Id > 0)
                         {
-                            <a href="javascript:void(0)" class="btn btn-danger" @onclick="@DeletePlaylist">
+                            <a href="javascript:void(0)" class="btn btn-danger" @onclick="@DeleteQuiz">
                                 Delete
                             </a>
                         }

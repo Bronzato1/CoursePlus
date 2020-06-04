@@ -92,7 +92,7 @@
                                                     <span class="catagroy"> @OneQuiz.Category.Name </span>
                                                 </div>
                                                 <div>
-                                                    <a href="javascript: void(0)" @onclick="@( () => SwitchFeatured(OneQuiz) )">
+                                                    <a href="javascript: void(0)" @onclick="@( () => SwitchFeatured(OneQuiz) )" uk-tooltip="Featured">
                                                         <i class="icon-material-outline-star@(OneQuiz.Featured?"":"-border") icon-small"></i>
                                                     </a>
                                                 </div>
@@ -101,11 +101,13 @@
                                             <h4> @OneQuiz.Title </h4>
 
                                             <div class="playlist-card-footer">
-                                                <h5> <i class="icon-feather-play"></i> Played @OneQuiz.PlayCount times </h5>
-                                                <div class="actions">
-                                                    <a href="/book/@OneQuiz.Id" class="btn btn-icon btn-hover btn-sm btn-circle" uk-tooltip="Quick view">
-                                                        <i class="uil-external-link-alt"></i>
+                                                <h5>
+                                                    <a href="/quiz/@OneQuiz.Id" class="btn btn-icon btn-hover btn-sm btn-circle" uk-tooltip="Quick play">
+                                                        <i class="uil-play"></i>
                                                     </a>
+                                                    Played @OneQuiz.PlayCount times 
+                                                </h5>
+                                                <div class="actions">
                                                     <a class="btn btn-icon btn-hover btn-sm btn-circle" uk-tooltip="Edit" @onclick="@(e => EditQuiz(OneQuiz))">
                                                         <i class="uil-pen"></i>
                                                     </a>

@@ -64,7 +64,7 @@ namespace CoursePlus.Server.Repositories
                 .Include(x => x.Image)
                 .Include(x => x.Category)
                 .Include(x => x.Owner.User)
-                .Include(x => x.Chapters).ThenInclude(x => x.Episodes).ThenInclude(x => x.WatchHistory)
+                //.Include(x => x.Chapters).ThenInclude(x => x.Episodes).ThenInclude(x => x.WatchHistory)
                 .Include(x => x.Enrollments).ThenInclude(x => x.Profile)
                 .FirstOrDefault();
 

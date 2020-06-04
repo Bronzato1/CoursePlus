@@ -19,6 +19,7 @@ namespace CoursePlus.Client.Pages.Admin
         [Inject] public IQuizService QuizService { get; set; }
         [Inject] public ICategoryService CategoryService { get; set; }
         [Inject] public IModalDialogService ModalDialog { get; set; }
+        [Inject] public NavigationManager NavigationManager { get; set; }
 
         public int PageSize { get; set; } = 8;
         public PaginatedList<QuizTopic> SomeQuizzes { get; set; }
@@ -113,6 +114,14 @@ namespace CoursePlus.Client.Pages.Admin
         {
             _ = FilterPlaylists();
         }
+        protected void EditQuiz(QuizTopic OneQuiz)
+        {
+            NavigationManager.NavigateTo("/admin/quiz/" + OneQuiz.Id);
+        }
+        protected void AddQuiz()
+        {
+            NavigationManager.NavigateTo("/admin/quiz/0");
+        }
         protected string PageSizeIndicator(int pageSize)
         {
             if (PageSize.Equals(pageSize))
@@ -156,14 +165,6 @@ namespace CoursePlus.Client.Pages.Admin
         {
             var result = await QuizService.CreateQuizzesFromJsonOfOpenQuizzDB();
             await ModalDialog.ShowMessageBoxAsync("Quizzes injection", $"Operation finished. Total quizzes created: {result}", MessageBoxButtons.OK);
-        }
-        protected async Task AddQuiz()
-        {
-
-        }
-        protected async Task EditQuiz(QuizTopic OneQuiz)
-        {
-
         }
         protected async Task DeleteQuiz(QuizTopic OneQuiz)
         {

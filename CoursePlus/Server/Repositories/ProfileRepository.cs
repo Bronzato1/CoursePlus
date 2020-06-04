@@ -19,7 +19,7 @@ namespace CoursePlus.Server.Repositories
         private readonly UserManager<CustomUser> _userManager;
         private readonly ApplicationDbContext _dbContext;
         private readonly HttpClient _httpClient;
-        
+
         public ProfileRepository(ApplicationDbContext dbContext, UserManager<CustomUser> userManager, HttpClient httpClient)
         {
             _dbContext = dbContext;
@@ -60,7 +60,6 @@ namespace CoursePlus.Server.Repositories
                 throw new ApplicationException();
             }
         }
-
 
         public Profile GetProfile(int id)
         {
