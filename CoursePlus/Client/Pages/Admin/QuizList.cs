@@ -35,9 +35,6 @@ namespace CoursePlus.Client.Pages.Admin
             {
                 var filters = new Dictionary<string, string>();
 
-                if (CurrentFilterModel.DurationFilter.HasValue)
-                    filters.Add("Duration", CurrentFilterModel.DurationFilter.Value.ToString());
-
                 if (CurrentFilterModel.CategoryFilter.HasValue)
                     filters.Add("CategoryId", CurrentFilterModel.CategoryFilter.Value.ToString());
 
@@ -84,7 +81,6 @@ namespace CoursePlus.Client.Pages.Admin
         }
         public class FilterModel
         {
-            public EnumDuration? DurationFilter { get; set; }
             public int? CategoryFilter { get; set; }
             public EnumRating? RatingFilter { get; set; }
             public EnumPeriode? PeriodeFilter { get; set; }
@@ -107,12 +103,12 @@ namespace CoursePlus.Client.Pages.Admin
             EditContextForFilterModel = new EditContext(CurrentSortOrderModel);
             EditContextForFilterModel.OnFieldChanged += OnFieldChanged;
 
-            await FilterPlaylists();
+            await FilterQuizzes();
             Categories = await CategoryService.GetCategories();
         }
         protected void OnFieldChanged(object sender, FieldChangedEventArgs e)
         {
-            _ = FilterPlaylists();
+            _ = FilterQuizzes();
         }
         protected void EditQuiz(QuizTopic OneQuiz)
         {
@@ -151,7 +147,7 @@ namespace CoursePlus.Client.Pages.Admin
 
             StateHasChanged();
         }
-        protected async Task FilterPlaylists()
+        protected async Task FilterQuizzes()
         {
             SomeQuizzes = await QuizService.GetQuizzes(pageSize: PageSize, sortOrder: GetCurrentSortOrder, filters: GetCurrentFilters);
             StateHasChanged();
@@ -159,7 +155,7 @@ namespace CoursePlus.Client.Pages.Admin
         protected async Task SetPageSize(int size)
         {
             PageSize = size;
-            await FilterPlaylists();
+            await FilterQuizzes();
         }
         protected async Task InjectQuizzes()
         {

@@ -3323,7 +3323,7 @@ ul.dropdown-user-menu .menu-divider {
 }
 
 .playlist-details-info ul li .star-rating {
-  top: -2px;
+  top: 2px; /* TLA -2px*/;
   position: relative;
 }
 

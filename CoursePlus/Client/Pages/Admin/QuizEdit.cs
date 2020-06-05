@@ -64,12 +64,14 @@ namespace CoursePlus.Client.Pages.Admin
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
-            {
+            { 
+                // Attention, sous Google Chrome ca bug à cause de l'extreme lenteur
                 await Task.Delay(1000);
                 await JSRuntime.InvokeVoidAsync("QuillFunctions.createQuill", divEditorElement);
                 await JSRuntime.InvokeVoidAsync("QuillFunctions.notifyQuillChanges", divEditorElement, DotNetObjectReference.Create(this));
                 await JSRuntime.InvokeVoidAsync("QuillFunctions.loadQuillContentFromHTML", divEditorElement, OneQuiz.Description);
             }
+            await base.OnAfterRenderAsync(firstRender);
         }
 
         protected void NavigateToList()

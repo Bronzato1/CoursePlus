@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CoursePlus.Server.Data.Migrations
 {
-    public partial class FirstMigration : Migration
+    public partial class MyFirstMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -396,7 +396,8 @@ namespace CoursePlus.Server.Data.Migrations
                     Question = table.Column<string>(nullable: true),
                     Answer = table.Column<string>(nullable: true),
                     Anecdote = table.Column<string>(nullable: true),
-                    QuizTopicId = table.Column<int>(nullable: true)
+                    QuizTopicId = table.Column<int>(nullable: true),
+                    QuizTopicId2 = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -404,6 +405,12 @@ namespace CoursePlus.Server.Data.Migrations
                     table.ForeignKey(
                         name: "FK_QuizItems_QuizTopics_QuizTopicId",
                         column: x => x.QuizTopicId,
+                        principalTable: "QuizTopics",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_QuizItems_QuizTopics_QuizTopicId2",
+                        column: x => x.QuizTopicId2,
                         principalTable: "QuizTopics",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -443,7 +450,8 @@ namespace CoursePlus.Server.Data.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Proposition = table.Column<string>(nullable: true),
-                    QuizItemId = table.Column<int>(nullable: true)
+                    QuizItemId = table.Column<int>(nullable: true),
+                    QuizItemId2 = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -451,6 +459,12 @@ namespace CoursePlus.Server.Data.Migrations
                     table.ForeignKey(
                         name: "FK_QuizProposals_QuizItems_QuizItemId",
                         column: x => x.QuizItemId,
+                        principalTable: "QuizItems",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_QuizProposals_QuizItems_QuizItemId2",
+                        column: x => x.QuizItemId2,
                         principalTable: "QuizItems",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -631,9 +645,19 @@ namespace CoursePlus.Server.Data.Migrations
                 column: "QuizTopicId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_QuizItems_QuizTopicId2",
+                table: "QuizItems",
+                column: "QuizTopicId2");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_QuizProposals_QuizItemId",
                 table: "QuizProposals",
                 column: "QuizItemId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_QuizProposals_QuizItemId2",
+                table: "QuizProposals",
+                column: "QuizItemId2");
 
             migrationBuilder.CreateIndex(
                 name: "IX_QuizTopics_CategoryId",

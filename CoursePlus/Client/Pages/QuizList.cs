@@ -16,6 +16,7 @@ namespace CoursePlus.Client.Pages
         [Inject] public ICategoryService CategoryService { get; set; }
         [Inject] public NavigationManager NavigationManager { get; set; }
 
+        public int PageSize { get; set; } = 8;
         public PaginatedList<QuizTopic> SomeQuizzes { get; set; }
         public IEnumerable<Category> Categories { get; set; }
         public FilterModel CurrentFilterModel = new FilterModel();
@@ -23,9 +24,58 @@ namespace CoursePlus.Client.Pages
         public EditContext EditContextForSortOrderModel;
         public EditContext EditContextForFilterModel;
 
+        public Dictionary<string, string> GetCurrentFilters
+        {
+            get
+            {
+                var filters = new Dictionary<string, string>();
+
+                if (CurrentFilterModel.CategoryFilter.HasValue)
+                    filters.Add("CategoryId", CurrentFilterModel.CategoryFilter.Value.ToString());
+
+                if (CurrentFilterModel.ClassmentFilter.HasValue)
+                {
+                    switch (CurrentFilterModel.ClassmentFilter.Value)
+                    {
+                        case EnumClassment.Featured:
+                            filters.Add("Featured", "true");
+                            break;
+                        case EnumClassment.Popular:
+                            filters.Add("Popular", "true");
+                            break;
+                    }
+                }
+
+                return filters;
+            }
+        }
+        public Dictionary<string, string> GetCurrentSortOrder
+        {
+            get
+            {
+                var sortOrder = new Dictionary<string, string>();
+
+                if (CurrentSortOrderModel.SortOrder.HasValue)
+                {
+                    switch (CurrentSortOrderModel.SortOrder.Value)
+                    {
+                        case EnumSortOrder.NewestFirst:
+                            sortOrder.Add("Id", "desc");
+                            break;
+                        case EnumSortOrder.OldestFirst:
+                            sortOrder.Add("Id", "asc");
+                            break;
+                        case EnumSortOrder.MostPlayed:
+                            sortOrder.Add("Popular", "asc");
+                            sortOrder.Add("Id", "desc");
+                            break;
+                    }
+                }
+                return sortOrder;
+            }
+        }
         public class FilterModel
         {
-            public EnumDuration? DurationFilter { get; set; }
             public int? CategoryFilter { get; set; }
             public EnumRating? RatingFilter { get; set; }
             public EnumPeriode? PeriodeFilter { get; set; }
@@ -60,51 +110,7 @@ namespace CoursePlus.Client.Pages
         } 
         protected async Task FilterQuizzes()
         {
-            PaginatedList<QuizTopic> quizzes;
-
-            var currentFilters = new Dictionary<string, string>();
-            var currentSortOrder = new Dictionary<string, string>();
-
-            if (CurrentFilterModel.DurationFilter.HasValue)
-                currentFilters.Add("Duration", CurrentFilterModel.DurationFilter.Value.ToString());
-
-            if (CurrentFilterModel.CategoryFilter.HasValue)
-                currentFilters.Add("CategoryId", CurrentFilterModel.CategoryFilter.Value.ToString());
-
-            if (CurrentFilterModel.ClassmentFilter.HasValue)
-            {
-                switch (CurrentFilterModel.ClassmentFilter.Value)
-                { 
-                    case EnumClassment.Featured:
-                        currentFilters.Add("Featured", "true");
-                        break;
-                    case EnumClassment.Popular:
-                        currentFilters.Add("Popular", "true");
-                        break;
-                }
-            }
-
-            if (CurrentSortOrderModel.SortOrder.HasValue)
-            { 
-                switch (CurrentSortOrderModel.SortOrder.Value)
-                {
-                    case EnumSortOrder.NewestFirst:
-                        currentSortOrder.Add("Id", "desc");
-                        break;
-                    case EnumSortOrder.OldestFirst:
-                        currentSortOrder.Add("Id", "asc");
-                        break;
-                    case EnumSortOrder.MostPlayed:
-                        currentSortOrder.Add("Popular", "asc");
-                        currentSortOrder.Add("Id", "desc");
-                        break;
-                }
-            }
-
-            quizzes = await QuizService.GetQuizzes(filters: currentFilters, sortOrder: currentSortOrder);
-            
-            SomeQuizzes = quizzes;
-
+            SomeQuizzes = await QuizService.GetQuizzes(pageSize: PageSize, sortOrder: GetCurrentSortOrder, filters: GetCurrentFilters);
             StateHasChanged();
         }
         protected async void PageIndexChanged(PaginatedList<QuizTopic> context, int newPageNumber)

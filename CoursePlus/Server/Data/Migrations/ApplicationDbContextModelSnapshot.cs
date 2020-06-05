@@ -528,9 +528,14 @@ namespace CoursePlus.Server.Data.Migrations
                     b.Property<int?>("QuizTopicId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("QuizTopicId2")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("QuizTopicId");
+
+                    b.HasIndex("QuizTopicId2");
 
                     b.ToTable("QuizItems");
                 });
@@ -548,9 +553,14 @@ namespace CoursePlus.Server.Data.Migrations
                     b.Property<int?>("QuizItemId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("QuizItemId2")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("QuizItemId");
+
+                    b.HasIndex("QuizItemId2");
 
                     b.ToTable("QuizProposals");
                 });
@@ -898,17 +908,25 @@ namespace CoursePlus.Server.Data.Migrations
 
             modelBuilder.Entity("CoursePlus.Shared.Models.QuizItem", b =>
                 {
+                    b.HasOne("CoursePlus.Shared.Models.QuizTopic", "QuizTopic")
+                        .WithMany()
+                        .HasForeignKey("QuizTopicId");
+
                     b.HasOne("CoursePlus.Shared.Models.QuizTopic", null)
                         .WithMany("Items")
-                        .HasForeignKey("QuizTopicId")
+                        .HasForeignKey("QuizTopicId2")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("CoursePlus.Shared.Models.QuizProposal", b =>
                 {
+                    b.HasOne("CoursePlus.Shared.Models.QuizItem", "QuizItem")
+                        .WithMany()
+                        .HasForeignKey("QuizItemId");
+
                     b.HasOne("CoursePlus.Shared.Models.QuizItem", null)
                         .WithMany("Proposals")
-                        .HasForeignKey("QuizItemId")
+                        .HasForeignKey("QuizItemId2")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

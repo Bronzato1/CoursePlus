@@ -64,8 +64,8 @@
                         @foreach (var OneQuiz in SomeQuizzes.Items)
                         {
                             <div class="uk-margin-small-bottom">
-                                <a href="/quiz/@OneQuiz.Id">
-                                    <div class="playlist-card">
+                                <div class="playlist-card">
+                                    <a href="/quiz/@OneQuiz.Id">
                                         <div class="playlist-card-thumbnail">
                                             @if (OneQuiz.Thumbnail != null)
                                             {
@@ -73,27 +73,26 @@
                                             }
                                             <span class="play-button-trigger"></span>
                                         </div>
-                                        <div class="playlist-card-body">
-                                            <div class="playlist-card-info">
-                                                <div>
-                                                    <span class="catagroy"> @OneQuiz.Category.Name </span>
-                                                </div>
-                                                <div>
-                                                    <i class="icon-feather-bookmark icon-small"></i>
-                                                </div>
+                                    </a>
+                                    <div class="playlist-card-body">
+                                        <div class="playlist-card-info">
+                                            <div>
+                                                <span class="catagroy"> @OneQuiz.Category.Name </span>
                                             </div>
-
-                                            <h4> @OneQuiz.Title </h4>
-                                            <p>  subtitle... </p>
-
-                                            <div class="playlist-card-footer">
-                                                <h5> <i class="icon-feather-film"></i> 33 Lectures </h5>
-                                                <h5> <i class="icon-feather-clock"></i> 26 Hours </h5>
+                                            <div>
+                                                <i class="icon-feather-bookmark icon-small"></i>
                                             </div>
                                         </div>
 
+                                        <h4> @OneQuiz.Title </h4>
+                                        <p>  subtitle... </p>
+
+                                        <div class="playlist-card-footer">
+                                            <h5> <i class="uil-play"></i> Played @OneQuiz.PlayCount times </h5>
+                                            <h5> <i class="icon-feather-clock"></i> 26 Hours </h5>
+                                        </div>
                                     </div>
-                                </a>
+                                </div>
                             </div>
                         }
 
@@ -125,38 +124,6 @@
                                 <h4> Filter By </h4>
 
                                 <ul class="sidebar-filter-list" uk-accordion="multiple: true">
-
-                                    <li>
-                                        <a class="uk-accordion-title" href="#"> Duration time </a>
-                                        <div class="uk-accordion-content">
-                                            <div class="uk-form-controls">
-                                                <label>
-                                                    <InputRadio class="uk-radio" SelectedValue="null" @bind-Value="@CurrentFilterModel.DurationFilter" />
-                                                    <span class="test"> Any </span>
-                                                </label>
-                                                <label>
-                                                    <InputRadio class="uk-radio" SelectedValue="EnumDuration.MoreThan2Hours" @bind-Value="@CurrentFilterModel.DurationFilter" />
-                                                    <span class="test"> +2 hours </span>
-                                                </label>
-                                                <label>
-                                                    <InputRadio class="uk-radio" SelectedValue="EnumDuration.MoreThan5Hours" @bind-Value="@CurrentFilterModel.DurationFilter" />
-                                                    <span class="test"> +5 hours </span>
-                                                </label>
-                                                <label>
-                                                    <InputRadio class="uk-radio" SelectedValue="EnumDuration.MoreThan10Hours" @bind-Value="@CurrentFilterModel.DurationFilter" />
-                                                    <span class="test"> +10 hours </span>
-                                                </label>
-                                                <label>
-                                                    <InputRadio class="uk-radio" SelectedValue="EnumDuration.MoreThan20Hours" @bind-Value="@CurrentFilterModel.DurationFilter" />
-                                                    <span class="test"> +20 hours </span>
-                                                </label>
-                                                <label>
-                                                    <InputRadio class="uk-radio" SelectedValue="EnumDuration.MoreThan30Hours" @bind-Value="@CurrentFilterModel.DurationFilter" />
-                                                    <span class="test"> +30 hours </span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </li>
 
                                     <li>
                                         <a class="uk-accordion-title" href="#"> Category </a>
