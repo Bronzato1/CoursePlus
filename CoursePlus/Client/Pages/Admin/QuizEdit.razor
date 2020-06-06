@@ -34,13 +34,12 @@
                     uk-switcher="connect: #quiz-edit-tab ; animation: uk-animation-fade">
                     <li class="uk-active"><a href="#"> Title </a></li>
                     <li><a href="#"> Description </a></li>
-                    <li><a href="#"> Extra </a></li>
                     <li><a href="#"> Episodes </a></li>
                     <li><a href="#"> Image </a></li>
                     <li><a href="#"> Q&A </a></li>
                 </ul>
 
-                <EditForm Model="@OneQuiz" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit" ccclass="uk-child-width-1-1@s uk-grid-small p-4">
+                <EditForm Model="@OneQuiz" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit">
 
                     <div class="card-body">
 
@@ -61,13 +60,85 @@
                                         </div>
 
                                         @*<div class="form-group row mb-3">
-                                                <label class="col-md-3 col-form-label" for="subtitle">
-                                                    Subtitle
-                                                </label>
-                                                <div class="col-md-9">
-                                                    <InputTextArea Id="subtitle" rows="1" class="form-control" @bind-Value="OneQuiz.SubTitle" />
-                                                </div>
-                                            </div>*@
+                                            <label class="col-md-3 col-form-label" for="subtitle">
+                                                Subtitle
+                                            </label>
+                                            <div class="col-md-9">
+                                                <InputTextArea Id="subtitle" rows="1" class="form-control" @bind-Value="OneQuiz.SubTitle" />
+                                            </div>
+                                        </div>*@
+
+                                        <div class="form-group row mb-3">
+                                            <label class="col-md-3 col-form-label" for="profile">
+                                                Owner <span class="required">*</span>
+                                            </label>
+                                            <div class="col-md-9">
+                                                <InputSelectCustom id="owner" class="selectpicker form-control col-sm-8" @bind-Value="@OneQuiz.OwnerId">
+                                                    <option value=""></option>
+                                                    @foreach (var profile in Profiles)
+                                                    {
+                                                        <option value="@profile.Id">@profile.User.FirstName @profile.User.LastName</option>
+                                                    }
+                                                </InputSelectCustom>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row mb-3">
+                                            <label class="col-md-3 col-form-label" for="category">
+                                                Category <span class="required">*</span>
+                                            </label>
+                                            <div class="col-md-9">
+                                                <InputSelectCustom id="category" class="selectpicker form-control col-sm-8" @bind-Value="@OneQuiz.CategoryId">
+                                                    <option value=""></option>
+                                                    @foreach (var category in Categories)
+                                                    {
+                                                        <option value="@category.Id">@category.Name</option>
+                                                    }
+                                                </InputSelectCustom>
+                                            </div>
+                                        </div>
+
+                                        @*<div class="form-group row mb-3">
+                                            <label class="col-md-3 col-form-label" for="language">
+                                                Language <span class="required">*</span>
+                                            </label>
+                                            <div class="col-md-9">
+
+                                                <InputSelectCustom Id="language" class="form-control col-sm-8" @bind-Value="OneQuiz.Language">
+                                                    <option value=""></option>
+                                                    <option value="English">English</option>
+                                                    <option value="French">French</option>
+                                                </InputSelectCustom>
+
+                                            </div>
+                                        </div>*@
+
+                                        @*<div class="form-group row mb-3">
+                                            <label class="col-md-3 col-form-label" for="difficulty">
+                                                Difficulty <span class="required">*</span>
+                                            </label>
+                                            <div class="col-md-9">
+
+                                                <InputSelectCustom Id="difficulty" class="uuuuk-select form-control col-sm-8" @bind-Value="OneQuiz.Difficulty">
+                                                    <option value=""></option>
+                                                    <option value="Beginner"> Beginner </option>
+                                                    <option value="Intermediate"> Intermediate </option>
+                                                    <option value="Advanced"> Advanced </option>
+                                                </InputSelectCustom>
+
+                                            </div>
+                                        </div>*@
+
+                                    <div class="form-group row mb-3">
+                                        <label class="col-md-3 col-form-label" for="category">
+                                            Featured
+                                        </label>
+                                        <div class="col-md-9 pt-2">
+                                            <a href="javascript: void(0)" @onclick="@( () => OneQuiz.Featured = !OneQuiz.Featured )" uk-tooltip="Featured">
+                                                <i class="icon-material-outline-star@(OneQuiz.Featured?"":"-border") icon-small"></i>
+                                            </a>
+                                        </div>
+                                    </div>
 
                                     </div>
                                 </div>
@@ -121,92 +192,6 @@
                                 }
 
                                 <div id="quill-editor" @ref="@divEditorElement" />
-
-                            </li>
-
-                            <li>
-
-                                <div class="row">
-                                    <div class="col-xl-9 m-auto">
-
-                                        <div class="form-group row mb-3">
-                                            <label class="col-md-3 col-form-label" for="profile">
-                                                Owner <span class="required">*</span>
-                                            </label>
-                                            <div class="col-md-9">
-                                                <InputSelectCustom id="owner" class="form-control col-sm-8" @bind-Value="@OneQuiz.OwnerId">
-                                                    <option value=""></option>
-                                                    @foreach (var profile in Profiles)
-                                                    {
-                                                        <option value="@profile.Id">@profile.User.FirstName @profile.User.LastName</option>
-                                                    }
-                                                </InputSelectCustom>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row mb-3">
-                                            <label class="col-md-3 col-form-label" for="category">
-                                                Category <span class="required">*</span>
-                                            </label>
-                                            <div class="col-md-9">
-                                                <InputSelectCustom id="category" class="form-control col-sm-8" @bind-Value="@OneQuiz.CategoryId">
-                                                    <option value=""></option>
-                                                    @foreach (var category in Categories)
-                                                    {
-                                                        <option value="@category.Id">@category.Name</option>
-                                                    }
-                                                </InputSelectCustom>
-                                            </div>
-                                        </div>
-
-                                        @*<div class="form-group row mb-3">
-                                                <label class="col-md-3 col-form-label" for="language">
-                                                    Language <span class="required">*</span>
-                                                </label>
-                                                <div class="col-md-9">
-
-                                                    <InputSelectCustom Id="language" class="form-control col-sm-8" @bind-Value="OneQuiz.Language">
-                                                        <option value=""></option>
-                                                        <option value="English">English</option>
-                                                        <option value="French">French</option>
-                                                    </InputSelectCustom>
-
-                                                </div>
-                                            </div>*@
-
-                                        @*<div class="form-group row mb-3">
-                                                <label class="col-md-3 col-form-label" for="difficulty">
-                                                    Difficulty <span class="required">*</span>
-                                                </label>
-                                                <div class="col-md-9">
-
-                                                    <InputSelectCustom Id="difficulty" class="uuuuk-select form-control col-sm-8" @bind-Value="OneQuiz.Difficulty">
-                                                        <option value=""></option>
-                                                        <option value="Beginner"> Beginner </option>
-                                                        <option value="Intermediate"> Intermediate </option>
-                                                        <option value="Advanced"> Advanced </option>
-                                                    </InputSelectCustom>
-
-                                                </div>
-                                            </div>*@
-
-                                        <div class="form-group row mb-3">
-                                            <div class="col-md-9">
-                                                <InputCheckbox id="featured" class="uk-checkbox" @bind-Value="@OneQuiz.Featured"></InputCheckbox>
-                                                &nbsp;Featured
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row mb-3">
-                                            <div class="col-md-9">
-                                                <InputCheckbox id="popular" class="uk-checkbox" @bind-Value="@OneQuiz.Popular"></InputCheckbox>
-                                                &nbsp;Popular
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-
 
                             </li>
 
@@ -327,7 +312,6 @@
                         <DataAnnotationsValidator />
                         <ValidationSummary />
                     </div>
-
 
                     <div class="uk-flex uk-flex-right pt-0 p-5">
                         <button class="btn btn-light mr-2" @onclick="NavigateToList">Cancel</button>

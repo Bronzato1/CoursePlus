@@ -82,5 +82,11 @@ namespace CoursePlus.Shared.Utilities
                 return base.TryParseValueFromString(value, out result, out validationErrorMessage);
             }
         }
+
+        protected override void OnAfterRender(bool firstRender)
+        {
+            if (firstRender) FormatValueAsString(Value);
+            base.OnAfterRender(firstRender);
+        }
     }
 }
