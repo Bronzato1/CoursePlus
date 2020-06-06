@@ -1,5 +1,4 @@
 ﻿using CoursePlus.Client.Services;
-using CoursePlus.Shared.Infrastructure;
 using CoursePlus.Shared.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
@@ -10,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CoursePlus.Client.Pages
 {
-    public class QuizDetailBase : ComponentBase
+    public class QuizPlayBase : ComponentBase
     {
         [Parameter] public int Id { get; set; }
         [Inject] public IJSRuntime JSRuntime { get; set; }
@@ -18,6 +17,9 @@ namespace CoursePlus.Client.Pages
         [Inject] public IQuizService QuizService { get; set; }
 
         public QuizTopic OneQuiz { get; set; }
+
+        public TimeSpan StopWatchValue = new TimeSpan();
+        public bool IsStopWatchRunning = false;
 
         protected override void OnParametersSet()
         {
@@ -31,6 +33,20 @@ namespace CoursePlus.Client.Pages
         {
             //await Task.Delay(3000);
             //await JSRuntime.InvokeVoidAsync("resetSticky", ".playlist-card-trailer");
+        }
+        public async Task StartStopWatch()
+        {
+            IsStopWatchRunning = true;
+
+            while (IsStopWatchRunning)
+            {
+                await Task.Delay(1000);
+                if (IsStopWatchRunning)
+                {
+                    StopWatchValue = StopWatchValue.Add(new TimeSpan(0, 0, 1));
+                    StateHasChanged();
+                }
+            }
         }
     }
 }
