@@ -147,8 +147,10 @@ namespace CoursePlus.Shared.Models
         public string Anecdote { get; set; }
         public List<QuizProposal> Proposals { get; set; }
 
-        [ForeignKey("QuizTopicId")]
-        public virtual QuizTopic QuizTopic { get; set; }
+        //[ForeignKey("QuizTopicId")]
+
+        public int QuizTopicId { get; set; }
+        public QuizTopic QuizTopic { get; set; }
     }
 
     public class QuizProposal
@@ -156,7 +158,9 @@ namespace CoursePlus.Shared.Models
         public int Id { get; set; }
         public string Proposition { get; set; }
 
-        [ForeignKey("QuizItemId")]
+        //[ForeignKey("QuizItemId")]
+
+        public int QuizItemId { get; set; }
         public QuizItem QuizItem { get; set; }
     }
 }

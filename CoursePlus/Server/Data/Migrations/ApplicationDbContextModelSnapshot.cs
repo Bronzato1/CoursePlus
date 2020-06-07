@@ -525,17 +525,17 @@ namespace CoursePlus.Server.Data.Migrations
                     b.Property<string>("Question")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("QuizTopicId")
+                    b.Property<int>("QuizTopicId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("QuizTopicId2")
+                    b.Property<int?>("QuizTopicId1")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("QuizTopicId");
 
-                    b.HasIndex("QuizTopicId2");
+                    b.HasIndex("QuizTopicId1");
 
                     b.ToTable("QuizItems");
                 });
@@ -550,17 +550,17 @@ namespace CoursePlus.Server.Data.Migrations
                     b.Property<string>("Proposition")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("QuizItemId")
+                    b.Property<int>("QuizItemId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("QuizItemId2")
+                    b.Property<int?>("QuizItemId1")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("QuizItemId");
 
-                    b.HasIndex("QuizItemId2");
+                    b.HasIndex("QuizItemId1");
 
                     b.ToTable("QuizProposals");
                 });
@@ -908,26 +908,28 @@ namespace CoursePlus.Server.Data.Migrations
 
             modelBuilder.Entity("CoursePlus.Shared.Models.QuizItem", b =>
                 {
-                    b.HasOne("CoursePlus.Shared.Models.QuizTopic", "QuizTopic")
-                        .WithMany()
-                        .HasForeignKey("QuizTopicId");
-
                     b.HasOne("CoursePlus.Shared.Models.QuizTopic", null)
                         .WithMany("Items")
-                        .HasForeignKey("QuizTopicId2")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("QuizTopicId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CoursePlus.Shared.Models.QuizTopic", "QuizTopic")
+                        .WithMany()
+                        .HasForeignKey("QuizTopicId1");
                 });
 
             modelBuilder.Entity("CoursePlus.Shared.Models.QuizProposal", b =>
                 {
-                    b.HasOne("CoursePlus.Shared.Models.QuizItem", "QuizItem")
-                        .WithMany()
-                        .HasForeignKey("QuizItemId");
-
                     b.HasOne("CoursePlus.Shared.Models.QuizItem", null)
                         .WithMany("Proposals")
-                        .HasForeignKey("QuizItemId2")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("QuizItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CoursePlus.Shared.Models.QuizItem", "QuizItem")
+                        .WithMany()
+                        .HasForeignKey("QuizItemId1");
                 });
 
             modelBuilder.Entity("CoursePlus.Shared.Models.QuizTopic", b =>

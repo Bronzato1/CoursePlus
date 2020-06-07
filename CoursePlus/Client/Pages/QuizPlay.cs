@@ -17,9 +17,7 @@ namespace CoursePlus.Client.Pages
         [Inject] public IQuizService QuizService { get; set; }
 
         public QuizTopic OneQuiz { get; set; }
-
-        public TimeSpan StopWatchValue = new TimeSpan();
-        public bool IsStopWatchRunning = false;
+        public Dictionary<int, int> UserChoices { get; set; } = new Dictionary<int, int>();
 
         protected override void OnParametersSet()
         {
@@ -29,24 +27,25 @@ namespace CoursePlus.Client.Pages
         {
             OneQuiz = await QuizService.GetQuiz(Id);
         }
-        protected override async Task OnAfterRenderAsync(bool firstRender)
+        protected void ProposalClicked(QuizProposal OneProposal)
         {
-            //await Task.Delay(3000);
-            //await JSRuntime.InvokeVoidAsync("resetSticky", ".playlist-card-trailer");
+            // Check if user already selected a proposal
+            var found = UserChoices.ContainsKey(OneProposal.QuizItemId);
+            // Remove previously selected proposal (if any)
+            if (found) UserChoices.Remove(OneProposal.QuizItemId);
+            // Add current selected proposal of the user
+            UserChoices.Add(OneProposal.QuizItemId, OneProposal.Id);
         }
-        public async Task StartStopWatch()
+        protected bool Chosen(QuizProposal OneProposal)
         {
-            IsStopWatchRunning = true;
-
-            while (IsStopWatchRunning)
+            if (UserChoices.TryGetValue(OneProposal.QuizItemId, out int proposalId))
             {
-                await Task.Delay(1000);
-                if (IsStopWatchRunning)
-                {
-                    StopWatchValue = StopWatchValue.Add(new TimeSpan(0, 0, 1));
-                    StateHasChanged();
-                }
+                // User already responded to this question
+                // The choosen proposal of the user is proposalId
+                // The correct proposal is OneProposal.Id
+                return OneProposal.Id == proposalId;
             }
+            return false;
         }
     }
 }

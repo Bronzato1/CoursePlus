@@ -30,7 +30,7 @@ namespace CoursePlus.Client.Pages
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             //await Task.Delay(3000);
-            //await JSRuntime.InvokeVoidAsync("resetSticky", ".playlist-card-trailer");
+            //await JSRuntime.InvokeVoidAsync("ResetSticky", ".playlist-card-trailer");
         }
     }
 }

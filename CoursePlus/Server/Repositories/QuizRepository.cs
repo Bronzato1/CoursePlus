@@ -75,7 +75,8 @@ namespace CoursePlus.Server.Repositories
             return await _dbContext.QuizTopics
                                    .Include(x => x.Category)
                                    .Include(x => x.Thumbnail)
-                                   .Take(6).ToListAsync();
+                                   .Take(6)
+                                   .ToListAsync();
         }
 
         public QuizTopic GetQuiz(int id)

@@ -249,4 +249,16 @@ li.uk-active {
     list-style-type: disc;
 }
 
+.quiz-item {
 
+}
+
+.quiz-proposal {
+    background-color: rgb(243, 243, 243);
+    cursor: pointer;
+}
+
+.quiz-proposal.selected {
+    background-color: #3659a2;
+    color: white;
+}

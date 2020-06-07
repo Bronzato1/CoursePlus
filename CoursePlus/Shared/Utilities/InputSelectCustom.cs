@@ -22,7 +22,7 @@ namespace CoursePlus.Shared.Utilities
             if (CssClass.Contains("selectpicker"))
             {
                 var id = "#" + AdditionalAttributes.First(x => x.Key == "id").Value;
-                JsRuntime.InvokeAsync<object>("selectpicker", id, value.ToString());
+                JsRuntime.InvokeAsync<object>("Selectpicker", id, value.ToString());
             }
             return base.FormatValueAsString(value);
         }
