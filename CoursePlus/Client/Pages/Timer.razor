@@ -1,10 +1,22 @@
 ﻿@code
 {
+    [Parameter] public EventCallback<int> OnStateChanged { get; set; }
     [Inject] public IJSRuntime JSRuntime { get; set; }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await JSRuntime.InvokeVoidAsync("InitializeTimer");
+        if (firstRender)
+        {
+            var dotNetReference = DotNetObjectReference.Create(this);
+            //await Task.Delay(2000);
+            await JSRuntime.InvokeVoidAsync("Timer.initialize", dotNetReference);
+        }
+
+    }
+    [JSInvokable("StateChanged")]
+    public async Task StateChanged(int state)
+    {
+        await OnStateChanged.InvokeAsync(state);
     }
 }
 
@@ -34,6 +46,7 @@
     </div>
     <div class="controlls">
         <div class="display-remain-time">00:30</div>
-        <button class="play" id="pause"></button>
+        <button id="pause" class="play startStopTimer"></button>
     </div>
 </div>
+

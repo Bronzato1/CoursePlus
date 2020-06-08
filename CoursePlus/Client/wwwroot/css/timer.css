@@ -13,9 +13,9 @@ button[data-setter] {
     cursor: pointer;
 }
 
-    button[data-setter]:hover {
-        opacity: 0.5;
-    }
+button[data-setter]:hover {
+    opacity: 0.5;
+}
 
 .timer_container {
     position: relative;
@@ -63,7 +63,7 @@ button[data-setter] {
     position: relative;
 }
 
-.play::before {
+.controlls .play::before {
     display: block;
     content: "";
     position: absolute;
@@ -74,7 +74,7 @@ button[data-setter] {
     border-left: 22px solid #3659A2;
 }
 
-.pause::after {
+.controlls .pause::after {
     content: "";
     position: absolute;
     top: 8px;

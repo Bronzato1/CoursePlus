@@ -2,6 +2,7 @@
 using CoursePlus.Shared.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using Syncfusion.Blazor.Popups;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,8 +17,15 @@ namespace CoursePlus.Client.Pages
         [Inject] public NavigationManager NavigationManager { get; set; }
         [Inject] public IQuizService QuizService { get; set; }
 
+        public const int TIMER_STOPPED = 0;
+        public const int TIMER_STARTED = 1;
+        public const int TIMER_PAUSED = 2;
+        public const int TIMER_RESUMED = 3;
+        public const int TIMER_ELAPSED = 4;
+
         public QuizTopic OneQuiz { get; set; }
         public Dictionary<int, int> UserChoices { get; set; } = new Dictionary<int, int>();
+        public int TimerState { get; set; } = TIMER_STOPPED;
 
         protected override void OnParametersSet()
         {
@@ -46,6 +54,10 @@ namespace CoursePlus.Client.Pages
                 return OneProposal.Id == proposalId;
             }
             return false;
+        }
+        protected void TimerStateChangedCallback(int state)
+        {
+            TimerState = state;
         }
     }
 }

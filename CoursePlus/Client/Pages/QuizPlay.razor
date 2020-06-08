@@ -70,14 +70,35 @@
             <div class="uk-grid-large mt-4" uk-grid>
                 <div class="uk-width-2-3@m">
 
-                    @if (OneQuiz != null)
+                    <div class="uk-text-center @( TimerState == TIMER_STOPPED ? "uk-visible": "uk-hidden" )">
+                        <p>
+                            Press button below to start the quiz.
+                        </p>
+                        <div class="uk-text-center">
+                            <a href="javascript:void(0)" class="px-5 py-4 btn btn-default startStopTimer">
+                                <i class="uil-play"></i> Play now
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="uk-text-center @( TimerState == TIMER_PAUSED ? "uk-visible": "uk-hidden" )">
+                        <p>
+                            The quiz is in pause...
+                        </p>
+                        <a href="javascript:void(0)" class="px-5 py-4 btn btn-default startStopTimer">
+                            <i class="uil-play"></i> Resume quiz
+                        </a>
+                    </div>
+                    
+
+                    @if (OneQuiz != null && (TimerState == TIMER_STARTED || TimerState == TIMER_RESUMED))
                     {
                         @foreach (var OneItem in OneQuiz.Items)
                         {
                             <div class="uk-text-center py-3">
                                 <h5> @OneItem.Question </h5>
                             </div>
-                            
+
                             <div class="uk-grid-small uk-child-width-1-4@s uk-flex uk-text-center quiz-item">
 
                                 @foreach (var OneProposal in OneItem?.Proposals)
@@ -103,7 +124,7 @@
                         </div>
 
                         <div class="pt-3 pb-5">
-                            <Timer></Timer>
+                            <Timer OnStateChanged="TimerStateChangedCallback"></Timer>
                         </div>
 
                     </div>
