@@ -150,7 +150,7 @@ namespace CoursePlus.Server.Repositories
                     if (thumbFilename.Length != 1) continue;
                     if (imageFilename.Length != 1) continue;
 
-                    var json  = await System.IO.File.ReadAllTextAsync(jsonFilename[0]);
+                    var json = await System.IO.File.ReadAllTextAsync(jsonFilename[0]);
                     var thumb = await System.IO.File.ReadAllBytesAsync(thumbFilename[0]);
                     var image = await System.IO.File.ReadAllBytesAsync(imageFilename[0]);
 
@@ -165,7 +165,7 @@ namespace CoursePlus.Server.Repositories
                         quiz = quizB;
                         quiz.Category = new CategoryRepository(_dbContext).GetCategoryByName(quizB.Catégorie);
                     }
-                    else 
+                    else
                     {
                         QuizModelA quizA = JsonConvert.DeserializeObject<QuizModelA>(json, settings);
                         quiz = quizA;
@@ -186,11 +186,14 @@ namespace CoursePlus.Server.Repositories
                     _dbContext.Images.Add(quiz.Image);
 
                     _dbContext.QuizTopics.Add(quiz);
+
+                    if (_dbContext.ChangeTracker.HasChanges())
+                        _dbContext.SaveChanges();
+
                     cptr++;
                 }
 
-                if (_dbContext.ChangeTracker.HasChanges())
-                    _dbContext.SaveChanges();
+                
 
                 return cptr;
             }

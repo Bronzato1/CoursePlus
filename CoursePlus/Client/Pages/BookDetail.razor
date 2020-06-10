@@ -4,11 +4,14 @@
 <div id="wrapper">
 
     <Header Class="header" UkSticky="top:20; cls-active:header-sticky">
-        <Breadcrumbs>
+        <BreadcrumbsMobile>
+            <li><a href="#"> Course <b>Plus</b> </a></li>
+        </BreadcrumbsMobile>
+        <BreadcrumbsDesktop>
             <li><a href="/"> <i class="uil-home-alt"></i> </a></li>
             <li><a href="/books">Books</a></li>
             <li>@OneBook?.Title</li>
-        </Breadcrumbs>
+        </BreadcrumbsDesktop>
     </Header>
 
     <SearchOnMobile></SearchOnMobile>

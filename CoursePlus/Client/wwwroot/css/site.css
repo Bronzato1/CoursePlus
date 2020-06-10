@@ -262,3 +262,39 @@ li.uk-active {
     background-color: #3659a2;
     color: white;
 }
+
+.uk-width-1-10 {
+    width: 10% !important;
+}
+
+.uk-width-2-10 {
+    width: 20% !important;
+}
+
+.uk-width-3-10 {
+    width: 30% !important;
+}
+
+.uk-width-4-10 {
+    width: 40% !important;
+}
+
+.uk-width-5-10 {
+    width: 50% !important;
+}
+
+.uk-width-6-10 {
+    width: 60% !important;
+}
+
+.uk-width-7-10 {
+    width: 70% !important;
+}
+
+.uk-width-8-10 {
+    width: 80% !important;
+}
+
+.uk-width-9-10 {
+    width: 90% !important;
+}

@@ -2,7 +2,9 @@
 @code 
 {
     [Parameter]
-    public RenderFragment Breadcrumbs { get; set; }
+    public RenderFragment BreadcrumbsMobile { get; set; }
+    [Parameter]
+    public RenderFragment BreadcrumbsDesktop { get; set; }
 }
 
 <header class="@Class" uk-sticky="@UkSticky">
@@ -21,10 +23,17 @@
                     <span> Courseplus</span>
                 </a>
 
-                <!-- breadcrumbs -->
-                <nav id="breadcrumbs">
+                <!-- breadcrumbs mobile -->
+                <nav id="breadcrumbsMobile">
                     <ul>
-                        @Breadcrumbs
+                        @BreadcrumbsMobile
+                    </ul>
+                </nav>
+
+                <!-- breadcrumbs -->
+                <nav id="breadcrumbsDesktop">
+                    <ul>
+                        @BreadcrumbsDesktop
                     </ul>
                 </nav>
 

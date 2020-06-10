@@ -9,6 +9,9 @@ using CoursePlus.Shared.Policies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Http;
+using System.Text;
+using System.IO;
 
 namespace CoursePlus.Server.Controllers
 {
@@ -111,6 +114,17 @@ namespace CoursePlus.Server.Controllers
         public async Task<int> CreateQuizzesFromJsonOfOpenQuizzDB()
         {
             return await _quizRepository.CreateQuizzesFromJsonOfOpenQuizzDB();
+        }
+
+        [HttpGet("getDirectoryName")]
+        public IActionResult GetDirectoryName()
+        {
+            // https://testwebassembly.scm.azurewebsites.net/DebugConsole
+            //
+            // On ajoute scm à l'URL pour pouvoir examiner les fichiers publiés sur Azure
+            // Explications ici: https://www.jamessturtevant.com/posts/How-to-add-edit-and-remove-files-in-your-azure-webapp-using-the-kudu-service-dashboard/
+
+            return Ok(Path.GetDirectoryName(typeof(QuizController).Assembly.Location));
         }
     }
 }

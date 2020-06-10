@@ -50,9 +50,9 @@ namespace CoursePlus.Server.Data
 
             builder.Entity<Enrollment>().HasKey(x => new { x.QuizTopicId, x.ProfileId });
             builder.Entity<WatchHistory>().HasKey(x => new { x.EpisodeId, x.ProfileId });
-            builder.Entity<QuizTopic>().HasMany(x => x.Items).WithOne().HasForeignKey(x => x.QuizTopicId).OnDelete(DeleteBehavior.Cascade);
+            //builder.Entity<QuizTopic>().HasMany(x => x.Items).WithOne().HasForeignKey(x => x.QuizTopicId).OnDelete(DeleteBehavior.Cascade);
             builder.Entity<QuizTopic>().HasOne(x => x.Owner).WithMany().OnDelete(DeleteBehavior.NoAction);
-            builder.Entity<QuizItem>().HasMany(x => x.Proposals).WithOne().HasForeignKey(x => x.QuizItemId).OnDelete(DeleteBehavior.Cascade);
+            //builder.Entity<QuizItem>().HasMany(x => x.Proposals).WithOne().HasForeignKey(x => x.QuizItemId).OnDelete(DeleteBehavior.Cascade);
         }
 
         public override int SaveChanges()

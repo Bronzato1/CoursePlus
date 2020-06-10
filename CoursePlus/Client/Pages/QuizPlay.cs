@@ -25,7 +25,12 @@ namespace CoursePlus.Client.Pages
 
         public QuizTopic OneQuiz { get; set; }
         public Dictionary<int, int> UserChoices { get; set; } = new Dictionary<int, int>();
+
         public int TimerState { get; set; } = TIMER_STOPPED;
+        
+        public int How_many_questions_to_ask = 10;
+        public int How_many_time_to_respond = 60;
+        public int What_level_of_difficulty = (int)EnumDifficulty.Beginner;
 
         protected override void OnParametersSet()
         {
@@ -58,6 +63,19 @@ namespace CoursePlus.Client.Pages
         protected void TimerStateChangedCallback(int state)
         {
             TimerState = state;
+        }
+        protected string TranslateDifficulty(int value)
+        {
+            switch ((EnumDifficulty)value)
+            {
+                case EnumDifficulty.Beginner:
+                    return "Beginner";
+                case EnumDifficulty.Confirmed:
+                    return "Confirmed";
+                case EnumDifficulty.Expert:
+                    return "Expert";
+                default: return string.Empty;
+            }
         }
     }
 }

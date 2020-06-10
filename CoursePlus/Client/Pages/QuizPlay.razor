@@ -4,12 +4,12 @@
 <div id="wrapper">
 
     <Header Class="header header-transparent uk-light" UkSticky="top: 1 ; cls-active: header-sticky ; cls-inactive: uk-light ; animation: uk-animation-slide-top-small">
-        <Breadcrumbs>
+        <BreadcrumbsDesktop>
             <li><a href="/"> <i class="uil-home-alt"></i> </a></li>
             <li><a href="/quizzes"> Quizzes </a></li>
             <li><a href="/quiz/@OneQuiz?.Id"> Quiz @OneQuiz?.Title </a></li>
             <li>Quiz play</li>
-        </Breadcrumbs>
+        </BreadcrumbsDesktop>
     </Header>
 
     <SearchOnMobile></SearchOnMobile>
@@ -72,7 +72,40 @@
 
                     <div class="uk-text-center @( TimerState == TIMER_STOPPED ? "uk-visible": "uk-hidden" )">
                         <p>
-                            Press button below to start the quiz.
+
+                            <div class="uk-grid">
+                                <div class="uk-width-1-10"></div>
+                                <div class="uk-width-4-10 uk-text-left"><span>How many questions to ask ?</span></div>
+                                <div class="uk-width-1-10"><i class="icon-feather-arrow-left-circle uk-text-large"></i></div>
+                                <div class="uk-width-2-10"><b>@How_many_questions_to_ask questions</b></div>
+                                <div class="uk-width-1-10"><i class="icon-feather-arrow-right-circle uk-text-large"></i></div>
+                                <div class="uk-width-1-10"></div>
+                            </div>
+
+                            <div class="uk-grid">
+                                <div class="uk-width-1-10"></div>
+                                <div class="uk-width-4-10 uk-text-left"><span>How many time to respond ?</span></div>
+                                <div class="uk-width-1-10"><i class="icon-feather-arrow-left-circle uk-text-large"></i></div>
+                                <div class="uk-width-2-10"><b>@How_many_time_to_respond seconds</b></div>
+                                <div class="uk-width-1-10"><i class="icon-feather-arrow-right-circle uk-text-large"></i></div>
+                                <div class="uk-width-1-10"></div>
+                            </div>
+
+                            <div class="uk-grid">
+                                <div class="uk-width-1-10"></div>
+                                <div class="uk-width-4-10 uk-text-left"><span>What level of difficulty ?</span></div>
+                                <div class="uk-width-1-10"><i class="icon-feather-arrow-left-circle uk-text-large"></i></div>
+                                <div class="uk-width-2-10"><b>@TranslateDifficulty(What_level_of_difficulty)</b></div>
+                                <div class="uk-width-1-10"><i class="icon-feather-arrow-right-circle uk-text-large"></i></div>
+                                <div class="uk-width-1-10"></div>
+                            </div>
+
+                            <div class="uk-grid">
+                                <div class="uk-width-1-10"></div>
+                                <div class="uk-width-4-10 uk-text-left"><span>Press button below to start the quiz.</span></div>
+                                <div class="uk-width-5-10"></div>
+                            </div>
+
                         </p>
                         <div class="uk-text-center">
                             <a href="javascript:void(0)" class="px-5 py-4 btn btn-default startStopTimer">
@@ -117,7 +150,7 @@
                 </div>
 
                 <div class="uk-width-1-3@m">
-                    <div class="playlist-card-trailer uk-position-fixed" uuuuk-sticky="top: 1 ; offset: 85 ; media: @@m" style="top: 378px; width: 370px;">
+                    <div class="playlist-card-trailer uk-position-fixed" uuuuk-sticky="top: 1 ; offset: 85 ; media: @@m" style="top: 378px; right: 20px; width: 370px;">
 
                         <div class="playlist-thumbnail">
                             <img src="@( OneQuiz!=null ? String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(OneQuiz.Image.Data)) : "" )" alt="" style="height: 200px; min-height: 200px; width: 350px; min-width: 350px;">
